@@ -1,0 +1,56 @@
+:root {
+  /*
+    Palette control lives here.
+    Change these values to reskin the site without editing components.
+    Current direction: premium graphite, clean porcelain, sharp cobalt and warm copper.
+  */
+  --color-bg: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-surface-muted: #e7e2d8;
+  --color-ink: #101114;
+  --color-text: #25262a;
+  --color-text-muted: #6e6f76;
+  --color-primary: #2457ff;
+  --color-primary-ink: #ffffff;
+  --color-accent: #c65a2e;
+  --color-accent-ink: #ffffff;
+  --color-line: rgba(16, 17, 20, 0.14);
+  --color-dark-line: rgba(246, 244, 239, 0.16);
+  --color-success: #197b52;
+  --color-warning: #9a6400;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --space-page: clamp(24px, 4vw, 56px);
+  --max-site: 1180px;
+  --font-heading: var(--font-space-grotesk), Arial, sans-serif;
+  --font-body: var(--font-inter), Arial, sans-serif;
+  --shadow-soft: 0 24px 70px rgba(16, 17, 20, 0.12);
+}
+
+[data-palette="manchester"] {
+  --color-bg: #f7f3ea;
+  --color-surface: #fffdf8;
+  --color-surface-muted: #d8d2c4;
+  --color-ink: #0b0b0d;
+  --color-text: #2b2b2f;
+  --color-text-muted: #68665f;
+  --color-primary: #f4c430;
+  --color-primary-ink: #0b0b0d;
+  --color-accent: #da291c;
+  --color-accent-ink: #ffffff;
+}
+
+[data-palette="editorial-green"] {
+  --color-bg: #f3f1e9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #dfe4dc;
+  --color-ink: #111614;
+  --color-text: #242a27;
+  --color-text-muted: #69716b;
+  --color-primary: #2fbf71;
+  --color-primary-ink: #07130d;
+  --color-accent: #3858e9;
+  --color-accent-ink: #ffffff;
+}

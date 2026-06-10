@@ -1,0 +1,57 @@
+{
+  "name": "essential-resourcing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --pass-with-no-tests",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "sanity": "sanity"
+  },
+  "dependencies": {
+    "@sanity/vision": "^5.30.0",
+    "next": "^16.2.7",
+    "next-sanity": "^13.0.11",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sanity": "^5.30.0",
+    "styled-components": "^6.1.19",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/node": "^22.15.32",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^16.2.7",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "@sanity/uuid": {
+      "uuid": "^11.1.1"
+    },
+    "@vercel/frameworks": {
+      "js-yaml": "^3.14.2"
+    },
+    "next": {
+      "postcss": "^8.5.15"
+    },
+    "typeid-js": {
+      "uuid": "^11.1.1"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+node_modules
+.next
+.vercel
+coverage
+playwright-report
+test-results
+New Website 2026
+package-lock.json

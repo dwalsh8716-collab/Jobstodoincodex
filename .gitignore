@@ -1,0 +1,22 @@
+# Local pasted/generated material
+New Website 2026/
+.DS_Store
+preview-*.png
+
+# Dependencies and build output
+node_modules
+.next
+.vercel
+dist
+build
+coverage
+playwright-report
+test-results
+tsconfig.tsbuildinfo
+
+# Environment and logs
+.env
+.env.*
+!.env.example
+*.log
+.npm-cache
