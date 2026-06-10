@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { CMS_SESSION_COOKIE, cmsGateConfigured, getCmsUsername, isCmsSessionValid } from "@/lib/cms-auth";
+import { imageSizes } from "@/lib/images";
 import { siteConfig } from "@/lib/site";
 
 type Props = {
@@ -43,7 +44,13 @@ export default async function CmsPage({ searchParams }: Props) {
     <section className="section cms-shell">
       <div className="container cms-layout">
         <div className="cms-panel cms-intro">
-          <Image src={siteConfig.logoDark} width={300} height={83} alt="Essential Resourcing" priority />
+          <Image
+            src={siteConfig.logoDark}
+            width={300}
+            height={83}
+            sizes={imageSizes.logo}
+            alt="Essential Resourcing"
+          />
           <p className="eyebrow">Private editor area</p>
           <h1>Make the site easy to keep sharp.</h1>
           <p className="lede">

@@ -190,6 +190,14 @@ p {
   color: rgba(246, 244, 239, 0.78);
 }
 
+.dark .eyebrow {
+  color: var(--color-accent-on-dark);
+}
+
+.dark .text-link {
+  color: var(--color-primary-on-dark);
+}
+
 .section-heading {
   max-width: 850px;
   margin-bottom: 40px;
@@ -942,6 +950,12 @@ p {
   margin-top: 10px;
   color: var(--color-text-muted);
   font-size: 0.92rem;
+}
+
+.dark .video-block figcaption,
+.dark .image-block figcaption,
+.dark .media-gallery figcaption {
+  color: rgba(246, 244, 239, 0.78);
 }
 
 .video-block figcaption strong,

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { RichMediaBlock } from "@/components/RichMedia";
+import { imageSizes } from "@/lib/images";
 import { caseStudies, homepageFeatureVideo, insights, proofPoints, richMediaExamples, services, specialisms, whyEssential } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -70,10 +71,18 @@ export default function HomePage() {
               alt="A sharp modern workspace used as an editorial recruitment image"
               width={1200}
               height={900}
-              sizes="(max-width: 980px) 100vw, 48vw"
+              sizes={imageSizes.hero}
               priority
             />
-            <Image className="hero-mark" src={siteConfig.iconLight} alt="" width={789} height={689} aria-hidden />
+            <Image
+              className="hero-mark"
+              src={siteConfig.iconLight}
+              alt=""
+              width={789}
+              height={689}
+              sizes={imageSizes.mark}
+              aria-hidden
+            />
             <div className="hero-card primary">
               <span>Fewer roles.</span>
               <strong>Deeper work.</strong>

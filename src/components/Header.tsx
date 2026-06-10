@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { imageSizes } from "@/lib/images";
 import { primaryNavigation, serviceNavigation, siteConfig } from "@/lib/site";
 
 export function Header() {
@@ -18,7 +19,13 @@ export function Header() {
   return (
     <header className="site-header">
       <Link className="brand" href="/" aria-label="Essential Resourcing home">
-        <Image src={siteConfig.logoDark} width={300} height={83} alt="Essential Resourcing" priority />
+        <Image
+          src={siteConfig.logoDark}
+          width={300}
+          height={83}
+          sizes={imageSizes.logo}
+          alt="Essential Resourcing"
+        />
       </Link>
 
       <button

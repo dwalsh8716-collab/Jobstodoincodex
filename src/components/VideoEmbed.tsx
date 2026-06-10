@@ -1,8 +1,6 @@
-"use client";
-
-import Image from "next/image";
-import { useState } from "react";
 import type { RichMedia as RichMediaType } from "@/lib/types";
+import { DeferredVideoEmbed } from "./DeferredVideoEmbed";
+import { VideoPoster } from "./VideoPoster";
 
 type VideoMedia = Extract<RichMediaType, { type: "video" }>;
 
@@ -18,26 +16,7 @@ function toEmbedUrl(url: string, provider: "youtube" | "vimeo") {
   return match ? `https://player.vimeo.com/video/${match[1]}` : url;
 }
 
-function Poster({ media }: { media: VideoMedia }) {
-  return (
-    <div className="video-placeholder">
-      {media.thumbnail ? (
-        <Image
-          className="video-poster-image"
-          src={media.thumbnail}
-          alt={media.thumbnailAlt || ""}
-          fill
-          sizes="(max-width: 980px) 100vw, 48vw"
-        />
-      ) : null}
-      <span>Founder video</span>
-      <strong>{media.title}</strong>
-    </div>
-  );
-}
-
 export function VideoEmbed({ media }: { media: VideoMedia }) {
-  const [loaded, setLoaded] = useState(false);
   const hasUrl = Boolean(media.url);
 
   if (media.provider === "upload" && hasUrl) {
@@ -64,29 +43,10 @@ export function VideoEmbed({ media }: { media: VideoMedia }) {
   return (
     <figure className="video-block">
       <div className="video-frame">
-        {embedUrl && loaded ? (
-          <iframe
-            src={embedUrl}
-            title={media.title}
-            loading="lazy"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-        ) : embedUrl ? (
-          <button
-            className="video-poster-button"
-            type="button"
-            aria-label={`Load video: ${media.title}`}
-            onClick={() => setLoaded(true)}
-          >
-            <Poster media={media} />
-            <span className="video-play-indicator" aria-hidden="true">
-              Play
-            </span>
-          </button>
+        {embedUrl ? (
+          <DeferredVideoEmbed embedUrl={embedUrl} media={media} />
         ) : (
-          <Poster media={media} />
+          <VideoPoster media={media} />
         )}
       </div>
       <figcaption>

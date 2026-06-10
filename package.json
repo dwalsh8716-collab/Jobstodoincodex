@@ -13,7 +13,8 @@
     "test:e2e": "playwright test --pass-with-no-tests",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "verify": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "performance:budget": "node scripts/performance-budget.mjs",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build && npm run performance:budget",
     "sanity": "sanity"
   },
   "dependencies": {

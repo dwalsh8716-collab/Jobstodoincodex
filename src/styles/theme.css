@@ -12,8 +12,10 @@
   --color-text-muted: #6e6f76;
   --color-primary: #2457ff;
   --color-primary-ink: #ffffff;
-  --color-accent: #c65a2e;
+  --color-accent: #a94622;
   --color-accent-ink: #ffffff;
+  --color-accent-on-dark: #f18a61;
+  --color-primary-on-dark: #9fb3ff;
   --color-line: rgba(16, 17, 20, 0.14);
   --color-dark-line: rgba(246, 244, 239, 0.16);
   --color-success: #197b52;
