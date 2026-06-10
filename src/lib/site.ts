@@ -19,10 +19,10 @@ export const siteConfig = {
 
 export const primaryNavigation = [
   { label: "Clients", href: "/clients" },
-  { label: "Candidates", href: "/candidates" },
   { label: "Services", href: "/services" },
-  { label: "Insights", href: "/insights" },
+  { label: "Strategic Interim", href: "/services/strategic-interim" },
   { label: "Jobs", href: "/jobs" },
+  { label: "Insights", href: "/insights" },
   { label: "About", href: "/about-essential" },
   { label: "Contact", href: "/contact", cta: true }
 ] as const;
@@ -31,8 +31,7 @@ export const serviceNavigation = [
   { label: "Leadership Search", href: "/services/leadership-search" },
   { label: "Strategic Interim", href: "/services/strategic-interim" },
   { label: "Agency Recruitment", href: "/services/agency-recruitment" },
-  { label: "Client-side Marketing Recruitment", href: "/services/client-side-marketing-recruitment" },
-  { label: "Senior Recruitment", href: "/services/senior-recruitment" }
+  { label: "Client-side Marketing Recruitment", href: "/services/client-side-marketing-recruitment" }
 ] as const;
 
 export const launchPages = [

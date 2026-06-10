@@ -101,6 +101,12 @@ The site uses structured, crawlable signals rather than relying on a single gimm
 
 Draft jobs, draft case studies and unvalidated salary snapshots are deliberately kept out of the sitemap and AI index routes.
 
+Launch route audit and future-page roadmap:
+
+```txt
+docs/LAUNCH-SITEMAP-ROUTES.md
+```
+
 ## Rich Media And Video
 
 The site supports:

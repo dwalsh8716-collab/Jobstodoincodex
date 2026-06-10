@@ -4,20 +4,28 @@ import { launchPages, siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticPages = launchPages.map((path) => ({
+  const seen = new Set<string>();
+  const unique = (paths: string[]) =>
+    paths.filter((path) => {
+      if (seen.has(path)) return false;
+      seen.add(path);
+      return true;
+    });
+
+  const staticPages = unique([...launchPages]).map((path) => ({
     url: `${siteConfig.url}${path}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: path === "/" ? 1 : 0.75
   }));
 
-  const dynamicPages = [
+  const dynamicPages = unique([
     ...services.map((item) => `/services/${item.slug}`),
     ...insights.filter((item) => item.status === "published").map((item) => `/insights/${item.slug}`),
     ...caseStudies.filter((item) => item.status === "published").map((item) => `/case-studies/${item.slug}`),
     ...salarySnapshots.filter((item) => item.status === "published").map((item) => `/salary-snapshots/${item.slug}`),
     ...jobs.filter((item) => item.status === "live").map((item) => `/jobs/${item.slug}`)
-  ].map((path) => ({
+  ]).map((path) => ({
     url: `${siteConfig.url}${path}`,
     lastModified: now,
     changeFrequency: "monthly" as const,

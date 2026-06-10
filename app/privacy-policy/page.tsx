@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
           <h1>Privacy Policy</h1>
           <p className="lede">
             This page is structured and editable, but should be reviewed against the final form provider, analytics
-            setup and data handling processes before launch.
+            setup and data handling processes by a qualified adviser before launch.
           </p>
         </div>
       </section>

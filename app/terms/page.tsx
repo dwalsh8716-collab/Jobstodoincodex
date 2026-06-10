@@ -15,7 +15,7 @@ export default function TermsPage() {
         <div className="container section-heading">
           <p className="eyebrow">Legal</p>
           <h1>Terms of Website Use</h1>
-          <p className="lede">Structured terms page ready for final legal review before launch.</p>
+          <p className="lede">Structured terms page ready for final review by a qualified adviser before launch.</p>
         </div>
       </section>
       <section className="section surface">

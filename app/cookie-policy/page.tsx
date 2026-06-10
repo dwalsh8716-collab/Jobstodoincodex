@@ -15,7 +15,10 @@ export default function CookiePolicyPage() {
         <div className="container section-heading">
           <p className="eyebrow">Legal</p>
           <h1>Cookie Policy</h1>
-          <p className="lede">Cookie and tracking copy should be updated when GA4, LinkedIn Insight Tag or other tools are enabled.</p>
+          <p className="lede">
+            Cookie and tracking copy should be reviewed by a qualified adviser when GA4, LinkedIn Insight Tag or other
+            tools are enabled.
+          </p>
         </div>
       </section>
       <section className="section surface">
