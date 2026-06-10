@@ -81,9 +81,8 @@ Main tokens:
 - `--color-accent`
 - Radius, spacing, typography and shadows are also tokenised.
 
-To change the visual direction, edit the root variables or set `NEXT_PUBLIC_THEME_PALETTE` to one of the included alternate palettes:
+To change the visual direction, edit the root variables or set `NEXT_PUBLIC_THEME_PALETTE` to an included alternate palette:
 
-- `manchester`
 - `editorial-green`
 
 There is a noindexed design reference page at `/design-system`.
@@ -118,6 +117,7 @@ docs/LAUNCH-SITEMAP-ROUTES.md
 docs/TECHNICAL-SEO-GEO.md
 docs/FINAL-PRODUCTION-READINESS-AUDIT.md
 docs/FINAL-POLISH-ROADMAP.md
+docs/VISUAL-DESIGN-POLISH.md
 ```
 
 ## Rich Media And Video

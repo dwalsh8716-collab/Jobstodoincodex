@@ -27,7 +27,6 @@ Default palette is a premium graphite/cobalt/copper direction.
 
 Alternative palettes already exist:
 
-- `manchester`
 - `editorial-green`
 
 Set:
@@ -38,7 +37,7 @@ NEXT_PUBLIC_THEME_PALETTE=editorial-green
 
 or change the variables directly.
 
-Keep the graphite/cobalt/copper palette as the production default unless David asks for a change. The Manchester palette stays available as an alternate token set, not the active look.
+Keep the graphite/cobalt/copper palette as the production default unless David asks for a change. Do not switch the site to a Manchester red/yellow palette.
 
 Tailwind is configured in:
 
@@ -103,6 +102,14 @@ This page shows:
 - Form pattern
 
 It is noindexed.
+
+## Final Polish Record
+
+The latest visual audit, page-level summary, asset gaps and future design roadmap are tracked in:
+
+```txt
+docs/VISUAL-DESIGN-POLISH.md
+```
 
 ## Codex Continuity
 

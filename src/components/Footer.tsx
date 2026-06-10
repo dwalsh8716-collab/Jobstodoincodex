@@ -8,12 +8,29 @@ export function Footer() {
     <footer className="site-footer dark">
       <div className="container footer-grid">
         <div>
-          <Image src={siteConfig.logoLight} width={300} height={83} alt="Essential Resourcing" />
-          <p className="footer-line">Senior marketing and comms hiring, done properly.</p>
+          <Image
+            src={siteConfig.logoLight}
+            width={300}
+            height={83}
+            alt="Essential Resourcing"
+          />
+          <p className="footer-line">
+            Senior marketing and comms hiring, done properly.
+          </p>
+          <p className="footer-brand-note">
+            Manchester-led judgement. North West roots. UK-wide senior hiring
+            support.
+          </p>
         </div>
         <div>
           <h2>Need good marketing, PR or digital people?</h2>
           <p>Give David a shout before it becomes a hiring headache.</p>
+          <div className="footer-contact" aria-label="Contact details">
+            <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
+            {siteConfig.linkedIn ? (
+              <Link href={siteConfig.linkedIn}>David on LinkedIn</Link>
+            ) : null}
+          </div>
           <Link
             className="button button-primary"
             href="/contact"

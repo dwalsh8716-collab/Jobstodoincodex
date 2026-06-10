@@ -118,6 +118,29 @@ export default function HomePage() {
         ))}
       </section>
 
+      <section className="section editorial-statement">
+        <div className="container split split-start">
+          <div>
+            <p className="eyebrow">Point of view</p>
+            <h2>The job title is not the brief.</h2>
+          </div>
+          <div>
+            <p className="lede">
+              The real brief is the commercial pressure behind the hire: the
+              stalled team, the founder carrying too much, the client work
+              slipping, or the growth plan that needs proper senior judgement.
+            </p>
+            <p className="editorial-note">
+              Start there and the shortlist gets sharper. Ignore it and you
+              lose six weeks interviewing the wrong people.
+            </p>
+            <Link className="text-link" href="/services">
+              Choose the right route
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="section">
         <div className="container split">
           <div>
