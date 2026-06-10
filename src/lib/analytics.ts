@@ -7,6 +7,7 @@ export type AnalyticsEventName =
   | "phone_click"
   | "whatsapp_click"
   | "linkedin_click"
+  | "candidate_enquiry_submitted"
   | "job_application_start"
   | "job_application_submission"
   | "cv_upload_submission"

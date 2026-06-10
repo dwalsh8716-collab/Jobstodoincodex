@@ -133,6 +133,8 @@ docs/sanity-editor-guide.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/railway-deployment.md
 docs/RAILWAY-POSTGRES-BACKEND.md
+docs/candidate-data-journey.md
+docs/cv-storage-and-retention.md
 docs/MASTER-BUILD-COMPLETION-REPORT.md
 ```
 

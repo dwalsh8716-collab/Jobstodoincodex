@@ -84,6 +84,7 @@ export function Footer() {
           <Link href="/case-studies">Case Studies</Link>
           <Link href="/salary-snapshots">Salary Snapshots</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/candidate-privacy">Candidate Privacy Notice</Link>
           <Link href="/cookie-policy">Cookie Policy</Link>
           {hasTrackingConfig ? <CookiePreferencesButton /> : null}
           <Link href="/terms">Terms</Link>

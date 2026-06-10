@@ -234,4 +234,11 @@ CV upload:
 Blocked until private object storage, signed URLs, retention/deletion process and legal review are approved.
 ```
 
+Candidate trust follow-up:
+
+```txt
+docs/candidate-data-journey.md
+docs/cv-storage-and-retention.md
+```
+
 Final rule: no fake compliance, no public CV links, no secrets in GitHub, and no duplicate public CMS content in Postgres.

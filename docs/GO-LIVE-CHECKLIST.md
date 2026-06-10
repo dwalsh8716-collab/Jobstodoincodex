@@ -18,6 +18,7 @@ Treat it as preview-ready now, not fully public-live until the items below are c
 - Invite the editor users in Sanity.
 - Set fresh `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET`.
 - Review privacy policy, cookie policy and terms.
+- Review the Candidate Privacy Notice and candidate data journey.
 - Confirm analytics consent wording and tracking requirements.
 - Confirm Google Search Console verification.
 - Confirm any CV handling/storage is legally and technically safe before enabling uploads.

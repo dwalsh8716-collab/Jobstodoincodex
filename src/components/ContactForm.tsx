@@ -1,16 +1,25 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import {
+  candidateConsentCopy,
+  candidateNextSteps,
+  candidatePrivacyPath,
+  candidateRetentionStatement,
+} from "@/lib/candidate-trust";
 
 type FormType = "client" | "candidate" | "job";
 
 export function ContactForm({
   type = "client",
   jobTitle,
+  jobSlug,
 }: {
   type?: FormType;
   jobTitle?: string;
+  jobSlug?: string;
 }) {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -26,7 +35,7 @@ export function ContactForm({
     setHasTrackedStart(true);
     trackEvent("job_application_start", {
       form_type: type,
-      job_title: jobTitle,
+      job_slug: jobSlug,
     });
   }
 
@@ -53,11 +62,18 @@ export function ContactForm({
         throw new Error(data.message || "Something went wrong.");
       setStatus("success");
       setMessage(data.message || "Thanks. Your enquiry has been received.");
-      trackEvent(type === "job" ? "job_application_submission" : "form_submission", {
-        form_type: type,
-        brief_type: String(formData.get("briefType") || ""),
-        job_title: jobTitle,
-      });
+      trackEvent(
+        type === "job"
+          ? "job_application_submission"
+          : type === "candidate"
+            ? "candidate_enquiry_submitted"
+            : "form_submission",
+        {
+          form_type: type,
+          brief_type: String(formData.get("briefType") || ""),
+          job_slug: jobSlug,
+        },
+      );
       form.reset();
       setStartedAt(Date.now().toString());
       setHasTrackedStart(false);
@@ -68,10 +84,12 @@ export function ContactForm({
       );
       trackEvent("form_error", {
         form_type: type,
-        job_title: jobTitle,
+        job_slug: jobSlug,
       });
     }
   }
+
+  const candidateMode = type !== "client";
 
   return (
     <form
@@ -93,12 +111,26 @@ export function ContactForm({
       </div>
       <input type="hidden" name="startedAt" value={startedAt} />
       <div className="form-assurance">
-        <strong>Direct with David.</strong>
+        <strong>
+          {candidateMode ? "Private candidate route." : "Direct with David."}
+        </strong>
         <span>
-          Share the useful context. You will get a straight reply, not a sales
-          sequence.
+          {candidateMode
+            ? "Your details are handled carefully. No CVs are sent anywhere without permission."
+            : "Share the useful context. You will get a straight reply, not a sales sequence."}
         </span>
       </div>
+      {candidateMode ? (
+        <div className="form-trust-panel">
+          <h3>What happens next?</h3>
+          <ol>
+            {candidateNextSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+          <p>{candidateRetentionStatement}</p>
+        </div>
+      ) : null}
       <div className="form-row">
         <label htmlFor={`${type}-name`}>Name</label>
         <input
@@ -201,15 +233,24 @@ export function ContactForm({
           required
         />
         <span>
-          I agree to be contacted about this enquiry. Nothing is shared without
-          permission.
+          {candidateMode ? (
+            <>
+              {candidateConsentCopy(type)} I have read the{" "}
+              <Link href={candidatePrivacyPath}>
+                Candidate Privacy Notice
+              </Link>
+              .
+            </>
+          ) : (
+            "I agree to be contacted about this enquiry. Nothing is shared without permission."
+          )}
         </span>
       </label>
       {type !== "client" ? (
         <p className="form-note">
           CV upload is intentionally not enabled until secure storage is
           configured. Add a LinkedIn URL or note and David can request the CV
-          safely.
+          safely. <Link href={candidatePrivacyPath}>How candidate data is handled</Link>.
         </p>
       ) : null}
       <button
@@ -232,6 +273,24 @@ export function ContactForm({
       >
         {message}
       </p>
+      {status === "success" && candidateMode ? (
+        <div className="form-confirmation" role="status">
+          <h3>{type === "job" ? "Application received." : "Note received."}</h3>
+          <p>
+            David will review it directly. If it looks like a possible fit, he
+            will come back to you. Your details are handled privately and you
+            can ask for deletion or export at any time.
+          </p>
+          <div className="button-row">
+            <Link className="text-link" href={candidatePrivacyPath}>
+              Candidate Privacy Notice
+            </Link>
+            <Link className="text-link" href="/jobs">
+              View live roles
+            </Link>
+          </div>
+        </div>
+      ) : null}
     </form>
   );
 }

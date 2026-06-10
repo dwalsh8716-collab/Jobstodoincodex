@@ -4,6 +4,7 @@ import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import { promisify } from "node:util";
 import type { ContactFormPayload } from "@/validations/contact";
+import { candidatePrivacyNoticeVersion } from "@/lib/candidate-trust";
 import type {
   OperationsBackendStatus,
   OperationsOverview,
@@ -125,7 +126,10 @@ export async function saveContactEnquiryToOperations(
     priority: payload.type === "client" ? "high" : "normal",
     ipHash: hashPrivateValue(meta.ip),
     userAgentHash: hashPrivateValue(meta.userAgent),
-    privacyNoticeVersion: "operations-foundation-v1",
+    privacyNoticeVersion:
+      payload.type === "client"
+        ? "operations-foundation-v1"
+        : candidatePrivacyNoticeVersion,
   };
 
   try {

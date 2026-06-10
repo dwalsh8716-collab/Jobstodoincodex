@@ -6,7 +6,14 @@ import {
   minimumCompletionTimeMs,
   type ContactFormPayload,
 } from "@/validations/contact";
+import {
+  candidateConfirmationSubject,
+  candidateNextSteps,
+  candidatePrivacyPath,
+  candidateRetentionStatement,
+} from "@/lib/candidate-trust";
 import { saveContactEnquiryToOperations } from "@/lib/operations/store";
+import { siteConfig } from "@/lib/site";
 
 export type ContactActionResult = {
   ok: boolean;
@@ -51,35 +58,81 @@ async function sendWithResend(payload: ContactFormPayload) {
     return { sent: false };
   }
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to,
-      subject: `Essential Resourcing ${payload.type} enquiry from ${payload.name}`,
-      text: [
-        `Type: ${payload.type}`,
-        payload.jobTitle ? `Job: ${payload.jobTitle}` : "",
-        `Name: ${payload.name}`,
-        `Email: ${payload.email}`,
-        payload.phone ? `Phone: ${payload.phone}` : "",
-        payload.company ? `Company: ${payload.company}` : "",
-        payload.linkedin ? `LinkedIn: ${payload.linkedin}` : "",
-        `Brief type: ${payload.briefType}`,
-        "",
-        payload.message,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-    }),
+  async function sendEmail({
+    recipient,
+    subject,
+    text,
+  }: {
+    recipient: string;
+    subject: string;
+    text: string;
+  }) {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to: recipient,
+        subject,
+        text,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Email provider rejected the message.");
+    }
+  }
+
+  await sendEmail({
+    recipient: to,
+    subject: `Essential Resourcing ${payload.type} enquiry from ${payload.name}`,
+    text: [
+      `Type: ${payload.type}`,
+      payload.jobTitle ? `Job: ${payload.jobTitle}` : "",
+      `Name: ${payload.name}`,
+      `Email: ${payload.email}`,
+      payload.phone ? `Phone: ${payload.phone}` : "",
+      payload.company ? `Company: ${payload.company}` : "",
+      payload.linkedin ? `LinkedIn: ${payload.linkedin}` : "",
+      `Brief type: ${payload.briefType}`,
+      "",
+      payload.message,
+      "",
+      payload.type !== "client"
+        ? "Candidate note: do not attach or forward CVs unless secure private storage and permission are in place."
+        : "",
+    ]
+      .filter(Boolean)
+      .join("\n"),
   });
 
-  if (!response.ok) {
-    throw new Error("Email provider rejected the message.");
+  if (payload.type !== "client") {
+    await sendEmail({
+      recipient: payload.email,
+      subject: candidateConfirmationSubject(payload.type),
+      text: [
+        `Hi ${payload.name},`,
+        "",
+        payload.type === "job"
+          ? `Thanks for applying through Essential Resourcing${payload.jobTitle ? ` for ${payload.jobTitle}` : ""}.`
+          : "Thanks for sending your note to Essential Resourcing.",
+        "",
+        "What happens next:",
+        ...candidateNextSteps.map((step, index) => `${index + 1}. ${step}`),
+        "",
+        candidateRetentionStatement,
+        "",
+        `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
+        `To ask for deletion or a copy of your details, email ${siteConfig.email}.`,
+        "",
+        "No black hole. No nonsense. If it looks relevant, David will come back to you.",
+        "",
+        "Essential Resourcing",
+      ].join("\n"),
+    });
   }
 
   return { sent: true };

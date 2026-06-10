@@ -77,6 +77,7 @@ export const launchPages = [
   "/salary-snapshots",
   "/contact",
   "/jobs",
+  "/candidate-privacy",
   "/privacy-policy",
   "/cookie-policy",
   "/terms",

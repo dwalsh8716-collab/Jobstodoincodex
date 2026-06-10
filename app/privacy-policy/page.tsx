@@ -1,5 +1,7 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { candidatePrivacyPath } from "@/lib/candidate-trust";
 import { createMetadata } from "@/lib/seo";
+import Link from "next/link";
 
 export const metadata = createMetadata({
   title: "Privacy Policy | Essential Resourcing",
@@ -46,6 +48,15 @@ export default function PrivacyPolicyPage() {
           <p>
             CV upload is not enabled in phase one. CVs should only be requested
             and handled through a secure, agreed process.
+          </p>
+          <h2>Candidate data</h2>
+          <p>
+            Candidate notes, job applications and future CV handling are covered
+            in the{" "}
+            <Link className="text-link" href={candidatePrivacyPath}>
+              Candidate Privacy Notice
+            </Link>
+            . Candidate data must not be sent to Sanity or analytics.
           </p>
           <h2>Analytics and cookies</h2>
           <p>

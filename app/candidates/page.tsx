@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { candidatePrivacyPath, candidateRetentionStatement } from "@/lib/candidate-trust";
 import { isJobLive, jobs } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -53,6 +54,9 @@ export default function CandidatesPage() {
             </Link>
             <Link className="button button-secondary" href="#candidate-contact">
               Send a note
+            </Link>
+            <Link className="button button-secondary" href={candidatePrivacyPath}>
+              Candidate privacy
             </Link>
             <WhatsAppButton
               intent="candidates"
@@ -106,6 +110,7 @@ export default function CandidatesPage() {
               Add a note and LinkedIn URL. If a CV is useful, David will ask for
               it directly and handle it properly.
             </p>
+            <p className="form-note">{candidateRetentionStatement}</p>
             <WhatsAppButton
               intent="candidates"
               label="Quick WhatsApp to David"

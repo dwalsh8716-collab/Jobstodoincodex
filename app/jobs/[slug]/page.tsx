@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { candidateNextSteps, candidatePrivacyPath } from "@/lib/candidate-trust";
 import { getJob, isJobClosed, isJobLive, jobs } from "@/lib/content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
 
@@ -130,6 +131,17 @@ export default async function JobPage({ params }: Props) {
                     Applications are handled by David directly at{" "}
                     {job.applicationEmail}.
                   </p>
+                  <div className="mini-process">
+                    <h3>What happens next?</h3>
+                    <ol>
+                      {candidateNextSteps.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ol>
+                    <Link className="text-link" href={candidatePrivacyPath}>
+                      Candidate Privacy Notice
+                    </Link>
+                  </div>
                   <WhatsAppButton
                     intent="jobs"
                     label="Quick question about this role? WhatsApp David"
@@ -138,7 +150,11 @@ export default async function JobPage({ params }: Props) {
                     variant="secondary"
                   />
                 </div>
-                <ContactForm type="job" jobTitle={job.title} />
+                <ContactForm
+                  type="job"
+                  jobTitle={job.title}
+                  jobSlug={job.slug}
+                />
               </>
             ) : (
               <div className="card">
