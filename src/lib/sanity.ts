@@ -1,5 +1,8 @@
 import { createClient } from "next-sanity";
 
+// Sanity is the public content engine for the website.
+// Do not use this client to write private enquiries, candidate records,
+// CV details, DSAR requests, audit logs or internal recruitment notes.
 export const sanityConfig = {
   projectId: process.env.SANITY_PROJECT_ID || "essentialresourcing",
   dataset: process.env.SANITY_DATASET || "production",

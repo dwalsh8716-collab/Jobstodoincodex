@@ -11,6 +11,10 @@
 - Safe CMS fetch helper: `src/lib/sanity-content.ts`.
 - Fallback content: `src/content/fallback/`.
 
+Sanity is the public content engine. It must not store private candidate/client
+PII, CV files, private application records, DSAR requests, audit logs or
+internal recruitment notes.
+
 ## Editor Structure
 
 The Studio is organised around plain-English groups:
@@ -52,6 +56,7 @@ The post-launch content, digital PR and measurement roadmap is tracked in:
 
 ```txt
 docs/POST-LAUNCH-GROWTH-ROADMAP.md
+docs/data-boundaries.md
 ```
 
 ## Fallback Behaviour

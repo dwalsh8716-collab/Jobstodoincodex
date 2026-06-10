@@ -72,6 +72,9 @@ Sanity remains responsible for:
 - navigation, footer and site settings
 - SEO-editable public content
 
+Sanity must not store private candidate/client PII, CV files, private
+application records, DSAR requests, audit logs or internal recruitment notes.
+
 Postgres is for private business operations only:
 
 - submitted enquiries
@@ -264,6 +267,7 @@ Candidate trust follow-up:
 docs/candidate-data-journey.md
 docs/cv-storage-and-retention.md
 docs/audit-logging.md
+docs/data-boundaries.md
 ```
 
 WhatsApp Business follow-up:

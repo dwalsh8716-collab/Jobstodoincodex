@@ -133,6 +133,8 @@ docs/sanity-editor-guide.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/railway-deployment.md
 docs/RAILWAY-POSTGRES-BACKEND.md
+docs/data-boundaries.md
+docs/audit-logging.md
 docs/candidate-data-journey.md
 docs/cv-storage-and-retention.md
 docs/whatsapp-business-cloud-api.md
@@ -179,10 +181,15 @@ Content groups:
 - Recruitment: Jobs
 - People: David Walsh / Team
 
+Sanity is the public content engine only. Do not store private candidate/client
+data, CVs, application records, DSAR requests, audit logs or internal
+recruitment notes in Sanity. Use Railway/Postgres for private operations.
+
 CMS audit and architecture notes:
 
 ```txt
 docs/CMS-ARCHITECTURE.md
+docs/data-boundaries.md
 ```
 
 Important: the front-end `/cms` gate is a branded site login. Sanity still needs a real Sanity project and invited editor account before live editing is production-ready.

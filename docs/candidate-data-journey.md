@@ -19,6 +19,7 @@ Already existed:
 - No public CV upload.
 - No CV files stored in `/public`.
 - Railway/Postgres schema with candidate, application, file metadata, consent and retention fields.
+- Clear architecture direction: Sanity is public CMS; Postgres is private operations.
 
 Missing before this pass:
 
@@ -83,6 +84,19 @@ Candidate/application schema fields include:
 - deletion/export request fields
 - archived/deleted fields
 - audit-log support
+
+Hard boundary:
+
+```txt
+Candidate names, emails, phone numbers, application messages, CV files, CV URLs
+and private recruitment notes must not be stored in Sanity.
+```
+
+Full boundary notes:
+
+```txt
+docs/data-boundaries.md
+```
 
 ## Emails
 

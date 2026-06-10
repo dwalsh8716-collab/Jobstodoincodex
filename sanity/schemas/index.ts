@@ -20,6 +20,9 @@ import {
 } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+// Sanity is the public website CMS. Do not add private candidate records,
+// client contact records, CV files, DSAR requests, audit logs or internal notes here.
+
 type RequiredRule = {
   required: () => {
     error: (message: string) => unknown;
@@ -710,8 +713,20 @@ const siteSettings = defineType({
     defineField({ name: "siteUrl", title: "Site URL", type: "url" }),
     imageWithAltField("logo", "Logo"),
     defineField({ name: "favicon", title: "Favicon", type: "image" }),
-    defineField({ name: "email", title: "Email", type: "string" }),
-    defineField({ name: "phone", title: "Phone", type: "string" }),
+    defineField({
+      name: "email",
+      title: "Public business email",
+      type: "string",
+      description:
+        "Public Essential Resourcing contact email only. Do not store private candidate, client contact or application email addresses here.",
+    }),
+    defineField({
+      name: "phone",
+      title: "Public business phone",
+      type: "string",
+      description:
+        "Public business phone only. Do not store candidate or private client phone numbers here.",
+    }),
     defineField({ name: "bookingUrl", title: "Booking link", type: "url" }),
     defineField({
       name: "whatsAppEnabled",
@@ -1112,6 +1127,8 @@ const job = defineType({
       name: "applicationEmail",
       title: "Application email",
       type: "string",
+      description:
+        "Public application inbox or routing email only. Do not store candidate email addresses, cover letters or private application records in Sanity.",
     }),
     defineField({
       name: "applicationFormEnabled",
@@ -1221,7 +1238,13 @@ const caseStudy = defineType({
       options: { source: "title" },
       validation: requiredText("Add a slug."),
     }),
-    defineField({ name: "clientType", title: "Client type", type: "string" }),
+    defineField({
+      name: "clientType",
+      title: "Client type",
+      type: "string",
+      description:
+        "Use a public-safe label unless David has approval to name the client.",
+    }),
     defineField({ name: "sector", title: "Sector", type: "string" }),
     defineField({ name: "roleHired", title: "Role hired", type: "string" }),
     defineField({
@@ -1322,6 +1345,7 @@ const salarySnapshot = defineType({
     stringListField(
       "candidateAvailabilityNotes",
       "Candidate availability notes",
+      "Market-level notes only. Do not include named candidates or private candidate details.",
     ),
     stringListField("keyTakeaways", "Key takeaways"),
     defineField({ name: "ctaHeading", title: "CTA heading", type: "string" }),
@@ -1345,7 +1369,13 @@ const testimonial = defineType({
       rows: 4,
       validation: requiredText("Add the quote."),
     }),
-    defineField({ name: "name", title: "Name", type: "string" }),
+    defineField({
+      name: "name",
+      title: "Name",
+      type: "string",
+      description:
+        "Only add a named person with permission. Otherwise keep the testimonial anonymous or generic.",
+    }),
     defineField({ name: "jobTitle", title: "Job title", type: "string" }),
     defineField({ name: "company", title: "Company", type: "string" }),
     defineField({ name: "companyType", title: "Company type", type: "string" }),
@@ -1414,7 +1444,13 @@ const person = defineType({
     defineField({ name: "bio", title: "Bio", type: "text", rows: 5 }),
     imageWithAltField("headshot", "Headshot"),
     defineField({ name: "linkedInUrl", title: "LinkedIn URL", type: "url" }),
-    defineField({ name: "email", title: "Email", type: "string" }),
+    defineField({
+      name: "email",
+      title: "Public profile email",
+      type: "string",
+      description:
+        "Public team/profile email only. Do not store candidate or private client email addresses here.",
+    }),
     stringListField("schemaKnowsAbout", "Topics this person knows about"),
   ],
 });
@@ -1499,7 +1535,14 @@ const redirect = defineType({
       },
       initialValue: "301",
     }),
-    defineField({ name: "notes", title: "Notes", type: "text", rows: 3 }),
+    defineField({
+      name: "notes",
+      title: "Notes",
+      type: "text",
+      rows: 3,
+      description:
+        "Technical/public redirect note only. Do not add candidate names, client contacts, CV details or private lead history.",
+    }),
   ],
   preview: {
     select: { title: "sourcePath", subtitle: "destinationPath" },

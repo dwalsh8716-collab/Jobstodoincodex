@@ -1,5 +1,31 @@
 # Sanity Editor Guide
 
+## Public Content Only
+
+Sanity is for public website content.
+
+Do not store private candidate/client data, CVs, application records or internal
+notes in Sanity.
+
+Keep these out of Sanity:
+
+- candidate names submitted through forms
+- candidate email addresses or phone numbers
+- CV files or CV URLs
+- cover letters or private application messages
+- private client contacts
+- internal recruitment notes
+- DSAR requests
+- audit logs
+
+Use Railway/Postgres for private operational data once it is configured.
+
+Full boundary guide:
+
+```txt
+docs/data-boundaries.md
+```
+
 ## WhatsApp Contact Settings
 
 WhatsApp is managed from Site Settings when Sanity is connected.

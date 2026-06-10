@@ -19,6 +19,19 @@ Use Railway Postgres only for private operational data:
 - consent records
 - audit logs
 
+Hard boundary:
+
+```txt
+Sanity is for public website content. Do not store private candidate/client data,
+CVs, application records or internal notes in Sanity.
+```
+
+Full boundary guide:
+
+```txt
+docs/data-boundaries.md
+```
+
 ## Current Build Contract
 
 Build command:
