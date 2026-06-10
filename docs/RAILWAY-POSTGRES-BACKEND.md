@@ -212,6 +212,7 @@ Files:
 - `scripts/db-migrate.mjs`
 - `scripts/db-status.mjs`
 - `docs/railway-deployment.md`
+- `docs/launch-handover.md`
 
 Railway is expected to run:
 

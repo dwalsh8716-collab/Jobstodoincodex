@@ -1,23 +1,38 @@
-"use client";
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { CMS_SESSION_COOKIE, isCmsSessionValid } from "@/lib/cms-auth";
+import { StudioClient } from "./StudioClient";
 
-import dynamic from "next/dynamic";
-import config from "../../../sanity.config";
+type Props = {
+  params?: Promise<{
+    tool?: string[];
+  }>;
+};
 
-const NextStudio = dynamic(
-  () => import("next-sanity/studio").then((mod) => mod.NextStudio),
-  {
-    ssr: false,
-    loading: () => (
-      <section className="section">
-        <div className="container empty-state">
-          <h1>Loading CMS Studio.</h1>
-          <p className="lede">The editor is opening now.</p>
-        </div>
-      </section>
-    ),
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
   },
-);
+};
 
-export default function StudioPage() {
-  return <NextStudio config={config} />;
+function studioPath(tool?: string[]) {
+  return `/studio${tool?.length ? `/${tool.join("/")}` : ""}`;
+}
+
+export default async function StudioPage({ params }: Props) {
+  const cookieStore = await cookies();
+  const isValid = await isCmsSessionValid(
+    cookieStore.get(CMS_SESSION_COOKIE)?.value,
+  );
+
+  if (!isValid) {
+    const resolvedParams = await params;
+    redirect(
+      `/cms?next=${encodeURIComponent(studioPath(resolvedParams?.tool))}`,
+    );
+  }
+
+  return <StudioClient />;
 }

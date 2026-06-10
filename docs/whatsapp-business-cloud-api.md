@@ -123,7 +123,7 @@ David must do this before live Cloud API use:
 6. Add the webhook verify token.
 7. Add the app secret.
 8. Create and approve message templates.
-9. Add env vars in Railway/Vercel.
+9. Add env vars in Railway.
 10. Test with a real opted-in mobile number.
 
 ## Privacy Notes

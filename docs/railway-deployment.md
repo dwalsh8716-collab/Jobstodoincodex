@@ -4,6 +4,12 @@
 
 Railway can host the Next.js app and provide Railway Postgres for the private operations database.
 
+Recommended Railway project name:
+
+```txt
+Essential Resourcing
+```
+
 Sanity remains the public website CMS.
 
 Use Railway Postgres only for private operational data:
@@ -72,33 +78,42 @@ npm run retention:check
 
 The Railway image is configured through `nixpacks.toml` to include the PostgreSQL client used by the migration/status scripts.
 
+Full launch handover:
+
+```txt
+docs/launch-handover.md
+```
+
 ## Dashboard Setup
 
 1. Go to Railway.
 2. Create a new project.
-3. Choose deploy from GitHub.
-4. Select `dwalsh8716-collab/Jobstodoincodex`.
-5. Add a PostgreSQL service.
-6. Open the app service variables.
-7. Add `DATABASE_URL` from the PostgreSQL service.
-8. Add the required Sanity variables.
-9. Add the required form/email variables.
-10. Add the CMS gate variables.
-11. Leave `OPERATIONS_DB_ENABLED=false` until migrations pass.
-12. Deploy the app.
-13. Run `npm run db:status`.
-14. Run `npm run db:migrate`.
-15. Run `npm run retention:check`.
-16. Set `OPERATIONS_DB_ENABLED=true`.
-17. Keep `RETENTION_ENGINE_ENABLED=false` until legal/privacy and backup review is complete.
-18. Redeploy.
-19. Visit `/api/health`.
-20. Log in at `/cms`.
-21. Open `/admin`.
-22. Submit a test contact form.
-23. Confirm the enquiry appears in `/admin`.
-24. Confirm retention review fields appear for due records.
-25. Add a custom domain after QA, not before.
+3. Name it `Essential Resourcing`.
+4. Choose deploy from GitHub.
+5. Select `dwalsh8716-collab/Jobstodoincodex`.
+6. Confirm the Railway-generated domain works before adding custom domains.
+7. Add a PostgreSQL service if private operations are going live.
+8. Open the app service variables.
+9. Add `DATABASE_URL` from the PostgreSQL service if Postgres is enabled.
+10. Add the required Sanity variables.
+11. Add the required form/email variables.
+12. Add the CMS gate variables.
+13. Leave `OPERATIONS_DB_ENABLED=false` until migrations pass.
+14. Deploy the app.
+15. Run `npm run db:status`.
+16. Run `npm run db:migrate` if Postgres is enabled.
+17. Run `npm run retention:check`.
+18. Set `OPERATIONS_DB_ENABLED=true` only after migrations pass.
+19. Keep `RETENTION_ENGINE_ENABLED=false` until legal/privacy and backup review is complete.
+20. Redeploy.
+21. Visit `/api/health`.
+22. Log in at `/cms`.
+23. Open `/studio` after the CMS gate.
+24. Open `/admin`.
+25. Submit a test contact form.
+26. Confirm the enquiry appears in `/admin` if Postgres is enabled.
+27. Confirm retention review fields appear for due records.
+28. Add a custom domain after QA, not before.
 
 ## Required Variables
 
@@ -123,11 +138,15 @@ RETENTION_CLIENT_ENQUIRY_MONTHS
 RETENTION_CV_FILE_MONTHS
 RETENTION_DSAR_RECORD_MONTHS
 RETENTION_AUDIT_LOG_MONTHS
+CRON_SECRET
 ```
 
 Sanity:
 
 ```txt
+NEXT_PUBLIC_SANITY_PROJECT_ID
+NEXT_PUBLIC_SANITY_DATASET
+NEXT_PUBLIC_SANITY_API_VERSION
 SANITY_PROJECT_ID
 SANITY_DATASET
 SANITY_API_VERSION
@@ -186,6 +205,12 @@ railway up
 ```
 
 Do not paste secrets into GitHub, Slack, browser notes or commit history.
+
+Current local audit note:
+
+```txt
+Railway CLI was not installed in the local workspace during the deployment audit.
+```
 
 ## Migrations
 
@@ -270,3 +295,21 @@ Before live private operations, define:
 - monthly review checklist
 
 This is a technical setup guide, not legal advice.
+
+## Custom Domain And 123 Reg
+
+Do not change 123 Reg DNS until the Railway-generated domain works.
+
+Custom domain/DNS guide:
+
+```txt
+docs/123-reg-domain-switch.md
+```
+
+Recommended canonical domain:
+
+```txt
+https://essentialresourcing.co.uk
+```
+
+Railway must generate the exact DNS records. Do not guess them.

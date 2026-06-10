@@ -9,7 +9,7 @@ Premium Next.js + Sanity-ready website for Essential Resourcing.
 - React 19
 - Clean CSS design system with central tokens
 - Sanity 5 Studio schemas and `/studio` route
-- Vercel-ready deployment
+- Railway-ready deployment
 - JSON-LD schema, dynamic sitemap, robots, RSS, `llms.txt` and `llms-full.txt`
 - API-backed contact forms with optional Resend email delivery
 - Project-level Codex guidance in `AGENTS.md`
@@ -50,6 +50,9 @@ Required before production:
 
 Required for Sanity:
 
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `NEXT_PUBLIC_SANITY_API_VERSION`
 - `SANITY_PROJECT_ID`
 - `SANITY_DATASET`
 - `SANITY_API_VERSION`
@@ -82,6 +85,7 @@ Optional private operations database:
 - `RETENTION_CV_FILE_MONTHS`
 - `RETENTION_DSAR_RECORD_MONTHS`
 - `RETENTION_AUDIT_LOG_MONTHS`
+- `CRON_SECRET`
 
 ## Design Adaptability
 
@@ -139,7 +143,10 @@ docs/POST-LAUNCH-GROWTH-ROADMAP.md
 docs/launch-google-seo-local-setup.md
 docs/consent-mode-v2-setup.md
 docs/sanity-editor-guide.md
+docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
+docs/launch-handover.md
+docs/123-reg-domain-switch.md
 docs/railway-deployment.md
 docs/RAILWAY-POSTGRES-BACKEND.md
 docs/data-boundaries.md
@@ -238,20 +245,23 @@ Important: the front-end `/cms` gate is a branded site login. Sanity still needs
 
 ## Deployment
 
-Recommended deployment target: Vercel.
+Recommended deployment target: Railway.
 
 1. Push the project to GitHub.
-2. Import the project in Vercel.
+2. Create or link the `Essential Resourcing` project in Railway.
 3. Add environment variables.
 4. Connect Sanity project and dataset.
-5. Configure DNS for `essentialresourcing.co.uk`.
-6. Run a final production URL QA pass.
+5. Test the Railway-generated URL.
+6. Configure DNS for `essentialresourcing.co.uk` after Railway works.
+7. Run a final production URL QA pass.
 
-Codex Sites note: if the Sites plugin is available in the workspace, this project can be reviewed as a saved candidate before any production deployment. Keep public deployment off until manual content, legal review and credentials are complete.
+Keep public deployment off until manual content, legal review and credentials are complete.
 
 Railway/Postgres notes for the private operations backend:
 
 ```txt
+docs/launch-handover.md
+docs/123-reg-domain-switch.md
 docs/railway-deployment.md
 docs/RAILWAY-POSTGRES-BACKEND.md
 ```

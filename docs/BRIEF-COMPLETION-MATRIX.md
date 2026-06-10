@@ -49,7 +49,7 @@ Status: Implemented.
 - React 19.
 - Sanity 5 Studio config and `/studio` route.
 - Sanity schemas for requested content types.
-- Vercel-ready environment setup.
+- Railway-ready environment setup.
 
 ## 26-28: Design System, Accessibility, Performance
 

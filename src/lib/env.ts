@@ -41,6 +41,18 @@ const publicEnvSchema = z.object({
   ),
   NEXT_PUBLIC_CLARITY_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   NEXT_PUBLIC_HOTJAR_ID: z.preprocess(emptyToUndefined, z.string().optional()),
+  NEXT_PUBLIC_SANITY_PROJECT_ID: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_SANITY_DATASET: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_SANITY_API_VERSION: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
 });
 
 const serverEnvSchema = publicEnvSchema.extend({

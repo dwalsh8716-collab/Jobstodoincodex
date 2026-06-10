@@ -27,7 +27,9 @@ Treat it as preview-ready now, not fully public-live until the items below are c
 - Replace draft case-study proof with approved outcomes.
 - Add only testimonials and logos with permission.
 - Add the final David Walsh portrait.
-- Deploy to Vercel and connect `essentialresourcing.co.uk`.
+- Deploy to Railway and test the Railway-generated URL first.
+- Follow `docs/launch-handover.md` before treating the site as live.
+- Follow `docs/123-reg-domain-switch.md` before changing 123 Reg DNS.
 - Run final QA on the live domain.
 - Keep `docs/FINAL-PRODUCTION-READINESS-AUDIT.md` with the launch record.
 

@@ -24,7 +24,111 @@ Full boundary guide:
 
 ```txt
 docs/data-boundaries.md
+docs/sanity-cms-access.md
 ```
+
+## How To Get In
+
+Live site route:
+
+```txt
+/cms
+```
+
+Studio route after login:
+
+```txt
+/studio
+```
+
+The site-level CMS gate protects the branded entry point and the embedded
+Studio route. Sanity then handles the actual editor account permissions.
+
+If the CMS gate says setup is missing, add these in Railway:
+
+```txt
+CMS_GATE_USERNAME
+CMS_GATE_PASSWORD
+CMS_GATE_SECRET
+```
+
+Do not put passwords or Sanity tokens into GitHub issues or AI prompts.
+
+## Main Editing Areas
+
+Main Site:
+
+- Homepage.
+- Site Settings.
+- Navigation.
+- Pages.
+- Redirects.
+
+Commercial:
+
+- Services.
+- Case Studies.
+- Testimonials.
+- FAQs.
+- CTA Blocks.
+- Logo / Proof Items.
+
+Content:
+
+- Insights.
+- Salary Snapshots.
+
+Recruitment:
+
+- Jobs.
+
+People:
+
+- David Walsh / Team.
+
+## Common Jobs
+
+Edit the homepage:
+
+1. Open Main Site.
+2. Open Homepage.
+3. Update copy, sections, media and CTAs.
+4. Publish only when the page is ready.
+
+Edit a service page:
+
+1. Open Commercial.
+2. Open Services.
+3. Choose the service.
+4. Keep copy plain, specific and commercially useful.
+
+Add a job:
+
+1. Open Recruitment.
+2. Open Jobs.
+3. Add title, slug, salary, location, hybrid status and role details.
+4. Keep status as draft until the role is genuinely live.
+
+Publish an insight:
+
+1. Open Content.
+2. Open Insights.
+3. Add title, slug, excerpt, author, dates, body and FAQs.
+4. Publish only when the advice is sharp and checked.
+
+Update navigation or footer:
+
+1. Open Main Site.
+2. Use Navigation for menu links.
+3. Use Site Settings for footer copy, contact details and social links.
+
+Invite another editor:
+
+1. Go to `https://www.sanity.io/manage`.
+2. Open the Essential Resourcing project.
+3. Open Members.
+4. Invite the person with Editor/Contributor access unless they genuinely need
+   admin rights.
 
 ## WhatsApp Contact Settings
 

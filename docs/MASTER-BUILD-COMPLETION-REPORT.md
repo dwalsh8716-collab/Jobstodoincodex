@@ -50,7 +50,7 @@ Current stack is suitable:
 - Tailwind CSS import with a central CSS token system.
 - Sanity 5 CMS.
 - Vitest and Playwright.
-- Vercel-ready deployment.
+- Railway-ready deployment.
 
 This is the right shape for a founder-led content, SEO and CMS site. No rebuild is needed.
 
@@ -284,16 +284,17 @@ The CMS gate requires `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SEC
 
 ## 21. How To Deploy
 
-Recommended deployment target: Vercel.
+Recommended deployment target: Railway.
 
 1. Push to GitHub.
-2. Import repo into Vercel.
+2. Create or link the `Essential Resourcing` project in Railway.
 3. Set environment variables.
 4. Configure Sanity project and tokens.
 5. Configure form delivery.
-6. Set production domain.
-7. Run final production URL QA.
-8. Complete Google Search Console, GA4/GTM and local SEO setup.
+6. Test the Railway-generated domain.
+7. Set production domain after Railway works.
+8. Run final production URL QA.
+9. Complete Google Search Console, GA4/GTM and local SEO setup.
 
 ## 22. Environment Variables Needed
 

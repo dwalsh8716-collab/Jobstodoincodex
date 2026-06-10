@@ -4,9 +4,18 @@ import { createClient } from "next-sanity";
 // Do not use this client to write private enquiries, candidate records,
 // CV details, DSAR requests, audit logs or internal recruitment notes.
 export const sanityConfig = {
-  projectId: process.env.SANITY_PROJECT_ID || "essentialresourcing",
-  dataset: process.env.SANITY_DATASET || "production",
-  apiVersion: process.env.SANITY_API_VERSION || "2026-06-09",
+  projectId:
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    process.env.SANITY_PROJECT_ID ||
+    "essentialresourcing",
+  dataset:
+    process.env.NEXT_PUBLIC_SANITY_DATASET ||
+    process.env.SANITY_DATASET ||
+    "production",
+  apiVersion:
+    process.env.NEXT_PUBLIC_SANITY_API_VERSION ||
+    process.env.SANITY_API_VERSION ||
+    "2026-06-09",
   useCdn: process.env.NODE_ENV === "production",
 };
 
@@ -16,5 +25,7 @@ export const sanityClient = createClient({
 });
 
 export const sanityReady = Boolean(
-  process.env.SANITY_PROJECT_ID && process.env.SANITY_DATASET,
+  (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    process.env.SANITY_PROJECT_ID) &&
+  (process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_DATASET),
 );

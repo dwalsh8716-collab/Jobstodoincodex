@@ -5,7 +5,7 @@
 - Provider: Sanity CMS.
 - Studio: embedded Next.js Studio at `/studio`, with a private `/cms` login gate before the editor route.
 - Schema location: `sanity/schemas/index.ts`.
-- Studio structure: `sanity/structure.ts`.
+- Studio structure: `sanity/studioStructure.ts`.
 - Frontend client: `src/lib/sanity.ts`.
 - Central GROQ queries: `src/lib/sanity-queries.ts`.
 - Safe CMS fetch helper: `src/lib/sanity-content.ts`.
@@ -66,3 +66,12 @@ The public site must not depend on Sanity being available. `sanityFetchWithFallb
 ## Preview
 
 Preview mode is available through `/api/preview?secret=...&path=/target-path` and can be disabled through `/api/preview/disable?path=/target-path`. Set `SANITY_PREVIEW_SECRET` before enabling this in production.
+
+## Access Handover
+
+CMS access and Railway launch handover are documented here:
+
+```txt
+docs/sanity-cms-access.md
+docs/launch-handover.md
+```
