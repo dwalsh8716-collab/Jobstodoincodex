@@ -48,7 +48,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const palette = process.env.NEXT_PUBLIC_THEME_PALETTE || "graphite";
 
   return (
-    <html lang="en-GB" data-palette={palette} className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html
+      lang="en-GB"
+      data-palette={palette}
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${spaceGrotesk.variable}`}
+    >
       <body>
         <a className="skip-link" href="#main">
           Skip to content
