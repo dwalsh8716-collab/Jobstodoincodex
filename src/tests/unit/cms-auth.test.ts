@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { cmsGateConfigured, createCmsSession, getCmsUsername } from "@/lib/cms-auth";
+import {
+  cmsGateConfigured,
+  createCmsSession,
+  getCmsSessionUsername,
+  getCmsUsername,
+} from "@/lib/cms-auth";
 
 const originalEnv = { ...process.env };
 
@@ -34,5 +39,15 @@ describe("cms gate configuration", () => {
     const session = await createCmsSession("david");
 
     expect(session.endsWith(".")).toBe(true);
+  });
+
+  it("returns the signed CMS username from a valid session", async () => {
+    process.env.CMS_GATE_USERNAME = "david";
+    process.env.CMS_GATE_PASSWORD = "password";
+    process.env.CMS_GATE_SECRET = "long-random-session-secret";
+
+    const session = await createCmsSession("david");
+
+    await expect(getCmsSessionUsername(session)).resolves.toBe("david");
   });
 });

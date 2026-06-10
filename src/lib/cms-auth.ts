@@ -54,17 +54,25 @@ export async function createCmsSession(username: string) {
 }
 
 export async function isCmsSessionValid(cookieValue?: string) {
-  if (!cmsGateConfigured() || !cookieValue) return false;
+  return Boolean(await getCmsSessionUsername(cookieValue));
+}
+
+export async function getCmsSessionUsername(cookieValue?: string) {
+  if (!cmsGateConfigured() || !cookieValue) return undefined;
 
   const parts = cookieValue.split(".");
-  if (parts.length !== 3) return false;
+  if (parts.length !== 3) return undefined;
 
   const [username, expires, signature] = parts;
   const expiresAt = Number(expires);
-  if (!username || !Number.isFinite(expiresAt) || expiresAt < Date.now()) return false;
+  if (!username || !Number.isFinite(expiresAt) || expiresAt < Date.now()) {
+    return undefined;
+  }
 
   const expected = await sign(`${username}.${expires}`);
-  return Boolean(expected) && timingSafeEqual(signature, expected);
+  if (!expected || !timingSafeEqual(signature, expected)) return undefined;
+
+  return decodeURIComponent(username);
 }
 
 export function getCmsSessionMaxAge() {

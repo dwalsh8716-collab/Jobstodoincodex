@@ -109,7 +109,7 @@ When Postgres is enabled, each request creates:
 
 - a `data_subject_requests` row
 - an `activities` row
-- an `audit_logs` row with a hashed requester identifier
+- an `audit_logs` row using the `dsar_request_created` action and a hashed requester identifier
 
 ## Admin Workflow
 
@@ -176,6 +176,12 @@ Future stage:
 - short-lived signed download
 - access logging
 - expiry and cleanup
+
+When those steps are built, they should use the central audit utility described in:
+
+```txt
+docs/audit-logging.md
+```
 
 ## Deletion And Anonymisation Workflow
 

@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   CMS_SESSION_COOKIE,
+  getCmsSessionUsername,
   isCmsSessionValid,
 } from "@/lib/cms-auth";
 import {
@@ -11,6 +12,7 @@ import {
   dataSubjectRequestTypeOptions,
   dataSubjectVerificationLabels,
 } from "@/lib/dsar";
+import { logAuditEvent } from "@/lib/operations/audit";
 import { getOperationsOverview } from "@/lib/operations/store";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -65,11 +67,26 @@ function formatDueDate(value?: string) {
 
 export default async function AdminPage() {
   const cookieStore = await cookies();
-  const loggedIn = await isCmsSessionValid(
-    cookieStore.get(CMS_SESSION_COOKIE)?.value,
-  );
+  const sessionCookie = cookieStore.get(CMS_SESSION_COOKIE)?.value;
+  const loggedIn = await isCmsSessionValid(sessionCookie);
 
   if (!loggedIn) redirect("/cms?next=/admin");
+
+  const username = await getCmsSessionUsername(sessionCookie);
+  await logAuditEvent({
+    actor: username
+      ? {
+          email: username,
+          role: "cms_admin",
+        }
+      : undefined,
+    action: "operations_dashboard_viewed",
+    entityType: "admin_dashboard",
+    entityLabel: "Private admin dashboard",
+    metadata: {
+      surface: "admin_overview",
+    },
+  });
 
   const overview = await getOperationsOverview();
   const statCards = [
@@ -99,9 +116,14 @@ export default async function AdminPage() {
             <h2>{overview.status.enabled ? "Operations database" : "Database staged"}</h2>
             <p>{overview.status.message}</p>
           </div>
-          <Link className="button button-secondary" href="/cms">
-            CMS gate
-          </Link>
+          <div className={styles.adminStatusActions}>
+            <Link className="button button-secondary" href="/cms">
+              CMS gate
+            </Link>
+            <Link className="button button-secondary" href="/admin/audit">
+              Audit log
+            </Link>
+          </div>
         </div>
 
         <div className={styles.adminGrid} aria-label="Operations overview">

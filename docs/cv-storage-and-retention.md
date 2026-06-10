@@ -97,6 +97,7 @@ Workflow notes:
 
 ```txt
 docs/dsar-framework.md
+docs/audit-logging.md
 ```
 
 Do not release a CV, CV metadata or private candidate notes from a DSAR request

@@ -56,6 +56,7 @@ Added:
 - Protected `/admin` operations dashboard.
 - Contact form hook that can save enquiries to Postgres once Railway is configured.
 - Candidate data/privacy request hook that can save DSAR requests to Postgres once Railway is configured.
+- Central audit logging utility and protected read-only audit view.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -148,7 +149,17 @@ Current dashboard:
 - open data/privacy request count
 - latest enquiries table
 - latest data/privacy requests table
+- link to read-only audit log view
 - setup checklist
+
+Audit route:
+
+```txt
+/admin/audit
+```
+
+The audit route is protected by the same CMS gate, noindexed and read-only in
+the application.
 
 This is a focused operations dashboard, not a bloated CRM.
 
@@ -212,6 +223,7 @@ Implemented:
 - audit logs in schema
 - retention/delete/export fields in schema
 - DSAR request table and protected dashboard summary
+- enriched append-only audit logs with actor, action, entity, metadata and hashed request context
 - server-side form validation remains in place
 - form spam/timing/honeypot controls remain in place
 
@@ -251,6 +263,7 @@ Candidate trust follow-up:
 ```txt
 docs/candidate-data-journey.md
 docs/cv-storage-and-retention.md
+docs/audit-logging.md
 ```
 
 WhatsApp Business follow-up:
