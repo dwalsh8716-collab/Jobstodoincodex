@@ -1,7 +1,12 @@
 import { InsightCard } from "@/components/Cards";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
-import { insightCategories, insightSeeds, insights } from "@/lib/content";
+import {
+  aiSearchQuestions,
+  insightCategories,
+  insightSeeds,
+  insights,
+} from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
@@ -106,6 +111,24 @@ export default function InsightsPage() {
               David&apos;s name.
             </p>
           </article>
+        </div>
+      </section>
+      <section className="section">
+        <div className="container section-heading">
+          <p className="eyebrow">Quick answers</p>
+          <h2>Clear answers to the hiring questions people actually ask.</h2>
+          <p className="lede">
+            Useful search visibility starts with first-party answers, not
+            keyword padding.
+          </p>
+        </div>
+        <div className="container grid grid-3">
+          {aiSearchQuestions.map((item) => (
+            <article className="card" key={item.question}>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </article>
+          ))}
         </div>
       </section>
       <CTASection title="Want a market view before you hire?" />

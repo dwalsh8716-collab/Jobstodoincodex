@@ -7,14 +7,15 @@ export const siteConfig = {
   linkedIn: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact",
   region: "Manchester, North West and UK-wide",
-  defaultTitle: "Essential Resourcing | Marketing & Comms Recruitment",
+  defaultTitle:
+    "Essential Resourcing | Senior Marketing & Comms Recruitment Manchester",
   defaultDescription:
     "Straight-talking search and recruitment for senior marketing, communications, digital and agency leadership roles across Manchester, the North West and beyond.",
   ogImage: "/assets/og-image.png",
   logoDark: "/assets/logo-dark.svg",
   logoLight: "/assets/logo-light.svg",
   iconDark: "/assets/icon-dark.svg",
-  iconLight: "/assets/icon-light.svg"
+  iconLight: "/assets/icon-light.svg",
 } as const;
 
 export const primaryNavigation = [
@@ -24,14 +25,17 @@ export const primaryNavigation = [
   { label: "Jobs", href: "/jobs" },
   { label: "Insights", href: "/insights" },
   { label: "About", href: "/about-essential" },
-  { label: "Contact", href: "/contact", cta: true }
+  { label: "Contact", href: "/contact", cta: true },
 ] as const;
 
 export const serviceNavigation = [
   { label: "Leadership Search", href: "/services/leadership-search" },
   { label: "Strategic Interim", href: "/services/strategic-interim" },
   { label: "Agency Recruitment", href: "/services/agency-recruitment" },
-  { label: "Client-side Marketing Recruitment", href: "/services/client-side-marketing-recruitment" }
+  {
+    label: "Client-side Marketing Recruitment",
+    href: "/services/client-side-marketing-recruitment",
+  },
 ] as const;
 
 export const launchPages = [
@@ -54,12 +58,12 @@ export const launchPages = [
   "/jobs",
   "/privacy-policy",
   "/cookie-policy",
-  "/terms"
+  "/terms",
 ] as const;
 
 export const designSystemNotes = {
   paletteFile: "src/styles/theme.css",
   paletteEnv: "NEXT_PUBLIC_THEME_PALETTE",
   mediaBlocks:
-    "VideoEmbed, MediaFeature and GalleryBlock are reusable frontend components and have matching Sanity block schema fields."
+    "VideoEmbed, MediaFeature and GalleryBlock are reusable frontend components and have matching Sanity block schema fields.",
 } as const;

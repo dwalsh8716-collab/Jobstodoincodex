@@ -1,36 +1,93 @@
 import type { MetadataRoute } from "next";
-import { caseStudies, insights, jobs, salarySnapshots, services } from "@/lib/content";
+import {
+  caseStudies,
+  insights,
+  isJobLive,
+  jobs,
+  salarySnapshots,
+  services,
+} from "@/lib/content";
 import { launchPages, siteConfig } from "@/lib/site";
+
+type SitemapEntry = MetadataRoute.Sitemap[number];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const seen = new Set<string>();
-  const unique = (paths: string[]) =>
-    paths.filter((path) => {
-      if (seen.has(path)) return false;
-      seen.add(path);
-      return true;
+  const entries = new Map<string, SitemapEntry>();
+
+  const addEntry = ({
+    path,
+    lastModified = now,
+    changeFrequency = "monthly",
+    priority = 0.65,
+  }: {
+    path: string;
+    lastModified?: Date;
+    changeFrequency?: SitemapEntry["changeFrequency"];
+    priority?: number;
+  }) => {
+    entries.set(path, {
+      url: `${siteConfig.url}${path}`,
+      lastModified,
+      changeFrequency,
+      priority,
+    });
+  };
+
+  launchPages.forEach((path) => {
+    addEntry({
+      path,
+      changeFrequency: path === "/" ? "weekly" : "monthly",
+      priority: path === "/" ? 1 : 0.75,
+    });
+  });
+
+  services.forEach((service) => {
+    addEntry({
+      path: `/services/${service.slug}`,
+      priority: 0.82,
+    });
+  });
+
+  insights
+    .filter((insight) => insight.status === "published")
+    .forEach((insight) => {
+      addEntry({
+        path: `/insights/${insight.slug}`,
+        lastModified: new Date(insight.updatedDate),
+        changeFrequency: "weekly",
+        priority: 0.72,
+      });
     });
 
-  const staticPages = unique([...launchPages]).map((path) => ({
-    url: `${siteConfig.url}${path}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: path === "/" ? 1 : 0.75
-  }));
+  caseStudies
+    .filter((caseStudy) => caseStudy.status === "published")
+    .forEach((caseStudy) => {
+      addEntry({
+        path: `/case-studies/${caseStudy.slug}`,
+        priority: 0.7,
+      });
+    });
 
-  const dynamicPages = unique([
-    ...services.map((item) => `/services/${item.slug}`),
-    ...insights.filter((item) => item.status === "published").map((item) => `/insights/${item.slug}`),
-    ...caseStudies.filter((item) => item.status === "published").map((item) => `/case-studies/${item.slug}`),
-    ...salarySnapshots.filter((item) => item.status === "published").map((item) => `/salary-snapshots/${item.slug}`),
-    ...jobs.filter((item) => item.status === "live").map((item) => `/jobs/${item.slug}`)
-  ]).map((path) => ({
-    url: `${siteConfig.url}${path}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.65
-  }));
+  salarySnapshots
+    .filter((snapshot) => snapshot.status === "published")
+    .forEach((snapshot) => {
+      addEntry({
+        path: `/salary-snapshots/${snapshot.slug}`,
+        priority: 0.68,
+      });
+    });
 
-  return [...staticPages, ...dynamicPages];
+  jobs
+    .filter((job) => isJobLive(job))
+    .forEach((job) => {
+      addEntry({
+        path: `/jobs/${job.slug}`,
+        lastModified: new Date(job.publishedDate),
+        changeFrequency: "daily",
+        priority: 0.7,
+      });
+    });
+
+  return Array.from(entries.values());
 }

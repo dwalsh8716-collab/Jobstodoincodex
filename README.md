@@ -105,6 +105,7 @@ Launch route audit and future-page roadmap:
 
 ```txt
 docs/LAUNCH-SITEMAP-ROUTES.md
+docs/TECHNICAL-SEO-GEO.md
 ```
 
 ## Rich Media And Video

@@ -1,11 +1,31 @@
-import { caseStudies, insights, jobs, salarySnapshots, services, specialisms } from "@/lib/content";
+import {
+  aiSearchQuestions,
+  caseStudies,
+  insights,
+  isJobLive,
+  jobs,
+  salarySnapshots,
+  services,
+  specialisms,
+} from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
-import { launchPages, primaryNavigation, serviceNavigation, siteConfig } from "@/lib/site";
+import {
+  launchPages,
+  primaryNavigation,
+  serviceNavigation,
+  siteConfig,
+} from "@/lib/site";
 
-const publicInsights = insights.filter((insight) => insight.status === "published");
-const publicCaseStudies = caseStudies.filter((caseStudy) => caseStudy.status === "published");
-const publicSalarySnapshots = salarySnapshots.filter((snapshot) => snapshot.status === "published");
-const liveJobs = jobs.filter((job) => job.status === "live");
+const publicInsights = insights.filter(
+  (insight) => insight.status === "published",
+);
+const publicCaseStudies = caseStudies.filter(
+  (caseStudy) => caseStudy.status === "published",
+);
+const publicSalarySnapshots = salarySnapshots.filter(
+  (snapshot) => snapshot.status === "published",
+);
+const liveJobs = jobs.filter((job) => isJobLive(job));
 
 function bullet(label: string, path: string, description: string) {
   return `- [${label}](${absoluteUrl(path)}): ${description}`;
@@ -23,46 +43,89 @@ export function buildLlmsTxt() {
     "",
     "Use this file as a concise map of the public website. For fuller article and service summaries, use /llms-full.txt.",
     "",
-    section(
-      "Core Pages",
-      [
-        bullet("Home", "/", siteConfig.defaultDescription),
-        bullet("For Clients", "/clients", "How Essential Resourcing handles serious client hiring briefs."),
-        bullet("For Candidates", "/candidates", "Candidate guidance for senior marketing, PR, digital and communications people."),
-        bullet("About Essential", "/about-essential", "Founder-led principles, positioning and working style."),
-        bullet("About David Walsh", "/about-david-walsh", "Founder biography and market judgement."),
-        bullet("Contact David", "/contact", "Client, candidate and job enquiry routes.")
-      ]
-    ),
+    section("Core Pages", [
+      bullet("Home", "/", siteConfig.defaultDescription),
+      bullet(
+        "For Clients",
+        "/clients",
+        "How Essential Resourcing handles serious client hiring briefs.",
+      ),
+      bullet(
+        "For Candidates",
+        "/candidates",
+        "Candidate guidance for senior marketing, PR, digital and communications people.",
+      ),
+      bullet(
+        "About Essential",
+        "/about-essential",
+        "Founder-led principles, positioning and working style.",
+      ),
+      bullet(
+        "About David Walsh",
+        "/about-david-walsh",
+        "Founder biography and market judgement.",
+      ),
+      bullet(
+        "Contact David",
+        "/contact",
+        "Client, candidate and job enquiry routes.",
+      ),
+    ]),
     section(
       "Services",
-      services.map((service) => bullet(service.title, `/services/${service.slug}`, service.shortDescription))
+      services.map((service) =>
+        bullet(
+          service.title,
+          `/services/${service.slug}`,
+          service.shortDescription,
+        ),
+      ),
     ),
     section(
       "Specialisms",
-      specialisms.map((item) => `- ${item.title}: ${item.description}`)
+      specialisms.map((item) => `- ${item.title}: ${item.description}`),
     ),
     section(
       "Published Insights",
-      publicInsights.map((insight) => bullet(insight.title, `/insights/${insight.slug}`, insight.excerpt))
+      publicInsights.map((insight) =>
+        bullet(insight.title, `/insights/${insight.slug}`, insight.excerpt),
+      ),
     ),
     section(
-      "Public Proof And Market Data",
-      [
-        bullet("Case Studies", "/case-studies", "Draft-safe proof area. Detail pages publish only when outcomes are verified."),
-        bullet("Salary & Market Snapshots", "/salary-snapshots", "Market snapshot hub. Detail pages publish only with validated salary data."),
-        bullet("Jobs", "/jobs", "Live jobs hub. JobPosting schema is emitted only for genuinely live roles.")
-      ]
+      "Common Hiring Questions",
+      aiSearchQuestions.map((item) => `- ${item.question} ${item.answer}`),
     ),
-    section(
-      "Technical Signals",
-      [
-        bullet("Sitemap", "/sitemap.xml", "Canonical crawl map for public, indexable routes."),
-        bullet("RSS", "/rss.xml", "Published insight feed."),
-        bullet("Robots", "/robots.txt", "Crawler access policy."),
-        bullet("Full AI Content Map", "/llms-full.txt", "Expanded service, insight, FAQ and publishing context.")
-      ]
-    )
+    section("Public Proof And Market Data", [
+      bullet(
+        "Case Studies",
+        "/case-studies",
+        "Draft-safe proof area. Detail pages publish only when outcomes are verified.",
+      ),
+      bullet(
+        "Salary & Market Snapshots",
+        "/salary-snapshots",
+        "Market snapshot hub. Detail pages publish only with validated salary data.",
+      ),
+      bullet(
+        "Jobs",
+        "/jobs",
+        "Live jobs hub. JobPosting schema is emitted only for genuinely live roles.",
+      ),
+    ]),
+    section("Technical Signals", [
+      bullet(
+        "Sitemap",
+        "/sitemap.xml",
+        "Canonical crawl map for public, indexable routes.",
+      ),
+      bullet("RSS", "/rss.xml", "Published insight feed."),
+      bullet("Robots", "/robots.txt", "Crawler access policy."),
+      bullet(
+        "Full AI Content Map",
+        "/llms-full.txt",
+        "Expanded service, insight, FAQ and publishing context.",
+      ),
+    ]),
   ].join("\n");
 }
 
@@ -84,7 +147,7 @@ export function buildLlmsFullTxt() {
     "",
     "FAQs:",
     ...service.faqs.map((faq) => `- ${faq.question} ${faq.answer}`),
-    ""
+    "",
   ]);
 
   const insightDetails = publicInsights.flatMap((insight) => [
@@ -100,18 +163,18 @@ export function buildLlmsFullTxt() {
       `### ${block.heading}`,
       "",
       ...block.content.map((paragraph) => `${paragraph}`),
-      ""
+      "",
     ]),
     insight.faqs.length ? "FAQs:" : "",
     ...insight.faqs.map((faq) => `- ${faq.question} ${faq.answer}`),
-    ""
+    "",
   ]);
 
   const publicProof = [
     `Published case studies: ${publicCaseStudies.length}`,
     `Published salary snapshots: ${publicSalarySnapshots.length}`,
     `Live jobs: ${liveJobs.length}`,
-    "Draft proof, salary and job records are deliberately excluded from this AI map until they are ready to publish."
+    "Draft proof, salary and job records are deliberately excluded from this AI map until they are ready to publish.",
   ];
 
   return [
@@ -126,11 +189,15 @@ export function buildLlmsFullTxt() {
     "",
     "## Navigation",
     "",
-    ...primaryNavigation.map((item) => bullet(item.label, item.href, "Primary website navigation item.")),
+    ...primaryNavigation.map((item) =>
+      bullet(item.label, item.href, "Primary website navigation item."),
+    ),
     "",
     "## Service Navigation",
     "",
-    ...serviceNavigation.map((item) => bullet(item.label, item.href, "Service landing page.")),
+    ...serviceNavigation.map((item) =>
+      bullet(item.label, item.href, "Service landing page."),
+    ),
     "",
     "## Public Launch Pages",
     "",
@@ -138,11 +205,15 @@ export function buildLlmsFullTxt() {
     "",
     ...serviceDetails,
     ...insightDetails,
+    "## Common Hiring Questions",
+    "",
+    ...aiSearchQuestions.map((item) => `- ${item.question} ${item.answer}`),
+    "",
     section("Publishing Controls", publicProof),
     "## Usage Notes",
     "",
     "- Use page content and JSON-LD as the primary source of truth.",
     "- Use this file as a supplemental AI-readable map, not a replacement for crawling canonical pages.",
-    "- Case study outcomes, salary data and jobs must remain unpublished until verified."
+    "- Case study outcomes, salary data and jobs must remain unpublished until verified.",
   ].join("\n");
 }

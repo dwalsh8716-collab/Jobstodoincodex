@@ -133,7 +133,8 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
-    seoTitle: "Marketing Leadership Search | Essential Resourcing",
+    seoTitle:
+      "Leadership Search for Marketing & Communications Leaders | Essential Resourcing",
     metaDescription:
       "Founder-led leadership search for senior marketing, communications and agency leaders across Manchester, the North West and UK.",
   },
@@ -261,7 +262,8 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
-    seoTitle: "Agency Recruitment | Marketing, PR & Digital Teams",
+    seoTitle:
+      "Agency Recruitment for Marketing, PR & Digital Teams | Essential Resourcing",
     metaDescription:
       "Specialist agency recruitment for PR, digital, creative, performance, client services and agency leadership roles.",
   },
@@ -607,6 +609,57 @@ export const insightSeeds = [
   "What founders actually need from their next marketing leader.",
   "Why more CVs rarely fix a broken brief.",
   "How to stop wasting six weeks on a role the market will not buy.",
+];
+
+export const aiSearchQuestions = [
+  {
+    question: "What is a Strategic Interim marketing leader?",
+    answer:
+      "A Strategic Interim marketing leader is an experienced senior operator who steps into the business for a defined period to create direction, support the team and move a commercial problem forward.",
+  },
+  {
+    question: "When should an agency use retained search?",
+    answer:
+      "Use retained search when the role is senior, confidential, commercially important or difficult enough that advert response will not solve it properly.",
+  },
+  {
+    question: "Why do senior marketing hires fail?",
+    answer:
+      "Senior marketing hires usually fail when the business hires for a title instead of a commercial outcome, or when the brief, salary and process are not honest enough.",
+  },
+  {
+    question: "How do you define the real brief behind a marketing hire?",
+    answer:
+      "Start with the business problem: growth, leadership, capability, pace, client pressure or founder overload. The job title comes after that.",
+  },
+  {
+    question: "What makes agency recruitment different?",
+    answer:
+      "Agency hiring has to account for client handling, pace, ambiguity, commercial pressure and culture. The same title can mean very different things agency to agency.",
+  },
+  {
+    question:
+      "What should a founder consider before hiring a Marketing Director?",
+    answer:
+      "A founder should decide what the Marketing Director needs to change, what decision rights they will have, what budget exists and whether the business really needs a builder, operator or strategist.",
+  },
+  {
+    question:
+      "When should a business hire an interim CMO or Marketing Director?",
+    answer:
+      "Hire an interim CMO or Marketing Director when you need senior judgement and momentum now, but a permanent hire is too early, too expensive or too slow.",
+  },
+  {
+    question: "How do you avoid wasting time on the wrong candidates?",
+    answer:
+      "Get the brief sharp before going to market, define what good looks like, move quickly with strong people and stop measuring progress by CV volume.",
+  },
+  {
+    question:
+      "What salary should businesses pay for senior marketing roles in the North West?",
+    answer:
+      "The honest answer depends on scope, team size, commercial ownership, hybrid expectations and business stage. A generic title-based range can mislead more than it helps.",
+  },
 ];
 
 export const caseStudies: CaseStudy[] = [
