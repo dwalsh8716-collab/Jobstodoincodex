@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { isJobLive, jobs } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -53,6 +54,12 @@ export default function CandidatesPage() {
             <Link className="button button-secondary" href="#candidate-contact">
               Send a note
             </Link>
+            <WhatsAppButton
+              intent="candidates"
+              label="Message David on WhatsApp"
+              location="candidate_hero"
+              variant="secondary"
+            />
           </div>
         </div>
       </section>
@@ -99,6 +106,12 @@ export default function CandidatesPage() {
               Add a note and LinkedIn URL. If a CV is useful, David will ask for
               it directly and handle it properly.
             </p>
+            <WhatsAppButton
+              intent="candidates"
+              label="Quick WhatsApp to David"
+              location="candidate_contact"
+              variant="secondary"
+            />
           </div>
           <ContactForm type="candidate" />
         </div>

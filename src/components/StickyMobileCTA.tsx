@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 
 export function StickyMobileCTA() {
@@ -13,8 +14,14 @@ export function StickyMobileCTA() {
 
   return (
     <div className="mobile-sticky-cta" aria-label="Quick contact">
+      <WhatsAppButton
+        intent="general"
+        label="WhatsApp David"
+        location="mobile sticky cta"
+        variant="primary"
+      />
       <Link
-        className="button button-primary"
+        className="button button-secondary"
         href="/contact"
         {...analyticsAttributes("cta_click", {
           label: "Talk to David",

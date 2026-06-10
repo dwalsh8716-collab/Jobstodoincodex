@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { RichMediaBlock } from "@/components/RichMedia";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
 import { caseStudies, homepageFeatureVideo, insights, proofPoints, richMediaExamples, services, specialisms, whyEssential } from "@/lib/content";
@@ -63,6 +64,12 @@ export default function HomePage() {
               >
                 I&apos;m looking for work
               </Link>
+              <WhatsAppButton
+                intent="hiring"
+                label="Message David on WhatsApp"
+                location="homepage_hero"
+                variant="secondary"
+              />
               <Link className="text-link" href="/services/strategic-interim">
                 Explore Strategic Interim
               </Link>
@@ -165,6 +172,12 @@ export default function HomePage() {
               <Link className="text-link" href="/services/strategic-interim">
                 Explore Strategic Interim
               </Link>
+              <WhatsAppButton
+                intent="hiring"
+                label="Fastest route? WhatsApp David"
+                location="founder video"
+                variant="text"
+              />
             </div>
           </div>
           <RichMediaBlock media={homepageFeatureVideo} />
@@ -341,6 +354,13 @@ export default function HomePage() {
               <Link className="button button-primary" href="/services/strategic-interim">
                 Explore Strategic Interim
               </Link>
+              <WhatsAppButton
+                intent="strategicInterim"
+                label="Need interim help quickly? WhatsApp David"
+                location="homepage_strategic_interim"
+                service="Strategic Interim"
+                variant="secondary"
+              />
             </div>
           </div>
           <RichMediaBlock media={richMediaExamples[0]} />
@@ -367,6 +387,8 @@ export default function HomePage() {
         title="Need good marketing, PR or digital people?"
         text="Give me a shout before it becomes a hiring headache."
         ctaLabel="Talk to David"
+        whatsAppIntent="hiring"
+        whatsAppLabel="Fastest way to reach me? Message me on WhatsApp"
       />
     </>
   );

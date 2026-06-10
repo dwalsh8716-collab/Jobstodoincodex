@@ -125,7 +125,11 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         </div>
       </section>
-      <CTASection title="Need this kind of hiring work?" />
+      <CTASection
+        title="Need this kind of hiring work?"
+        whatsAppIntent="hiring"
+        whatsAppLabel="Message David on WhatsApp"
+      />
     </>
   );
 }

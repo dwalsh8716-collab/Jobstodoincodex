@@ -117,7 +117,11 @@ export default async function InsightPage({ params }: Props) {
         </section>
       </article>
       <FAQAccordion faqs={insight.faqs} />
-      <CTASection title="Need this thinking applied to a real brief?" />
+      <CTASection
+        title="Need this thinking applied to a real brief?"
+        whatsAppIntent="hiring"
+        whatsAppLabel="Message David on WhatsApp"
+      />
       <SchemaScript data={articleSchema(insight)} />
     </>
   );

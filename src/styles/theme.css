@@ -31,6 +31,8 @@
   --radius-lg: 18px;
   --space-page: clamp(24px, 4vw, 56px);
   --max-site: 1180px;
+  --font-space-grotesk: "Trebuchet MS";
+  --font-inter: Arial;
   --font-heading: var(--font-space-grotesk), Arial, sans-serif;
   --font-body: var(--font-inter), Arial, sans-serif;
   --shadow-soft: 0 24px 70px rgba(16, 17, 20, 0.12);

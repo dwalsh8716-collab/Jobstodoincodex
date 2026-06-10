@@ -1,13 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   analyticsConsentStorageKey,
   analyticsParamsFromElement,
+  consentModeStateFromPreferences,
+  consentPreferencesStorageKey,
+  defaultConsentPreferences,
   trackEvent,
   type AnalyticsEventName,
+  type ConsentPreferences,
 } from "@/lib/analytics";
 
 export type AnalyticsConfig = {
@@ -19,7 +24,23 @@ export type AnalyticsConfig = {
   hotjarId?: string;
 };
 
-type ConsentState = "granted" | "denied" | null;
+type StoredConsentPreferences = ConsentPreferences & {
+  updatedAt?: string;
+  source?: "custom-banner" | "legacy";
+};
+
+const analyticsCookiePrefixes = ["_ga", "_gid", "_gat", "_hj", "_clck", "_clsk"];
+const marketingCookiePrefixes = [
+  "_gcl",
+  "_fbp",
+  "_fbc",
+  "bcookie",
+  "li_sugr",
+  "lidc",
+  "AnalyticsSyncHistory",
+  "UserMatchHistory",
+  "MUID",
+];
 
 function hasTracking(config: AnalyticsConfig) {
   return Boolean(
@@ -32,22 +53,127 @@ function hasTracking(config: AnalyticsConfig) {
   );
 }
 
-function readStoredConsent(): ConsentState {
+function readStoredPreferences(): ConsentPreferences | null {
   if (typeof window === "undefined") return null;
-  const value = window.localStorage.getItem(analyticsConsentStorageKey);
-  return value === "granted" || value === "denied" ? value : null;
+
+  const rawPreferences = window.localStorage.getItem(
+    consentPreferencesStorageKey,
+  );
+
+  if (rawPreferences) {
+    try {
+      const parsed = JSON.parse(rawPreferences) as Partial<ConsentPreferences>;
+      if (
+        typeof parsed.analytics === "boolean" &&
+        typeof parsed.marketing === "boolean"
+      ) {
+        return {
+          analytics: parsed.analytics,
+          marketing: parsed.marketing,
+        };
+      }
+    } catch {
+      window.localStorage.removeItem(consentPreferencesStorageKey);
+    }
+  }
+
+  const legacyValue = window.localStorage.getItem(analyticsConsentStorageKey);
+  if (legacyValue === "granted") return { analytics: true, marketing: true };
+  if (legacyValue === "denied") return { ...defaultConsentPreferences };
+
+  return null;
 }
 
-function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
+function storePreferences(preferences: ConsentPreferences) {
+  const stored: StoredConsentPreferences = {
+    ...preferences,
+    updatedAt: new Date().toISOString(),
+    source: "custom-banner",
+  };
+
+  window.localStorage.setItem(
+    consentPreferencesStorageKey,
+    JSON.stringify(stored),
+  );
+  window.localStorage.setItem(
+    analyticsConsentStorageKey,
+    preferences.analytics ? "granted" : "denied",
+  );
+}
+
+function cookieDomainsForCurrentHost() {
+  const host = window.location.hostname;
+  const domains = new Set<string>([host]);
+  const parts = host.split(".");
+
+  if (parts.length > 2) {
+    domains.add(`.${parts.slice(-2).join(".")}`);
+  }
+
+  return Array.from(domains);
+}
+
+function removeCookie(name: string) {
+  const expires = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  document.cookie = `${name}=; ${expires}; path=/; SameSite=Lax`;
+
+  for (const domain of cookieDomainsForCurrentHost()) {
+    document.cookie = `${name}=; ${expires}; path=/; domain=${domain}; SameSite=Lax`;
+  }
+}
+
+function clearCookiesByPrefix(prefixes: string[]) {
+  const cookieNames = document.cookie
+    .split(";")
+    .map((cookie) => cookie.trim().split("=")[0])
+    .filter(Boolean);
+
+  for (const name of cookieNames) {
+    if (prefixes.some((prefix) => name.startsWith(prefix))) {
+      removeCookie(name);
+    }
+  }
+}
+
+function clearNonEssentialCookies(preferences: ConsentPreferences) {
+  if (!preferences.analytics) clearCookiesByPrefix(analyticsCookiePrefixes);
+  if (!preferences.marketing) clearCookiesByPrefix(marketingCookiePrefixes);
+}
+
+function updateGoogleConsentMode(preferences: ConsentPreferences) {
+  const state = consentModeStateFromPreferences(preferences);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag =
+    window.gtag ||
+    function gtag(...args: unknown[]) {
+      window.dataLayer?.push(args);
+    };
+  window.gtag("consent", "update", state);
+  window.dataLayer.push({
+    event: "consent_preferences_updated",
+    consent_analytics: preferences.analytics ? "granted" : "denied",
+    consent_marketing: preferences.marketing ? "granted" : "denied",
+  });
+}
+
+function AnalyticsScripts({
+  config,
+  preferences,
+}: {
+  config: AnalyticsConfig;
+  preferences: ConsentPreferences;
+}) {
   const useGtm = Boolean(config.gtmId);
+  const canLoadGoogle = preferences.analytics || preferences.marketing;
 
   return (
     <>
-      {config.gtmId ? (
+      {config.gtmId && canLoadGoogle ? (
         <Script id="gtm" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({ event: 'analytics_consent_granted' });
+            window.dataLayer.push({ event: 'consent_preferences_loaded' });
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -57,7 +183,7 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
         </Script>
       ) : null}
 
-      {config.gaId && !useGtm ? (
+      {config.gaId && !useGtm && preferences.analytics ? (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(config.gaId)}`}
@@ -66,17 +192,9 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
           <Script id="ga4" strategy="afterInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('consent', 'default', {
-                analytics_storage: 'granted',
-                ad_storage: 'denied',
-                ad_user_data: 'denied',
-                ad_personalization: 'denied',
-                functionality_storage: 'granted',
-                security_storage: 'granted'
-              });
-              gtag('js', new Date());
-              gtag('config', ${JSON.stringify(config.gaId)}, {
+              window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+              window.gtag('js', new Date());
+              window.gtag('config', ${JSON.stringify(config.gaId)}, {
                 anonymize_ip: true,
                 send_page_view: true
               });
@@ -85,7 +203,7 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
         </>
       ) : null}
 
-      {config.linkedInPartnerId ? (
+      {config.linkedInPartnerId && preferences.marketing ? (
         <Script id="linkedin-insight" strategy="afterInteractive">
           {`
             _linkedin_partner_id = ${JSON.stringify(config.linkedInPartnerId)};
@@ -104,7 +222,7 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
         </Script>
       ) : null}
 
-      {config.metaPixelId ? (
+      {config.metaPixelId && preferences.marketing ? (
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -121,7 +239,7 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
         </Script>
       ) : null}
 
-      {config.clarityId ? (
+      {config.clarityId && preferences.analytics ? (
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
@@ -133,7 +251,7 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
         </Script>
       ) : null}
 
-      {config.hotjarId ? (
+      {config.hotjarId && preferences.analytics ? (
         <Script id="hotjar" strategy="afterInteractive">
           {`
             (function(h,o,t,j,a,r){
@@ -153,12 +271,25 @@ function AnalyticsScripts({ config }: { config: AnalyticsConfig }) {
 
 export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
   const pathname = usePathname();
-  const [consent, setConsent] = useState<ConsentState>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [preferences, setPreferences] = useState<ConsentPreferences | null>(
+    null,
+  );
+  const [draftPreferences, setDraftPreferences] = useState<ConsentPreferences>({
+    ...defaultConsentPreferences,
+  });
   const [ready, setReady] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [manageOpen, setManageOpen] = useState(false);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      setConsent(readStoredConsent());
+      const storedPreferences = readStoredPreferences();
+      if (storedPreferences) {
+        updateGoogleConsentMode(storedPreferences);
+        setPreferences(storedPreferences);
+        setDraftPreferences(storedPreferences);
+      }
       setReady(true);
     }, 0);
 
@@ -166,7 +297,49 @@ export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
   }, []);
 
   useEffect(() => {
-    if (consent !== "granted") return;
+    function openPreferences() {
+      setDraftPreferences(preferences || defaultConsentPreferences);
+      setManageOpen(true);
+      setPanelOpen(true);
+    }
+
+    window.addEventListener(
+      "essential:open-consent-preferences",
+      openPreferences,
+    );
+
+    return () =>
+      window.removeEventListener(
+        "essential:open-consent-preferences",
+        openPreferences,
+      );
+  }, [preferences]);
+
+  useEffect(() => {
+    if (!panelOpen && preferences !== null) return;
+    const panel = panelRef.current;
+    const focusTarget = panel?.querySelector<HTMLElement>(
+      "button, input, a[href]",
+    );
+    focusTarget?.focus();
+  }, [panelOpen, preferences]);
+
+  useEffect(() => {
+    if (!panelOpen) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && preferences !== null) {
+        setPanelOpen(false);
+        setManageOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [panelOpen, preferences]);
+
+  useEffect(() => {
+    if (!preferences?.analytics) return;
 
     function onClick(event: MouseEvent) {
       const target = event.target;
@@ -183,40 +356,139 @@ export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
 
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);
-  }, [consent]);
+  }, [preferences]);
 
   if (!hasTracking(config)) return null;
   if (pathname.startsWith("/cms") || pathname.startsWith("/studio")) return null;
 
-  function updateConsent(nextConsent: Exclude<ConsentState, null>) {
-    window.localStorage.setItem(analyticsConsentStorageKey, nextConsent);
-    setConsent(nextConsent);
+  function savePreferences(nextPreferences: ConsentPreferences) {
+    storePreferences(nextPreferences);
+    updateGoogleConsentMode(nextPreferences);
+    clearNonEssentialCookies(nextPreferences);
+    setPreferences(nextPreferences);
+    setDraftPreferences(nextPreferences);
+    setPanelOpen(false);
+    setManageOpen(false);
   }
+
+  const showPanel = ready && (preferences === null || panelOpen);
 
   return (
     <>
-      {consent === "granted" ? <AnalyticsScripts config={config} /> : null}
-      {ready && consent === null ? (
-        <div className="analytics-consent" role="region" aria-label="Analytics consent">
-          <p>
-            We use privacy-conscious analytics to see what is useful. No
-            tracking loads unless you say yes.
-          </p>
+      {preferences ? (
+        <AnalyticsScripts config={config} preferences={preferences} />
+      ) : null}
+      {showPanel ? (
+        <div
+          className="analytics-consent"
+          ref={panelRef}
+          role={manageOpen ? "dialog" : "region"}
+          aria-label="Cookie and analytics preferences"
+        >
           <div>
-            <button
-              className="button button-primary"
-              type="button"
-              onClick={() => updateConsent("granted")}
-            >
-              Accept analytics
-            </button>
+            <h2 className="analytics-consent-title">Cookie choices</h2>
+            <p>
+              We use essential site functions. Analytics and marketing tags only
+              load if you say yes. You can read the{" "}
+              <Link href="/cookie-policy">Cookie Policy</Link> and{" "}
+              <Link href="/privacy-policy">Privacy Policy</Link>.
+            </p>
+            {manageOpen ? (
+              <div className="consent-preferences">
+                <div className="consent-preference">
+                  <input
+                    id="consent-analytics"
+                    type="checkbox"
+                    checked={draftPreferences.analytics}
+                    onChange={(event) =>
+                      setDraftPreferences((current) => ({
+                        ...current,
+                        analytics: event.target.checked,
+                      }))
+                    }
+                  />
+                  <label htmlFor="consent-analytics">
+                    <strong>Analytics</strong>
+                    <small>
+                      Helps David see which pages, CTAs and content are useful.
+                    </small>
+                  </label>
+                </div>
+                <div className="consent-preference">
+                  <input
+                    id="consent-marketing"
+                    type="checkbox"
+                    checked={draftPreferences.marketing}
+                    onChange={(event) =>
+                      setDraftPreferences((current) => ({
+                        ...current,
+                        marketing: event.target.checked,
+                      }))
+                    }
+                  />
+                  <label htmlFor="consent-marketing">
+                    <strong>Marketing</strong>
+                    <small>
+                      Allows advertising and retargeting tags if they are
+                      configured.
+                    </small>
+                  </label>
+                </div>
+                <p className="consent-essential-note">
+                  Essential security storage stays on. Non-essential functional
+                  storage is denied unless a real feature needs it.
+                </p>
+              </div>
+            ) : null}
+          </div>
+          <div>
+            {manageOpen ? (
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={() => savePreferences(draftPreferences)}
+              >
+                Save preferences
+              </button>
+            ) : (
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={() =>
+                  savePreferences({ analytics: true, marketing: true })
+                }
+              >
+                Accept all
+              </button>
+            )}
             <button
               className="button button-secondary"
               type="button"
-              onClick={() => updateConsent("denied")}
+              onClick={() =>
+                savePreferences({ analytics: false, marketing: false })
+              }
             >
-              Keep browsing
+              Reject non-essential
             </button>
+            {manageOpen ? (
+              <button
+                className="button button-secondary"
+                type="button"
+                onClick={() =>
+                  savePreferences({ analytics: true, marketing: true })
+                }
+              >
+                Accept all
+              </button>
+            ) : (
+              <button
+                className="button button-secondary"
+                type="button"
+                onClick={() => setManageOpen(true)}
+              >
+                Manage preferences
+              </button>
+            )}
           </div>
         </div>
       ) : null}

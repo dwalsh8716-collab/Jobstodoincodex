@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -39,8 +40,14 @@ export default function ContactPage() {
               </p>
             </div>
             <div className="button-row hero-actions">
+              <WhatsAppButton
+                intent="hiring"
+                label="Fastest way to reach me? Message me on WhatsApp"
+                location="contact_page"
+                variant="primary"
+              />
               <Link
-                className="button button-primary"
+                className="button button-secondary"
                 href="#contact-form"
                 {...analyticsAttributes("cta_click", {
                   label: "I'm hiring",
@@ -122,6 +129,23 @@ export default function ContactPage() {
             </div>
           </div>
           <div id="contact-form">
+            <div className="contact-options-card">
+              <p className="eyebrow">Fast route</p>
+              <h2>Message David directly.</h2>
+              <p>
+                Fastest way to reach me? Message me on WhatsApp. Forms and
+                email still work if you prefer to send more detail.
+              </p>
+              <WhatsAppButton
+                intent="hiring"
+                label="Message David on WhatsApp"
+                location="contact_options"
+                variant="primary"
+              />
+              <p className="meta">
+                Opens WhatsApp. WhatsApp has its own terms and privacy policy.
+              </p>
+            </div>
             <ContactForm type="client" />
           </div>
         </div>

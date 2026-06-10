@@ -3,6 +3,7 @@ import {
   analyticsAttributes,
   analyticsConsentStorageKey,
   analyticsParamsFromElement,
+  consentModeStateFromPreferences,
   trackEvent,
 } from "@/lib/analytics";
 
@@ -17,6 +18,33 @@ function createLocalStorage(initial: Record<string, string> = {}) {
 }
 
 describe("analytics utility", () => {
+  it("maps rejected preferences to privacy-first Consent Mode V2 defaults", () => {
+    expect(
+      consentModeStateFromPreferences({ analytics: false, marketing: false }),
+    ).toMatchObject({
+      ad_storage: "denied",
+      analytics_storage: "denied",
+      functionality_storage: "denied",
+      personalization_storage: "denied",
+      security_storage: "granted",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+  });
+
+  it("maps accepted preferences to analytics and advertising consent", () => {
+    expect(
+      consentModeStateFromPreferences({ analytics: true, marketing: true }),
+    ).toMatchObject({
+      ad_storage: "granted",
+      analytics_storage: "granted",
+      personalization_storage: "granted",
+      security_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+    });
+  });
+
   it("creates safe data attributes for delegated CTA tracking", () => {
     const attrs = analyticsAttributes("cta_click", {
       label: "Talk to David",

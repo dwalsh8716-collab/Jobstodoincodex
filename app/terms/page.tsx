@@ -26,7 +26,7 @@ export default function TermsPage() {
           <h2>Accuracy</h2>
           <p>Essential Resourcing aims to keep information current, but salary data, market commentary and job information should be verified before decisions are made.</p>
           <h2>External links</h2>
-          <p>The site may link to third-party services such as LinkedIn, video providers or booking tools. Essential Resourcing is not responsible for third-party content.</p>
+          <p>The site may link to third-party services such as WhatsApp, LinkedIn, video providers or booking tools. Essential Resourcing is not responsible for third-party content.</p>
           <h2>Contact</h2>
           <p>For questions about these terms, contact Essential Resourcing through the contact page.</p>
         </div>

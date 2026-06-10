@@ -1,3 +1,14 @@
+import {
+  buildWhatsAppUrl,
+  defaultWhatsAppNumber,
+  whatsAppMessages,
+} from "@/lib/whatsapp";
+
+const whatsAppNumber =
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || defaultWhatsAppNumber;
+const whatsAppDefaultMessage =
+  process.env.NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE || whatsAppMessages.general;
+
 export const siteConfig = {
   name: "Essential Resourcing",
   founder: "David Walsh",
@@ -6,6 +17,16 @@ export const siteConfig = {
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   linkedIn: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact",
+  whatsApp: {
+    enabled: Boolean(buildWhatsAppUrl({ number: whatsAppNumber })),
+    number: whatsAppNumber,
+    label: "Message David on WhatsApp",
+    defaultMessage: whatsAppDefaultMessage,
+    url: buildWhatsAppUrl({
+      number: whatsAppNumber,
+      message: whatsAppDefaultMessage,
+    }),
+  },
   region: "Manchester, North West and UK-wide",
   defaultTitle:
     "Essential Resourcing | Senior Marketing & Comms Recruitment Manchester",

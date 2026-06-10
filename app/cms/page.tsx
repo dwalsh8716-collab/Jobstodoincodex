@@ -97,7 +97,7 @@ export default async function CmsPage({ searchParams }: Props) {
 
               {!hasSetup || params?.setup === "missing" ? (
                 <div className="cms-alert">
-                  Add `CMS_GATE_USERNAME` and `CMS_GATE_PASSWORD` before using this in production.
+                  Add `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET` before using the editor gate.
                 </div>
               ) : null}
 

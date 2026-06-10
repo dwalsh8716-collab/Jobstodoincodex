@@ -21,6 +21,14 @@ const publicEnvSchema = z.object({
     z.string().url().optional(),
   ),
   NEXT_PUBLIC_PHONE: z.preprocess(emptyToUndefined, z.string().optional()),
+  NEXT_PUBLIC_WHATSAPP_NUMBER: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   NEXT_PUBLIC_GA_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   NEXT_PUBLIC_GTM_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   NEXT_PUBLIC_LINKEDIN_PARTNER_ID: z.preprocess(

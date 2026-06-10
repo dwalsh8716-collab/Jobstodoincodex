@@ -107,6 +107,7 @@ It is not final-live until the manual content, credential, legal and launch setu
 - Add final David Walsh portrait.
 - Add real phone number.
 - Add real LinkedIn URL.
+- Confirm WhatsApp Business number and message wording.
 - Add real booking URL if booking should happen outside the contact form.
 - Add verified salary data.
 - Replace draft case studies with verified outcomes.
@@ -114,7 +115,7 @@ It is not final-live until the manual content, credential, legal and launch setu
 - Review privacy policy, cookie policy and terms with a qualified adviser.
 - Configure Resend or another form delivery provider.
 - Configure Sanity project credentials and invite editors.
-- Replace temporary CMS gate credentials.
+- Configure fresh CMS gate username, password and signing secret.
 - Confirm analytics requirements and consent wording.
 - Confirm Google Search Console verification.
 - Confirm any CV handling/storage is legally and technically safe before enabling uploads.

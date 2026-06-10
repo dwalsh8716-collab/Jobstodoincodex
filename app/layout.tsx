@@ -1,25 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { SchemaScript } from "@/components/SchemaScript";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
-import { createMetadata, organisationSchema, personSchema, websiteSchema } from "@/lib/seo";
+import { defaultConsentModeState } from "@/lib/analytics";
+import {
+  createMetadata,
+  organisationSchema,
+  personSchema,
+  websiteSchema,
+} from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "optional"
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "optional"
-});
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -46,14 +40,28 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const palette = process.env.NEXT_PUBLIC_THEME_PALETTE || "graphite";
+  const hasGoogleTag = Boolean(
+    process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_GTM_ID,
+  );
 
   return (
     <html
       lang="en-GB"
       data-palette={palette}
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
+      {hasGoogleTag ? (
+        <Script id="google-consent-mode-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+            window.gtag('consent', 'default', ${JSON.stringify({
+              ...defaultConsentModeState,
+              wait_for_update: 500,
+            })});
+          `}
+        </Script>
+      ) : null}
       <body>
         <a className="skip-link" href="#main">
           Skip to content

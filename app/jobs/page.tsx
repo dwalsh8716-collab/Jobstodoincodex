@@ -2,6 +2,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JobCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { isJobLive, jobs } from "@/lib/content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
@@ -42,6 +43,14 @@ export default function JobsPage() {
             If you are senior and want a confidential conversation, use the
             candidate route rather than waiting for the perfect role to appear.
           </p>
+          <div className="button-row hero-actions">
+            <WhatsAppButton
+              intent="candidates"
+              label="Message David on WhatsApp"
+              location="jobs_page"
+              variant="secondary"
+            />
+          </div>
         </div>
         {liveJobs.length ? (
           <div className="container grid grid-3">
@@ -94,6 +103,8 @@ export default function JobsPage() {
         text="Send a note or LinkedIn URL and David can come back to you properly."
         ctaLabel="Send a confidential note"
         ctaHref="/candidates"
+        whatsAppIntent="candidates"
+        whatsAppLabel="Quick WhatsApp to David"
       />
       {liveJobs.length ? (
         <SchemaScript

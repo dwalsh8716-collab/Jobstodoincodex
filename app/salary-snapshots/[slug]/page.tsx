@@ -78,7 +78,11 @@ export default async function SalarySnapshotPage({ params }: Props) {
           </article>
         </div>
       </section>
-      <CTASection title="Want salary advice on a live role?" />
+      <CTASection
+        title="Want salary advice on a live role?"
+        whatsAppIntent="hiring"
+        whatsAppLabel="Check a salary range on WhatsApp"
+      />
       <AnalyticsPageEvent
         event="salary_snapshot_view"
         snapshotSlug={snapshot.slug}

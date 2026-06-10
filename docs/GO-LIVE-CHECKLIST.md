@@ -10,12 +10,13 @@ Treat it as preview-ready now, not fully public-live until the items below are c
 
 - Add the real phone number.
 - Add the correct LinkedIn URL.
+- Confirm David's WhatsApp Business number and default message.
 - Add the booking URL, if calls should go through a booking tool.
 - Configure `RESEND_API_KEY`, `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` so forms send email.
 - Create or connect the real Sanity project.
 - Add `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_VERSION` and any required read token.
 - Invite the editor users in Sanity.
-- Change `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET`.
+- Set fresh `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET`.
 - Review privacy policy, cookie policy and terms.
 - Confirm analytics consent wording and tracking requirements.
 - Confirm Google Search Console verification.

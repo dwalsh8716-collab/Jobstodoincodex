@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { SchemaScript } from "@/components/SchemaScript";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { getJob, isJobClosed, isJobLive, jobs } from "@/lib/content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
 
@@ -76,6 +77,13 @@ export default async function JobPage({ params }: Props) {
               <Link className="button button-secondary" href="/candidates">
                 Send a confidential note
               </Link>
+              <WhatsAppButton
+                intent="candidates"
+                label="Message David on WhatsApp"
+                location="closed_job_detail"
+                jobSlug={job.slug}
+                variant="secondary"
+              />
             </div>
           </div>
         </section>
@@ -122,6 +130,13 @@ export default async function JobPage({ params }: Props) {
                     Applications are handled by David directly at{" "}
                     {job.applicationEmail}.
                   </p>
+                  <WhatsAppButton
+                    intent="jobs"
+                    label="Quick question about this role? WhatsApp David"
+                    location="job_detail_page"
+                    jobSlug={job.slug}
+                    variant="secondary"
+                  />
                 </div>
                 <ContactForm type="job" jobTitle={job.title} />
               </>

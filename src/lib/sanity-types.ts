@@ -85,6 +85,16 @@ export type SanitySiteSettings = SanitySeo & {
   email?: string;
   phone?: string;
   bookingUrl?: string;
+  whatsAppEnabled?: boolean;
+  whatsAppNumber?: string;
+  whatsAppButtonText?: string;
+  whatsAppDefaultMessage?: string;
+  whatsAppHiringMessage?: string;
+  whatsAppCandidateMessage?: string;
+  whatsAppStrategicInterimMessage?: string;
+  showWhatsAppInHeader?: boolean;
+  showWhatsAppInFooter?: boolean;
+  showWhatsAppOnContactPage?: boolean;
   addressRegion?: string;
   socialLinks?: Array<{ _key?: string; label?: string; url?: string }>;
   footerCopy?: string;

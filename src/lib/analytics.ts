@@ -5,6 +5,7 @@ export type AnalyticsEventName =
   | "book_call_click"
   | "email_click"
   | "phone_click"
+  | "whatsapp_click"
   | "linkedin_click"
   | "job_application_start"
   | "job_application_submission"
@@ -17,6 +18,11 @@ export type AnalyticsEventParams = {
   label?: string;
   href?: string;
   location?: string;
+  page_path?: string;
+  cta_text?: string;
+  intent?: string;
+  service?: string;
+  job_slug?: string;
   form_type?: string;
   brief_type?: string;
   job_title?: string;
@@ -25,10 +31,57 @@ export type AnalyticsEventParams = {
 };
 
 export const analyticsConsentStorageKey = "essential.analytics-consent";
+export const consentPreferencesStorageKey = "essential.consent-preferences";
+
+export type ConsentPreferences = {
+  analytics: boolean;
+  marketing: boolean;
+};
+
+export type ConsentModeValue = "granted" | "denied";
+
+export type ConsentModeState = {
+  ad_storage: ConsentModeValue;
+  analytics_storage: ConsentModeValue;
+  functionality_storage: ConsentModeValue;
+  personalization_storage: ConsentModeValue;
+  security_storage: ConsentModeValue;
+  ad_user_data: ConsentModeValue;
+  ad_personalization: ConsentModeValue;
+};
+
+export const defaultConsentPreferences: ConsentPreferences = {
+  analytics: false,
+  marketing: false,
+};
+
+export const defaultConsentModeState: ConsentModeState = {
+  ad_storage: "denied",
+  analytics_storage: "denied",
+  functionality_storage: "denied",
+  personalization_storage: "denied",
+  security_storage: "granted",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+};
+
+export function consentModeStateFromPreferences(
+  preferences: ConsentPreferences,
+): ConsentModeState {
+  return {
+    ad_storage: preferences.marketing ? "granted" : "denied",
+    analytics_storage: preferences.analytics ? "granted" : "denied",
+    functionality_storage: "denied",
+    personalization_storage: preferences.marketing ? "granted" : "denied",
+    security_storage: "granted",
+    ad_user_data: preferences.marketing ? "granted" : "denied",
+    ad_personalization: preferences.marketing ? "granted" : "denied",
+  };
+}
 
 declare global {
   interface Window {
-    dataLayer?: Array<Record<string, unknown> | IArguments>;
+    dataLayer?: Array<Record<string, unknown> | unknown[]>;
     gtag?: (...args: unknown[]) => void;
     lintrk?: (...args: unknown[]) => void;
     fbq?: (...args: unknown[]) => void;
@@ -40,6 +93,11 @@ const dataAttributeMap: Record<keyof AnalyticsEventParams, string> = {
   label: "data-analytics-label",
   href: "data-analytics-href",
   location: "data-analytics-location",
+  page_path: "data-analytics-page-path",
+  cta_text: "data-analytics-cta-text",
+  intent: "data-analytics-intent",
+  service: "data-analytics-service",
+  job_slug: "data-analytics-job-slug",
   form_type: "data-analytics-form-type",
   brief_type: "data-analytics-brief-type",
   job_title: "data-analytics-job-title",

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
 import { primaryNavigation, serviceNavigation, siteConfig } from "@/lib/site";
@@ -77,6 +78,13 @@ export function Header() {
             </Link>
           )
         )}
+        <WhatsAppButton
+          className="nav-whatsapp"
+          intent="general"
+          label="WhatsApp David"
+          location="mobile_menu"
+          variant="secondary"
+        />
       </nav>
     </header>
   );

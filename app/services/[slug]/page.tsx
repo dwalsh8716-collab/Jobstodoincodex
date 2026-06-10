@@ -5,8 +5,10 @@ import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { SchemaScript } from "@/components/SchemaScript";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { caseStudies, getService, insights, services } from "@/lib/content";
 import { createMetadata, serviceSchema } from "@/lib/seo";
+import type { WhatsAppIntent } from "@/lib/whatsapp";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -72,6 +74,12 @@ export default async function ServicePage({ params }: Props) {
   const draftCases = relatedCases.filter(
     (caseStudy) => caseStudy.status === "draft",
   );
+  const whatsAppIntent: WhatsAppIntent =
+    service.slug === "strategic-interim" ? "strategicInterim" : "hiring";
+  const whatsAppLabel =
+    service.slug === "strategic-interim"
+      ? "Need interim help quickly? WhatsApp David"
+      : "Message David on WhatsApp";
 
   return (
     <>
@@ -90,6 +98,13 @@ export default async function ServicePage({ params }: Props) {
             <Link className="button button-primary" href={service.cta.href}>
               {service.cta.label}
             </Link>
+            <WhatsAppButton
+              intent={whatsAppIntent}
+              label={whatsAppLabel}
+              location={`${service.slug}_hero`}
+              service={service.title}
+              variant="secondary"
+            />
             <Link className="button button-secondary" href="/case-studies">
               View proof standards
             </Link>
@@ -253,7 +268,13 @@ export default async function ServicePage({ params }: Props) {
       ) : null}
 
       <FAQAccordion faqs={service.faqs} />
-      <CTASection title={service.cta.label} ctaLabel={service.cta.label} />
+      <CTASection
+        title={service.cta.label}
+        ctaLabel={service.cta.label}
+        whatsAppIntent={whatsAppIntent}
+        whatsAppLabel={whatsAppLabel}
+        whatsAppService={service.title}
+      />
       <SchemaScript data={serviceSchema(service)} />
     </>
   );

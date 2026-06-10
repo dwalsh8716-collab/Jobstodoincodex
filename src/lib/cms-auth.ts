@@ -4,15 +4,19 @@ const encoder = new TextEncoder();
 const sessionHours = 12;
 
 function getSecret() {
-  return process.env.CMS_GATE_SECRET || process.env.CMS_GATE_PASSWORD || "";
+  return process.env.CMS_GATE_SECRET || "";
 }
 
 export function cmsGateConfigured() {
-  return Boolean(process.env.CMS_GATE_PASSWORD);
+  return Boolean(
+    process.env.CMS_GATE_USERNAME &&
+      process.env.CMS_GATE_PASSWORD &&
+      process.env.CMS_GATE_SECRET,
+  );
 }
 
 export function getCmsUsername() {
-  return process.env.CMS_GATE_USERNAME || "david";
+  return process.env.CMS_GATE_USERNAME || "";
 }
 
 function toHex(bytes: ArrayBuffer) {
@@ -66,4 +70,3 @@ export async function isCmsSessionValid(cookieValue?: string) {
 export function getCmsSessionMaxAge() {
   return sessionHours * 60 * 60;
 }
-

@@ -4,7 +4,7 @@ Premium Next.js + Sanity-ready website for Essential Resourcing.
 
 ## Stack
 
-- Next.js 16 App Router with Turbopack production builds
+- Next.js 16 App Router with webpack production builds
 - TypeScript
 - React 19
 - Clean CSS design system with central tokens
@@ -65,6 +65,8 @@ Optional tracking:
 - `NEXT_PUBLIC_HOTJAR_ID`
 - `GOOGLE_SITE_VERIFICATION`
 - `NEXT_PUBLIC_BOOKING_URL`
+- `NEXT_PUBLIC_WHATSAPP_NUMBER`
+- `NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE`
 
 ## Design Adaptability
 
@@ -120,6 +122,9 @@ docs/FINAL-POLISH-ROADMAP.md
 docs/VISUAL-DESIGN-POLISH.md
 docs/POST-LAUNCH-GROWTH-ROADMAP.md
 docs/launch-google-seo-local-setup.md
+docs/consent-mode-v2-setup.md
+docs/sanity-editor-guide.md
+docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/MASTER-BUILD-COMPLETION-REPORT.md
 ```
 
@@ -147,14 +152,7 @@ Friendly editor login:
 /cms
 ```
 
-Temporary local preview login:
-
-```txt
-Username: david
-Password: Essential-Preview-2026!
-```
-
-Change `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET` before the site goes live.
+Set `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET` locally before using the editor gate. Do not commit those values.
 
 Sanity Studio route after login:
 
@@ -242,7 +240,7 @@ Codex Sites note: if the Sites plugin is available in the workspace, this projec
 - Configure Resend or another form delivery provider.
 - Configure Sanity project credentials.
 - Invite editor users to the Sanity project.
-- Change the temporary CMS preview password.
+- Set fresh CMS gate username, password and signing secret.
 - Confirm analytics consent wording and tracking requirements.
 - Confirm Google Search Console verification.
 - Confirm CV handling/storage is legally and technically safe before enabling uploads.

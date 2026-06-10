@@ -33,7 +33,7 @@ The CMS can manage:
 - Insights with buyer questions, problem addressed, author, rich text, FAQs, CTA and related content.
 - Case studies with business problem, why the hire mattered, what made it tricky, de-risking, outcome and impact.
 - Salary snapshots with table rows, market commentary, hiring notes and CTA.
-- Site settings, contact details, social links, footer content, navigation, redirects and proof/logos where permission is clear.
+- Site settings, contact details, WhatsApp Business details, social links, footer content, navigation, redirects and proof/logos where permission is clear.
 
 ## Post-Launch Growth Support
 

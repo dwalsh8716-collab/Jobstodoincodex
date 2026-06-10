@@ -29,6 +29,8 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - `NEXT_PUBLIC_GTM_ID` is supported.
 - LinkedIn, Meta, Clarity and Hotjar env-controlled tracking is supported.
 - Tracking scripts are consent-gated and do not load when env vars are absent.
+- Google Consent Mode V2 default and update flow is implemented for Google tags.
+- Users can accept, reject, manage and reopen cookie preferences.
 - GTM suppresses the direct GA4 script so the site does not double-load GA4 by default.
 - `sitemap.xml` is dynamic and includes launch pages, service pages, published insights, published proof, published salary snapshots and live jobs.
 - `robots.txt` points to the sitemap and blocks `/studio`, `/cms` and `/api`.
@@ -44,6 +46,7 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - Salary snapshot view tracking for future published snapshots.
 - Unit tests for sitemap and robots launch behaviour.
 - This Google/local launch setup guide.
+- Consent Mode V2 setup is documented in `docs/consent-mode-v2-setup.md`.
 
 ### Missing Or Manual
 
@@ -57,6 +60,7 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - Bing Webmaster Tools setup.
 - PageSpeed Insights checks on the production URL.
 - Legal review of privacy/cookie wording.
+- Final CMP approval if marketing or advertising tags are enabled.
 
 ## Google Search Console
 
@@ -108,6 +112,57 @@ Manual checks after deployment:
 2. Open `/robots.txt` on the production domain.
 3. Confirm the sitemap uses `https://essentialresourcing.co.uk`.
 4. Confirm Search Console can fetch the sitemap.
+
+## Cookie Consent And Google Consent Mode V2
+
+Consent Mode is critical for launch. It is not a cookie banner by itself. It communicates the user's consent choice to Google tags.
+
+Current technical status:
+
+- A lightweight custom consent banner exists.
+- The banner supports Accept all, Reject non-essential, Manage preferences and Save preferences.
+- Users can reopen Cookie preferences from the footer.
+- Cookie Policy and Privacy Policy links are included in the banner.
+- Consent preferences are stored locally.
+- Google Consent Mode V2 defaults are initialised before Google tags load.
+- Privacy-first defaults deny analytics and advertising storage until consent is given.
+- Consent updates are sent when the user accepts, rejects or saves preferences.
+- Known first-party analytics and marketing cookies are cleared when the matching category is rejected.
+- GTM and direct GA4 are not loaded together in a way that should double-count pageviews.
+
+Default consent state:
+
+```txt
+ad_storage: denied
+analytics_storage: denied
+functionality_storage: denied
+personalization_storage: denied
+security_storage: granted
+ad_user_data: denied
+ad_personalization: denied
+```
+
+Recommendation:
+
+- Use direct GA4 for the simplest first launch if only GA4 is needed.
+- Use GTM when David approves multiple tags or a CMP/GTM template.
+- Use a reputable CMP before enabling marketing or advertising tags.
+- Shortlist Cookiebot, CookieYes and Civic Cookie Control first; review OneTrust, Osano and Complianz if requirements grow.
+- Treat FitConsent as one possible vendor, not a requirement.
+
+Manual actions:
+
+1. Approve the final tracking stack.
+2. Decide whether to keep the interim custom banner or buy a CMP.
+3. Get Cookie Policy and Privacy Policy wording reviewed.
+4. Use Tag Assistant and GTM Preview after deployment.
+5. Confirm no non-essential cookies are set before consent where consent is required.
+
+Full setup and QA checklist:
+
+```txt
+docs/consent-mode-v2-setup.md
+```
 
 ## GA4
 

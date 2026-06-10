@@ -714,6 +714,83 @@ const siteSettings = defineType({
     defineField({ name: "phone", title: "Phone", type: "string" }),
     defineField({ name: "bookingUrl", title: "Booking link", type: "url" }),
     defineField({
+      name: "whatsAppEnabled",
+      title: "Show WhatsApp buttons on the website?",
+      type: "boolean",
+      description:
+        "Turn this on when David wants WhatsApp shown as a quick contact route.",
+      initialValue: true,
+    }),
+    defineField({
+      name: "whatsAppNumber",
+      title: "WhatsApp Business number",
+      type: "string",
+      description:
+        "Use international format only, with no spaces or symbols. Example: 447824514296. This opens WhatsApp directly.",
+      validation: (rule) =>
+        rule.regex(/^\d{8,15}$/, {
+          name: "international WhatsApp number",
+          invert: false,
+        }),
+    }),
+    defineField({
+      name: "whatsAppButtonText",
+      title: "WhatsApp button text",
+      type: "string",
+      description: "Short button copy, for example: Message David on WhatsApp.",
+      validation: (rule) => rule.max(42),
+    }),
+    defineField({
+      name: "whatsAppDefaultMessage",
+      title: "Default WhatsApp message",
+      type: "text",
+      rows: 3,
+      description:
+        "This message is pre-filled when someone opens WhatsApp from the site.",
+    }),
+    defineField({
+      name: "whatsAppHiringMessage",
+      title: "WhatsApp hiring message",
+      type: "text",
+      rows: 3,
+      description:
+        "Used for hiring and client CTAs. Keep it plain English and specific.",
+    }),
+    defineField({
+      name: "whatsAppCandidateMessage",
+      title: "WhatsApp candidate message",
+      type: "text",
+      rows: 3,
+      description:
+        "Used on candidate and job pages for quick role or career questions.",
+    }),
+    defineField({
+      name: "whatsAppStrategicInterimMessage",
+      title: "WhatsApp strategic interim message",
+      type: "text",
+      rows: 3,
+      description:
+        "Used where the need may be urgent, especially Strategic Interim pages.",
+    }),
+    defineField({
+      name: "showWhatsAppInHeader",
+      title: "Show WhatsApp in the mobile menu?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showWhatsAppInFooter",
+      title: "Show WhatsApp in the footer?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showWhatsAppOnContactPage",
+      title: "Show WhatsApp on the contact page?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "addressRegion",
       title: "Address / region",
       type: "string",

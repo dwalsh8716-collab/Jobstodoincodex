@@ -1,9 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CookiePreferencesButton } from "@/components/CookiePreferencesButton";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { serviceNavigation, siteConfig } from "@/lib/site";
 
 export function Footer() {
+  const hasTrackingConfig = Boolean(
+    process.env.NEXT_PUBLIC_GA_ID ||
+      process.env.NEXT_PUBLIC_GTM_ID ||
+      process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID ||
+      process.env.NEXT_PUBLIC_META_PIXEL_ID ||
+      process.env.NEXT_PUBLIC_CLARITY_ID ||
+      process.env.NEXT_PUBLIC_HOTJAR_ID,
+  );
+
   return (
     <footer className="site-footer dark">
       <div className="container footer-grid">
@@ -26,6 +37,12 @@ export function Footer() {
           <h2>Need good marketing, PR or digital people?</h2>
           <p>Give David a shout before it becomes a hiring headache.</p>
           <div className="footer-contact" aria-label="Contact details">
+            <WhatsAppButton
+              intent="general"
+              label="Message David on WhatsApp"
+              location="footer"
+              variant="text"
+            />
             <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
             {siteConfig.linkedIn ? (
               <Link
@@ -68,6 +85,7 @@ export function Footer() {
           <Link href="/salary-snapshots">Salary Snapshots</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/cookie-policy">Cookie Policy</Link>
+          {hasTrackingConfig ? <CookiePreferencesButton /> : null}
           <Link href="/terms">Terms</Link>
         </nav>
       </div>

@@ -94,7 +94,7 @@ Main areas changed:
 - Palette is centralised in `src/styles/theme.css`.
 - Current production direction is graphite, cobalt and copper.
 - Manchester red/yellow palette is not used.
-- Typography uses Space Grotesk and Inter.
+- Typography uses central tokens with local system fallbacks so builds do not depend on live font fetching.
 - Buttons, cards, forms, tables, media, CTAs and layout primitives share one visual language.
 - Mobile typography now uses controlled breakpoints rather than viewport-scaled font sizes.
 - Reduced-motion support is in place.
@@ -246,7 +246,7 @@ Open `http://localhost:3000`.
 5. Open `/studio`.
 6. Edit content in the grouped Studio structure.
 
-The current local preview gate credentials must be replaced before production.
+The CMS gate requires `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET`. Do not commit those values.
 
 ## 17. How To Add A Job
 
