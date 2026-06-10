@@ -120,7 +120,7 @@ export async function saveContactEnquiryToOperations(
     jobTitle: payload.jobTitle,
     message: payload.message,
     serviceInterest: payload.briefType,
-    preferredContactMethod: payload.phone ? "phone_or_email" : "email",
+    preferredContactMethod: payload.preferredContactMethod,
     consentToContact: payload.consent === "yes",
     marketingConsent: false,
     priority: payload.type === "client" ? "high" : "normal",

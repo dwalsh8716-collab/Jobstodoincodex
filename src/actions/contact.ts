@@ -14,6 +14,7 @@ import {
 } from "@/lib/candidate-trust";
 import { saveContactEnquiryToOperations } from "@/lib/operations/store";
 import { siteConfig } from "@/lib/site";
+import { sendWhatsAppBusinessConfirmation } from "@/lib/whatsapp-business/client";
 
 export type ContactActionResult = {
   ok: boolean;
@@ -195,6 +196,15 @@ export async function submitContactEnquiry(
     }
 
     const result = await sendWithResend(payload);
+    const whatsAppResult = await sendWhatsAppBusinessConfirmation(payload);
+
+    if (!whatsAppResult.ok) {
+      console.error("WhatsApp Business message was not sent", {
+        type: payload.type,
+        reason: whatsAppResult.reason,
+      });
+    }
+
     return {
       ok: true,
       statusCode: 200,

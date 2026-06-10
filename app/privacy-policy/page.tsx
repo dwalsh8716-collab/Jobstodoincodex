@@ -72,6 +72,12 @@ export default function PrivacyPolicyPage() {
             privacy policy as well as Essential Resourcing&apos;s normal contact
             process.
           </p>
+          <p>
+            If you select WhatsApp as your preferred contact method on a form,
+            Essential Resourcing may use its official WhatsApp Business setup to
+            send a transactional acknowledgement about that enquiry. This must
+            not be used for marketing broadcasts without separate approval.
+          </p>
           <h2>Legal review</h2>
           <p>
             This policy is not legal advice. It must be checked against the

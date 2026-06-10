@@ -105,6 +105,14 @@ export default function CandidatePrivacyPage() {
             variant="secondary"
           />
 
+          <h2>WhatsApp acknowledgements</h2>
+          <p>
+            If you choose WhatsApp as your preferred contact method, Essential
+            Resourcing may send a short transactional acknowledgement through
+            the official WhatsApp Business setup. It should not be used for
+            marketing broadcasts without separate approval.
+          </p>
+
           <h2>Legal review</h2>
           <p>
             This is clear launch wording, not legal advice. It must be checked

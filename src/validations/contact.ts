@@ -1,6 +1,12 @@
 import { z } from "zod";
 
 export const contactTypes = ["client", "candidate", "job"] as const;
+export const preferredContactMethods = [
+  "no_preference",
+  "email",
+  "phone",
+  "whatsapp",
+] as const;
 export const minimumCompletionTimeMs = 3000;
 
 const stripControlCharacters = (value: string) =>
@@ -24,38 +30,57 @@ const optionalUrl = z.preprocess(
     .optional(),
 );
 
-export const contactFormSchema = z.object({
-  type: z.enum(contactTypes).default("client"),
-  name: limitedText(80).pipe(z.string().min(2, "Please add your name.")),
-  email: z.string().trim().email("Please add a valid email address.").max(254),
-  phone: z.preprocess(
-    (value) => (value === "" ? undefined : value),
-    z
-      .string()
-      .trim()
-      .max(32)
-      .regex(/^[+\d\s().-]+$/, "Please add a valid phone number.")
-      .optional(),
-  ),
-  company: optionalText(120),
-  linkedin: optionalUrl,
-  briefType: limitedText(80).pipe(
-    z.string().min(2, "Please choose an enquiry type."),
-  ),
-  message: limitedText(2000).pipe(
-    z.string().min(10, "Please add a little more detail."),
-  ),
-  consent: z.preprocess(
-    (value) => (value === true ? "yes" : value),
-    z.literal("yes", { errorMap: () => ({ message: "Consent is required." }) }),
-  ),
-  website: z.string().max(0, "Spam check failed.").optional().default(""),
-  startedAt: z.coerce
-    .number()
-    .int()
-    .positive("Please reload the form and try again."),
-  jobTitle: optionalText(160),
-});
+export const contactFormSchema = z
+  .object({
+    type: z.enum(contactTypes).default("client"),
+    name: limitedText(80).pipe(z.string().min(2, "Please add your name.")),
+    email: z.string().trim().email("Please add a valid email address.").max(254),
+    phone: z.preprocess(
+      (value) => (value === "" ? undefined : value),
+      z
+        .string()
+        .trim()
+        .max(32)
+        .regex(/^[+\d\s().-]+$/, "Please add a valid phone number.")
+        .optional(),
+    ),
+    preferredContactMethod: z
+      .enum(preferredContactMethods)
+      .default("no_preference"),
+    company: optionalText(120),
+    linkedin: optionalUrl,
+    briefType: limitedText(80).pipe(
+      z.string().min(2, "Please choose an enquiry type."),
+    ),
+    message: limitedText(2000).pipe(
+      z.string().min(10, "Please add a little more detail."),
+    ),
+    consent: z.preprocess(
+      (value) => (value === true ? "yes" : value),
+      z.literal("yes", {
+        errorMap: () => ({ message: "Consent is required." }),
+      }),
+    ),
+    website: z.string().max(0, "Spam check failed.").optional().default(""),
+    startedAt: z.coerce
+      .number()
+      .int()
+      .positive("Please reload the form and try again."),
+    jobTitle: optionalText(160),
+  })
+  .superRefine((payload, ctx) => {
+    if (
+      ["phone", "whatsapp"].includes(payload.preferredContactMethod) &&
+      !payload.phone
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["phone"],
+        message:
+          "Please add a phone number if you prefer phone or WhatsApp contact.",
+      });
+    }
+  });
 
 export type ContactFormPayload = z.infer<typeof contactFormSchema>;
 

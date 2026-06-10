@@ -241,4 +241,11 @@ docs/candidate-data-journey.md
 docs/cv-storage-and-retention.md
 ```
 
+WhatsApp Business follow-up:
+
+```txt
+database/migrations/002_whatsapp_business_messages.sql
+docs/whatsapp-business-cloud-api.md
+```
+
 Final rule: no fake compliance, no public CV links, no secrets in GitHub, and no duplicate public CMS content in Postgres.

@@ -135,6 +135,7 @@ docs/railway-deployment.md
 docs/RAILWAY-POSTGRES-BACKEND.md
 docs/candidate-data-journey.md
 docs/cv-storage-and-retention.md
+docs/whatsapp-business-cloud-api.md
 docs/MASTER-BUILD-COMPLETION-REPORT.md
 ```
 

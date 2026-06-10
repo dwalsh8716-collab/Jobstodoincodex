@@ -47,6 +47,16 @@ describe("contact form validation", () => {
 
     expect(result.success).toBe(false);
   });
+
+  it("requires a phone number when WhatsApp is preferred", () => {
+    const result = contactFormSchema.safeParse({
+      ...basePayload,
+      phone: "",
+      preferredContactMethod: "whatsapp",
+    });
+
+    expect(result.success).toBe(false);
+  });
 });
 
 describe("contact server action response shape", () => {

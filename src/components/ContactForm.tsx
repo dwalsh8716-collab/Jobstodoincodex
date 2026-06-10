@@ -224,6 +224,25 @@ export function ContactForm({
           required
         />
       </div>
+      <div className="form-row">
+        <label htmlFor={`${type}-preferred-contact`}>
+          Preferred contact method
+        </label>
+        <select
+          id={`${type}-preferred-contact`}
+          name="preferredContactMethod"
+          defaultValue="no_preference"
+        >
+          <option value="no_preference">No preference</option>
+          <option value="email">Email</option>
+          <option value="phone">Phone</option>
+          <option value="whatsapp">WhatsApp</option>
+        </select>
+        <p className="form-note">
+          If you choose WhatsApp or phone, add a mobile number above. This is
+          for this enquiry only, not marketing broadcasts.
+        </p>
+      </div>
       <label className="consent" htmlFor={`${type}-consent`}>
         <input
           id={`${type}-consent`}
@@ -242,7 +261,7 @@ export function ContactForm({
               .
             </>
           ) : (
-            "I agree to be contacted about this enquiry. Nothing is shared without permission."
+            "I agree to be contacted about this enquiry using the details I've provided, including WhatsApp if I select it as my preferred contact method. Nothing is shared without permission."
           )}
         </span>
       </label>
