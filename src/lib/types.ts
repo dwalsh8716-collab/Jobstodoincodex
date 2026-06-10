@@ -46,6 +46,7 @@ export type Service = {
   howEssentialWorks: string[];
   mistakes: string[];
   faqs: FAQ[];
+  relatedServiceSlugs: string[];
   relatedInsightSlugs: string[];
   relatedCaseStudySlugs: string[];
   cta: CTA;
@@ -103,7 +104,13 @@ export type SalarySnapshot = {
   market: string;
   intro: string;
   commentary: string[];
-  rows: Array<{ role: string; low: string; mid: string; high: string; notes: string }>;
+  rows: Array<{
+    role: string;
+    low: string;
+    mid: string;
+    high: string;
+    notes: string;
+  }>;
   hiringNotes: string[];
   candidateAvailability: string[];
   takeaways: string[];

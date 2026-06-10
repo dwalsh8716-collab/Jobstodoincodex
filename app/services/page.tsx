@@ -8,7 +8,7 @@ export const metadata = createMetadata({
   title: "Recruitment Services | Essential Resourcing",
   description:
     "Leadership search, strategic interim, agency recruitment, client-side marketing recruitment and senior recruitment services.",
-  path: "/services"
+  path: "/services",
 });
 
 export default function ServicesPage() {
@@ -18,10 +18,10 @@ export default function ServicesPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Services</p>
-          <h1>Marketing and comms hiring without the recruitment nonsense.</h1>
+          <h1>Marketing and comms hiring where the brief actually matters.</h1>
           <p className="lede">
-            Clear service routes for senior hiring, retained search, strategic interim, agency recruitment and
-            client-side marketing roles.
+            Clear service routes for senior hiring, retained search, strategic
+            interim, agency recruitment and client-side marketing roles.
           </p>
         </div>
       </section>
@@ -41,15 +41,38 @@ export default function ServicesPage() {
           <div className="grid">
             <article className="card">
               <h3>Use Leadership Search</h3>
-              <p>When the role is senior, sensitive, retained, hard to fill or commercially important.</p>
+              <p>
+                When the role is senior, sensitive, retained, hard to fill or
+                commercially important.
+              </p>
             </article>
             <article className="card">
               <h3>Use Strategic Interim</h3>
-              <p>When you need senior brains in the business without another full-time salary.</p>
+              <p>
+                When you need senior brains in the business without another
+                full-time salary.
+              </p>
+            </article>
+            <article className="card">
+              <h3>Use Agency Recruitment</h3>
+              <p>
+                When the hire needs agency pace, client maturity, commercial
+                sense and cultural fit.
+              </p>
+            </article>
+            <article className="card">
+              <h3>Use Client-side Marketing Recruitment</h3>
+              <p>
+                When the hire needs to connect demand, performance, brand and
+                wider business growth.
+              </p>
             </article>
             <article className="card">
               <h3>Use Senior Recruitment</h3>
-              <p>When the role is specialist or mid-to-senior and quality matters more than CV volume.</p>
+              <p>
+                When the role is specialist or mid-to-senior and quality matters
+                more than CV volume.
+              </p>
             </article>
           </div>
         </div>

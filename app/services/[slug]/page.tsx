@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CaseStudyCard, InsightCard } from "@/components/Cards";
+import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { SchemaScript } from "@/components/SchemaScript";
@@ -11,6 +11,31 @@ import { createMetadata, serviceSchema } from "@/lib/seo";
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+const serviceProcessSteps = [
+  {
+    title: "Work out what you are really hiring for",
+    description: "Not just the job title. The problem behind it.",
+  },
+  {
+    title: "Define what good actually looks like",
+    description:
+      "Experience, judgement, behaviours, salary, expectations and what the person needs to deliver.",
+  },
+  {
+    title: "Position the opportunity properly",
+    description:
+      "Strong people need a reason to care. A job spec on its own rarely does the job.",
+  },
+  {
+    title: "Build a focused shortlist",
+    description: "Fewer CVs. Better fit. Proper context.",
+  },
+  {
+    title: "Keep the process moving",
+    description: "Clear feedback, honest advice and no recruitment theatre.",
+  },
+];
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -23,7 +48,7 @@ export async function generateMetadata({ params }: Props) {
   return createMetadata({
     title: service.seoTitle,
     description: service.metaDescription,
-    path: `/services/${service.slug}`
+    path: `/services/${service.slug}`,
   });
 }
 
@@ -32,9 +57,20 @@ export default async function ServicePage({ params }: Props) {
   const service = getService(slug);
   if (!service) notFound();
 
-  const relatedInsights = insights.filter((insight) => service.relatedInsightSlugs.includes(insight.slug));
-  const relatedCases = caseStudies.filter(
-    (caseStudy) => caseStudy.status === "published" && service.relatedCaseStudySlugs.includes(caseStudy.slug)
+  const relatedInsights = insights.filter((insight) =>
+    service.relatedInsightSlugs.includes(insight.slug),
+  );
+  const relatedServices = services.filter((item) =>
+    service.relatedServiceSlugs.includes(item.slug),
+  );
+  const relatedCases = caseStudies.filter((caseStudy) =>
+    service.relatedCaseStudySlugs.includes(caseStudy.slug),
+  );
+  const publishedCases = relatedCases.filter(
+    (caseStudy) => caseStudy.status === "published",
+  );
+  const draftCases = relatedCases.filter(
+    (caseStudy) => caseStudy.status === "draft",
   );
 
   return (
@@ -42,7 +78,7 @@ export default async function ServicePage({ params }: Props) {
       <Breadcrumbs
         items={[
           { name: "Services", href: "/services" },
-          { name: service.title, href: `/services/${service.slug}` }
+          { name: service.title, href: `/services/${service.slug}` },
         ]}
       />
       <section className="section dark">
@@ -55,7 +91,7 @@ export default async function ServicePage({ params }: Props) {
               {service.cta.label}
             </Link>
             <Link className="button button-secondary" href="/case-studies">
-              View proof structure
+              View proof standards
             </Link>
           </div>
         </div>
@@ -99,9 +135,27 @@ export default async function ServicePage({ params }: Props) {
             <p className="eyebrow">Process</p>
             <h2>How Essential works.</h2>
             <p className="lede">
-              The process is deliberately tight: sharper brief, better market read, direct candidate engagement and
-              honest feedback.
+              The process is deliberately tight because weak briefs and slow
+              decisions cost you the strongest people.
             </p>
+          </div>
+          <div className="grid grid-2">
+            {serviceProcessSteps.map((step) => (
+              <article className="card" key={step.title}>
+                <span className="tag">Process</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section surface">
+        <div className="container split split-start">
+          <div>
+            <p className="eyebrow">Service judgement</p>
+            <h2>What changes on this kind of brief.</h2>
           </div>
           <div className="statement-list">
             {service.howEssentialWorks.map((item) => (
@@ -127,15 +181,58 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      {relatedCases.length ? (
-        <section className="section surface">
+      <section className="section surface">
+        <div className="container section-heading">
+          <p className="eyebrow">Related proof</p>
+          <h2>Proof only works when it is specific.</h2>
+          <p className="lede">
+            Case studies stay unpublished until the outcome and permission are
+            clear. Until then, the useful proof is the shape of the brief, the
+            pressure behind it and the standard David would hold it to.
+          </p>
+        </div>
+        <div className="container grid grid-3">
+          {publishedCases.map((caseStudy) => (
+            <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+          ))}
+          {draftCases.map((caseStudy) => (
+            <article className="card lift-card" key={caseStudy.slug}>
+              <span className="tag">Proof being checked</span>
+              <h3>{caseStudy.title}</h3>
+              <p>
+                <strong>Role:</strong> {caseStudy.roleHired}
+              </p>
+              <p>{caseStudy.challengeSummary}</p>
+              <p className="meta">
+                Full case study held back until the detail is verified.
+              </p>
+            </article>
+          ))}
+          {!relatedCases.length ? (
+            <article className="card lift-card">
+              <span className="tag">Proof standard</span>
+              <h3>No recycled logos.</h3>
+              <p>
+                David will talk through relevant context directly rather than
+                publishing loose claims that have not been checked.
+              </p>
+              <Link className="text-link" href="/case-studies">
+                View proof standards
+              </Link>
+            </article>
+          ) : null}
+        </div>
+      </section>
+
+      {relatedServices.length ? (
+        <section className="section muted">
           <div className="container section-heading">
-            <p className="eyebrow">Related proof</p>
-            <h2>Case study structure.</h2>
+            <p className="eyebrow">Related services</p>
+            <h2>Other routes that may fit the brief.</h2>
           </div>
           <div className="container grid grid-3">
-            {relatedCases.map((caseStudy) => (
-              <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+            {relatedServices.map((item) => (
+              <ServiceCard key={item.slug} service={item} />
             ))}
           </div>
         </section>
