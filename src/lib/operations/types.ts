@@ -28,6 +28,17 @@ export type DataSubjectRequestSummary = {
   createdAt: string;
 };
 
+export type RetentionReviewSummary = {
+  entityType: string;
+  entityId: string;
+  entityLabel: string;
+  retentionCategory: string;
+  retentionStatus: string;
+  dataRetentionUntil?: string;
+  retentionReviewAt?: string;
+  recommendedAction: string;
+};
+
 export type OperationsOverview = {
   status: OperationsBackendStatus;
   enquiryCount: number;
@@ -37,6 +48,7 @@ export type OperationsOverview = {
   openTaskCount: number;
   dataRequestCount: number;
   openDataRequestCount: number;
+  retentionReviewCount: number;
   latestEnquiries: Array<{
     id: string;
     name: string;
@@ -47,4 +59,5 @@ export type OperationsOverview = {
     createdAt: string;
   }>;
   latestDataRequests: DataSubjectRequestSummary[];
+  latestRetentionReviews: RetentionReviewSummary[];
 };

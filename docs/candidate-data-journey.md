@@ -81,6 +81,9 @@ Candidate/application schema fields include:
 - consent timestamp
 - privacy notice version
 - data retention date
+- retention category
+- retention review date
+- retention status
 - deletion/export request fields
 - archived/deleted fields
 - audit-log support
@@ -97,6 +100,26 @@ Full boundary notes:
 ```txt
 docs/data-boundaries.md
 ```
+
+## Retention Review
+
+Candidate and job enquiries now receive a retention category and review date
+when written to the private operations database.
+
+Starting categories:
+
+- job/application enquiry: `role_application`
+- speculative candidate enquiry: `general_candidate_enquiry`
+- talent pool record: `talent_pool` only after clear opt-in
+
+The staged retention engine is documented here:
+
+```txt
+docs/data-retention-engine.md
+```
+
+It runs in dry-run mode by default, creates admin review tasks before any
+action, and does not delete or anonymise candidate data automatically.
 
 ## Emails
 

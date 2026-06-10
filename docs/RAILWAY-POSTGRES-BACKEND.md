@@ -19,6 +19,7 @@ Railway Postgres is now staged as the private operations database for:
 - consent records
 - audit logs
 - data/privacy requests
+- retention review queue
 
 No public website content has moved from Sanity to Postgres.
 
@@ -57,6 +58,7 @@ Added:
 - Contact form hook that can save enquiries to Postgres once Railway is configured.
 - Candidate data/privacy request hook that can save DSAR requests to Postgres once Railway is configured.
 - Central audit logging utility and protected read-only audit view.
+- Review-first retention engine and admin retention queue.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -95,6 +97,9 @@ Migration:
 
 ```txt
 database/migrations/001_operations_foundation.sql
+database/migrations/003_data_subject_requests.sql
+database/migrations/004_audit_logging_enhancements.sql
+database/migrations/005_retention_engine.sql
 ```
 
 Tables:
@@ -113,6 +118,7 @@ Tables:
 - `consent_records`
 - `audit_logs`
 - `data_subject_requests`
+- `retention_review_queue` view
 
 Important privacy fields are included for candidate/application records:
 
@@ -120,8 +126,13 @@ Important privacy fields are included for candidate/application records:
 - `consent_timestamp`
 - `privacy_notice_version`
 - `data_retention_until`
+- `retention_category`
+- `retention_review_at`
+- `retention_status`
 - `delete_requested_at`
 - `export_requested_at`
+- `deletion_approved_at`
+- `anonymised_at`
 - `deleted_at`
 - `deletion_reason`
 
@@ -152,6 +163,8 @@ Current dashboard:
 - open data/privacy request count
 - latest enquiries table
 - latest data/privacy requests table
+- retention review count
+- latest retention review table
 - link to read-only audit log view
 - setup checklist
 
@@ -227,6 +240,8 @@ Implemented:
 - retention/delete/export fields in schema
 - DSAR request table and protected dashboard summary
 - enriched append-only audit logs with actor, action, entity, metadata and hashed request context
+- dry-run retention check and review-first apply script
+- no unauthenticated retention/cron endpoint
 - server-side form validation remains in place
 - form spam/timing/honeypot controls remain in place
 
@@ -238,6 +253,7 @@ Still manual before live operations:
 - private storage provider for CVs
 - legal review of retention wording
 - backup and access-control policy
+- approval before `RETENTION_ENGINE_ENABLED=true`
 - admin user/role operational policy
 - decision on Prisma or Drizzle once package registry/authentication is available
 

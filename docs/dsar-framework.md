@@ -111,6 +111,17 @@ When Postgres is enabled, each request creates:
 - an `activities` row
 - an `audit_logs` row using the `dsar_request_created` action and a hashed requester identifier
 
+The request also receives retention lifecycle fields:
+
+- `retention_category`
+- `data_retention_until`
+- `retention_review_at`
+- `retention_status`
+- `retention_last_checked_at`
+
+DSAR records appear in the staged retention review queue. They are not deleted
+or anonymised automatically.
+
 ## Admin Workflow
 
 Route:
@@ -181,6 +192,7 @@ When those steps are built, they should use the central audit utility described 
 
 ```txt
 docs/audit-logging.md
+docs/data-retention-engine.md
 ```
 
 ## Deletion And Anonymisation Workflow

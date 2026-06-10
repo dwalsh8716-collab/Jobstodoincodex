@@ -64,6 +64,12 @@ Database status command:
 npm run db:status
 ```
 
+Retention dry-run command:
+
+```bash
+npm run retention:check
+```
+
 The Railway image is configured through `nixpacks.toml` to include the PostgreSQL client used by the migration/status scripts.
 
 ## Dashboard Setup
@@ -82,14 +88,17 @@ The Railway image is configured through `nixpacks.toml` to include the PostgreSQ
 12. Deploy the app.
 13. Run `npm run db:status`.
 14. Run `npm run db:migrate`.
-15. Set `OPERATIONS_DB_ENABLED=true`.
-16. Redeploy.
-17. Visit `/api/health`.
-18. Log in at `/cms`.
-19. Open `/admin`.
-20. Submit a test contact form.
-21. Confirm the enquiry appears in `/admin`.
-22. Add a custom domain after QA, not before.
+15. Run `npm run retention:check`.
+16. Set `OPERATIONS_DB_ENABLED=true`.
+17. Keep `RETENTION_ENGINE_ENABLED=false` until legal/privacy and backup review is complete.
+18. Redeploy.
+19. Visit `/api/health`.
+20. Log in at `/cms`.
+21. Open `/admin`.
+22. Submit a test contact form.
+23. Confirm the enquiry appears in `/admin`.
+24. Confirm retention review fields appear for due records.
+25. Add a custom domain after QA, not before.
 
 ## Required Variables
 
@@ -105,6 +114,15 @@ Private operations database:
 DATABASE_URL
 OPERATIONS_DB_ENABLED
 OPERATIONS_PRIVACY_SALT
+RETENTION_ENGINE_ENABLED
+RETENTION_DRY_RUN
+RETENTION_ROLE_APPLICATION_MONTHS
+RETENTION_TALENT_POOL_MONTHS
+RETENTION_GENERAL_CANDIDATE_MONTHS
+RETENTION_CLIENT_ENQUIRY_MONTHS
+RETENTION_CV_FILE_MONTHS
+RETENTION_DSAR_RECORD_MONTHS
+RETENTION_AUDIT_LOG_MONTHS
 ```
 
 Sanity:
@@ -184,6 +202,38 @@ npm run db:migrate
 ```
 
 Only set `OPERATIONS_DB_ENABLED=true` after migrations succeed.
+
+## Retention Checks
+
+The retention engine is review-first.
+
+Safe dry-run:
+
+```bash
+npm run retention:check
+```
+
+Apply mode:
+
+```bash
+RETENTION_ENGINE_ENABLED=true npm run retention:apply
+```
+
+Apply mode creates review tasks and audit entries only. It does not delete rows,
+anonymise data or delete CV files.
+
+Keep `RETENTION_ENGINE_ENABLED=false` until:
+
+- legal review confirms the retention periods
+- Railway Postgres backups are understood
+- David has approved the first dry-run output
+- private CV storage and deletion rules are agreed
+
+Full operating notes:
+
+```txt
+docs/data-retention-engine.md
+```
 
 ## CV And File Storage
 

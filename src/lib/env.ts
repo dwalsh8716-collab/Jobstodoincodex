@@ -59,15 +59,76 @@ const serverEnvSchema = publicEnvSchema.extend({
   CMS_GATE_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
   DATABASE_URL: z.preprocess(emptyToUndefined, z.string().optional()),
   OPERATIONS_DB_ENABLED: z.preprocess(emptyToUndefined, z.string().optional()),
-  OPERATIONS_PRIVACY_SALT: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_ENABLED: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_PHONE_NUMBER_ID: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_ACCESS_TOKEN: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_VERIFY_TOKEN: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_APP_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_DEFAULT_TEMPLATE: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_TEMPLATE_LANGUAGE: z.preprocess(emptyToUndefined, z.string().optional()),
-  WHATSAPP_BUSINESS_API_VERSION: z.preprocess(emptyToUndefined, z.string().optional()),
+  OPERATIONS_PRIVACY_SALT: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_ENGINE_ENABLED: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_DRY_RUN: z.preprocess(emptyToUndefined, z.string().optional()),
+  RETENTION_ROLE_APPLICATION_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_TALENT_POOL_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_GENERAL_CANDIDATE_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_CLIENT_ENQUIRY_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_CV_FILE_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_DSAR_RECORD_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  RETENTION_AUDIT_LOG_MONTHS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CRON_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
+  WHATSAPP_BUSINESS_ENABLED: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_PHONE_NUMBER_ID: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_ACCESS_TOKEN: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_VERIFY_TOKEN: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_APP_SECRET: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_DEFAULT_TEMPLATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_TEMPLATE_LANGUAGE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_API_VERSION: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   RESEND_API_KEY: z.preprocess(emptyToUndefined, z.string().optional()),
   CONTACT_TO_EMAIL: z.preprocess(
     emptyToUndefined,

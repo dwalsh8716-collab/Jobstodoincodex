@@ -96,6 +96,7 @@ export default async function AdminPage() {
     { label: "Applications", value: overview.applicationCount },
     { label: "Open tasks", value: overview.openTaskCount },
     { label: "Open data requests", value: overview.openDataRequestCount },
+    { label: "Retention reviews", value: overview.retentionReviewCount },
   ];
 
   return (
@@ -111,9 +112,15 @@ export default async function AdminPage() {
         </div>
 
         <div className={styles.adminStatus}>
-          <span className="tag">{overview.status.state.replaceAll("_", " ")}</span>
+          <span className="tag">
+            {overview.status.state.replaceAll("_", " ")}
+          </span>
           <div>
-            <h2>{overview.status.enabled ? "Operations database" : "Database staged"}</h2>
+            <h2>
+              {overview.status.enabled
+                ? "Operations database"
+                : "Database staged"}
+            </h2>
             <p>{overview.status.message}</p>
           </div>
           <div className={styles.adminStatusActions}>
@@ -224,6 +231,61 @@ export default async function AdminPage() {
                 No data/privacy requests are showing yet. When one arrives,
                 verify identity before releasing, deleting or changing private
                 candidate data.
+              </p>
+            )}
+          </section>
+
+          <section className={styles.adminPanel}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">Retention review</p>
+                <h2>Review before deleting anything.</h2>
+              </div>
+            </div>
+            {overview.latestRetentionReviews.length ? (
+              <div className={styles.adminTableWrap}>
+                <table className={styles.adminTable}>
+                  <thead>
+                    <tr>
+                      <th>Record</th>
+                      <th>Category</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                      <th>Retention date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {overview.latestRetentionReviews.map((record) => (
+                      <tr key={`${record.entityType}-${record.entityId}`}>
+                        <td>
+                          {formatLookup(
+                            {
+                              candidate: "Candidate",
+                              application: "Application",
+                              enquiry: "Enquiry",
+                              cv_file: "CV/file metadata",
+                              data_subject_request: "Data/privacy request",
+                            },
+                            record.entityType,
+                          )}
+                          <span className={styles.adminSubtle}>
+                            {record.entityLabel}
+                          </span>
+                        </td>
+                        <td>{record.retentionCategory.replaceAll("_", " ")}</td>
+                        <td>{record.retentionStatus.replaceAll("_", " ")}</td>
+                        <td>{record.recommendedAction.replaceAll("_", " ")}</td>
+                        <td>{formatDueDate(record.dataRetentionUntil)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className={styles.adminEmpty}>
+                No records are currently due for retention review. The retention
+                engine is staged to create review tasks first, not delete data
+                automatically.
               </p>
             )}
           </section>

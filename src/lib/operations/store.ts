@@ -5,14 +5,15 @@ import type { DataSubjectRequestPayload } from "@/validations/data-subject-reque
 import { candidatePrivacyNoticeVersion } from "@/lib/candidate-trust";
 import { dataSubjectRequestDueDays } from "@/lib/dsar";
 import {
+  retentionDatesForCategory,
+  type RetentionCategory,
+} from "@/lib/retention";
+import {
   getOperationsBackendStatus,
   hashPrivateValue,
   runPsqlJson,
 } from "./database";
-import type {
-  OperationsOverview,
-  OperationWriteResult,
-} from "./types";
+import type { OperationsOverview, OperationWriteResult } from "./types";
 
 type RequestMeta = {
   ip?: string;
@@ -20,6 +21,18 @@ type RequestMeta = {
 };
 
 export { getOperationsBackendStatus } from "./database";
+
+function dateOnly(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function contactRetentionCategory(
+  type: ContactFormPayload["type"],
+): RetentionCategory {
+  if (type === "client") return "client_hiring_enquiry";
+  if (type === "job") return "role_application";
+  return "general_candidate_enquiry";
+}
 
 export async function saveContactEnquiryToOperations(
   payload: ContactFormPayload,
@@ -36,6 +49,8 @@ export async function saveContactEnquiryToOperations(
     return { ok: false, required, reason: status.state };
   }
 
+  const retentionCategory = contactRetentionCategory(payload.type);
+  const retentionDates = retentionDatesForCategory(retentionCategory);
   const record = {
     source: "website_contact_form",
     enquiryType: payload.type,
@@ -52,6 +67,11 @@ export async function saveContactEnquiryToOperations(
     priority: payload.type === "client" ? "high" : "normal",
     ipHash: hashPrivateValue(meta.ip),
     userAgentHash: hashPrivateValue(meta.userAgent),
+    consentSource: "website_contact_form",
+    retentionCategory,
+    dataRetentionUntil: dateOnly(retentionDates.retentionUntil),
+    retentionReviewAt: dateOnly(retentionDates.reviewAt),
+    retentionStatus: "active",
     privacyNoticeVersion:
       payload.type === "client"
         ? "operations-foundation-v1"
@@ -79,6 +99,11 @@ export async function saveContactEnquiryToOperations(
             consent_to_contact,
             marketing_consent,
             priority,
+            consent_source,
+            retention_category,
+            data_retention_until,
+            retention_review_at,
+            retention_status,
             metadata
           )
           select
@@ -95,6 +120,11 @@ export async function saveContactEnquiryToOperations(
             coalesce((data->>'consentToContact')::boolean, false),
             coalesce((data->>'marketingConsent')::boolean, false),
             coalesce(nullif(data->>'priority', ''), 'normal'),
+            data->>'consentSource',
+            data->>'retentionCategory',
+            (data->>'dataRetentionUntil')::date,
+            (data->>'retentionReviewAt')::date,
+            coalesce(nullif(data->>'retentionStatus', ''), 'active'),
             jsonb_build_object(
               'privacyNoticeVersion', data->>'privacyNoticeVersion'
             )
@@ -172,6 +202,7 @@ export async function saveDataSubjectRequestToOperations(
     return { ok: false, required, reason: status.state };
   }
 
+  const retentionDates = retentionDatesForCategory("dsar_record");
   const record = {
     requestType: payload.requestType,
     requesterName: payload.name,
@@ -186,6 +217,10 @@ export async function saveDataSubjectRequestToOperations(
     ipHash: hashPrivateValue(meta.ip),
     userAgentHash: hashPrivateValue(meta.userAgent),
     privacyNoticeVersion: candidatePrivacyNoticeVersion,
+    retentionCategory: "dsar_record",
+    dataRetentionUntil: dateOnly(retentionDates.retentionUntil),
+    retentionReviewAt: dateOnly(retentionDates.reviewAt),
+    retentionStatus: "active",
   };
 
   try {
@@ -208,6 +243,10 @@ export async function saveDataSubjectRequestToOperations(
             due_at,
             ip_hash,
             user_agent_hash,
+            retention_category,
+            data_retention_until,
+            retention_review_at,
+            retention_status,
             metadata
           )
           select
@@ -223,6 +262,10 @@ export async function saveDataSubjectRequestToOperations(
             now() + make_interval(days => coalesce((data->>'dueDays')::int, 30)),
             nullif(data->>'ipHash', ''),
             nullif(data->>'userAgentHash', ''),
+            data->>'retentionCategory',
+            (data->>'dataRetentionUntil')::date,
+            (data->>'retentionReviewAt')::date,
+            coalesce(nullif(data->>'retentionStatus', ''), 'active'),
             jsonb_build_object(
               'privacyNoticeVersion', data->>'privacyNoticeVersion',
               'manualReviewRequired', true,
@@ -305,8 +348,10 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
       openTaskCount: 0,
       dataRequestCount: 0,
       openDataRequestCount: 0,
+      retentionReviewCount: 0,
       latestEnquiries: [],
       latestDataRequests: [],
+      latestRetentionReviews: [],
     };
   }
 
@@ -329,6 +374,11 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
           select count(*)::int
           from data_subject_requests
           where status not in ('completed', 'closed', 'rejected')
+        ),
+        'retentionReviewCount', (
+          select count(*)::int
+          from retention_review_queue
+          where recommended_action <> 'no_action'
         ),
         'latestEnquiries', coalesce((
           select json_agg(row_to_json(latest))
@@ -361,6 +411,32 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
             order by created_at desc
             limit 8
           ) latest_requests
+        ), '[]'::json),
+        'latestRetentionReviews', coalesce((
+          select json_agg(row_to_json(latest_retention))
+          from (
+            select
+              entity_type as "entityType",
+              entity_id::text as "entityId",
+              entity_label as "entityLabel",
+              retention_category as "retentionCategory",
+              retention_status as "retentionStatus",
+              data_retention_until as "dataRetentionUntil",
+              retention_review_at as "retentionReviewAt",
+              recommended_action as "recommendedAction"
+            from retention_review_queue
+            where recommended_action <> 'no_action'
+            order by
+              case recommended_action
+                when 'review_deletion_request' then 1
+                when 'review_expired_retention' then 2
+                when 'review_due' then 3
+                else 4
+              end,
+              data_retention_until asc nulls last,
+              retention_review_at asc nulls last
+            limit 8
+          ) latest_retention
         ), '[]'::json)
       )::text;
     `);
@@ -383,8 +459,10 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
       openTaskCount: 0,
       dataRequestCount: 0,
       openDataRequestCount: 0,
+      retentionReviewCount: 0,
       latestEnquiries: [],
       latestDataRequests: [],
+      latestRetentionReviews: [],
     };
   }
 }

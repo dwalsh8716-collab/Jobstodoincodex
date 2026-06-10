@@ -34,6 +34,7 @@ Added:
 - admin dashboard view audit event
 - read-only `/admin/audit` route
 - audit utility sanitisation tests
+- retention review task creation through the staged retention engine
 
 ## What Is Logged Now
 
@@ -45,6 +46,7 @@ Implemented event sources:
 - `operations_dashboard_viewed`
 - `audit_log_viewed`
 - `dsar_request_created`
+- `task_created` for retention review tasks
 
 Prepared typed actions include:
 
@@ -197,8 +199,19 @@ David should approve:
 - database backup retention
 - whether and how actor details are anonymised after an admin leaves
 - how DSAR deletion/anonymisation interacts with minimal compliance audit records
+- how retention review, deletion and anonymisation actions should be retained
 
 The recommended principle is to retain enough audit data to defend sensitive data handling decisions, without storing full candidate content in the log itself.
+
+Retention engine notes:
+
+```txt
+docs/data-retention-engine.md
+```
+
+The first-stage engine logs review-task creation. Future approved deletion or
+anonymisation must log the actor, reason, entity, timestamp and file cleanup
+result. Do not delete audit logs as part of a general cleanup job.
 
 ## Testing Checklist
 
@@ -212,6 +225,7 @@ Before launch:
 - confirm no edit/delete audit routes exist
 - confirm audit log trigger blocks normal update/delete
 - confirm DSAR creation writes `dsar_request_created`
+- confirm retention apply mode writes audit entries for review tasks
 - confirm CV routes, once built, log upload/view/download/delete
 - confirm signed URL values are never logged
 - confirm raw CV content is never logged

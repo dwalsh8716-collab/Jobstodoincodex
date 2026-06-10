@@ -1,6 +1,10 @@
 .adminShell {
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 42%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 10%, transparent),
+      transparent 42%
+    ),
     var(--color-bg);
 }
 
@@ -34,7 +38,7 @@
 
 .adminGrid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 14px;
   margin-top: 22px;
 }
@@ -194,12 +198,6 @@
     justify-content: flex-start;
   }
 
-  .adminGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
   .adminGrid {
     grid-template-columns: 1fr;
   }

@@ -82,10 +82,26 @@ Postgres already has fields for:
 - consent timestamp
 - privacy notice version
 - data retention date
+- retention category
+- retention review date
+- retention status
 - deletion request date
+- deletion approval date
 - export request date
 - deleted date
+- anonymised date
 - deletion reason
+- anonymisation reason
+
+Retention engine notes:
+
+```txt
+docs/data-retention-engine.md
+```
+
+The current engine can flag CV/file metadata for review, but it does not delete
+files. Actual CV deletion must wait until private object storage, signed access,
+approval workflow and audit logging are in place.
 
 Formal candidate data/privacy requests are captured through:
 

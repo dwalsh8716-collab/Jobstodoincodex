@@ -73,6 +73,15 @@ Optional private operations database:
 - `DATABASE_URL`
 - `OPERATIONS_DB_ENABLED`
 - `OPERATIONS_PRIVACY_SALT`
+- `RETENTION_ENGINE_ENABLED`
+- `RETENTION_DRY_RUN`
+- `RETENTION_ROLE_APPLICATION_MONTHS`
+- `RETENTION_TALENT_POOL_MONTHS`
+- `RETENTION_GENERAL_CANDIDATE_MONTHS`
+- `RETENTION_CLIENT_ENQUIRY_MONTHS`
+- `RETENTION_CV_FILE_MONTHS`
+- `RETENTION_DSAR_RECORD_MONTHS`
+- `RETENTION_AUDIT_LOG_MONTHS`
 
 ## Design Adaptability
 
@@ -135,6 +144,7 @@ docs/railway-deployment.md
 docs/RAILWAY-POSTGRES-BACKEND.md
 docs/data-boundaries.md
 docs/audit-logging.md
+docs/data-retention-engine.md
 docs/candidate-data-journey.md
 docs/cv-storage-and-retention.md
 docs/whatsapp-business-cloud-api.md

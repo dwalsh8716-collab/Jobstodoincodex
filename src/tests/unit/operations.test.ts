@@ -54,6 +54,8 @@ describe("operations backend status", () => {
       dataRequestCount: 0,
       openDataRequestCount: 0,
       latestDataRequests: [],
+      retentionReviewCount: 0,
+      latestRetentionReviews: [],
     });
   });
 });
