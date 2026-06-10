@@ -20,15 +20,15 @@ export default function ClientsPage() {
           <p className="eyebrow">For clients</p>
           <h1>Marketing and comms hiring that actually moves the business forward.</h1>
           <p className="lede">
-            Essential helps clients hire senior and specialist marketing, PR, communications and digital talent with a
-            process that reduces risk instead of creating noise.
+            When the next senior hire has consequences, the brief needs sharper thinking than another pile of CVs.
+            Essential keeps the work focused on the person who can solve the problem.
           </p>
         </div>
       </section>
       <section className="section surface">
         <div className="container split split-start">
           <div>
-            <h2>What clients get.</h2>
+            <h2>What a sharper search gives you.</h2>
             <p className="lede">
               A sharper brief, honest challenge, stronger candidate engagement and a shortlist that is worth your time.
             </p>

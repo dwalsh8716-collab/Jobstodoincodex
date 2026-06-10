@@ -30,7 +30,7 @@ export default function AboutDavidPage() {
             </div>
           </div>
           <div className="founder-photo-slot">
-            <span>Add portrait</span>
+            <span>Founder-led</span>
             <strong>Human, direct, commercially sharp.</strong>
           </div>
         </div>

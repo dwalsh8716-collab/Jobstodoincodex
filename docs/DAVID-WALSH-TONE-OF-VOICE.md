@@ -1,6 +1,6 @@
 # David Walsh Tone Of Voice
 
-Use this for every Essential Resourcing page, component, CMS field label, CTA, FAQ, insight, job, case study and proof slot.
+Use this for every Essential Resourcing page, component, CMS field label, CTA, FAQ, insight, job, case study and proof placeholder.
 
 ## Core Voice
 

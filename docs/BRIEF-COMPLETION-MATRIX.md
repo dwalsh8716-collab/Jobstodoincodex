@@ -18,7 +18,7 @@ Status: Implemented with user override.
 - Original Manchester palette remains as an optional theme.
 - Typography uses Space Grotesk and Inter.
 - Logo assets are used for header, footer, icon, favicon and social preview.
-- David portrait remains a manual asset slot.
+- David portrait remains a manual asset placeholder.
 
 ## 13-17: Purpose, Journeys, Sitemap, Navigation, Homepage
 
@@ -27,7 +27,7 @@ Status: Implemented.
 - Required launch sitemap routes created.
 - Clean top navigation with services dropdown.
 - Homepage follows the requested 10-section conversion flow.
-- Proof slots are text-based and do not invent fake logos.
+- Proof placeholders are text-based and do not invent fake logos.
 - Final CTA included.
 
 ## 18-23: Services, Candidates, Jobs, Insights, Salary, Case Studies
@@ -96,7 +96,7 @@ Status: Implemented.
 Status: Implemented.
 
 - No lorem ipsum.
-- Draft proof and salary slots are clearly marked.
+- Draft proof and salary placeholders are clearly marked.
 - Content seeds included.
 - Internal links between services, insights, jobs, case studies and contact.
 

@@ -55,9 +55,8 @@ export default function AboutEssentialPage() {
             <p className="eyebrow">How it works</p>
             <h2>Essential is built around fewer roles, deeper work.</h2>
             <p className="lede">
-              The business is intentionally moving away from looking like a general recruitment supplier and towards a
-              premium, founder-led specialist search and recruitment partner for senior marketing, comms and agency
-              leadership hiring.
+              The business is not trying to look like a general recruiter. It is built as a serious, founder-led
+              specialist for senior marketing, comms and agency leadership hiring.
             </p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="/clients">

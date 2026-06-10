@@ -31,7 +31,7 @@ export function buildLlmsTxt() {
         bullet("For Candidates", "/candidates", "Candidate guidance for senior marketing, PR, digital and communications people."),
         bullet("About Essential", "/about-essential", "Founder-led principles, positioning and working style."),
         bullet("About David Walsh", "/about-david-walsh", "Founder biography and market judgement."),
-        bullet("Contact / Book a Call", "/contact", "Client, candidate and job enquiry routes.")
+        bullet("Contact David", "/contact", "Client, candidate and job enquiry routes.")
       ]
     ),
     section(

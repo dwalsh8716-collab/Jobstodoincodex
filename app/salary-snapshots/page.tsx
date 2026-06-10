@@ -7,7 +7,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "Salary & Market Snapshots | Essential Resourcing",
   description:
-    "CMS-editable salary and market snapshots for marketing, PR, communications and digital hiring across the North West.",
+    "Practical salary and market snapshots for marketing, PR, communications and digital hiring across the North West.",
   path: "/salary-snapshots"
 });
 

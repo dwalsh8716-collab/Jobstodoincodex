@@ -36,14 +36,14 @@ export default function InsightsPage() {
       <section className="section muted">
         <div className="container split split-start">
           <div>
-            <p className="eyebrow">Content seeds</p>
-            <h2>Draft ideas ready for CMS planning.</h2>
-            <p className="lede">These are not published as articles until they are written properly.</p>
+            <p className="eyebrow">Article ideas</p>
+            <h2>Useful topics, not SEO sludge.</h2>
+            <p className="lede">These only become articles when they have a clear point of view and something useful to say.</p>
           </div>
           <div className="grid">
             {insightSeeds.map((seed) => (
               <article className="card" key={seed}>
-                <span className="tag">Draft article idea</span>
+                <span className="tag">Article idea</span>
                 <h3>{seed}</h3>
               </article>
             ))}

@@ -19,7 +19,7 @@ const candidateFaqs = [
   {
     question: "Why is there no CV upload?",
     answer:
-      "Secure CV storage should be configured before uploads are accepted. For phase one, use LinkedIn or the contact route and David can request the CV safely."
+      "Because CVs should be handled properly. Send a LinkedIn URL or short note first; if a CV is useful, David will ask for it directly."
   }
 ];
 
@@ -39,15 +39,15 @@ export default function CandidatesPage() {
           <p className="eyebrow">For candidates</p>
           <h1>Good roles. Honest advice. No recruitment nonsense.</h1>
           <p className="lede">
-            Candidates matter here, but the site stays client-led. You still get a clear route to live roles, honest
-            salary/process advice and a proper conversation.
+            If the right role is not live today, you can still get honest salary/process advice and a proper
+            conversation without your CV being fired around the market.
           </p>
           <div className="button-row hero-actions">
             <Link className="button button-primary" href="/jobs">
               View live roles
             </Link>
             <Link className="button button-secondary" href="#candidate-contact">
-              Send your details
+              Send a note
             </Link>
           </div>
         </div>
@@ -76,11 +76,11 @@ export default function CandidatesPage() {
       <section className="section muted" id="candidate-contact">
         <div className="container split">
           <div>
-            <p className="eyebrow">Candidate contact</p>
-            <h2>Send your details without the nonsense.</h2>
-            <p className="lede">
-              Add a note and LinkedIn URL. CV upload can be enabled later once secure storage is configured.
-            </p>
+          <p className="eyebrow">Confidential note</p>
+          <h2>Send your details without the nonsense.</h2>
+          <p className="lede">
+              Add a note and LinkedIn URL. If a CV is useful, David will ask for it directly and handle it properly.
+          </p>
           </div>
           <ContactForm type="candidate" />
         </div>

@@ -33,7 +33,7 @@ export function InsightCard({ insight }: { insight: Insight }) {
 export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
     <article className="card lift-card">
-      <span className="tag">{caseStudy.status === "draft" ? "Draft proof slot" : "Case study"}</span>
+      <span className="tag">{caseStudy.status === "draft" ? "Proof being checked" : "Case study"}</span>
       <h3>{caseStudy.title}</h3>
       <p>
         <strong>Role:</strong> {caseStudy.roleHired}

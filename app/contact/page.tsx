@@ -5,7 +5,7 @@ import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
-  title: "Contact / Book a Call | Essential Resourcing",
+  title: "Contact David | Essential Resourcing",
   description:
     "Tell David Walsh what you are trying to hire and he will tell you honestly whether Essential Resourcing can help.",
   path: "/contact"
@@ -45,7 +45,7 @@ export default function ContactPage() {
               ) : null}
               {hasBookingUrl ? (
                 <Link className="button button-primary" href={siteConfig.bookingUrl}>
-                  Book a call
+                  Talk to David
                 </Link>
               ) : null}
             </div>

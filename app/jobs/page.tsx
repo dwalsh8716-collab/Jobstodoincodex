@@ -53,7 +53,7 @@ export default function JobsPage() {
           </div>
         )}
       </section>
-      <CTASection title="Looking for your next move?" text="Send a note or LinkedIn URL and David can come back to you properly." ctaLabel="Candidate contact" ctaHref="/candidates" />
+      <CTASection title="Looking for your next move?" text="Send a note or LinkedIn URL and David can come back to you properly." ctaLabel="Send a confidential note" ctaHref="/candidates" />
     </>
   );
 }

@@ -1,6 +1,6 @@
 # Codex Research Upgrade Pass
 
-This pass was added after the initial full build to push the project closer to a best-in-class Codex-built website.
+This pass was added after the initial full build to make the project sharper, safer and closer to launch.
 
 ## Sources Checked
 

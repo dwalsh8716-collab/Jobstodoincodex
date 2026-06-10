@@ -56,7 +56,7 @@ const serviceFaqs: FAQ[] = [
   {
     question: "Can you challenge the brief before we go to market?",
     answer:
-      "Yes. A useful recruitment partner should tell you if the role, salary, timing or process is likely to struggle before candidates start seeing the brief."
+      "Yes. A useful recruiter should tell you if the role, salary, timing or process is likely to struggle before candidates start seeing the brief."
   },
   {
     question: "Do you work outside Manchester and the North West?",
@@ -506,8 +506,8 @@ export const caseStudies: CaseStudy[] = [
       "Focused screening on client handling, mentoring and commercial judgement"
     ],
     process: "Draft example structure. Add real shortlist, process detail and permissioned timings before publication.",
-    outcome: "Draft proof slot. Add confirmed outcome before publication.",
-    impact: "Draft proof slot. Add real commercial impact if it can be disclosed.",
+    outcome: "Proof is being checked. Add the confirmed outcome before publication.",
+    impact: "Proof is being checked. Add real commercial impact if it can be disclosed.",
     featured: true,
     seoTitle: "Independent PR Agency Senior Account Director Case Study | Essential Resourcing",
     metaDescription:
@@ -535,8 +535,8 @@ export const caseStudies: CaseStudy[] = [
       "Screened for stage-fit and measurable commercial impact"
     ],
     process: "Draft example structure. Add real process detail before publication.",
-    outcome: "Draft proof slot. Add verified outcome before publication.",
-    impact: "Draft proof slot. Add real commercial impact if permission allows.",
+    outcome: "Proof is being checked. Add the verified outcome before publication.",
+    impact: "Proof is being checked. Add real commercial impact if permission allows.",
     featured: true,
     seoTitle: "Growth Brand Head of Marketing Case Study | Essential Resourcing",
     metaDescription:
@@ -564,8 +564,8 @@ export const caseStudies: CaseStudy[] = [
       "Kept scope focused on momentum, clarity and team confidence"
     ],
     process: "Draft example structure. Add real scope and timing before publication.",
-    outcome: "Draft proof slot. Add verified outcome before publication.",
-    impact: "Draft proof slot. Add real commercial impact if permission allows.",
+    outcome: "Proof is being checked. Add the verified outcome before publication.",
+    impact: "Proof is being checked. Add real commercial impact if permission allows.",
     featured: true,
     seoTitle: "Strategic Interim Agency Leadership Case Study | Essential Resourcing",
     metaDescription:
@@ -581,7 +581,7 @@ export const salarySnapshots: SalarySnapshot[] = [
     quarter: "Draft for 2026 update",
     market: "North West marketing",
     intro:
-      "A CMS-ready salary snapshot page for senior marketing roles in the North West. Replace validation notes with current salary data before publishing as advice.",
+      "A draft salary snapshot for senior marketing roles in the North West. Add current, checked salary data before publishing it as advice.",
     commentary: [
       "Salary data should be reviewed against current briefs, candidate conversations and market movement before publication.",
       "The table is intentionally semantic HTML so search engines and AI systems can understand the content."
@@ -623,7 +623,7 @@ export const salarySnapshots: SalarySnapshot[] = [
     ],
     seoTitle: "North West Marketing Salary Snapshot | Essential Resourcing",
     metaDescription:
-      "Draft CMS-ready North West marketing salary snapshot with semantic salary table and hiring notes."
+      "Draft North West marketing salary snapshot with semantic salary table and hiring notes."
   },
   {
     title: "PR & Communications Salary Snapshot",
@@ -642,7 +642,7 @@ export const salarySnapshots: SalarySnapshot[] = [
     candidateAvailability: ["Senior PR candidates often prioritise leadership quality and client mix, not only salary."],
     takeaways: ["Benchmark against responsibility, not title alone."],
     seoTitle: "PR & Communications Salary Snapshot | Essential Resourcing",
-    metaDescription: "Draft CMS-ready PR and communications salary snapshot for validation before publication."
+    metaDescription: "Draft PR and communications salary snapshot for validation before publication."
   }
 ];
 
@@ -658,9 +658,9 @@ export const jobs: Job[] = [
     sector: "Agency",
     specialism: "PR & Communications",
     summary:
-      "Draft job structure for a senior agency role. This is not a live vacancy until David marks it live in the CMS.",
+      "Draft role note for a senior agency hire. This is not a live vacancy until David marks it live.",
     description: [
-      "This draft demonstrates the job page structure, application form route and schema logic.",
+      "This draft is here so the role can be written properly before it goes live.",
       "When a role is live, this page should include a clear brief, salary, location, responsibilities and requirements."
     ],
     responsibilities: [
@@ -685,10 +685,10 @@ export const richMediaExamples: RichMedia[] = [
   strategicInterimVideo,
   {
     type: "image",
-    title: "Manchester-led recruitment imagery slot",
+    title: "Manchester-led recruitment imagery",
     src: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80",
     alt: "Abstract architectural detail suitable for a premium Manchester-led recruitment website",
-    caption: "Replace with real Manchester, workplace or David Walsh photography when available."
+    caption: "Manchester-led, UK-wide, with real photography to follow."
   }
 ];
 
