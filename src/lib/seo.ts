@@ -13,7 +13,7 @@ export function createMetadata({
   description,
   path = "/",
   image = siteConfig.ogImage,
-  noIndex = false
+  noIndex = false,
 }: {
   title: string;
   description: string;
@@ -40,17 +40,17 @@ export function createMetadata({
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} - ${description}`
-        }
+          alt: `${siteConfig.name} - ${description}`,
+        },
       ],
-      locale: "en_GB"
+      locale: "en_GB",
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl]
-    }
+      images: [imageUrl],
+    },
   };
 }
 
@@ -71,8 +71,8 @@ export function organisationSchema() {
       contactType: "Recruitment enquiries",
       email: siteConfig.email,
       ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
-      areaServed: "GB"
-    }
+      areaServed: "GB",
+    },
   };
 }
 
@@ -82,7 +82,11 @@ export function personSchema() {
     "@type": "Person",
     name: siteConfig.founder,
     jobTitle: "Founder",
-    worksFor: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+    worksFor: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
     url: absoluteUrl("/about-david-walsh"),
     ...(siteConfig.linkedIn ? { sameAs: [siteConfig.linkedIn] } : {}),
     knowsAbout: [
@@ -91,8 +95,8 @@ export function personSchema() {
       "Communications recruitment",
       "Digital recruitment",
       "Leadership search",
-      "Strategic interim"
-    ]
+      "Strategic interim",
+    ],
   };
 }
 
@@ -102,7 +106,7 @@ export function websiteSchema() {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteConfig.url,
-    publisher: { "@type": "Organization", name: siteConfig.name }
+    publisher: { "@type": "Organization", name: siteConfig.name },
   };
 }
 
@@ -114,8 +118,8 @@ export function breadcrumbSchema(items: Array<{ name: string; href: string }>) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: absoluteUrl(item.href)
-    }))
+      item: absoluteUrl(item.href),
+    })),
   };
 }
 
@@ -128,11 +132,14 @@ export function serviceSchema(service: Service) {
     provider: {
       "@type": "Organization",
       name: siteConfig.name,
-      url: siteConfig.url
+      url: siteConfig.url,
     },
     areaServed: ["Manchester", "North West England", "United Kingdom"],
-    audience: service.audience.map((audience) => ({ "@type": "Audience", audienceType: audience })),
-    url: absoluteUrl(`/services/${service.slug}`)
+    audience: service.audience.map((audience) => ({
+      "@type": "Audience",
+      audienceType: audience,
+    })),
+    url: absoluteUrl(`/services/${service.slug}`),
   };
 }
 
@@ -145,9 +152,9 @@ export function faqSchema(faqs: FAQ[]) {
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answer
-      }
-    }))
+        text: faq.answer,
+      },
+    })),
   };
 }
 
@@ -161,12 +168,12 @@ export function articleSchema(insight: Insight) {
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
-      logo: { "@type": "ImageObject", url: absoluteUrl(siteConfig.logoDark) }
+      logo: { "@type": "ImageObject", url: absoluteUrl(siteConfig.logoDark) },
     },
     datePublished: insight.publishedDate,
     dateModified: insight.updatedDate,
     image: absoluteUrl(siteConfig.ogImage),
-    mainEntityOfPage: absoluteUrl(`/insights/${insight.slug}`)
+    mainEntityOfPage: absoluteUrl(`/insights/${insight.slug}`),
   };
 }
 
@@ -175,24 +182,31 @@ export function jobPostingSchema(job: Job) {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
+    identifier: {
+      "@type": "PropertyValue",
+      name: siteConfig.name,
+      value: job.slug,
+    },
     description: `${job.summary}\n\n${job.description.join("\n")}`,
     datePosted: job.publishedDate,
-    validThrough: job.closingDate,
+    ...(job.closingDate ? { validThrough: job.closingDate } : {}),
     employmentType: job.employmentType.toUpperCase().replaceAll("-", "_"),
+    industry: job.sector,
+    occupationalCategory: job.specialism,
+    directApply: true,
     hiringOrganization: {
       "@type": "Organization",
       name: siteConfig.name,
       sameAs: siteConfig.url,
-      logo: absoluteUrl(siteConfig.logoDark)
+      logo: absoluteUrl(siteConfig.logoDark),
     },
     jobLocation: {
       "@type": "Place",
       address: {
         "@type": "PostalAddress",
         addressLocality: job.location,
-        addressCountry: "GB"
-      }
+        addressCountry: "GB",
+      },
     },
-    baseSalary: job.salary.includes("Add") ? undefined : job.salary
   };
 }

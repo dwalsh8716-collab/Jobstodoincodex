@@ -3,34 +3,37 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
-import { jobs } from "@/lib/content";
+import { isJobLive, jobs } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 const candidateFaqs = [
   {
     question: "Will my CV be sent anywhere without permission?",
-    answer: "No. Essential does not do pointless CV sending or push candidates into wrong roles."
+    answer:
+      "No. Essential does not do pointless CV sending or push candidates into wrong roles.",
   },
   {
     question: "Can I have a confidential conversation?",
     answer:
-      "Yes. If you are senior, visible in your market or not actively looking, the conversation can stay confidential."
+      "Yes. If you are senior, visible in your market or not actively looking, the conversation can stay confidential.",
   },
   {
     question: "Why is there no CV upload?",
     answer:
-      "Because CVs should be handled properly. Send a LinkedIn URL or short note first; if a CV is useful, David will ask for it directly."
-  }
+      "Because CVs should be handled properly. Send a LinkedIn URL or short note first; if a CV is useful, David will ask for it directly.",
+  },
 ];
 
 export const metadata = createMetadata({
   title: "Marketing, PR & Digital Careers | Essential Resourcing",
   description:
     "Honest candidate support for senior marketing, PR, communications and digital roles. No pointless CV sending.",
-  path: "/candidates"
+  path: "/candidates",
 });
 
 export default function CandidatesPage() {
+  const liveJobs = jobs.filter((job) => isJobLive(job));
+
   return (
     <>
       <Breadcrumbs items={[{ name: "Candidates", href: "/candidates" }]} />
@@ -39,8 +42,9 @@ export default function CandidatesPage() {
           <p className="eyebrow">For candidates</p>
           <h1>Good roles. Honest advice. No recruitment nonsense.</h1>
           <p className="lede">
-            If the right role is not live today, you can still get honest salary/process advice and a proper
-            conversation without your CV being fired around the market.
+            If the right role is not live today, you can still get honest
+            salary/process advice and a proper conversation without your CV
+            being fired around the market.
           </p>
           <div className="button-row hero-actions">
             <Link className="button button-primary" href="/jobs">
@@ -54,7 +58,11 @@ export default function CandidatesPage() {
       </section>
       <section className="section surface">
         <div className="container grid grid-3">
-          {["No pointless CV sending", "No pushing people into wrong roles", "Proper advice on salary, market and process"].map((item) => (
+          {[
+            "No pointless CV sending",
+            "No pushing people into wrong roles",
+            "Proper advice on salary, market and process",
+          ].map((item) => (
             <article className="card" key={item}>
               <h3>{item}</h3>
             </article>
@@ -64,23 +72,33 @@ export default function CandidatesPage() {
       <section className="section">
         <div className="container section-heading">
           <p className="eyebrow">Current roles</p>
-          <h2>Live and draft roles.</h2>
-          <p className="lede">Draft roles are clearly marked and are not presented as open vacancies.</p>
+          <h2>
+            {liveJobs.length
+              ? "Live roles."
+              : "No live roles published right now."}
+          </h2>
+          <p className="lede">
+            Draft and closed roles stay out of this list. If the right role is
+            sensitive or not public, use the confidential route.
+          </p>
         </div>
-        <div className="container grid grid-3">
-          {jobs.map((job) => (
-            <JobCard key={job.slug} job={job} />
-          ))}
-        </div>
+        {liveJobs.length ? (
+          <div className="container grid grid-3">
+            {liveJobs.map((job) => (
+              <JobCard key={job.slug} job={job} />
+            ))}
+          </div>
+        ) : null}
       </section>
       <section className="section muted" id="candidate-contact">
         <div className="container split">
           <div>
-          <p className="eyebrow">Confidential note</p>
-          <h2>Send your details without the nonsense.</h2>
-          <p className="lede">
-              Add a note and LinkedIn URL. If a CV is useful, David will ask for it directly and handle it properly.
-          </p>
+            <p className="eyebrow">Confidential note</p>
+            <h2>Send your details without the nonsense.</h2>
+            <p className="lede">
+              Add a note and LinkedIn URL. If a CV is useful, David will ask for
+              it directly and handle it properly.
+            </p>
           </div>
           <ContactForm type="candidate" />
         </div>

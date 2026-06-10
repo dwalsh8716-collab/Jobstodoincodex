@@ -408,7 +408,7 @@ export const insights: Insight[] = [
     title: "What is a Strategic Interim Marketing Leader?",
     slug: "what-is-a-strategic-interim-marketing-leader",
     status: "published",
-    category: "Strategic Interim",
+    category: "Strategic interim explainers",
     excerpt:
       "A plain-English explanation of when interim senior marketing leadership makes sense and how it differs from consultancy.",
     publishedDate: "2026-06-09",
@@ -463,7 +463,7 @@ export const insights: Insight[] = [
     title: "When Should an Agency Use Retained Search?",
     slug: "when-should-an-agency-use-retained-search",
     status: "published",
-    category: "Leadership Search",
+    category: "Agency growth/hiring insight",
     excerpt:
       "Retained search is not for every role. It is for moments where candidate quality, confidentiality and judgement matter.",
     publishedDate: "2026-06-09",
@@ -502,7 +502,7 @@ export const insights: Insight[] = [
     title: "Why Senior Marketing Hiring Goes Wrong",
     slug: "why-senior-marketing-hiring-goes-wrong",
     status: "published",
-    category: "Hiring Advice",
+    category: "Hiring advice",
     excerpt:
       "Senior marketing hiring usually goes wrong before the first interview, because the brief, salary or process is not honest enough.",
     publishedDate: "2026-06-09",
@@ -546,7 +546,7 @@ export const insights: Insight[] = [
     title: "How to Hire a Marketing Director Without Wasting Six Weeks",
     slug: "how-to-hire-a-marketing-director-without-wasting-six-weeks",
     status: "published",
-    category: "Client-side Hiring",
+    category: "Client-side marketing hiring insight",
     excerpt:
       "A sharper brief, better salary reality and cleaner process can save weeks in a senior marketing director search.",
     publishedDate: "2026-06-09",
@@ -585,13 +585,28 @@ export const insights: Insight[] = [
   },
 ];
 
+export const insightCategories = [
+  "Hiring advice",
+  "Market commentary",
+  "Salary snapshots",
+  "Strategic interim explainers",
+  "Candidate advice",
+  "Agency growth/hiring insight",
+  "Client-side marketing hiring insight",
+  "Case-study led articles",
+];
+
 export const insightSeeds = [
-  "Strategic Interim vs Consultant: What Is the Difference?",
-  "Why Good Marketing Candidates Are Not Applying to Your Job",
-  "North West Marketing Recruitment Market Snapshot",
-  "How Agencies Should Hire Senior PR and Communications Talent",
-  "What Salary Should You Pay for a Head of Marketing?",
-  "Why Your Hiring Process Might Be Killing Your Employer Brand",
+  "Nobody buys recruitment. They buy the outcome.",
+  "The job title is not the brief.",
+  "Why strategic but hands-on usually means the brief needs work.",
+  "Why your hiring process is putting good people off.",
+  "The hidden cost of lowballing senior marketing hires.",
+  "Strategic Interim is not consultancy. Here is the difference.",
+  "Why agencies struggle to hire senior PR people.",
+  "What founders actually need from their next marketing leader.",
+  "Why more CVs rarely fix a broken brief.",
+  "How to stop wasting six weeks on a role the market will not buy.",
 ];
 
 export const caseStudies: CaseStudy[] = [
@@ -611,6 +626,14 @@ export const caseStudies: CaseStudy[] = [
       "The agency needed a candidate who could win trust with clients quickly, support junior team members and operate without constant founder input.",
     whyHard:
       "Senior agency candidates can look similar on paper. The difference is often client maturity, commercial judgement and how they behave under pressure.",
+    businessProblem:
+      "The founder needed senior client leadership that would remove pressure rather than create another layer to manage.",
+    whyHireMattered:
+      "The hire needed to protect client confidence, support the team and give the founder more commercial headspace.",
+    whatMadeItTricky:
+      "The right person had to bring PR and communications depth, but the real test was judgement with clients and junior people.",
+    whatKindOfPerson:
+      "A calm senior operator with credible client handling, mentoring ability and enough commercial sense to earn trust quickly.",
     approach: [
       "Clarified the real pressure points behind the title",
       "Mapped candidates with credible PR, comms and client leadership depth",
@@ -620,6 +643,8 @@ export const caseStudies: CaseStudy[] = [
       "Draft example structure. Add real shortlist, process detail and permissioned timings before publication.",
     outcome:
       "Proof is being checked. Add the confirmed outcome before publication.",
+    whatChanged:
+      "Proof is being checked. Add verified detail on client confidence, team support and founder capacity before publication.",
     impact:
       "Proof is being checked. Add real commercial impact if it can be disclosed.",
     featured: true,
@@ -644,6 +669,14 @@ export const caseStudies: CaseStudy[] = [
       "The risk was hiring a channel specialist into a role that required broader judgement and business-stage fit.",
     whyHard:
       "Strong interviewers are not always strong builders. The brief needed evidence of operating in a similar stage of growth.",
+    businessProblem:
+      "The business needed marketing leadership connected to growth, not a channel owner producing more activity.",
+    whyHireMattered:
+      "A weak hire would have slowed demand, confused priorities and left the wider business without a useful marketing voice.",
+    whatMadeItTricky:
+      "The brief needed stage-fit, commercial judgement and proof of building momentum, not just polished interview answers.",
+    whatKindOfPerson:
+      "A hands-on marketing leader who could connect brand, demand, performance and customer growth without needing perfect conditions.",
     approach: [
       "Defined the business outcomes before discussing channel experience",
       "Pressure-tested salary, team support and decision rights",
@@ -653,6 +686,8 @@ export const caseStudies: CaseStudy[] = [
       "Draft example structure. Add real process detail before publication.",
     outcome:
       "Proof is being checked. Add the verified outcome before publication.",
+    whatChanged:
+      "Proof is being checked. Add verified detail on marketing direction, team focus and growth impact before publication.",
     impact:
       "Proof is being checked. Add real commercial impact if permission allows.",
     featured: true,
@@ -677,6 +712,14 @@ export const caseStudies: CaseStudy[] = [
       "The brief required someone embedded enough to shape decisions, not a consultant producing abstract recommendations.",
     whyHard:
       "Interim leaders need credibility quickly. They must manage stakeholders, challenge decisions and still be practical.",
+    businessProblem:
+      "The agency needed senior direction and operating rhythm without committing too early to a permanent leadership salary.",
+    whyHireMattered:
+      "The right interim would create momentum during transition and give the team clearer decisions week by week.",
+    whatMadeItTricky:
+      "The work needed someone embedded enough to influence reality, not a detached adviser producing a tidy deck.",
+    whatKindOfPerson:
+      "A credible senior operator who could challenge usefully, steady the team and keep the commercial rhythm honest.",
     approach: [
       "Defined the outcome and operating rhythm",
       "Prioritised candidates with agency leadership and commercial maturity",
@@ -686,6 +729,8 @@ export const caseStudies: CaseStudy[] = [
       "Draft example structure. Add real scope and timing before publication.",
     outcome:
       "Proof is being checked. Add the verified outcome before publication.",
+    whatChanged:
+      "Proof is being checked. Add verified detail on operating rhythm, team confidence and commercial progress before publication.",
     impact:
       "Proof is being checked. Add real commercial impact if permission allows.",
     featured: true,
@@ -786,6 +831,132 @@ export const salarySnapshots: SalarySnapshot[] = [
     metaDescription:
       "Draft PR and communications salary snapshot for validation before publication.",
   },
+  {
+    title: "Digital and Performance Marketing Salary Snapshot",
+    slug: "digital-performance-marketing-salary-snapshot",
+    status: "draft",
+    quarter: "Draft for 2026 update",
+    market: "Digital and performance marketing",
+    intro:
+      "A draft salary snapshot for digital, performance, CRM and demand generation roles. Add current, checked data before publishing.",
+    commentary: [
+      "Digital and performance salaries should be checked against channel ownership, budget responsibility, reporting line and commercial expectations.",
+    ],
+    rows: [
+      {
+        role: "Performance Marketing Lead",
+        low: "To validate",
+        mid: "To validate",
+        high: "To validate",
+        notes: "Confirm against current budget ownership and channel mix.",
+      },
+      {
+        role: "Digital Marketing Manager",
+        low: "To validate",
+        mid: "To validate",
+        high: "To validate",
+        notes:
+          "Confirm against paid, organic, CRM and analytics responsibilities.",
+      },
+    ],
+    hiringNotes: [
+      "Separate hands-on channel execution from strategic growth ownership before benchmarking.",
+    ],
+    candidateAvailability: [
+      "Strong digital candidates can move quickly when the scope, budget and decision rights are clear.",
+    ],
+    takeaways: [
+      "Do not compare digital salaries without checking budget, team and commercial accountability.",
+    ],
+    seoTitle:
+      "Digital and Performance Marketing Salary Snapshot | Essential Resourcing",
+    metaDescription:
+      "Draft digital and performance marketing salary snapshot for validation before publication.",
+  },
+  {
+    title: "Senior Marketing Leadership Salary Snapshot",
+    slug: "senior-marketing-leadership-salary-snapshot",
+    status: "draft",
+    quarter: "Draft for 2026 update",
+    market: "Senior marketing leadership",
+    intro:
+      "A draft salary snapshot for senior marketing leadership roles. Add verified salary data before publishing.",
+    commentary: [
+      "Senior marketing leadership ranges should be benchmarked against commercial ownership, team size, board exposure and business stage.",
+    ],
+    rows: [
+      {
+        role: "Marketing Director",
+        low: "To validate",
+        mid: "To validate",
+        high: "To validate",
+        notes: "Confirm against team size, budget and reporting line.",
+      },
+      {
+        role: "CMO / Fractional CMO",
+        low: "To validate",
+        mid: "To validate",
+        high: "To validate",
+        notes:
+          "Separate permanent, fractional and interim scope before comparing.",
+      },
+    ],
+    hiringNotes: [
+      "Clarify whether the role is strategic leadership, hands-on building or both.",
+    ],
+    candidateAvailability: [
+      "Senior leaders judge the brief, decision process and ambition as much as the salary.",
+    ],
+    takeaways: [
+      "Leadership salaries need context. The title alone tells you very little.",
+    ],
+    seoTitle:
+      "Senior Marketing Leadership Salary Snapshot | Essential Resourcing",
+    metaDescription:
+      "Draft senior marketing leadership salary snapshot for validation before publication.",
+  },
+  {
+    title: "Agency Hiring Market Snapshot",
+    slug: "agency-hiring-market-snapshot",
+    status: "draft",
+    quarter: "Draft for 2026 update",
+    market: "Agency hiring",
+    intro:
+      "A draft agency hiring market snapshot covering senior client services, PR, digital and agency leadership roles.",
+    commentary: [
+      "Agency market commentary should account for client mix, margin pressure, pace, hybrid expectations and senior candidate appetite.",
+    ],
+    rows: [
+      {
+        role: "Account Director / Senior Account Director",
+        low: "To validate",
+        mid: "To validate",
+        high: "To validate",
+        notes:
+          "Confirm by agency type, client complexity and leadership expectations.",
+      },
+      {
+        role: "Agency Operations / Commercial Lead",
+        low: "To validate",
+        mid: "To validate",
+        high: "To validate",
+        notes:
+          "Confirm by remit, reporting line and commercial accountability.",
+      },
+    ],
+    hiringNotes: [
+      "Agency titles vary heavily. Benchmark against responsibility, not title alone.",
+    ],
+    candidateAvailability: [
+      "Senior agency candidates often move for better leadership, clearer clients and commercial trust.",
+    ],
+    takeaways: [
+      "More CVs rarely fix an agency brief if the proposition is weak.",
+    ],
+    seoTitle: "Agency Hiring Market Snapshot | Essential Resourcing",
+    metaDescription:
+      "Draft agency hiring market snapshot for validation before publication.",
+  },
 ];
 
 export const jobs: Job[] = [
@@ -799,6 +970,9 @@ export const jobs: Job[] = [
     employmentType: "Full-time",
     sector: "Agency",
     specialism: "PR & Communications",
+    roleType: "Permanent",
+    whyThisRoleMatters:
+      "This draft exists so David can prepare the role properly before it is shown as a live opportunity.",
     summary:
       "Draft role note for a senior agency hire. This is not a live vacancy until David marks it live.",
     description: [
@@ -816,6 +990,11 @@ export const jobs: Job[] = [
       "Clear communication and judgement under pressure",
     ],
     benefits: ["Add real benefits before publication"],
+    applicationCta: {
+      label: "Start application",
+      href: "/contact",
+      variant: "primary",
+    },
     applicationEmail: "david@essentialresourcing.co.uk",
     publishedDate: "2026-06-09",
     seoTitle: "Senior Account Director Draft Role | Essential Resourcing",
@@ -855,4 +1034,20 @@ export function getSalarySnapshot(slug: string) {
 
 export function getJob(slug: string) {
   return jobs.find((job) => job.slug === slug);
+}
+
+function todayIsoDate(referenceDate = new Date()) {
+  return referenceDate.toISOString().slice(0, 10);
+}
+
+export function isJobLive(job: Job, referenceDate = new Date()) {
+  if (job.status !== "live") return false;
+  if (!job.closingDate) return true;
+  return job.closingDate >= todayIsoDate(referenceDate);
+}
+
+export function isJobClosed(job: Job, referenceDate = new Date()) {
+  if (job.status === "closed") return true;
+  if (job.status !== "live" || !job.closingDate) return false;
+  return job.closingDate < todayIsoDate(referenceDate);
 }

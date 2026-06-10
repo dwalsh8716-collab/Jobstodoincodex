@@ -10,7 +10,9 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  return caseStudies.filter((caseStudy) => caseStudy.status === "published").map((caseStudy) => ({ slug: caseStudy.slug }));
+  return caseStudies
+    .filter((caseStudy) => caseStudy.status === "published")
+    .map((caseStudy) => ({ slug: caseStudy.slug }));
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -20,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
   return createMetadata({
     title: caseStudy.seoTitle,
     description: caseStudy.metaDescription,
-    path: `/case-studies/${caseStudy.slug}`
+    path: `/case-studies/${caseStudy.slug}`,
   });
 }
 
@@ -35,7 +37,7 @@ export default async function CaseStudyPage({ params }: Props) {
       <Breadcrumbs
         items={[
           { name: "Case Studies", href: "/case-studies" },
-          { name: caseStudy.title, href: `/case-studies/${caseStudy.slug}` }
+          { name: caseStudy.title, href: `/case-studies/${caseStudy.slug}` },
         ]}
       />
       <section className="section dark">
@@ -53,19 +55,38 @@ export default async function CaseStudyPage({ params }: Props) {
       <section className="section surface">
         <div className="container grid grid-3">
           <article className="card">
-            <span className="tag">Client context</span>
+            <span className="tag">Business context</span>
             <h2>{caseStudy.clientType}</h2>
             <p>{caseStudy.clientContext}</p>
           </article>
           <article className="card">
-            <span className="tag">Role</span>
+            <span className="tag">The business problem</span>
             <h2>{caseStudy.roleHired}</h2>
-            <p>{caseStudy.hiringChallenge}</p>
+            <p>{caseStudy.businessProblem}</p>
           </article>
           <article className="card">
-            <span className="tag">Why hard</span>
-            <h2>Why the brief was hard</h2>
-            <p>{caseStudy.whyHard}</p>
+            <span className="tag">Why the hire mattered</span>
+            <h2>Why it mattered</h2>
+            <p>{caseStudy.whyHireMattered}</p>
+          </article>
+        </div>
+      </section>
+      <section className="section muted">
+        <div className="container grid grid-3">
+          <article className="card">
+            <span className="tag">What made it tricky</span>
+            <h2>The difficult bit.</h2>
+            <p>{caseStudy.whatMadeItTricky}</p>
+          </article>
+          <article className="card">
+            <span className="tag">Person needed</span>
+            <h2>The kind of person needed.</h2>
+            <p>{caseStudy.whatKindOfPerson}</p>
+          </article>
+          <article className="card">
+            <span className="tag">Related service</span>
+            <h2>{service?.title || "Service used"}</h2>
+            <p>{caseStudy.hiringChallenge}</p>
           </article>
         </div>
       </section>
@@ -73,11 +94,11 @@ export default async function CaseStudyPage({ params }: Props) {
         <div className="container split split-start">
           <div>
             <p className="eyebrow">Approach</p>
-            <h2>How the brief should be written up.</h2>
+            <h2>How we de-risked it.</h2>
           </div>
           <div className="article-body">
             <section>
-              <h3>Approach</h3>
+              <h3>How we de-risked it</h3>
               {caseStudy.approach.map((item) => (
                 <p key={item}>{item}</p>
               ))}
@@ -87,13 +108,20 @@ export default async function CaseStudyPage({ params }: Props) {
               <p>{caseStudy.process}</p>
             </section>
             <section>
-              <h3>Outcome</h3>
+              <h3>The outcome</h3>
               <p>{caseStudy.outcome}</p>
+            </section>
+            <section>
+              <h3>What changed</h3>
+              <p>{caseStudy.whatChanged}</p>
             </section>
             <section>
               <h3>Commercial impact</h3>
               <p>{caseStudy.impact}</p>
             </section>
+            {caseStudy.quote ? (
+              <blockquote className="pull-quote">{caseStudy.quote}</blockquote>
+            ) : null}
           </div>
         </div>
       </section>

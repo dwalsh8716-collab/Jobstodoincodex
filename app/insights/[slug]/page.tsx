@@ -13,7 +13,9 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  return insights.filter((insight) => insight.status === "published").map((insight) => ({ slug: insight.slug }));
+  return insights
+    .filter((insight) => insight.status === "published")
+    .map((insight) => ({ slug: insight.slug }));
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -23,7 +25,7 @@ export async function generateMetadata({ params }: Props) {
   return createMetadata({
     title: insight.seoTitle,
     description: insight.metaDescription,
-    path: `/insights/${insight.slug}`
+    path: `/insights/${insight.slug}`,
   });
 }
 
@@ -32,14 +34,21 @@ export default async function InsightPage({ params }: Props) {
   const insight = getInsight(slug);
   if (!insight) notFound();
 
-  const relatedServices = services.filter((service) => insight.relatedServiceSlugs.includes(service.slug));
+  const relatedServices = services.filter((service) =>
+    insight.relatedServiceSlugs.includes(service.slug),
+  );
+  const relatedInsights = insights.filter(
+    (item) =>
+      item.status === "published" &&
+      insight.relatedInsightSlugs.includes(item.slug),
+  );
 
   return (
     <>
       <Breadcrumbs
         items={[
           { name: "Insights", href: "/insights" },
-          { name: insight.title, href: `/insights/${insight.slug}` }
+          { name: insight.title, href: `/insights/${insight.slug}` },
         ]}
       />
       <article>
@@ -49,7 +58,8 @@ export default async function InsightPage({ params }: Props) {
             <h1>{insight.title}</h1>
             <p className="lede">{insight.excerpt}</p>
             <p className="meta">
-              {insight.author} · Published {insight.publishedDate} · Updated {insight.updatedDate} · {insight.readingTime}
+              {insight.author} · Published {insight.publishedDate} · Updated{" "}
+              {insight.updatedDate} · {insight.readingTime}
             </p>
           </div>
         </section>
@@ -64,7 +74,11 @@ export default async function InsightPage({ params }: Props) {
                   ))}
                 </section>
               ))}
-              {insight.pullQuote ? <blockquote className="pull-quote">{insight.pullQuote}</blockquote> : null}
+              {insight.pullQuote ? (
+                <blockquote className="pull-quote">
+                  {insight.pullQuote}
+                </blockquote>
+              ) : null}
             </div>
             <aside className="grid">
               {insight.media ? <RichMediaBlock media={insight.media} /> : null}
@@ -72,12 +86,32 @@ export default async function InsightPage({ params }: Props) {
                 <span className="tag">Related services</span>
                 <div className="grid">
                   {relatedServices.map((service) => (
-                    <Link className="text-link" href={`/services/${service.slug}`} key={service.slug}>
+                    <Link
+                      className="text-link"
+                      href={`/services/${service.slug}`}
+                      key={service.slug}
+                    >
                       {service.title}
                     </Link>
                   ))}
                 </div>
               </div>
+              {relatedInsights.length ? (
+                <div className="card">
+                  <span className="tag">Related insights</span>
+                  <div className="grid">
+                    {relatedInsights.map((item) => (
+                      <Link
+                        className="text-link"
+                        href={`/insights/${item.slug}`}
+                        key={item.slug}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </aside>
           </div>
         </section>

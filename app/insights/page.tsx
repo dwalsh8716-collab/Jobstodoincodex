@@ -1,18 +1,24 @@
 import { InsightCard } from "@/components/Cards";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
-import { insightSeeds, insights } from "@/lib/content";
+import { insightCategories, insightSeeds, insights } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Marketing Recruitment Insights | Essential Resourcing",
   description:
     "Hiring advice, market commentary, strategic interim explainers and senior marketing recruitment insight from David Walsh.",
-  path: "/insights"
+  path: "/insights",
 });
 
 export default function InsightsPage() {
-  const published = insights.filter((insight) => insight.status === "published");
+  const published = insights.filter(
+    (insight) => insight.status === "published",
+  );
+  const categories = insightCategories.map((category) => ({
+    category,
+    count: published.filter((insight) => insight.category === category).length,
+  }));
 
   return (
     <>
@@ -22,7 +28,8 @@ export default function InsightsPage() {
           <p className="eyebrow">Insights</p>
           <h1>Marketing recruitment insight without vague brochure copy.</h1>
           <p className="lede">
-            Clear, structured answers to real hiring questions, written for clients, candidates and AI-search visibility.
+            Clear, structured answers to real hiring questions, written for
+            clients, candidates and AI-search visibility.
           </p>
         </div>
       </section>
@@ -33,12 +40,35 @@ export default function InsightsPage() {
           ))}
         </div>
       </section>
+      <section className="section">
+        <div className="container split split-start">
+          <div>
+            <p className="eyebrow">Categories</p>
+            <h2>Grouped by the question behind the search.</h2>
+            <p className="lede">
+              The point is not to produce more articles. It is to answer the
+              questions clients and candidates are already asking.
+            </p>
+          </div>
+          <div className="grid">
+            {categories.map((item) => (
+              <article className="card" key={item.category}>
+                <span className="tag">{item.count} published</span>
+                <h3>{item.category}</h3>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="section muted">
         <div className="container split split-start">
           <div>
             <p className="eyebrow">Article ideas</p>
             <h2>Useful topics, not SEO sludge.</h2>
-            <p className="lede">These only become articles when they have a clear point of view and something useful to say.</p>
+            <p className="lede">
+              These only become articles when they have a clear point of view
+              and something useful to say.
+            </p>
           </div>
           <div className="grid">
             {insightSeeds.map((seed) => (
@@ -48,6 +78,34 @@ export default function InsightsPage() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+      <section className="section surface">
+        <div className="container grid grid-3">
+          <article className="card">
+            <span className="tag">Author</span>
+            <h2>Every article has a visible point of view.</h2>
+            <p>
+              Byline, dates, related services and FAQs are part of the
+              publishing standard.
+            </p>
+          </article>
+          <article className="card">
+            <span className="tag">Structure</span>
+            <h2>Answers first. Detail after.</h2>
+            <p>
+              Articles should answer a buyer question clearly before drifting
+              into background detail.
+            </p>
+          </article>
+          <article className="card">
+            <span className="tag">Usefulness</span>
+            <h2>No content for the sake of it.</h2>
+            <p>
+              Draft ideas stay draft until they are worth publishing under
+              David&apos;s name.
+            </p>
+          </article>
         </div>
       </section>
       <CTASection title="Want a market view before you hire?" />
