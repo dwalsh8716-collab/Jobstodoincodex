@@ -81,4 +81,28 @@ describe("contact server action response shape", () => {
     expect(result.message).toContain("validated");
     expect(result.message).not.toContain("valid-phase-13@example.com");
   });
+
+  it("fails safely when operations database is enabled without DATABASE_URL", async () => {
+    process.env.OPERATIONS_DB_ENABLED = "true";
+    delete process.env.DATABASE_URL;
+
+    const now = Date.now();
+    const result = await submitContactEnquiry(
+      {
+        ...basePayload,
+        email: "missing-db@example.com",
+        startedAt: now - minimumCompletionTimeMs - 500,
+      },
+      { ip: "phase-47-missing-db", now },
+    );
+
+    delete process.env.OPERATIONS_DB_ENABLED;
+
+    expect(result).toMatchObject({
+      ok: false,
+      statusCode: 502,
+      message:
+        "The form could not be saved right now. Please email David directly.",
+    });
+  });
 });

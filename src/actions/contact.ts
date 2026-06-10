@@ -6,6 +6,7 @@ import {
   minimumCompletionTimeMs,
   type ContactFormPayload,
 } from "@/validations/contact";
+import { saveContactEnquiryToOperations } from "@/lib/operations/store";
 
 export type ContactActionResult = {
   ok: boolean;
@@ -126,13 +127,29 @@ export async function submitContactEnquiry(
   }
 
   try {
+    const operationsResult = await saveContactEnquiryToOperations(payload, {
+      ip: meta.ip,
+      userAgent: meta.userAgent,
+    });
+
+    if (!operationsResult.ok && operationsResult.required) {
+      return {
+        ok: false,
+        statusCode: 502,
+        message:
+          "The form could not be saved right now. Please email David directly.",
+      };
+    }
+
     const result = await sendWithResend(payload);
     return {
       ok: true,
       statusCode: 200,
-      message: result.sent
-        ? "Thanks. Your enquiry has been sent."
-        : "Thanks. Your enquiry has been validated. Email delivery still needs to be configured before launch.",
+      message: operationsResult.id
+        ? "Thanks. Your enquiry has been received."
+        : result.sent
+          ? "Thanks. Your enquiry has been sent."
+          : "Thanks. Your enquiry has been validated. Email delivery still needs to be configured before launch.",
     };
   } catch {
     console.error("Contact form delivery failed", {

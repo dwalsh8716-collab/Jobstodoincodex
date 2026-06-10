@@ -68,6 +68,12 @@ Optional tracking:
 - `NEXT_PUBLIC_WHATSAPP_NUMBER`
 - `NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE`
 
+Optional private operations database:
+
+- `DATABASE_URL`
+- `OPERATIONS_DB_ENABLED`
+- `OPERATIONS_PRIVACY_SALT`
+
 ## Design Adaptability
 
 The visual system is controlled in `src/styles/theme.css`.
@@ -125,6 +131,8 @@ docs/launch-google-seo-local-setup.md
 docs/consent-mode-v2-setup.md
 docs/sanity-editor-guide.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
+docs/railway-deployment.md
+docs/RAILWAY-POSTGRES-BACKEND.md
 docs/MASTER-BUILD-COMPLETION-REPORT.md
 ```
 
@@ -220,6 +228,13 @@ Recommended deployment target: Vercel.
 6. Run a final production URL QA pass.
 
 Codex Sites note: if the Sites plugin is available in the workspace, this project can be reviewed as a saved candidate before any production deployment. Keep public deployment off until manual content, legal review and credentials are complete.
+
+Railway/Postgres notes for the private operations backend:
+
+```txt
+docs/railway-deployment.md
+docs/RAILWAY-POSTGRES-BACKEND.md
+```
 
 ## Security And Quality
 

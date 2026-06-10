@@ -57,6 +57,9 @@ const serverEnvSchema = publicEnvSchema.extend({
   CMS_GATE_USERNAME: z.preprocess(emptyToUndefined, z.string().optional()),
   CMS_GATE_PASSWORD: z.preprocess(emptyToUndefined, z.string().optional()),
   CMS_GATE_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
+  DATABASE_URL: z.preprocess(emptyToUndefined, z.string().optional()),
+  OPERATIONS_DB_ENABLED: z.preprocess(emptyToUndefined, z.string().optional()),
+  OPERATIONS_PRIVACY_SALT: z.preprocess(emptyToUndefined, z.string().optional()),
   RESEND_API_KEY: z.preprocess(emptyToUndefined, z.string().optional()),
   CONTACT_TO_EMAIL: z.preprocess(
     emptyToUndefined,
