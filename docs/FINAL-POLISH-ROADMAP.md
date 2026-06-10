@@ -54,6 +54,12 @@ The site is in strong shape technically. The remaining risk is not code polish. 
 - Digital PR and authority building.
 - Ongoing A/B testing once there is enough traffic to make it meaningful.
 
+The detailed post-launch content, authority, digital PR and GEO plan is tracked in:
+
+```txt
+docs/POST-LAUNCH-GROWTH-ROADMAP.md
+```
+
 ## Final SEO And GEO Status
 
 The site is now structured around useful, crawlable answers rather than search padding.

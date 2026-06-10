@@ -35,6 +35,25 @@ The CMS can manage:
 - Salary snapshots with table rows, market commentary, hiring notes and CTA.
 - Site settings, contact details, social links, footer content, navigation, redirects and proof/logos where permission is clear.
 
+## Post-Launch Growth Support
+
+The first growth phase does not need a big new CMS build. Insights, salary snapshots, case studies, FAQs, CTAs, proof items and SEO fields already support the first 12 weeks of content and authority work.
+
+Future additions should wait until David is actually using them:
+
+- External coverage document or field.
+- Report/download content type.
+- Source and citation fields for data-led content.
+- David media bio / quote bank.
+- Newsletter signup and archive.
+- Open Graph image templates for reports and campaigns.
+
+The post-launch content, digital PR and measurement roadmap is tracked in:
+
+```txt
+docs/POST-LAUNCH-GROWTH-ROADMAP.md
+```
+
 ## Fallback Behaviour
 
 The public site must not depend on Sanity being available. `sanityFetchWithFallback` returns the provided fallback if credentials are missing, the dataset is unavailable or a query returns nothing. The fallback content lives in `src/content/fallback/` and reuses the production-safe local content already used by the site.
