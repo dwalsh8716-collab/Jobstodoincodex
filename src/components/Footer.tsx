@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { analyticsAttributes } from "@/lib/analytics";
 import { serviceNavigation, siteConfig } from "@/lib/site";
 
 export function Footer() {
@@ -13,7 +14,15 @@ export function Footer() {
         <div>
           <h2>Need good marketing, PR or digital people?</h2>
           <p>Give David a shout before it becomes a hiring headache.</p>
-          <Link className="button button-primary" href="/contact">
+          <Link
+            className="button button-primary"
+            href="/contact"
+            {...analyticsAttributes("cta_click", {
+              label: "Talk to David",
+              href: "/contact",
+              location: "footer",
+            })}
+          >
             Talk to David
           </Link>
         </div>

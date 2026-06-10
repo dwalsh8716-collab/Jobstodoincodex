@@ -27,6 +27,12 @@ const publicEnvSchema = z.object({
     emptyToUndefined,
     z.string().optional(),
   ),
+  NEXT_PUBLIC_META_PIXEL_ID: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_CLARITY_ID: z.preprocess(emptyToUndefined, z.string().optional()),
+  NEXT_PUBLIC_HOTJAR_ID: z.preprocess(emptyToUndefined, z.string().optional()),
 });
 
 const serverEnvSchema = publicEnvSchema.extend({

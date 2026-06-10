@@ -25,9 +25,9 @@ export default function CookiePolicyPage() {
         <div className="container legal-content">
           <p>The site uses essential browser functionality to deliver pages and forms.</p>
           <h2>Analytics cookies</h2>
-          <p>Analytics scripts are environment-variable controlled and are not hardcoded. Add consent tooling if required by the final tracking setup.</p>
+          <p>Analytics scripts are environment-variable controlled and are not hardcoded. Where tracking is configured, it waits for consent before loading.</p>
           <h2>Managing cookies</h2>
-          <p>You can manage or delete cookies through your browser settings.</p>
+          <p>You can decline analytics on the site or manage and delete cookies through your browser settings.</p>
           <h2>Changes</h2>
           <p>This policy should be reviewed whenever new tracking, pixels or third-party embeds are added.</p>
         </div>

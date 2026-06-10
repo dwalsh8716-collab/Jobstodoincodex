@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 type FormType = "client" | "candidate" | "job";
 
@@ -16,8 +17,18 @@ export function ContactForm({
   >("idle");
   const [message, setMessage] = useState("");
   const [startedAt, setStartedAt] = useState(() => Date.now().toString());
+  const [hasTrackedStart, setHasTrackedStart] = useState(false);
   const formId = useId();
   const statusId = `${formId}-${type}-form-status`;
+
+  function onFocusCapture() {
+    if (type !== "job" || hasTrackedStart) return;
+    setHasTrackedStart(true);
+    trackEvent("job_application_start", {
+      form_type: type,
+      job_title: jobTitle,
+    });
+  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,8 +53,14 @@ export function ContactForm({
         throw new Error(data.message || "Something went wrong.");
       setStatus("success");
       setMessage(data.message || "Thanks. Your enquiry has been received.");
+      trackEvent(type === "job" ? "job_application_submission" : "form_submission", {
+        form_type: type,
+        brief_type: String(formData.get("briefType") || ""),
+        job_title: jobTitle,
+      });
       form.reset();
       setStartedAt(Date.now().toString());
+      setHasTrackedStart(false);
     } catch (error) {
       setStatus("error");
       setMessage(
@@ -56,6 +73,7 @@ export function ContactForm({
     <form
       className="contact-form"
       onSubmit={onSubmit}
+      onFocusCapture={onFocusCapture}
       aria-busy={status === "loading"}
       aria-describedby={statusId}
     >

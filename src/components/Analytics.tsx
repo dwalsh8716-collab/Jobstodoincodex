@@ -1,33 +1,15 @@
-import Script from "next/script";
+import { AnalyticsConsent, type AnalyticsConfig } from "./AnalyticsConsent";
 
 export function Analytics() {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
-  const linkedInId = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID;
+  const config: AnalyticsConfig = {
+    gaId: process.env.NEXT_PUBLIC_GA_ID || undefined,
+    gtmId: process.env.NEXT_PUBLIC_GTM_ID || undefined,
+    linkedInPartnerId:
+      process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID || undefined,
+    metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || undefined,
+    clarityId: process.env.NEXT_PUBLIC_CLARITY_ID || undefined,
+    hotjarId: process.env.NEXT_PUBLIC_HOTJAR_ID || undefined,
+  };
 
-  return (
-    <>
-      {gaId ? (
-        <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
-          <Script id="ga4" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gaId}');
-            `}
-          </Script>
-        </>
-      ) : null}
-      {linkedInId ? (
-        <Script id="linkedin-insight" strategy="afterInteractive">
-          {`
-            _linkedin_partner_id = "${linkedInId}";
-            window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
-            window._linkedin_data_partner_ids.push(_linkedin_partner_id);
-          `}
-        </Script>
-      ) : null}
-    </>
-  );
+  return <AnalyticsConsent config={config} />;
 }

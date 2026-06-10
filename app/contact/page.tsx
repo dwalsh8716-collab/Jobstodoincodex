@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
+import { analyticsAttributes } from "@/lib/analytics";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -38,23 +39,49 @@ export default function ContactPage() {
               </p>
             </div>
             <div className="button-row hero-actions">
-              <Link className="button button-primary" href="#contact-form">
+              <Link
+                className="button button-primary"
+                href="#contact-form"
+                {...analyticsAttributes("cta_click", {
+                  label: "I'm hiring",
+                  href: "#contact-form",
+                  location: "contact hero",
+                })}
+              >
                 I&apos;m hiring
               </Link>
               <Link
                 className="button button-secondary"
                 href="/candidates#candidate-contact"
+                {...analyticsAttributes("cta_click", {
+                  label: "I'm looking for work",
+                  href: "/candidates#candidate-contact",
+                  location: "contact hero",
+                })}
               >
                 I&apos;m looking for work
               </Link>
               <Link
                 className="button button-secondary"
                 href={`mailto:${siteConfig.email}`}
+                {...analyticsAttributes("email_click", {
+                  label: siteConfig.email,
+                  href: `mailto:${siteConfig.email}`,
+                  location: "contact hero",
+                })}
               >
                 {siteConfig.email}
               </Link>
               {phoneHref ? (
-                <Link className="button button-secondary" href={phoneHref}>
+                <Link
+                  className="button button-secondary"
+                  href={phoneHref}
+                  {...analyticsAttributes("phone_click", {
+                    label: "Call David",
+                    href: phoneHref,
+                    location: "contact hero",
+                  })}
+                >
                   Call David
                 </Link>
               ) : null}
@@ -70,6 +97,11 @@ export default function ContactPage() {
                 <Link
                   className="button button-primary"
                   href={siteConfig.bookingUrl}
+                  {...analyticsAttributes("book_call_click", {
+                    label: "Talk to David",
+                    href: siteConfig.bookingUrl,
+                    location: "contact hero",
+                  })}
                 >
                   Talk to David
                 </Link>

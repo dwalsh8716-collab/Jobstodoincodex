@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
 import { primaryNavigation, serviceNavigation, siteConfig } from "@/lib/site";
 
@@ -64,6 +65,13 @@ export function Header() {
               key={item.href}
               aria-current={currentFor(item.href) ? "page" : undefined}
               onClick={() => setOpen(false)}
+              {...("cta" in item && item.cta
+                ? analyticsAttributes("cta_click", {
+                    label: "Talk to David",
+                    href: item.href,
+                    location: "header",
+                  })
+                : {})}
             >
               {"cta" in item && item.cta ? "Talk to David" : item.label}
             </Link>

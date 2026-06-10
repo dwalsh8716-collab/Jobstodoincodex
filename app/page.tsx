@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { RichMediaBlock } from "@/components/RichMedia";
+import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
 import { caseStudies, homepageFeatureVideo, insights, proofPoints, richMediaExamples, services, specialisms, whyEssential } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
@@ -40,10 +41,26 @@ export default function HomePage() {
             </p>
             <p className="hero-reassurance">Direct with David. Confidential when needed. No CVs sent without context.</p>
             <div className="button-row hero-actions">
-              <Link className="button button-primary" href="/contact">
+              <Link
+                className="button button-primary"
+                href="/contact"
+                {...analyticsAttributes("cta_click", {
+                  label: "I'm hiring",
+                  href: "/contact",
+                  location: "home hero",
+                })}
+              >
                 I&apos;m hiring
               </Link>
-              <Link className="button button-secondary" href="/candidates">
+              <Link
+                className="button button-secondary"
+                href="/candidates"
+                {...analyticsAttributes("cta_click", {
+                  label: "I'm looking for work",
+                  href: "/candidates",
+                  location: "home hero",
+                })}
+              >
                 I&apos;m looking for work
               </Link>
               <Link className="text-link" href="/services/strategic-interim">
@@ -111,7 +128,15 @@ export default function HomePage() {
               direction, or a market that will not buy a vague brief. Start there and the hiring gets sharper.
             </p>
             <div className="button-row hero-actions">
-              <Link className="button button-primary" href="/contact">
+              <Link
+                className="button button-primary"
+                href="/contact"
+                {...analyticsAttributes("cta_click", {
+                  label: "Sense-check a brief",
+                  href: "/contact",
+                  location: "founder video",
+                })}
+              >
                 Sense-check a brief
               </Link>
               <Link className="text-link" href="/services/strategic-interim">

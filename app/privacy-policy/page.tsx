@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
           <h2>CVs and sensitive documents</h2>
           <p>CV upload is not enabled in phase one. CVs should only be requested and handled through a secure, agreed process.</p>
           <h2>Analytics and cookies</h2>
-          <p>Analytics tools are only loaded when environment variables are configured. Update this page when tracking is enabled.</p>
+          <p>Analytics tools only load when environment variables are configured and analytics consent has been accepted.</p>
           <h2>Your rights</h2>
           <p>You can request access, correction or deletion of personal data by contacting Essential Resourcing.</p>
         </div>

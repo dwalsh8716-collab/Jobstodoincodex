@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { analyticsAttributes } from "@/lib/analytics";
 
 export function CTASection({
   eyebrow = "Next step",
@@ -23,7 +24,15 @@ export function CTASection({
           <h2>{title}</h2>
           <p>{text}</p>
         </div>
-        <Link className="button button-primary" href={ctaHref}>
+        <Link
+          className="button button-primary"
+          href={ctaHref}
+          {...analyticsAttributes("cta_click", {
+            label: ctaLabel,
+            href: ctaHref,
+            location: title,
+          })}
+        >
           {ctaLabel}
         </Link>
       </div>

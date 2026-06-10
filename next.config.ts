@@ -6,11 +6,11 @@ const contentSecurityPolicy = [
   "object-src 'none'",
   "form-action 'self'",
   "frame-ancestors 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://snap.licdn.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://snap.licdn.com https://connect.facebook.net https://www.clarity.ms https://static.hotjar.com https://script.hotjar.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com",
+  "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://px.ads.linkedin.com https://www.facebook.com https://*.clarity.ms https://*.hotjar.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://api.resend.com https://api.sanity.io https://*.api.sanity.io https://*.apicdn.sanity.io https://cdn.sanity.io wss://*.api.sanity.io https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net",
+  "connect-src 'self' https://api.resend.com https://api.sanity.io https://*.api.sanity.io https://*.apicdn.sanity.io https://cdn.sanity.io wss://*.api.sanity.io https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net https://px.ads.linkedin.com https://www.facebook.com https://*.clarity.ms https://*.hotjar.com wss://*.hotjar.com",
   "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.googletagmanager.com",
 ].join("; ");
 
