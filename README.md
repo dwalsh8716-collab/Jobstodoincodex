@@ -26,10 +26,16 @@ Open `http://localhost:3000`.
 ## Production Checks
 
 ```bash
-npm run typecheck
 npm run lint
 npm run build
+npm run typecheck
+npm test
+npm run performance:budget
+npm run test:e2e
+npm run verify
 ```
+
+`npm run verify` is the release gate. It runs linting, production build, TypeScript, Vitest, public bundle budget and Playwright.
 
 ## Environment Variables
 
@@ -52,7 +58,11 @@ Required for Sanity:
 Optional tracking:
 
 - `NEXT_PUBLIC_GA_ID`
+- `NEXT_PUBLIC_GTM_ID`
 - `NEXT_PUBLIC_LINKEDIN_PARTNER_ID`
+- `NEXT_PUBLIC_META_PIXEL_ID`
+- `NEXT_PUBLIC_CLARITY_ID`
+- `NEXT_PUBLIC_HOTJAR_ID`
 - `GOOGLE_SITE_VERIFICATION`
 - `NEXT_PUBLIC_BOOKING_URL`
 
@@ -106,6 +116,7 @@ Launch route audit and future-page roadmap:
 ```txt
 docs/LAUNCH-SITEMAP-ROUTES.md
 docs/TECHNICAL-SEO-GEO.md
+docs/FINAL-PRODUCTION-READINESS-AUDIT.md
 ```
 
 ## Rich Media And Video
@@ -228,7 +239,9 @@ Codex Sites note: if the Sites plugin is available in the workspace, this projec
 - Configure Sanity project credentials.
 - Invite editor users to the Sanity project.
 - Change the temporary CMS preview password.
-- Add cookie consent if tracking requires it.
+- Confirm analytics consent wording and tracking requirements.
+- Confirm Google Search Console verification.
+- Confirm CV handling/storage is legally and technically safe before enabling uploads.
 
 ## Production Status
 
