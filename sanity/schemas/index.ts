@@ -89,12 +89,70 @@ const richText = defineField({
           name: "provider",
           title: "Provider",
           type: "string",
-          options: { list: ["youtube", "vimeo"] },
+          options: {
+            list: [
+              { title: "YouTube", value: "youtube" },
+              { title: "Vimeo", value: "vimeo" },
+              { title: "Uploaded video file", value: "upload" }
+            ],
+            layout: "radio"
+          },
           validation: (Rule) => Rule.required()
         }),
-        defineField({ name: "url", title: "Embed or video URL", type: "url", validation: (Rule) => Rule.required() }),
+        defineField({
+          name: "url",
+          title: "Embed or video URL",
+          type: "url",
+          description: "Use this for YouTube, Vimeo or a hosted MP4 URL. Leave blank when using an uploaded file.",
+          hidden: ({ parent }) => parent?.provider === "upload",
+          validation: (Rule) =>
+            Rule.custom((value, context) => {
+              const parent = context.parent as { provider?: string } | undefined;
+              if (parent?.provider !== "upload" && !value) return "Add a YouTube or Vimeo URL.";
+              return true;
+            })
+        }),
+        defineField({
+          name: "uploadedVideo",
+          title: "Uploaded video file",
+          type: "file",
+          description: "Use an MP4/WebM file that has been compressed for the web.",
+          options: { accept: "video/mp4,video/webm" },
+          hidden: ({ parent }) => parent?.provider !== "upload",
+          validation: (Rule) =>
+            Rule.custom((value, context) => {
+              const parent = context.parent as { provider?: string } | undefined;
+              if (parent?.provider === "upload" && !value) return "Upload a video file or switch provider.";
+              return true;
+            })
+        }),
         defineField({ name: "description", title: "Description", type: "text", rows: 3 }),
-        defineField({ name: "thumbnail", title: "Thumbnail", type: "image" })
+        defineField({
+          name: "thumbnail",
+          title: "Poster image",
+          type: "image",
+          description: "Used before the video loads, and as the poster image for uploaded files."
+        }),
+        defineField({
+          name: "thumbnailAlt",
+          title: "Poster alt text",
+          type: "string",
+          description: "Leave blank when the poster is decorative and the video title explains the content.",
+          validation: (Rule) => Rule.max(140)
+        }),
+        defineField({
+          name: "transcript",
+          title: "Short transcript or accessibility note",
+          type: "text",
+          rows: 4,
+          description: "Add the key spoken points in plain English when the video is published."
+        }),
+        defineField({
+          name: "captionsUrl",
+          title: "Captions file URL",
+          type: "url",
+          description: "Use a WebVTT captions file for uploaded video where possible."
+        })
       ],
       preview: {
         select: { title: "title", subtitle: "provider" }

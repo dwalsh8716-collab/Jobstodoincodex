@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { RichMediaBlock } from "@/components/RichMedia";
-import { caseStudies, insights, proofPoints, richMediaExamples, services, specialisms, whyEssential } from "@/lib/content";
+import { caseStudies, homepageFeatureVideo, insights, proofPoints, richMediaExamples, services, specialisms, whyEssential } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -90,6 +90,28 @@ export default function HomePage() {
         {proofPoints.map((point) => (
           <p key={point}>{point}</p>
         ))}
+      </section>
+
+      <section className="section">
+        <div className="container split">
+          <div>
+            <p className="eyebrow">Founder video</p>
+            <h2>A quick word before you brief the market.</h2>
+            <p className="lede">
+              The useful bit usually sits behind the job title: growth pressure, founder overload, a team that needs
+              direction, or a market that will not buy a vague brief. Start there and the hiring gets sharper.
+            </p>
+            <div className="button-row hero-actions">
+              <Link className="button button-primary" href="/contact">
+                Sense-check a brief
+              </Link>
+              <Link className="text-link" href="/services/strategic-interim">
+                Explore Strategic Interim
+              </Link>
+            </div>
+          </div>
+          <RichMediaBlock media={homepageFeatureVideo} />
+        </div>
       </section>
 
       <section className="section surface">

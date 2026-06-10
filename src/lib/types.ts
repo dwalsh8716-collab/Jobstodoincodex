@@ -12,11 +12,14 @@ export type FAQ = {
 export type RichMedia =
   | {
       type: "video";
-      provider: "youtube" | "vimeo";
+      provider: "youtube" | "vimeo" | "upload";
       title: string;
-      url: string;
+      url?: string;
       description?: string;
       thumbnail?: string;
+      thumbnailAlt?: string;
+      captionsUrl?: string;
+      transcript?: string;
     }
   | {
       type: "image";

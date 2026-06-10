@@ -286,10 +286,21 @@ export const services: Service[] = [
 const strategicInterimVideo: RichMedia = {
   type: "video",
   provider: "youtube",
-  title: "Strategic Interim explainer video slot",
+  title: "Strategic Interim: senior help without another permanent hire.",
   url: "",
   description:
-    "Replace this media slot with a David Walsh explainer, client Q&A or market update video inside the CMS."
+    "For teams that need senior direction now, Strategic Interim can create momentum without locking in another permanent salary."
+};
+
+export const homepageFeatureVideo: RichMedia = {
+  type: "video",
+  provider: "youtube",
+  title: "The problem behind the hire matters more than the job title.",
+  url: "",
+  thumbnail: "/assets/og-image.png",
+  thumbnailAlt: "Essential Resourcing brand graphic for a founder video",
+  description:
+    "David's short version: get clear on the commercial problem before you ask the market for a job title."
 };
 
 export const insights: Insight[] = [

@@ -107,9 +107,11 @@ The site supports:
 
 - YouTube embeds
 - Vimeo embeds
+- Uploaded MP4/WebM video files through Sanity
 - Image feature blocks
 - Galleries
 - Captions and alt text
+- Poster images, click-to-load embeds and metadata-only preload for safer Core Web Vitals
 
 Frontend component: `src/components/RichMedia.tsx`
 
