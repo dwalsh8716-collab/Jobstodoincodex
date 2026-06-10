@@ -8,12 +8,15 @@ export const metadata = createMetadata({
   title: "Contact David | Essential Resourcing",
   description:
     "Tell David Walsh what you are trying to hire and he will tell you honestly whether Essential Resourcing can help.",
-  path: "/contact"
+  path: "/contact",
 });
 
 export default function ContactPage() {
-  const phoneHref = siteConfig.phone ? `tel:${siteConfig.phone.replace(/[^+\d]/g, "")}` : "";
-  const hasBookingUrl = siteConfig.bookingUrl && siteConfig.bookingUrl !== "/contact";
+  const phoneHref = siteConfig.phone
+    ? `tel:${siteConfig.phone.replace(/[^+\d]/g, "")}`
+    : "";
+  const hasBookingUrl =
+    siteConfig.bookingUrl && siteConfig.bookingUrl !== "/contact";
 
   return (
     <>
@@ -23,14 +26,31 @@ export default function ContactPage() {
           <div>
             <p className="eyebrow">Contact</p>
             <h1>Need good people?</h1>
-            <p className="lede">Tell me what you’re trying to hire and I’ll tell you honestly whether I can help.</p>
+            <p className="lede">
+              Tell me what you’re trying to hire and I’ll tell you honestly
+              whether I can help.
+            </p>
             <div className="statement-list hero-actions">
               <p>Confidential briefs handled directly</p>
               <p>Candidate conversations without pressure</p>
-              <p>A straight answer if the role, salary or process needs fixing</p>
+              <p>
+                A straight answer if the role, salary or process needs fixing
+              </p>
             </div>
             <div className="button-row hero-actions">
-              <Link className="button button-secondary" href={`mailto:${siteConfig.email}`}>
+              <Link className="button button-primary" href="#contact-form">
+                I&apos;m hiring
+              </Link>
+              <Link
+                className="button button-secondary"
+                href="/candidates#candidate-contact"
+              >
+                I&apos;m looking for work
+              </Link>
+              <Link
+                className="button button-secondary"
+                href={`mailto:${siteConfig.email}`}
+              >
                 {siteConfig.email}
               </Link>
               {phoneHref ? (
@@ -39,12 +59,18 @@ export default function ContactPage() {
                 </Link>
               ) : null}
               {siteConfig.linkedIn ? (
-                <Link className="button button-secondary" href={siteConfig.linkedIn}>
+                <Link
+                  className="button button-secondary"
+                  href={siteConfig.linkedIn}
+                >
                   LinkedIn
                 </Link>
               ) : null}
               {hasBookingUrl ? (
-                <Link className="button button-primary" href={siteConfig.bookingUrl}>
+                <Link
+                  className="button button-primary"
+                  href={siteConfig.bookingUrl}
+                >
                   Talk to David
                 </Link>
               ) : null}
@@ -52,12 +78,15 @@ export default function ContactPage() {
             <div className="trust-callout hero-actions">
               <h2>What happens next?</h2>
               <p>
-                David reviews the note personally. If Essential can help, you will get a practical next step. If it is
-                not the right fit, you will get that answer quickly too.
+                David reviews the note personally. If Essential can help, you
+                will get a practical next step. If it is not the right fit, you
+                will get that answer quickly too.
               </p>
             </div>
           </div>
-          <ContactForm type="client" />
+          <div id="contact-form">
+            <ContactForm type="client" />
+          </div>
         </div>
       </section>
     </>

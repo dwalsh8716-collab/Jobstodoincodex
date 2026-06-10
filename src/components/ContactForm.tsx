@@ -4,9 +4,18 @@ import { useId, useState } from "react";
 
 type FormType = "client" | "candidate" | "job";
 
-export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jobTitle?: string }) {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+export function ContactForm({
+  type = "client",
+  jobTitle,
+}: {
+  type?: FormType;
+  jobTitle?: string;
+}) {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
+  const [startedAt, setStartedAt] = useState(() => Date.now().toString());
   const formId = useId();
   const statusId = `${formId}-${type}-form-status`;
 
@@ -23,56 +32,124 @@ export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jo
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData
+        body: formData,
       });
-      const data = (await response.json()) as { ok?: boolean; message?: string };
-      if (!response.ok || !data.ok) throw new Error(data.message || "Something went wrong.");
+      const data = (await response.json()) as {
+        ok?: boolean;
+        message?: string;
+      };
+      if (!response.ok || !data.ok)
+        throw new Error(data.message || "Something went wrong.");
       setStatus("success");
       setMessage(data.message || "Thanks. Your enquiry has been received.");
       form.reset();
+      setStartedAt(Date.now().toString());
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "The form could not be sent.");
+      setMessage(
+        error instanceof Error ? error.message : "The form could not be sent.",
+      );
     }
   }
 
   return (
-    <form className="contact-form" onSubmit={onSubmit} aria-busy={status === "loading"} aria-describedby={statusId}>
+    <form
+      className="contact-form"
+      onSubmit={onSubmit}
+      aria-busy={status === "loading"}
+      aria-describedby={statusId}
+    >
       <div className="honeypot" aria-hidden="true">
         <label htmlFor={`${type}-website`}>Leave this field blank</label>
-        <input id={`${type}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+        <input
+          id={`${type}-website`}
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
+      <input type="hidden" name="startedAt" value={startedAt} />
       <div className="form-assurance">
         <strong>Direct with David.</strong>
-        <span>Share the useful context. You will get a straight reply, not a sales sequence.</span>
+        <span>
+          Share the useful context. You will get a straight reply, not a sales
+          sequence.
+        </span>
       </div>
       <div className="form-row">
         <label htmlFor={`${type}-name`}>Name</label>
-        <input id={`${type}-name`} name="name" type="text" autoComplete="name" required />
+        <input
+          id={`${type}-name`}
+          name="name"
+          type="text"
+          autoComplete="name"
+          minLength={2}
+          maxLength={80}
+          required
+        />
       </div>
       <div className="form-row">
         <label htmlFor={`${type}-email`}>Email</label>
-        <input id={`${type}-email`} name="email" type="email" autoComplete="email" required />
+        <input
+          id={`${type}-email`}
+          name="email"
+          type="email"
+          autoComplete="email"
+          maxLength={254}
+          required
+        />
       </div>
       <div className="form-row">
-        <label htmlFor={`${type}-phone`}>Phone <span className="optional-label">optional</span></label>
-        <input id={`${type}-phone`} name="phone" type="tel" autoComplete="tel" />
+        <label htmlFor={`${type}-phone`}>
+          Phone <span className="optional-label">optional</span>
+        </label>
+        <input
+          id={`${type}-phone`}
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          maxLength={32}
+          pattern="^[+0-9\\s().-]+$"
+        />
       </div>
       {type === "client" ? (
         <div className="form-row">
           <label htmlFor={`${type}-company`}>Company</label>
-          <input id={`${type}-company`} name="company" type="text" autoComplete="organization" />
+          <input
+            id={`${type}-company`}
+            name="company"
+            type="text"
+            autoComplete="organization"
+            maxLength={120}
+          />
         </div>
       ) : null}
       {type !== "client" ? (
         <div className="form-row">
           <label htmlFor={`${type}-linkedin`}>LinkedIn URL</label>
-          <input id={`${type}-linkedin`} name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." />
+          <input
+            id={`${type}-linkedin`}
+            name="linkedin"
+            type="url"
+            placeholder="https://www.linkedin.com/in/..."
+            maxLength={240}
+          />
         </div>
       ) : null}
       <div className="form-row">
-        <label htmlFor={`${type}-brief`}>{type === "job" ? "Application note" : "What do you need?"}</label>
-        <select id={`${type}-brief`} name="briefType" defaultValue={type === "candidate" ? "Candidate conversation" : "Leadership Search"}>
+        <label htmlFor={`${type}-brief`}>
+          {type === "job" ? "Application note" : "What do you need?"}
+        </label>
+        <select
+          id={`${type}-brief`}
+          name="briefType"
+          defaultValue={
+            type === "candidate"
+              ? "Candidate conversation"
+              : "Leadership Search"
+          }
+        >
           <option>Leadership Search</option>
           <option>Strategic Interim</option>
           <option>Agency Recruitment</option>
@@ -84,21 +161,53 @@ export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jo
       </div>
       <div className="form-row">
         <label htmlFor={`${type}-message`}>Message</label>
-        <textarea id={`${type}-message`} name="message" rows={6} required />
+        <textarea
+          id={`${type}-message`}
+          name="message"
+          rows={6}
+          minLength={10}
+          maxLength={2000}
+          required
+        />
       </div>
       <label className="consent" htmlFor={`${type}-consent`}>
-        <input id={`${type}-consent`} type="checkbox" name="consent" value="yes" required />
-        <span>I agree to be contacted about this enquiry. Nothing is shared without permission.</span>
+        <input
+          id={`${type}-consent`}
+          type="checkbox"
+          name="consent"
+          value="yes"
+          required
+        />
+        <span>
+          I agree to be contacted about this enquiry. Nothing is shared without
+          permission.
+        </span>
       </label>
       {type !== "client" ? (
         <p className="form-note">
-          CV upload is intentionally not enabled until secure storage is configured. Add a LinkedIn URL or note and David can request the CV safely.
+          CV upload is intentionally not enabled until secure storage is
+          configured. Add a LinkedIn URL or note and David can request the CV
+          safely.
         </p>
       ) : null}
-      <button className="button button-primary" type="submit" disabled={status === "loading"} aria-disabled={status === "loading"}>
-        {status === "loading" ? "Sending..." : type === "job" ? "Start application" : "Send enquiry"}
+      <button
+        className="button button-primary"
+        type="submit"
+        disabled={status === "loading"}
+        aria-disabled={status === "loading"}
+      >
+        {status === "loading"
+          ? "Sending..."
+          : type === "job"
+            ? "Start application"
+            : "Send enquiry"}
       </button>
-      <p id={statusId} className={`form-status ${status}`} role={status === "error" ? "alert" : "status"} aria-live="polite">
+      <p
+        id={statusId}
+        className={`form-status ${status}`}
+        role={status === "error" ? "alert" : "status"}
+        aria-live="polite"
+      >
         {message}
       </p>
     </form>
