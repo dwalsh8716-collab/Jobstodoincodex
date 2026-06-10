@@ -35,7 +35,7 @@ It is not final-live until the manual content, credential, legal and launch setu
 
 ### Deliberately Left Unchanged
 
-- The Manchester palette remains optional, not default.
+- The current graphite, cobalt and copper palette remains the production direction.
 - CV upload remains disabled until private storage, malware scanning and legal handling are properly in place.
 - Draft jobs, salary snapshots and proof remain visibly draft-safe rather than pretending to be verified production content.
 - The CMS uses Sanity because it is already integrated and suits structured recruitment content.

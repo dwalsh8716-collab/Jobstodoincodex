@@ -15,7 +15,7 @@ Status: Implemented with user override.
 
 - Original Manchester palette is not the default because David said he did not like it.
 - New default palette is centralised in `src/styles/theme.css`.
-- Original Manchester palette remains as an optional theme.
+- Manchester red/yellow palette is not used as an active or advertised theme.
 - Typography uses Space Grotesk and Inter.
 - Logo assets are used for header, footer, icon, favicon and social preview.
 - David portrait remains a manual asset placeholder.

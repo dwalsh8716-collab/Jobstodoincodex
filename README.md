@@ -120,6 +120,7 @@ docs/FINAL-POLISH-ROADMAP.md
 docs/VISUAL-DESIGN-POLISH.md
 docs/POST-LAUNCH-GROWTH-ROADMAP.md
 docs/launch-google-seo-local-setup.md
+docs/MASTER-BUILD-COMPLETION-REPORT.md
 ```
 
 ## Rich Media And Video
