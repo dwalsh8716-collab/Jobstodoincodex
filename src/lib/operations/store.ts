@@ -4,7 +4,9 @@ import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import { promisify } from "node:util";
 import type { ContactFormPayload } from "@/validations/contact";
+import type { DataSubjectRequestPayload } from "@/validations/data-subject-request";
 import { candidatePrivacyNoticeVersion } from "@/lib/candidate-trust";
+import { dataSubjectRequestDueDays } from "@/lib/dsar";
 import type {
   OperationsBackendStatus,
   OperationsOverview,
@@ -231,6 +233,139 @@ export async function saveContactEnquiryToOperations(
   }
 }
 
+export async function saveDataSubjectRequestToOperations(
+  payload: DataSubjectRequestPayload,
+  meta: RequestMeta = {},
+): Promise<OperationWriteResult> {
+  const status = getOperationsBackendStatus();
+  const required = status.enabled;
+
+  if (!status.enabled) {
+    return { ok: true, required: false, reason: status.state };
+  }
+
+  if (!status.configured) {
+    return { ok: false, required, reason: status.state };
+  }
+
+  const record = {
+    requestType: payload.requestType,
+    requesterName: payload.name,
+    requesterEmail: payload.email,
+    requesterPhone: payload.phone,
+    requesterEmailHash: hashPrivateValue(payload.email.toLowerCase()),
+    message: payload.message,
+    status: "received",
+    verificationStatus: "pending",
+    source: "website_privacy_request",
+    dueDays: dataSubjectRequestDueDays,
+    ipHash: hashPrivateValue(meta.ip),
+    userAgentHash: hashPrivateValue(meta.userAgent),
+    privacyNoticeVersion: candidatePrivacyNoticeVersion,
+  };
+
+  try {
+    const result = await runPsqlJson<{ id: string }>(
+      `
+        with payload as (
+          select convert_from(decode(:'payload', 'base64'), 'utf8')::jsonb as data
+        ),
+        created as (
+          insert into data_subject_requests (
+            request_type,
+            requester_name,
+            requester_email,
+            requester_phone,
+            requester_email_hash,
+            message,
+            status,
+            verification_status,
+            source,
+            due_at,
+            ip_hash,
+            user_agent_hash,
+            metadata
+          )
+          select
+            data->>'requestType',
+            data->>'requesterName',
+            data->>'requesterEmail',
+            nullif(data->>'requesterPhone', ''),
+            nullif(data->>'requesterEmailHash', ''),
+            data->>'message',
+            coalesce(nullif(data->>'status', ''), 'received'),
+            coalesce(nullif(data->>'verificationStatus', ''), 'pending'),
+            coalesce(nullif(data->>'source', ''), 'website_privacy_request'),
+            now() + make_interval(days => coalesce((data->>'dueDays')::int, 30)),
+            nullif(data->>'ipHash', ''),
+            nullif(data->>'userAgentHash', ''),
+            jsonb_build_object(
+              'privacyNoticeVersion', data->>'privacyNoticeVersion',
+              'manualReviewRequired', true,
+              'noPublicLookupPerformed', true
+            )
+          from payload
+          returning id, request_type, status, verification_status, due_at, requester_email_hash
+        ),
+        activity as (
+          insert into activities (
+            entity_type,
+            entity_id,
+            activity_type,
+            title,
+            description,
+            metadata
+          )
+          select
+            'data_subject_request',
+            id,
+            'dsar_request_received',
+            'Data/privacy request received',
+            'Created from the public privacy request form. Identity verification is required before release, deletion or correction.',
+            jsonb_build_object(
+              'requestType', request_type,
+              'verificationStatus', verification_status
+            )
+          from created
+          returning id
+        ),
+        audit as (
+          insert into audit_logs (
+            action,
+            entity_type,
+            entity_id,
+            after
+          )
+          select
+            'data_subject_request.created',
+            'data_subject_request',
+            id,
+            jsonb_build_object(
+              'requestType', request_type,
+              'status', status,
+              'verificationStatus', verification_status,
+              'dueAt', due_at,
+              'requesterEmailHash', requester_email_hash
+            )
+          from created
+          returning id
+        )
+        select json_build_object('id', created.id)::text from created;
+      `,
+      record,
+    );
+
+    return { ok: true, required, id: result.id };
+  } catch (error) {
+    console.error("Operations data request write failed", {
+      reason: error instanceof Error ? error.message : "unknown",
+      requestType: payload.requestType,
+    });
+
+    return { ok: false, required, reason: "database_write_failed" };
+  }
+}
+
 export async function getOperationsOverview(): Promise<OperationsOverview> {
   const status = getOperationsBackendStatus();
 
@@ -242,7 +377,10 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
       candidateCount: 0,
       applicationCount: 0,
       openTaskCount: 0,
+      dataRequestCount: 0,
+      openDataRequestCount: 0,
       latestEnquiries: [],
+      latestDataRequests: [],
     };
   }
 
@@ -260,6 +398,12 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
         'candidateCount', (select count(*)::int from candidates),
         'applicationCount', (select count(*)::int from applications),
         'openTaskCount', (select count(*)::int from tasks where status in ('open', 'in_progress', 'waiting')),
+        'dataRequestCount', (select count(*)::int from data_subject_requests),
+        'openDataRequestCount', (
+          select count(*)::int
+          from data_subject_requests
+          where status not in ('completed', 'closed', 'rejected')
+        ),
         'latestEnquiries', coalesce((
           select json_agg(row_to_json(latest))
           from (
@@ -275,6 +419,22 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
             order by created_at desc
             limit 8
           ) latest
+        ), '[]'::json),
+        'latestDataRequests', coalesce((
+          select json_agg(row_to_json(latest_requests))
+          from (
+            select
+              id::text,
+              request_type as "requestType",
+              requester_name as "requesterName",
+              status,
+              verification_status as "verificationStatus",
+              due_at as "dueAt",
+              created_at as "createdAt"
+            from data_subject_requests
+            order by created_at desc
+            limit 8
+          ) latest_requests
         ), '[]'::json)
       )::text;
     `);
@@ -295,7 +455,10 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
       candidateCount: 0,
       applicationCount: 0,
       openTaskCount: 0,
+      dataRequestCount: 0,
+      openDataRequestCount: 0,
       latestEnquiries: [],
+      latestDataRequests: [],
     };
   }
 }

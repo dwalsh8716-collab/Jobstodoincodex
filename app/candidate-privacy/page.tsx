@@ -6,6 +6,7 @@ import {
   candidatePrivacyPath,
   candidateRetentionStatement,
 } from "@/lib/candidate-trust";
+import { dataSubjectRequestPath } from "@/lib/dsar";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -91,7 +92,11 @@ export default function CandidatePrivacyPage() {
           <h2>Deletion, export and withdrawal</h2>
           <p>
             To ask for a copy of your details, withdraw consent or request
-            deletion, email{" "}
+            deletion, use the{" "}
+            <Link className="text-link" href={dataSubjectRequestPath}>
+              candidate data request form
+            </Link>
+            . If the form cannot be used, email{" "}
             <Link className="text-link" href={`mailto:${siteConfig.email}`}>
               {siteConfig.email}
             </Link>

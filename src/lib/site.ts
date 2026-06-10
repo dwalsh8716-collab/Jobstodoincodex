@@ -78,6 +78,7 @@ export const launchPages = [
   "/contact",
   "/jobs",
   "/candidate-privacy",
+  "/candidate-privacy/request",
   "/privacy-policy",
   "/cookie-policy",
   "/terms",

@@ -1,5 +1,6 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { candidatePrivacyPath } from "@/lib/candidate-trust";
+import { dataSubjectRequestPath } from "@/lib/dsar";
 import { createMetadata } from "@/lib/seo";
 import Link from "next/link";
 
@@ -87,7 +88,12 @@ export default function PrivacyPolicyPage() {
           <h2>Your rights</h2>
           <p>
             You can request access, correction or deletion of personal data by
-            contacting Essential Resourcing.
+            using the{" "}
+            <Link className="text-link" href={dataSubjectRequestPath}>
+              candidate data request form
+            </Link>
+            . Essential Resourcing will not release or delete private candidate
+            data through an unauthenticated public form without review.
           </p>
         </div>
       </section>

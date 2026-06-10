@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getOperationsBackendStatus } from "@/lib/operations/store";
+import {
+  getOperationsBackendStatus,
+  getOperationsOverview,
+} from "@/lib/operations/store";
 
 vi.mock("server-only", () => ({}));
 
@@ -40,6 +43,17 @@ describe("operations backend status", () => {
       enabled: true,
       configured: true,
       state: "ready",
+    });
+  });
+
+  it("returns zeroed DSAR overview fields when the database is disabled", async () => {
+    delete process.env.OPERATIONS_DB_ENABLED;
+    delete process.env.DATABASE_URL;
+
+    await expect(getOperationsOverview()).resolves.toMatchObject({
+      dataRequestCount: 0,
+      openDataRequestCount: 0,
+      latestDataRequests: [],
     });
   });
 });

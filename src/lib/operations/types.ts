@@ -18,6 +18,16 @@ export type OperationWriteResult = {
   reason?: string;
 };
 
+export type DataSubjectRequestSummary = {
+  id: string;
+  requestType: string;
+  requesterName: string;
+  status: string;
+  verificationStatus: string;
+  dueAt?: string;
+  createdAt: string;
+};
+
 export type OperationsOverview = {
   status: OperationsBackendStatus;
   enquiryCount: number;
@@ -25,6 +35,8 @@ export type OperationsOverview = {
   candidateCount: number;
   applicationCount: number;
   openTaskCount: number;
+  dataRequestCount: number;
+  openDataRequestCount: number;
   latestEnquiries: Array<{
     id: string;
     name: string;
@@ -34,4 +46,5 @@ export type OperationsOverview = {
     priority: string;
     createdAt: string;
   }>;
+  latestDataRequests: DataSubjectRequestSummary[];
 };

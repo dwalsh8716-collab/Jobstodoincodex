@@ -12,6 +12,7 @@ import {
   candidatePrivacyPath,
   candidateRetentionStatement,
 } from "@/lib/candidate-trust";
+import { dataSubjectRequestPath } from "@/lib/dsar";
 import { saveContactEnquiryToOperations } from "@/lib/operations/store";
 import { siteConfig } from "@/lib/site";
 import { sendWhatsAppBusinessConfirmation } from "@/lib/whatsapp-business/client";
@@ -127,7 +128,7 @@ async function sendWithResend(payload: ContactFormPayload) {
         candidateRetentionStatement,
         "",
         `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
-        `To ask for deletion or a copy of your details, email ${siteConfig.email}.`,
+        `To ask for deletion or a copy of your details: ${siteConfig.url}${dataSubjectRequestPath}`,
         "",
         "No black hole. No nonsense. If it looks relevant, David will come back to you.",
         "",

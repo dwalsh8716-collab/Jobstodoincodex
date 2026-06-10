@@ -29,6 +29,7 @@ Postgres:
 - Virus/manual scan status.
 - Retention date.
 - Deleted timestamp.
+- DSAR/request linkage where a candidate asks for export, deletion or correction.
 
 Private object storage:
 
@@ -86,6 +87,21 @@ Postgres already has fields for:
 - deleted date
 - deletion reason
 
+Formal candidate data/privacy requests are captured through:
+
+```txt
+/candidate-privacy/request
+```
+
+Workflow notes:
+
+```txt
+docs/dsar-framework.md
+```
+
+Do not release a CV, CV metadata or private candidate notes from a DSAR request
+until identity has been checked and the request has been reviewed.
+
 ## Manual Actions Before CV Upload
 
 1. Choose the storage provider.
@@ -97,5 +113,6 @@ Postgres already has fields for:
 7. Add audit logging for access.
 8. Confirm retention/deletion workflow.
 9. Get legal/privacy wording reviewed.
+10. Confirm how DSAR export and deletion requests apply to stored CV files.
 
 Until then, the website should keep asking candidates for a LinkedIn URL or short note first.

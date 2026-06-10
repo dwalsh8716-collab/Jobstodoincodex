@@ -6,6 +6,11 @@ import {
   CMS_SESSION_COOKIE,
   isCmsSessionValid,
 } from "@/lib/cms-auth";
+import {
+  dataSubjectRequestStatusLabels,
+  dataSubjectRequestTypeOptions,
+  dataSubjectVerificationLabels,
+} from "@/lib/dsar";
 import { getOperationsOverview } from "@/lib/operations/store";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -32,7 +37,31 @@ const setupItems = [
   "Set OPERATIONS_DB_ENABLED=true only after migrations pass.",
   "Run npm run db:migrate against the Railway database.",
   "Keep CV files out of public storage until private object storage is approved.",
+  "Review data/privacy requests before any export, correction or deletion.",
 ];
+
+function formatDataRequestType(value: string) {
+  return (
+    dataSubjectRequestTypeOptions.find((option) => option.value === value)
+      ?.label || value.replaceAll("_", " ")
+  );
+}
+
+function formatLookup<T extends Record<string, string>>(
+  lookup: T,
+  value: string,
+) {
+  return lookup[value as keyof T] || value.replaceAll("_", " ");
+}
+
+function formatDueDate(value?: string) {
+  if (!value) return "Not set";
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(value));
+}
 
 export default async function AdminPage() {
   const cookieStore = await cookies();
@@ -49,6 +78,7 @@ export default async function AdminPage() {
     { label: "Candidates", value: overview.candidateCount },
     { label: "Applications", value: overview.applicationCount },
     { label: "Open tasks", value: overview.openTaskCount },
+    { label: "Open data requests", value: overview.openDataRequestCount },
   ];
 
   return (
@@ -121,6 +151,57 @@ export default async function AdminPage() {
                 No private records are showing yet. If Railway Postgres is not
                 enabled, the public site still works and enquiries can still go
                 through the existing email route.
+              </p>
+            )}
+          </section>
+
+          <section className={styles.adminPanel}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">Data/privacy requests</p>
+                <h2>Identity first. Then action.</h2>
+              </div>
+            </div>
+            {overview.latestDataRequests.length ? (
+              <div className={styles.adminTableWrap}>
+                <table className={styles.adminTable}>
+                  <thead>
+                    <tr>
+                      <th>Requester</th>
+                      <th>Request</th>
+                      <th>Status</th>
+                      <th>Verification</th>
+                      <th>Due</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {overview.latestDataRequests.map((request) => (
+                      <tr key={request.id}>
+                        <td>{request.requesterName}</td>
+                        <td>{formatDataRequestType(request.requestType)}</td>
+                        <td>
+                          {formatLookup(
+                            dataSubjectRequestStatusLabels,
+                            request.status,
+                          )}
+                        </td>
+                        <td>
+                          {formatLookup(
+                            dataSubjectVerificationLabels,
+                            request.verificationStatus,
+                          )}
+                        </td>
+                        <td>{formatDueDate(request.dueAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className={styles.adminEmpty}>
+                No data/privacy requests are showing yet. When one arrives,
+                verify identity before releasing, deleting or changing private
+                candidate data.
               </p>
             )}
           </section>

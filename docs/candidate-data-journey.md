@@ -39,6 +39,9 @@ Improved:
 - Added candidate confirmation email text through the existing Resend path.
 - Changed candidate analytics to use safe event names and avoid candidate PII.
 - Added `/admin` to robots disallow rules.
+- Added `/candidate-privacy/request` for data export, deletion, correction,
+  withdrawal and privacy questions.
+- Added a Postgres-backed DSAR request workflow with manual verification.
 
 ## What Candidates See
 
@@ -50,6 +53,7 @@ Before applying or sending a note, candidates now see:
 - what happens next after they apply or send a note
 - a link to the Candidate Privacy Notice
 - how to ask for deletion or export
+- where to submit a formal data/privacy request
 
 ## Consent
 
@@ -110,6 +114,33 @@ Current safe events:
 - `job_application_submission`
 - `form_error`
 
+The data/privacy request form does not send candidate names, emails, phone
+numbers, request details or request types to analytics.
+
+## Data And Privacy Requests
+
+Route:
+
+```txt
+/candidate-privacy/request
+```
+
+This route supports candidate requests for access/export, deletion, correction,
+consent withdrawal, restriction, objection and privacy questions.
+
+It does not confirm whether a matching record exists. It does not provide an
+automatic export. It does not delete records from a public form submission.
+
+When Railway/Postgres operations are enabled, requests are stored in
+`data_subject_requests` and logged in activity/audit tables. Identity
+verification remains manual before any export, correction or deletion.
+
+Full workflow notes:
+
+```txt
+docs/dsar-framework.md
+```
+
 Safe properties:
 
 - form type
@@ -128,6 +159,7 @@ Before public launch, David should have the final wording checked against:
 - retention policy
 - client-sharing process
 - deletion/export request process
+- DSAR identity verification process
 - admin access controls
 
 No fake compliance. No public CV links. No candidate data in analytics.

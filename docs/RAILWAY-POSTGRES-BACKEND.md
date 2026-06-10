@@ -18,6 +18,7 @@ Railway Postgres is now staged as the private operations database for:
 - activity history
 - consent records
 - audit logs
+- data/privacy requests
 
 No public website content has moved from Sanity to Postgres.
 
@@ -54,6 +55,7 @@ Added:
 - `/api/health` route for Railway health checks.
 - Protected `/admin` operations dashboard.
 - Contact form hook that can save enquiries to Postgres once Railway is configured.
+- Candidate data/privacy request hook that can save DSAR requests to Postgres once Railway is configured.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -79,6 +81,7 @@ Postgres is for private business operations only:
 - CV/file metadata
 - consent records
 - audit logs
+- data/privacy requests
 
 Public jobs can still live in Sanity. Private applications can store a Sanity job ID or slug when that flow is extended.
 
@@ -105,6 +108,7 @@ Tables:
 - `activities`
 - `consent_records`
 - `audit_logs`
+- `data_subject_requests`
 
 Important privacy fields are included for candidate/application records:
 
@@ -141,7 +145,9 @@ Current dashboard:
 - candidates count
 - applications count
 - open tasks count
+- open data/privacy request count
 - latest enquiries table
+- latest data/privacy requests table
 - setup checklist
 
 This is a focused operations dashboard, not a bloated CRM.
@@ -160,6 +166,11 @@ Behaviour:
 - `OPERATIONS_DB_ENABLED=true` and `DATABASE_URL` missing: form returns a safe failure.
 - database write fails while enabled: form returns a safe failure and tells the user to email David.
 - database write succeeds: enquiry, activity record and consent record are created.
+
+The candidate data/privacy request form posts through a separate action. When
+Railway/Postgres is enabled, it creates a `data_subject_requests` row, an
+activity record and an audit-log record. It does not look up candidate records
+publicly, and it does not export or delete data without manual review.
 
 No PII is sent to analytics.
 
@@ -200,6 +211,7 @@ Implemented:
 - consent records in schema
 - audit logs in schema
 - retention/delete/export fields in schema
+- DSAR request table and protected dashboard summary
 - server-side form validation remains in place
 - form spam/timing/honeypot controls remain in place
 
