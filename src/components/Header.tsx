@@ -24,6 +24,7 @@ export function Header() {
       <button
         className="nav-toggle"
         type="button"
+        aria-label={open ? "Close navigation" : "Open navigation"}
         aria-expanded={open}
         aria-controls="primary-navigation"
         onClick={() => setOpen((value) => !value)}
@@ -31,7 +32,7 @@ export function Header() {
         <span />
         <span />
         <span />
-        <span className="sr-only">Open navigation</span>
+        <span className="sr-only">{open ? "Close navigation" : "Open navigation"}</span>
       </button>
 
       <nav className={`primary-nav ${open ? "is-open" : ""}`} id="primary-navigation" aria-label="Primary navigation">

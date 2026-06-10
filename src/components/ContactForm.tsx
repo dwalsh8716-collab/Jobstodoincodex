@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 type FormType = "client" | "candidate" | "job";
 
 export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jobTitle?: string }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const formId = useId();
+  const statusId = `${formId}-${type}-form-status`;
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,7 +37,7 @@ export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jo
   }
 
   return (
-    <form className="contact-form" onSubmit={onSubmit}>
+    <form className="contact-form" onSubmit={onSubmit} aria-busy={status === "loading"} aria-describedby={statusId}>
       <div className="honeypot" aria-hidden="true">
         <label htmlFor={`${type}-website`}>Leave this field blank</label>
         <input id={`${type}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
@@ -58,14 +60,14 @@ export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jo
       </div>
       {type === "client" ? (
         <div className="form-row">
-          <label htmlFor="company">Company</label>
-          <input id="company" name="company" type="text" autoComplete="organization" />
+          <label htmlFor={`${type}-company`}>Company</label>
+          <input id={`${type}-company`} name="company" type="text" autoComplete="organization" />
         </div>
       ) : null}
       {type !== "client" ? (
         <div className="form-row">
-          <label htmlFor="linkedin">LinkedIn URL</label>
-          <input id="linkedin" name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." />
+          <label htmlFor={`${type}-linkedin`}>LinkedIn URL</label>
+          <input id={`${type}-linkedin`} name="linkedin" type="url" placeholder="https://www.linkedin.com/in/..." />
         </div>
       ) : null}
       <div className="form-row">
@@ -93,10 +95,10 @@ export function ContactForm({ type = "client", jobTitle }: { type?: FormType; jo
           CV upload is intentionally not enabled until secure storage is configured. Add a LinkedIn URL or note and David can request the CV safely.
         </p>
       ) : null}
-      <button className="button button-primary" type="submit" disabled={status === "loading"}>
+      <button className="button button-primary" type="submit" disabled={status === "loading"} aria-disabled={status === "loading"}>
         {status === "loading" ? "Sending..." : type === "job" ? "Start application" : "Send enquiry"}
       </button>
-      <p className={`form-status ${status}`} role="status" aria-live="polite">
+      <p id={statusId} className={`form-status ${status}`} role={status === "error" ? "alert" : "status"} aria-live="polite">
         {message}
       </p>
     </form>

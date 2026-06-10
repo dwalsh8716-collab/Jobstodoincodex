@@ -38,6 +38,26 @@ NEXT_PUBLIC_THEME_PALETTE=editorial-green
 
 or change the variables directly.
 
+Keep the graphite/cobalt/copper palette as the production default unless David asks for a change. The Manchester palette stays available as an alternate token set, not the active look.
+
+Tailwind is configured in:
+
+```txt
+tailwind.config.ts
+```
+
+It maps utility colours and radii back to the same CSS variables, so Tailwind usage and the existing class-based design system do not drift apart.
+
+## Reusable UI Primitives
+
+Shared primitives live in:
+
+```txt
+src/components/ui/Primitives.tsx
+```
+
+Use these for new buttons, cards, badges, sections, form labels, errors and loading states before inventing another one-off pattern.
+
 ## Rich Media
 
 Reusable rich media component:
