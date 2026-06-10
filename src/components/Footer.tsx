@@ -28,7 +28,16 @@ export function Footer() {
           <div className="footer-contact" aria-label="Contact details">
             <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
             {siteConfig.linkedIn ? (
-              <Link href={siteConfig.linkedIn}>David on LinkedIn</Link>
+              <Link
+                href={siteConfig.linkedIn}
+                {...analyticsAttributes("linkedin_click", {
+                  label: "David on LinkedIn",
+                  href: siteConfig.linkedIn,
+                  location: "footer",
+                })}
+              >
+                David on LinkedIn
+              </Link>
             ) : null}
           </div>
           <Link

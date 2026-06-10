@@ -1,9 +1,11 @@
 export type AnalyticsEventName =
   | "form_submission"
+  | "form_error"
   | "cta_click"
   | "book_call_click"
   | "email_click"
   | "phone_click"
+  | "linkedin_click"
   | "job_application_start"
   | "job_application_submission"
   | "cv_upload_submission"

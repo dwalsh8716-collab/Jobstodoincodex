@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { AnalyticsPageEvent } from "@/components/AnalyticsPageEvent";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { SalaryTable } from "@/components/SalaryTable";
@@ -78,6 +79,10 @@ export default async function SalarySnapshotPage({ params }: Props) {
         </div>
       </section>
       <CTASection title="Want salary advice on a live role?" />
+      <AnalyticsPageEvent
+        event="salary_snapshot_view"
+        snapshotSlug={snapshot.slug}
+      />
     </>
   );
 }

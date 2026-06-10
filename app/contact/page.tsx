@@ -89,6 +89,11 @@ export default function ContactPage() {
                 <Link
                   className="button button-secondary"
                   href={siteConfig.linkedIn}
+                  {...analyticsAttributes("linkedin_click", {
+                    label: "LinkedIn",
+                    href: siteConfig.linkedIn,
+                    location: "contact hero",
+                  })}
                 >
                   LinkedIn
                 </Link>

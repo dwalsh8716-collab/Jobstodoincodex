@@ -32,6 +32,21 @@ describe("analytics utility", () => {
     });
   });
 
+  it("creates safe data attributes for LinkedIn tracking", () => {
+    const attrs = analyticsAttributes("linkedin_click", {
+      label: "David on LinkedIn",
+      href: "https://www.linkedin.com/in/example",
+      location: "footer",
+    });
+
+    expect(attrs).toMatchObject({
+      "data-analytics-event": "linkedin_click",
+      "data-analytics-label": "David on LinkedIn",
+      "data-analytics-href": "https://www.linkedin.com/in/example",
+      "data-analytics-location": "footer",
+    });
+  });
+
   it("reads analytics params from an element", () => {
     const element = {
       getAttribute: (name: string) =>
@@ -71,13 +86,13 @@ describe("analytics utility", () => {
       gtag,
     });
 
-    trackEvent("form_submission", { form_type: "client" });
+    trackEvent("form_error", { form_type: "client" });
 
     expect(dataLayer).toContainEqual({
-      event: "form_submission",
+      event: "form_error",
       form_type: "client",
     });
-    expect(gtag).toHaveBeenCalledWith("event", "form_submission", {
+    expect(gtag).toHaveBeenCalledWith("event", "form_error", {
       form_type: "client",
     });
     vi.unstubAllGlobals();

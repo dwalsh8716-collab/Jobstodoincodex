@@ -119,6 +119,7 @@ docs/FINAL-PRODUCTION-READINESS-AUDIT.md
 docs/FINAL-POLISH-ROADMAP.md
 docs/VISUAL-DESIGN-POLISH.md
 docs/POST-LAUNCH-GROWTH-ROADMAP.md
+docs/launch-google-seo-local-setup.md
 ```
 
 ## Rich Media And Video

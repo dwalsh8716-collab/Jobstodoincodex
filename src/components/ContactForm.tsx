@@ -66,6 +66,10 @@ export function ContactForm({
       setMessage(
         error instanceof Error ? error.message : "The form could not be sent.",
       );
+      trackEvent("form_error", {
+        form_type: type,
+        job_title: jobTitle,
+      });
     }
   }
 

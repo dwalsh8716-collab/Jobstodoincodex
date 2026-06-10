@@ -24,8 +24,17 @@ Current tracked actions:
 - Book-a-call clicks
 - Email clicks
 - Phone clicks
+- LinkedIn clicks
 - Contact form submissions
+- Contact form errors
 - Job application starts
 - Job application submissions
+- Salary snapshot views
 
 Salary snapshot and insight download events are reserved in the utility for future downloads.
+
+Google Search Console, GA4, GTM, Google Business Profile, local SEO and launch monitoring setup is documented in:
+
+```txt
+docs/launch-google-seo-local-setup.md
+```
