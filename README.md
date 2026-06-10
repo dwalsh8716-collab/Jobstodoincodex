@@ -148,11 +148,17 @@ Sanity Studio route after login:
 
 Content groups:
 
-- Main Site: Pages, Navigation, Site Settings
+- Main Site: Homepage, Pages, Navigation, Site Settings, Redirects
 - Commercial: Services, Case Studies, Testimonials, FAQs, CTA Blocks, Proof Items
 - Content: Insights, Salary Snapshots
 - Recruitment: Jobs
 - People: David Walsh / Team
+
+CMS audit and architecture notes:
+
+```txt
+docs/CMS-ARCHITECTURE.md
+```
 
 Important: the front-end `/cms` gate is a branded site login. Sanity still needs a real Sanity project and invited editor account before live editing is production-ready.
 

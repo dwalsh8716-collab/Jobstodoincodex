@@ -3,39 +3,69 @@ import { z } from "zod";
 const emptyToUndefined = (value: unknown) => (value === "" ? undefined : value);
 
 const publicEnvSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.preprocess(emptyToUndefined, z.string().url().optional()),
+  NEXT_PUBLIC_SITE_URL: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
   NEXT_PUBLIC_SITE_NAME: z.preprocess(emptyToUndefined, z.string().optional()),
-  NEXT_PUBLIC_THEME_PALETTE: z.preprocess(emptyToUndefined, z.string().optional()),
-  NEXT_PUBLIC_BOOKING_URL: z.preprocess(emptyToUndefined, z.string().optional()),
-  NEXT_PUBLIC_LINKEDIN_URL: z.preprocess(emptyToUndefined, z.string().url().optional()),
+  NEXT_PUBLIC_THEME_PALETTE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_BOOKING_URL: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_LINKEDIN_URL: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
   NEXT_PUBLIC_PHONE: z.preprocess(emptyToUndefined, z.string().optional()),
   NEXT_PUBLIC_GA_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   NEXT_PUBLIC_GTM_ID: z.preprocess(emptyToUndefined, z.string().optional()),
-  NEXT_PUBLIC_LINKEDIN_PARTNER_ID: z.preprocess(emptyToUndefined, z.string().optional())
+  NEXT_PUBLIC_LINKEDIN_PARTNER_ID: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
 });
 
 const serverEnvSchema = publicEnvSchema.extend({
-  GOOGLE_SITE_VERIFICATION: z.preprocess(emptyToUndefined, z.string().optional()),
+  GOOGLE_SITE_VERIFICATION: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   SANITY_PROJECT_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_DATASET: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_API_VERSION: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_READ_TOKEN: z.preprocess(emptyToUndefined, z.string().optional()),
+  SANITY_API_READ_TOKEN: z.preprocess(emptyToUndefined, z.string().optional()),
+  SANITY_PREVIEW_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
   CMS_GATE_USERNAME: z.preprocess(emptyToUndefined, z.string().optional()),
   CMS_GATE_PASSWORD: z.preprocess(emptyToUndefined, z.string().optional()),
   CMS_GATE_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
   RESEND_API_KEY: z.preprocess(emptyToUndefined, z.string().optional()),
-  CONTACT_TO_EMAIL: z.preprocess(emptyToUndefined, z.string().email().optional()),
-  CONTACT_FROM_EMAIL: z.preprocess(emptyToUndefined, z.string().email().optional()),
-  RATE_LIMIT_SECRET: z.preprocess(emptyToUndefined, z.string().optional())
+  CONTACT_TO_EMAIL: z.preprocess(
+    emptyToUndefined,
+    z.string().email().optional(),
+  ),
+  CONTACT_FROM_EMAIL: z.preprocess(
+    emptyToUndefined,
+    z.string().email().optional(),
+  ),
+  RATE_LIMIT_SECRET: z.preprocess(emptyToUndefined, z.string().optional()),
 });
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>;
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
 
-export function parsePublicEnv(env: NodeJS.ProcessEnv = process.env): PublicEnv {
+export function parsePublicEnv(
+  env: NodeJS.ProcessEnv = process.env,
+): PublicEnv {
   return publicEnvSchema.parse(env);
 }
 
-export function parseServerEnv(env: NodeJS.ProcessEnv = process.env): ServerEnv {
+export function parseServerEnv(
+  env: NodeJS.ProcessEnv = process.env,
+): ServerEnv {
   return serverEnvSchema.parse(env);
 }

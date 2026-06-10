@@ -1,0 +1,44 @@
+# CMS Architecture
+
+## Current Setup
+
+- Provider: Sanity CMS.
+- Studio: embedded Next.js Studio at `/studio`, with a private `/cms` login gate before the editor route.
+- Schema location: `sanity/schemas/index.ts`.
+- Studio structure: `sanity/structure.ts`.
+- Frontend client: `src/lib/sanity.ts`.
+- Central GROQ queries: `src/lib/sanity-queries.ts`.
+- Safe CMS fetch helper: `src/lib/sanity-content.ts`.
+- Fallback content: `src/content/fallback/`.
+
+## Editor Structure
+
+The Studio is organised around plain-English groups:
+
+- Main Site: Homepage, Site Settings, Navigation, Pages, Redirects.
+- Commercial: Services, Case Studies, Testimonials, FAQs, CTA Blocks, Logo / Proof Items.
+- Content: Insights, Salary Snapshots.
+- Recruitment: Jobs.
+- People: David Walsh / Team.
+
+Homepage and Site Settings are single-entry documents so David can edit the main website settings without creating duplicates.
+
+## Content Coverage
+
+The CMS can manage:
+
+- Homepage hero copy and premium video.
+- Service page copy, client problems, what good looks like, mistakes, process, FAQs, CTAs and related content.
+- Jobs, application details, status and SEO.
+- Insights with buyer questions, problem addressed, author, rich text, FAQs, CTA and related content.
+- Case studies with business problem, why the hire mattered, what made it tricky, de-risking, outcome and impact.
+- Salary snapshots with table rows, market commentary, hiring notes and CTA.
+- Site settings, contact details, social links, footer content, navigation, redirects and proof/logos where permission is clear.
+
+## Fallback Behaviour
+
+The public site must not depend on Sanity being available. `sanityFetchWithFallback` returns the provided fallback if credentials are missing, the dataset is unavailable or a query returns nothing. The fallback content lives in `src/content/fallback/` and reuses the production-safe local content already used by the site.
+
+## Preview
+
+Preview mode is available through `/api/preview?secret=...&path=/target-path` and can be disabled through `/api/preview/disable?path=/target-path`. Set `SANITY_PREVIEW_SECRET` before enabling this in production.
