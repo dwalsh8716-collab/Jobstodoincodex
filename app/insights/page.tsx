@@ -1,13 +1,14 @@
 import { InsightCard } from "@/components/Cards";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
+import { SchemaScript } from "@/components/SchemaScript";
 import {
   aiSearchQuestions,
   insightCategories,
   insightSeeds,
   insights,
 } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Marketing Recruitment Insights | Essential Resourcing",
@@ -132,6 +133,20 @@ export default function InsightsPage() {
         </div>
       </section>
       <CTASection title="Want a market view before you hire?" />
+      {published.length ? (
+        <SchemaScript
+          data={itemListSchema({
+            name: "Essential Resourcing insights",
+            description:
+              "Published hiring advice, market commentary and senior marketing recruitment insight from David Walsh.",
+            items: published.map((insight) => ({
+              name: insight.title,
+              url: `/insights/${insight.slug}`,
+              description: insight.excerpt,
+            })),
+          })}
+        />
+      ) : null}
     </>
   );
 }

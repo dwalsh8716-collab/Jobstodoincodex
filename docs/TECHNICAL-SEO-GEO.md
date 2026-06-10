@@ -22,6 +22,9 @@ The site emits:
 - `Article` schema on published insight pages.
 - `FAQPage` schema through the shared FAQ component.
 - `JobPosting` schema only on live job pages.
+- `ItemList` schema on visible list pages where there are real public services, insights, live jobs, published case studies or published salary snapshots.
+
+List schema is deliberately guarded. Draft proof, closed roles and unvalidated salary data are not marked up as public evidence.
 
 ## Crawl Files
 
@@ -35,3 +38,11 @@ The site emits:
 The insights hub includes crawlable answers to common senior hiring questions around Strategic Interim, retained search, senior marketing hiring failure, agency recruitment, Marketing Director briefs, interim leadership, candidate quality and North West salary context.
 
 The priority is useful first-party content in David Walsh's tone, not keyword stuffing.
+
+## Final Polish Roadmap
+
+The launch audit, manual blockers and future SEO/GEO roadmap are tracked in:
+
+```txt
+docs/FINAL-POLISH-ROADMAP.md
+```

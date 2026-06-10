@@ -1,8 +1,9 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
+import { SchemaScript } from "@/components/SchemaScript";
 import { services } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Recruitment Services | Essential Resourcing",
@@ -78,6 +79,18 @@ export default function ServicesPage() {
         </div>
       </section>
       <CTASection />
+      <SchemaScript
+        data={itemListSchema({
+          name: "Essential Resourcing services",
+          description:
+            "Visible recruitment services for senior marketing, communications, digital and agency hiring.",
+          items: services.map((service) => ({
+            name: service.title,
+            url: `/services/${service.slug}`,
+            description: service.shortDescription,
+          })),
+        })}
+      />
     </>
   );
 }

@@ -1,8 +1,9 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CaseStudyCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
+import { SchemaScript } from "@/components/SchemaScript";
 import { caseStudies } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Marketing Recruitment Case Studies | Essential Resourcing",
@@ -78,6 +79,20 @@ export default function CaseStudiesPage() {
         </section>
       ) : null}
       <CTASection title="Have a brief that needs this level of focus?" />
+      {publishedCaseStudies.length ? (
+        <SchemaScript
+          data={itemListSchema({
+            name: "Essential Resourcing case studies",
+            description:
+              "Permissioned marketing recruitment case studies published by Essential Resourcing.",
+            items: publishedCaseStudies.map((caseStudy) => ({
+              name: caseStudy.title,
+              url: `/case-studies/${caseStudy.slug}`,
+              description: caseStudy.challengeSummary,
+            })),
+          })}
+        />
+      ) : null}
     </>
   );
 }

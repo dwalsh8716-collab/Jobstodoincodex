@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
+import { SchemaScript } from "@/components/SchemaScript";
 import { salarySnapshots } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Salary & Market Snapshots | Essential Resourcing",
@@ -118,6 +119,20 @@ export default function SalarySnapshotsPage() {
         </div>
       </section>
       <CTASection title="Need salary advice for a real brief?" />
+      {publishedSnapshots.length ? (
+        <SchemaScript
+          data={itemListSchema({
+            name: "Essential Resourcing salary snapshots",
+            description:
+              "Published salary and market snapshots for marketing, PR, communications and digital hiring.",
+            items: publishedSnapshots.map((snapshot) => ({
+              name: snapshot.title,
+              url: `/salary-snapshots/${snapshot.slug}`,
+              description: snapshot.intro,
+            })),
+          })}
+        />
+      ) : null}
     </>
   );
 }

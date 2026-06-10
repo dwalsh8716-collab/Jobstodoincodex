@@ -1,8 +1,9 @@
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JobCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
+import { SchemaScript } from "@/components/SchemaScript";
 import { isJobLive, jobs } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Marketing, PR & Digital Jobs | Essential Resourcing",
@@ -94,6 +95,20 @@ export default function JobsPage() {
         ctaLabel="Send a confidential note"
         ctaHref="/candidates"
       />
+      {liveJobs.length ? (
+        <SchemaScript
+          data={itemListSchema({
+            name: "Essential Resourcing live jobs",
+            description:
+              "Visible live marketing, PR, communications and digital roles handled by Essential Resourcing.",
+            items: liveJobs.map((job) => ({
+              name: job.title,
+              url: `/jobs/${job.slug}`,
+              description: job.summary,
+            })),
+          })}
+        />
+      ) : null}
     </>
   );
 }

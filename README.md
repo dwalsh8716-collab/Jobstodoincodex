@@ -117,6 +117,7 @@ Launch route audit and future-page roadmap:
 docs/LAUNCH-SITEMAP-ROUTES.md
 docs/TECHNICAL-SEO-GEO.md
 docs/FINAL-PRODUCTION-READINESS-AUDIT.md
+docs/FINAL-POLISH-ROADMAP.md
 ```
 
 ## Rich Media And Video

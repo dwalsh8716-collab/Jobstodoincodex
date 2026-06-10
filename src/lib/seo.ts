@@ -123,6 +123,30 @@ export function breadcrumbSchema(items: Array<{ name: string; href: string }>) {
   };
 }
 
+export function itemListSchema({
+  name,
+  description,
+  items,
+}: {
+  name: string;
+  description?: string;
+  items: Array<{ name: string; url: string; description?: string }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    ...(description ? { description } : {}),
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: absoluteUrl(item.url),
+      name: item.name,
+      ...(item.description ? { description: item.description } : {}),
+    })),
+  };
+}
+
 export function serviceSchema(service: Service) {
   return {
     "@context": "https://schema.org",

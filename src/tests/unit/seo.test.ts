@@ -4,6 +4,7 @@ import {
   absoluteUrl,
   breadcrumbSchema,
   createMetadata,
+  itemListSchema,
   jobPostingSchema,
   serviceSchema,
 } from "@/lib/seo";
@@ -63,6 +64,33 @@ describe("structured data builders", () => {
       expect.objectContaining({ position: 1, name: "Home" }),
       expect.objectContaining({ position: 2, name: "Services" }),
     ]);
+  });
+
+  it("builds item lists from visible page items only", () => {
+    const schema = itemListSchema({
+      name: "Visible services",
+      items: [
+        {
+          name: "Strategic Interim",
+          url: "/services/strategic-interim",
+          description: "Senior interim support.",
+        },
+      ],
+    });
+
+    expect(schema).toMatchObject({
+      "@type": "ItemList",
+      name: "Visible services",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          url: absoluteUrl("/services/strategic-interim"),
+          name: "Strategic Interim",
+          description: "Senior interim support.",
+        },
+      ],
+    });
   });
 
   it("builds job posting schema without exposing draft as live state", () => {
