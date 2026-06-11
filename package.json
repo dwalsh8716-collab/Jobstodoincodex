@@ -19,6 +19,7 @@
     "retention:check": "node scripts/retention-check.mjs --dry-run",
     "retention:apply": "node scripts/retention-check.mjs --apply",
     "performance:budget": "node scripts/performance-budget.mjs",
+    "health:monthly": "node scripts/monthly-health-check.mjs",
     "verify": "npm run lint && npm run build && npm run clean:next-dev-types && npm run typecheck && npm run test && npm run performance:budget && playwright test",
     "sanity": "sanity"
   },

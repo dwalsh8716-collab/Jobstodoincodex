@@ -42,4 +42,23 @@ describe("observability and alerts", () => {
     expect(doc).toContain("No paid monitoring service has been added");
     expect(doc).toContain("No PII in monitoring");
   });
+
+  it("keeps the monthly health report practical and non-technical", () => {
+    const docPath = "docs/monthly-website-health-report-template.md";
+    const scriptPath = "scripts/monthly-health-check.mjs";
+    const readme = readFileSync("README.md", "utf8");
+    const report = readFileSync(docPath, "utf8");
+    const script = readFileSync(scriptPath, "utf8");
+
+    expect(existsSync(docPath)).toBe(true);
+    expect(existsSync(scriptPath)).toBe(true);
+    expect(readme).toContain(docPath);
+    expect(report).toContain("Green: safe");
+    expect(report).toContain("No fake compliance");
+    expect(report).toContain("Do not put real candidate/client private details");
+    expect(script).toContain("Manual checks still needed");
+    expect(script).not.toMatch(
+      /DATABASE_URL|RESEND_API_KEY|CRON_SECRET|CMS_GATE_PASSWORD/i,
+    );
+  });
 });
