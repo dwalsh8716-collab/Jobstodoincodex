@@ -50,10 +50,14 @@ Not safe yet:
 - Passed: `/admin/recruiter-labs` is protected by the CMS session gate.
 - Passed: `/admin/recruiter-labs` is noindexed.
 - Passed: `/client` is blocked in `robots.txt`.
-- Passed: no `/client/shortlist/[token]` route exists yet.
+- Passed: `/client/shortlist/[token]` is staged, noindexed and absent from
+  sitemap.
+- Passed: the staged route shows safe invalid, expired, revoked, disabled,
+  rate-limited and not-ready states without exposing the raw token.
 - Passed: no Recruiter Labs route appears in `sitemap.xml`.
-- Blocked: future client token route still needs real validation, expiry and
-  revocation handling.
+- Blocked: real client use still needs Railway Postgres, audit proof, private
+  CV access, legal/privacy review and David approval before the feature flag is
+  switched on.
 
 ### Candidate Consent
 
@@ -221,6 +225,7 @@ Before private beta:
 - confirm unauthenticated `/admin/recruiter-labs` redirects to `/cms`
 - confirm `/admin/recruiter-labs` is noindexed
 - confirm `/client` remains blocked in `robots.txt`
+- confirm `/client/shortlist/[token]` is noindexed
 - confirm no Recruiter Labs/client route appears in `sitemap.xml`
 - confirm database migrations have run on Railway
 - confirm audit log writes are visible in `/admin/audit`
@@ -267,7 +272,7 @@ If anything looks wrong:
 
 - The current CMS gate is not a full role-based admin system.
 - Private object storage is not live.
-- Client portal routes are not built.
+- The client portal route is staged, but real client access is not approved.
 - Candidate shortlist-sharing consent wording is not legally signed off.
 - Audit proof depends on Railway Postgres being configured and migrated.
 - AI workflow rules need final review before client use.

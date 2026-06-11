@@ -61,23 +61,32 @@ Admin planning:
 /admin/recruiter-labs
 ```
 
-Future client access, not built yet:
+Staged client access:
 
 ```txt
 /client/shortlist/[token]
 ```
 
-The future client route must have:
+The staged client route now has:
 
-- valid token required
-- token stored as a hash only
-- expiry required
-- revocation supported
-- shortlist scope enforced
-- no token in analytics
-- no token in logs
 - noindex metadata
 - no sitemap inclusion
+- feature flag defaulting to off
+- default 30-day token expiry configuration
+- SHA-256 token hashing helper
+- invalid, expired, revoked, disabled, rate-limited and not-ready states
+- candidate share checks before any profile can render
+- no analytics attributes or event calls on the private route
+
+Before real client use, it still needs:
+
+- Railway Postgres live and migrated
+- valid token lookup against `recruiter_lab_client_access_tokens`
+- shortlist scope enforced through Postgres
+- audit logging proof
+- private CV access approval and signed access routes
+- David/legal privacy review
+- David approval before `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
 
 ## Sanity And Postgres Boundary
 
@@ -118,12 +127,6 @@ Important:
 - interview references are metadata only until integrations are approved
 - no automated deletion or public sharing is added by this migration
 
-Launch gate detail lives in:
-
-```txt
-docs/recruiter-labs-client-pipeline-launch-gate.md
-```
-
 AI governance lives in:
 
 ```txt
@@ -148,6 +151,9 @@ Before any client portal goes live:
 - audit logging live
 - DSAR workflow live
 - data retention policy reviewed
+- `RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS` reviewed, defaulting to 30 days
+- `FEATURE_CLIENT_PRESENTATION_PORTAL=true` approved by David for the exact
+  release stage
 - WhatsApp Business API configured and approved if used
 - Google Calendar/Meet booking configured and approved if used
 - no PII in analytics

@@ -2,12 +2,19 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import sitemap from "../../../app/sitemap";
 import {
+  createRecruiterLabsClientToken,
   getRecruiterLabsCandidateShareDecision,
   getRecruiterLabsClientAccessDecision,
+  getRecruiterLabsClientPortalExpiryDays,
+  getRecruiterLabsClientPortalRateLimitDecision,
+  getRecruiterLabsClientPortalStatus,
   getRecruiterLabsFeatureFlags,
   getRecruiterLabsLaunchGate,
   getRecruiterLabsOverview,
+  hashRecruiterLabsClientToken,
   isRecruiterLabsFeatureEnabled,
+  recruiterLabsClientPortalDefaultExpiryDays,
+  recruiterLabsClientPortalRoute,
   recruiterLabsFlagDefinitions,
 } from "@/lib/recruiter-labs";
 import { siteConfig } from "@/lib/site";
@@ -43,13 +50,18 @@ describe("Recruiter Labs foundation", () => {
     expect(urls.some((url) => url.includes("/client/shortlist"))).toBe(false);
   });
 
-  it("starts with no public Recruiter Labs routes", () => {
+  it("stages the client shortlist route without making it public", () => {
     const overview = getRecruiterLabsOverview({});
+    const route = readFileSync("app/client/shortlist/[token]/page.tsx", "utf8");
 
     expect(overview.stats.publicRoutes).toBe(0);
     expect(overview.stats.blockedDependencies).toBeGreaterThan(0);
     expect(overview.launchGate.safeForPrivateAdminTesting).toBe(true);
     expect(overview.launchGate.safeForRealClients).toBe(false);
+    expect(route).toContain('dynamic = "force-dynamic"');
+    expect(route).toContain("noIndex: true");
+    expect(route).toContain("getRecruiterLabsClientPortalView");
+    expect(route).not.toContain("analyticsAttributes");
   });
 
   it("stages hashed magic-link storage instead of raw token storage", () => {
@@ -62,11 +74,92 @@ describe("Recruiter Labs foundation", () => {
     expect(migration).not.toMatch(/\btoken\s+text\b/);
   });
 
+  it("creates high-entropy client portal tokens and stores only the hash", () => {
+    const issued = createRecruiterLabsClientToken({
+      now: new Date("2026-06-10T12:00:00.000Z"),
+      expiryDays: recruiterLabsClientPortalDefaultExpiryDays,
+    });
+
+    expect(issued.rawToken).toMatch(/^[A-Za-z0-9_-]{32,}$/);
+    expect(issued.tokenHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(issued.tokenHash).toBe(
+      hashRecruiterLabsClientToken(issued.rawToken),
+    );
+    expect(issued.tokenHash).not.toContain(issued.rawToken);
+    expect(issued.expiresAt.toISOString()).toBe("2026-07-10T12:00:00.000Z");
+    expect(hashRecruiterLabsClientToken("not a valid token")).toBeUndefined();
+  });
+
+  it("keeps the client portal flag off, expiry configurable and private DB gated", () => {
+    expect(getRecruiterLabsClientPortalExpiryDays({})).toBe(30);
+    expect(
+      getRecruiterLabsClientPortalExpiryDays({
+        RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS: "120",
+      }),
+    ).toBe(90);
+    expect(getRecruiterLabsClientPortalStatus({})).toMatchObject({
+      route: recruiterLabsClientPortalRoute,
+      featureEnabled: false,
+      expiryDays: 30,
+      canReadPrivateData: false,
+      databaseStatus: { state: "disabled" },
+    });
+    expect(
+      getRecruiterLabsClientPortalStatus({
+        FEATURE_CLIENT_PRESENTATION_PORTAL: "true",
+        OPERATIONS_DB_ENABLED: "true",
+        DATABASE_URL: "postgres://example",
+      }),
+    ).toMatchObject({
+      featureEnabled: true,
+      canReadPrivateData: true,
+      databaseStatus: { state: "ready" },
+    });
+  });
+
+  it("rate limits client portal access attempts without storing the raw token", () => {
+    const token = createRecruiterLabsClientToken().rawToken;
+    const now = new Date("2026-06-10T12:00:00.000Z");
+
+    expect(
+      getRecruiterLabsClientPortalRateLimitDecision(token, now, {
+        limit: 2,
+        windowMs: 1_000,
+      }),
+    ).toMatchObject({ allowed: true, remaining: 1 });
+    expect(
+      getRecruiterLabsClientPortalRateLimitDecision(token, now, {
+        limit: 2,
+        windowMs: 1_000,
+      }),
+    ).toMatchObject({ allowed: true, remaining: 0 });
+    expect(
+      getRecruiterLabsClientPortalRateLimitDecision(token, now, {
+        limit: 2,
+        windowMs: 1_000,
+      }),
+    ).toMatchObject({ allowed: false, remaining: 0 });
+    expect(
+      getRecruiterLabsClientPortalRateLimitDecision(
+        token,
+        new Date("2026-06-10T12:00:01.001Z"),
+        {
+          limit: 2,
+          windowMs: 1_000,
+        },
+      ),
+    ).toMatchObject({ allowed: true, remaining: 1 });
+  });
+
   it("keeps the launch gate explicit about blockers and manual review", () => {
     const launchGate = getRecruiterLabsLaunchGate();
 
     expect(launchGate.checks).toEqual(
       expect.arrayContaining([
+        expect.objectContaining({
+          id: "client-token-route-staged",
+          status: "passed",
+        }),
         expect.objectContaining({
           id: "magic-link-validation",
           status: "blocked",

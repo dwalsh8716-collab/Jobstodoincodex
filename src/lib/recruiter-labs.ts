@@ -1,5 +1,9 @@
 import "server-only";
 
+import { createHash, randomBytes } from "node:crypto";
+
+import { runPsqlJson } from "./operations/database";
+import type { OperationsBackendStatus } from "./operations/types";
 import type { RetentionStatus } from "./retention";
 
 export const recruiterLabsFlagDefinitions = [
@@ -81,10 +85,60 @@ export type RecruiterLabsAccessState =
   | "expired"
   | "revoked";
 
+export type RecruiterLabsClientPortalState =
+  | RecruiterLabsAccessState
+  | "feature_disabled"
+  | "backend_unavailable"
+  | "rate_limited"
+  | "shortlist_not_ready";
+
 export type RecruiterLabsClientAccessRecord = {
   tokenHash?: string | null;
   expiresAt?: Date | string | null;
   revokedAt?: Date | string | null;
+};
+
+export type RecruiterLabsClientPortalDecision = {
+  allowed: boolean;
+  state: RecruiterLabsClientPortalState;
+  reason?: string;
+  tokenHash?: string;
+  shortlistId?: string | null;
+  expiresAt?: string | null;
+};
+
+export type RecruiterLabsShortlistCandidatePresentation = {
+  id: string;
+  displayOrder: number;
+  name: string;
+  headline?: string;
+  location?: string;
+  availability?: string;
+  salaryExpectation?: string;
+  davidSummary?: string;
+  evidenceNotes?: string;
+  sharingMode: "named" | "anonymised";
+  cvAccessAllowed: boolean;
+  audioNotePlanned: boolean;
+};
+
+export type RecruiterLabsShortlistPresentation = {
+  id: string;
+  title: string;
+  status: string;
+  launchGateStatus: string;
+  roleContext?: string;
+  davidIntroNote?: string;
+  expiresAt?: string | null;
+  clientVisibleAt?: string | null;
+  candidates: RecruiterLabsShortlistCandidatePresentation[];
+  withheldCandidateCount: number;
+};
+
+export type RecruiterLabsClientPortalView = {
+  decision: RecruiterLabsClientPortalDecision;
+  status: RecruiterLabsClientPortalStatus;
+  shortlist: RecruiterLabsShortlistPresentation | null;
 };
 
 export type RecruiterLabsCandidateShareInput = {
@@ -98,6 +152,59 @@ export type RecruiterLabsCandidateShareInput = {
   retentionStatus?: RetentionStatus | null;
   sharingMode?: "named" | "anonymised" | null;
 };
+
+type RecruiterLabsClientPortalStatus = {
+  route: typeof recruiterLabsClientPortalRoute;
+  featureEnabled: boolean;
+  expiryDays: number;
+  databaseStatus: OperationsBackendStatus;
+  canReadPrivateData: boolean;
+};
+
+type RecruiterLabsClientPortalQueryResult = {
+  access: {
+    tokenHash?: string | null;
+    shortlistId?: string | null;
+    expiresAt?: string | null;
+    revokedAt?: string | null;
+  } | null;
+  shortlist: {
+    id: string;
+    title: string;
+    status: string;
+    launchGateStatus?: string | null;
+    expiresAt?: string | null;
+    revokedAt?: string | null;
+    clientVisibleAt?: string | null;
+    notes?: string | null;
+    metadata?: Record<string, unknown> | null;
+  } | null;
+  candidates: Array<{
+    id: string;
+    displayOrder?: number | null;
+    profileStatus: RecruiterLabsCandidateShareInput["profileStatus"];
+    davidSummary?: string | null;
+    evidenceNotes?: string | null;
+    consentConfirmed?: boolean | null;
+    approvedAt?: string | null;
+    candidateSharingConsentAt?: string | null;
+    cvAccessRequired?: boolean | null;
+    cvAccessApproved?: boolean | null;
+    cvAccessRevokedAt?: string | null;
+    retentionStatus?: RetentionStatus | null;
+    sharingMode?: "named" | "anonymised" | null;
+    candidateProfileSnapshot?: Record<string, unknown> | null;
+  }>;
+};
+
+export const recruiterLabsClientPortalRoute = "/client/shortlist/[token]";
+export const recruiterLabsClientPortalDefaultExpiryDays = 30;
+export const recruiterLabsClientPortalMaxExpiryDays = 90;
+const recruiterLabsTokenByteLength = 32;
+const recruiterLabsPortalRateLimitStore = new Map<
+  string,
+  { count: number; resetAt: number }
+>();
 
 export const recruiterLabsDependencies = [
   {
@@ -159,12 +266,12 @@ export const recruiterLabsLaunchGateChecks = [
     ],
   },
   {
-    id: "public-client-routes-absent",
+    id: "client-token-route-staged",
     category: "Private routing",
-    label: "No public client portal exists yet",
+    label: "Client token route is staged but not public",
     status: "passed",
     evidence:
-      "There is no `/client/shortlist/[token]` route and `/client` is blocked from robots.",
+      "`/client/shortlist/[token]` exists only as a noindexed, feature-gated route. `/client` is blocked from robots and the route is absent from the sitemap.",
     requiredBefore: [
       "private_admin_testing",
       "private_beta",
@@ -190,7 +297,7 @@ export const recruiterLabsLaunchGateChecks = [
     label: "Client tokens must be hashed, expiring and revocable",
     status: "blocked",
     evidence:
-      "Hash storage is staged. The public validation route is deliberately not built yet.",
+      "Hash storage, token helpers and staged route states exist. Real client use is still blocked until Railway Postgres, audit proof, CV access and legal/privacy review are complete.",
     requiredBefore: ["private_beta", "real_client_launch"],
   },
   {
@@ -282,9 +389,9 @@ export const recruiterLabsBuildPhases = [
   },
   {
     title: "Magic-link portal",
-    status: "blocked",
+    status: "staged",
     detail:
-      "Requires signed token validation, expiry, revocation and no token analytics/logging.",
+      "A noindexed, feature-gated route is staged. Real client use still requires Railway Postgres, audit proof, CV access and privacy sign-off.",
   },
   {
     title: "Interview workflow",
@@ -314,11 +421,359 @@ function dateFrom(value: Date | string | null | undefined) {
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
+function operationsStatusFromEnv(
+  env: RecruiterLabsEnv = process.env,
+): OperationsBackendStatus {
+  const enabled = env.OPERATIONS_DB_ENABLED === "true";
+  const configured = Boolean(env.DATABASE_URL);
+
+  if (!enabled) {
+    return {
+      enabled,
+      configured,
+      state: "disabled",
+      message:
+        "Private operations database is staged but not enabled. Set OPERATIONS_DB_ENABLED=true after Railway Postgres is ready.",
+    };
+  }
+
+  if (!configured) {
+    return {
+      enabled,
+      configured,
+      state: "missing_database_url",
+      message:
+        "OPERATIONS_DB_ENABLED is true, but DATABASE_URL is missing.",
+    };
+  }
+
+  return {
+    enabled,
+    configured,
+    state: "ready",
+    message: "Private operations database is configured.",
+  };
+}
+
+function normaliseClientPortalToken(rawToken?: string | null) {
+  const token = rawToken?.trim();
+  if (!token) return undefined;
+  if (!/^[A-Za-z0-9_-]{32,256}$/.test(token)) return undefined;
+  return token;
+}
+
+function safeString(
+  value: unknown,
+  maxLength = 180,
+): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+  return trimmed.slice(0, maxLength);
+}
+
+function snapshotString(
+  snapshot: Record<string, unknown> | null | undefined,
+  keys: string[],
+  maxLength?: number,
+) {
+  for (const key of keys) {
+    const value = safeString(snapshot?.[key], maxLength);
+    if (value) return value;
+  }
+
+  return undefined;
+}
+
+function jsonStringFromMetadata(
+  metadata: Record<string, unknown> | null | undefined,
+  keys: string[],
+  maxLength?: number,
+) {
+  for (const key of keys) {
+    const value = metadata?.[key];
+    if (typeof value === "string") {
+      const trimmed = safeString(value, maxLength);
+      if (trimmed) return trimmed;
+    }
+  }
+
+  return undefined;
+}
+
+function getClientPortalExpiryDate(now: Date, expiryDays: number) {
+  return new Date(now.getTime() + expiryDays * 24 * 60 * 60 * 1000);
+}
+
+function isLaunchGateSafeForClient(shortlist: {
+  status: string;
+  launchGateStatus?: string | null;
+  clientVisibleAt?: string | null;
+}) {
+  const liveStatus = shortlist.status === "private_preview" || shortlist.status === "sent";
+  const gateApproved =
+    shortlist.launchGateStatus === "private_beta" ||
+    shortlist.launchGateStatus === "approved";
+
+  return liveStatus && gateApproved && Boolean(dateFrom(shortlist.clientVisibleAt));
+}
+
+function toCandidatePresentation(
+  candidate: RecruiterLabsClientPortalQueryResult["candidates"][number],
+): RecruiterLabsShortlistCandidatePresentation | null {
+  const shareDecision = getRecruiterLabsCandidateShareDecision({
+    profileStatus: candidate.profileStatus,
+    approvedAt: candidate.approvedAt,
+    consentConfirmed: candidate.consentConfirmed,
+    candidateSharingConsentAt: candidate.candidateSharingConsentAt,
+    cvAccessRequired: candidate.cvAccessRequired,
+    cvAccessApproved: candidate.cvAccessApproved,
+    cvAccessRevokedAt: candidate.cvAccessRevokedAt,
+    retentionStatus: candidate.retentionStatus,
+    sharingMode: candidate.sharingMode,
+  });
+
+  if (!shareDecision.canShare) return null;
+
+  const snapshot = candidate.candidateProfileSnapshot;
+  const anonymised = shareDecision.sharingMode === "anonymised";
+  const name = anonymised
+    ? "Anonymised candidate"
+    : snapshotString(snapshot, ["name", "displayName", "fullName"], 80) ||
+      "Candidate profile";
+
+  return {
+    id: candidate.id,
+    displayOrder: candidate.displayOrder ?? 0,
+    name,
+    headline: snapshotString(snapshot, ["headline", "roleTitle", "currentTitle"]),
+    location: snapshotString(snapshot, ["location", "region"]),
+    availability: snapshotString(snapshot, ["availability", "noticePeriod"]),
+    salaryExpectation: snapshotString(snapshot, [
+      "salaryExpectation",
+      "packageExpectation",
+    ]),
+    davidSummary: safeString(candidate.davidSummary, 900),
+    evidenceNotes: safeString(candidate.evidenceNotes, 900),
+    sharingMode: shareDecision.sharingMode,
+    cvAccessAllowed: Boolean(
+      candidate.cvAccessRequired &&
+        candidate.cvAccessApproved &&
+        !candidate.cvAccessRevokedAt,
+    ),
+    audioNotePlanned: false,
+  };
+}
+
+async function getRecruiterLabsClientPortalData(
+  tokenHash: string,
+): Promise<RecruiterLabsClientPortalQueryResult> {
+  return runPsqlJson<RecruiterLabsClientPortalQueryResult>(
+    `
+      with payload as (
+        select convert_from(decode(:'payload', 'base64'), 'utf8')::jsonb as data
+      ),
+      matched_token as (
+        select
+          t.token_hash,
+          t.shortlist_id::text,
+          t.expires_at,
+          t.revoked_at,
+          s.id::text as shortlist_id_text,
+          s.title,
+          s.status,
+          s.expires_at as shortlist_expires_at,
+          s.revoked_at as shortlist_revoked_at,
+          s.notes,
+          s.metadata,
+          s.launch_gate_status,
+          s.client_visible_at
+        from recruiter_lab_client_access_tokens t
+        join recruiter_lab_shortlists s on s.id = t.shortlist_id
+        where t.token_hash = (select data->>'tokenHash' from payload)
+        limit 1
+      ),
+      candidate_rows as (
+        select
+          c.id::text,
+          c.display_order,
+          c.profile_status,
+          c.david_summary,
+          c.evidence_notes,
+          c.consent_confirmed,
+          c.approved_at,
+          c.candidate_sharing_consent_at,
+          c.cv_access_required,
+          c.cv_access_approved,
+          c.cv_access_revoked_at,
+          c.retention_status,
+          c.sharing_mode,
+          c.candidate_profile_snapshot
+        from recruiter_lab_shortlist_candidates c
+        join matched_token mt on mt.shortlist_id = c.shortlist_id
+        order by c.display_order asc, c.created_at asc
+      )
+      select coalesce(
+        (
+          select jsonb_build_object(
+            'access', jsonb_build_object(
+              'tokenHash', mt.token_hash,
+              'shortlistId', mt.shortlist_id,
+              'expiresAt', mt.expires_at,
+              'revokedAt', mt.revoked_at
+            ),
+            'shortlist', jsonb_build_object(
+              'id', mt.shortlist_id_text,
+              'title', mt.title,
+              'status', mt.status,
+              'launchGateStatus', mt.launch_gate_status,
+              'expiresAt', mt.shortlist_expires_at,
+              'revokedAt', mt.shortlist_revoked_at,
+              'clientVisibleAt', mt.client_visible_at,
+              'notes', mt.notes,
+              'metadata', mt.metadata
+            ),
+            'candidates', coalesce(
+              (
+                select jsonb_agg(
+                  jsonb_build_object(
+                    'id', cr.id,
+                    'displayOrder', cr.display_order,
+                    'profileStatus', cr.profile_status,
+                    'davidSummary', cr.david_summary,
+                    'evidenceNotes', cr.evidence_notes,
+                    'consentConfirmed', cr.consent_confirmed,
+                    'approvedAt', cr.approved_at,
+                    'candidateSharingConsentAt', cr.candidate_sharing_consent_at,
+                    'cvAccessRequired', cr.cv_access_required,
+                    'cvAccessApproved', cr.cv_access_approved,
+                    'cvAccessRevokedAt', cr.cv_access_revoked_at,
+                    'retentionStatus', cr.retention_status,
+                    'sharingMode', cr.sharing_mode,
+                    'candidateProfileSnapshot', cr.candidate_profile_snapshot
+                  )
+                )
+                from candidate_rows cr
+              ),
+              '[]'::jsonb
+            )
+          )
+          from matched_token mt
+        ),
+        '{"access": null, "shortlist": null, "candidates": []}'::jsonb
+      )
+    `,
+    { tokenHash },
+  );
+}
+
 export function isRecruiterLabsFeatureEnabled(
   flagName: RecruiterLabsFlagName,
   env: RecruiterLabsEnv = process.env,
 ) {
   return env[flagName] === "true";
+}
+
+export function getRecruiterLabsClientPortalExpiryDays(
+  env: RecruiterLabsEnv = process.env,
+) {
+  const configured = Number(env.RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS);
+  if (!Number.isFinite(configured) || configured <= 0) {
+    return recruiterLabsClientPortalDefaultExpiryDays;
+  }
+
+  return Math.min(
+    Math.floor(configured),
+    recruiterLabsClientPortalMaxExpiryDays,
+  );
+}
+
+export function hashRecruiterLabsClientToken(rawToken?: string | null) {
+  const token = normaliseClientPortalToken(rawToken);
+  if (!token) return undefined;
+
+  return createHash("sha256").update(token).digest("hex");
+}
+
+export function createRecruiterLabsClientToken({
+  now = new Date(),
+  expiryDays = recruiterLabsClientPortalDefaultExpiryDays,
+}: {
+  now?: Date;
+  expiryDays?: number;
+} = {}) {
+  const rawToken = randomBytes(recruiterLabsTokenByteLength).toString(
+    "base64url",
+  );
+  const tokenHash = hashRecruiterLabsClientToken(rawToken);
+
+  if (!tokenHash) {
+    throw new Error("Failed to create a Recruiter Labs client token.");
+  }
+
+  return {
+    rawToken,
+    tokenHash,
+    expiresAt: getClientPortalExpiryDate(now, expiryDays),
+    expiryDays,
+  };
+}
+
+export function getRecruiterLabsClientPortalStatus(
+  env: RecruiterLabsEnv = process.env,
+): RecruiterLabsClientPortalStatus {
+  const featureEnabled = isRecruiterLabsFeatureEnabled(
+    "FEATURE_CLIENT_PRESENTATION_PORTAL",
+    env,
+  );
+  const databaseStatus = operationsStatusFromEnv(env);
+
+  return {
+    route: recruiterLabsClientPortalRoute,
+    featureEnabled,
+    expiryDays: getRecruiterLabsClientPortalExpiryDays(env),
+    databaseStatus,
+    canReadPrivateData:
+      featureEnabled &&
+      databaseStatus.enabled &&
+      databaseStatus.configured &&
+      databaseStatus.state === "ready",
+  };
+}
+
+export function getRecruiterLabsClientPortalRateLimitDecision(
+  rawToken?: string | null,
+  now = new Date(),
+  options: { limit?: number; windowMs?: number } = {},
+) {
+  const tokenHash =
+    hashRecruiterLabsClientToken(rawToken) ||
+    createHash("sha256").update("missing-client-portal-token").digest("hex");
+  const key = tokenHash.slice(0, 24);
+  const limit = options.limit ?? 24;
+  const windowMs = options.windowMs ?? 60_000;
+  const current = recruiterLabsPortalRateLimitStore.get(key);
+
+  if (!current || current.resetAt <= now.getTime()) {
+    recruiterLabsPortalRateLimitStore.set(key, {
+      count: 1,
+      resetAt: now.getTime() + windowMs,
+    });
+
+    return { allowed: true, remaining: limit - 1, resetAt: now.getTime() + windowMs };
+  }
+
+  if (current.count >= limit) {
+    return { allowed: false, remaining: 0, resetAt: current.resetAt };
+  }
+
+  current.count += 1;
+
+  return {
+    allowed: true,
+    remaining: Math.max(0, limit - current.count),
+    resetAt: current.resetAt,
+  };
 }
 
 export function getRecruiterLabsFeatureFlags(
@@ -398,6 +853,145 @@ export function getRecruiterLabsClientAccessDecision(
   return {
     allowed: true,
     state: "active",
+  };
+}
+
+export async function getRecruiterLabsClientPortalView(
+  rawToken?: string | null,
+  env: RecruiterLabsEnv = process.env,
+  now = new Date(),
+): Promise<RecruiterLabsClientPortalView> {
+  const status = getRecruiterLabsClientPortalStatus(env);
+  const tokenHash = hashRecruiterLabsClientToken(rawToken);
+
+  const unavailableView = (
+    decision: RecruiterLabsClientPortalDecision,
+  ): RecruiterLabsClientPortalView => ({
+    decision,
+    status,
+    shortlist: null,
+  });
+
+  if (!tokenHash) {
+    return unavailableView({
+      allowed: false,
+      state: "invalid",
+      reason: "missing_or_invalid_token",
+    });
+  }
+
+  if (!status.featureEnabled) {
+    return unavailableView({
+      allowed: false,
+      state: "feature_disabled",
+      reason: "feature_disabled",
+      tokenHash,
+    });
+  }
+
+  if (!status.canReadPrivateData) {
+    return unavailableView({
+      allowed: false,
+      state: "backend_unavailable",
+      reason: status.databaseStatus.state,
+      tokenHash,
+    });
+  }
+
+  let data: RecruiterLabsClientPortalQueryResult;
+
+  try {
+    data = await getRecruiterLabsClientPortalData(tokenHash);
+  } catch {
+    return unavailableView({
+      allowed: false,
+      state: "backend_unavailable",
+      reason: "private_database_lookup_failed",
+      tokenHash,
+    });
+  }
+
+  const accessDecision = getRecruiterLabsClientAccessDecision(
+    data.access,
+    now,
+  );
+
+  if (!accessDecision.allowed || !data.shortlist) {
+    return unavailableView({
+      ...accessDecision,
+      state: accessDecision.state,
+      tokenHash,
+      shortlistId: data.access?.shortlistId,
+      expiresAt: data.access?.expiresAt,
+    });
+  }
+
+  const shortlistAccessDecision = getRecruiterLabsClientAccessDecision(
+    {
+      tokenHash,
+      expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
+      revokedAt: data.shortlist.revokedAt,
+    },
+    now,
+  );
+
+  if (!shortlistAccessDecision.allowed) {
+    return unavailableView({
+      ...shortlistAccessDecision,
+      tokenHash,
+      shortlistId: data.shortlist.id,
+      expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
+    });
+  }
+
+  if (!isLaunchGateSafeForClient(data.shortlist)) {
+    return unavailableView({
+      allowed: false,
+      state: "shortlist_not_ready",
+      reason: "launch_gate_not_approved",
+      tokenHash,
+      shortlistId: data.shortlist.id,
+      expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
+    });
+  }
+
+  const candidates = data.candidates
+    .map(toCandidatePresentation)
+    .filter(
+      (
+        candidate,
+      ): candidate is RecruiterLabsShortlistCandidatePresentation =>
+        Boolean(candidate),
+    );
+
+  return {
+    decision: {
+      allowed: true,
+      state: "active",
+      tokenHash,
+      shortlistId: data.shortlist.id,
+      expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
+    },
+    status,
+    shortlist: {
+      id: data.shortlist.id,
+      title: data.shortlist.title,
+      status: data.shortlist.status,
+      launchGateStatus: data.shortlist.launchGateStatus || "blocked",
+      roleContext: jsonStringFromMetadata(data.shortlist.metadata, [
+        "roleContext",
+        "role_context",
+      ]),
+      davidIntroNote:
+        jsonStringFromMetadata(data.shortlist.metadata, [
+          "davidIntroNote",
+          "david_intro_note",
+        ]) || safeString(data.shortlist.notes, 900),
+      expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
+      clientVisibleAt: data.shortlist.clientVisibleAt,
+      candidates,
+      withheldCandidateCount: Math.max(0, data.candidates.length - candidates.length),
+    },
   };
 }
 

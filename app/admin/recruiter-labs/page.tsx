@@ -115,9 +115,9 @@ export default async function AdminRecruiterLabsPage() {
                 : "Recruiter Labs is private testing only. Real clients are blocked."}
             </h2>
             <p>
-              The future client portal still needs signed token validation,
-              private CV access, audit proof and legal/privacy sign-off before
-              any client link exists.
+              The client token route is now staged and noindexed, but real
+              client data still needs private CV access, audit proof and
+              legal/privacy sign-off before David sends any link.
             </p>
           </div>
           <div className={styles.adminStatusActions}>
@@ -156,7 +156,10 @@ export default async function AdminRecruiterLabsPage() {
             <h2>Private first. Client links later.</h2>
             <ul className={styles.adminChecklist}>
               <li>`/admin/recruiter-labs` is admin-only and noindexed.</li>
-              <li>No `/client/shortlist/[token]` route exists yet.</li>
+              <li>
+                `/client/shortlist/[token]` is staged, noindexed and
+                feature-gated.
+              </li>
               <li>
                 No shortlist or candidate profile appears in public sitemap.
               </li>

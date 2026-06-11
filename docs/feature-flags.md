@@ -100,6 +100,14 @@ notes in feature flag values.
 | `FEATURE_AI_CLIENT_PROFILE_DRAFTS`         | `false` | No                   | Future client profile drafts behind approval.              |
 | `FEATURE_AI_FOLLOW_UP_DRAFTS`              | `false` | No                   | Future follow-up draft support, no automatic sending.      |
 
+## Recruiter Labs Portal Config
+
+`RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS` controls future client shortlist link
+expiry. It defaults to 30 days and is capped in code at 90 days.
+
+Keep the default unless David approves a shorter or longer private-beta window.
+This is not a secret and must not contain a token.
+
 ## Suggested Flags From Issue #117
 
 Issue #117 specifically called out these flags. They all exist and default off:

@@ -99,6 +99,10 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS: optionalBooleanFlag,
   FEATURE_AI_CLIENT_PROFILE_DRAFTS: optionalBooleanFlag,
   FEATURE_AI_FOLLOW_UP_DRAFTS: optionalBooleanFlag,
+  RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   SANITY_PROJECT_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_DATASET: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_API_VERSION: z.preprocess(emptyToUndefined, z.string().optional()),
