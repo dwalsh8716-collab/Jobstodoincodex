@@ -237,7 +237,11 @@ export function ContactForm({
       </div>
       <div className="form-row">
         <label htmlFor={`${type}-preferred-contact`}>
-          Preferred contact method
+          {type === "job"
+            ? "How would you prefer David to contact you about this application?"
+            : type === "candidate"
+              ? "How would you prefer David to contact you?"
+              : "Preferred contact method"}
         </label>
         <select
           id={`${type}-preferred-contact`}
@@ -254,6 +258,20 @@ export function ContactForm({
           for this enquiry only, not marketing broadcasts.
         </p>
       </div>
+      {candidateMode ? (
+        <label className="consent" htmlFor={`${type}-whatsapp-consent`}>
+          <input
+            id={`${type}-whatsapp-consent`}
+            type="checkbox"
+            name="whatsappContactConsent"
+            value="yes"
+          />
+          <span>
+            If I choose WhatsApp above, David can reply by WhatsApp about this
+            application or note. No broadcasts.
+          </span>
+        </label>
+      ) : null}
       {candidateMode ? (
         <label className="consent" htmlFor={`${type}-talent-pool-consent`}>
           <input

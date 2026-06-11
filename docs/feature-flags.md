@@ -98,7 +98,7 @@ notes in feature flag values.
 | `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future friction-light application route.                          |
 | `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future LinkedIn/profile-first application option.                 |
 | `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
-| `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Future candidate WhatsApp question workflow.                      |
+| `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Candidate WhatsApp quick questions and preference workflow.       |
 | `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Future interview-process transparency on roles.                   |
 | `FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD` | `false` | No                   | Private job-advert readiness checker before publishing.           |
 | `FEATURE_AI_OPS_COMPRESSION`               | `false` | No                   | Future AI support for reducing admin typing.                      |
@@ -160,6 +160,13 @@ can still show the draft readiness report at
 `/admin/recruiter-labs/candidate-transparency`, but the score must not be shown
 publicly or used as fake compliance. The implementation note lives in
 `docs/recruiter-labs-candidate-transparency-scorecard.md`.
+
+`FEATURE_CANDIDATE_WHATSAPP_QUESTIONS` remains `false` while WhatsApp is a
+simple user-initiated question route. Candidate/job forms now capture explicit
+WhatsApp reply consent when WhatsApp is selected, but future automated WhatsApp
+Business updates still need templates, opt-out handling and privacy review. The
+implementation note lives in
+`docs/recruiter-labs-candidate-whatsapp-preferences.md`.
 
 ## Salary Guide Gate
 

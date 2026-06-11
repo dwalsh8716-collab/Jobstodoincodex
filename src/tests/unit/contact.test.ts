@@ -58,6 +58,27 @@ describe("contact form validation", () => {
     expect(result.success).toBe(false);
   });
 
+  it("requires explicit WhatsApp consent for candidate WhatsApp replies", () => {
+    const missingWhatsAppConsent = contactFormSchema.safeParse({
+      ...basePayload,
+      type: "job",
+      briefType: "Job application",
+      preferredContactMethod: "whatsapp",
+      privacyNoticeAcknowledgement: "yes",
+    });
+    const validWhatsAppPreference = contactFormSchema.safeParse({
+      ...basePayload,
+      type: "job",
+      briefType: "Job application",
+      preferredContactMethod: "whatsapp",
+      privacyNoticeAcknowledgement: "yes",
+      whatsappContactConsent: "yes",
+    });
+
+    expect(missingWhatsAppConsent.success).toBe(false);
+    expect(validWhatsAppPreference.success).toBe(true);
+  });
+
   it("requires candidate privacy acknowledgement separately from contact consent", () => {
     const missingPrivacy = contactFormSchema.safeParse({
       ...basePayload,
@@ -166,6 +187,7 @@ describe("contact server action response shape", () => {
         briefType: "Candidate conversation",
         message: "I want a confidential conversation about my next move.",
         privacyNoticeAcknowledgement: "yes",
+        whatsappContactConsent: "yes",
         talentPoolConsent: "yes",
         startedAt: now - minimumCompletionTimeMs - 500,
       },

@@ -17,6 +17,7 @@ routes. It keeps the current simple journey:
 - short note
 - preferred contact method
 - application/data-processing consent
+- explicit WhatsApp reply consent when WhatsApp is selected
 - optional talent-pool consent
 - Candidate Privacy Notice acknowledgement
 
@@ -60,7 +61,7 @@ Missing before this pass:
 - Separate privacy acknowledgement on candidate/job forms.
 - Optional talent-pool consent that is not treated as marketing consent.
 - Private operations metadata for LinkedIn/profile URL, job slug, privacy
-  acknowledgement and talent-pool consent.
+  acknowledgement, WhatsApp reply consent and talent-pool consent.
 
 ## Storage Decision
 

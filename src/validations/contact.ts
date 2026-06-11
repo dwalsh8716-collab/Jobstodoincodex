@@ -69,6 +69,10 @@ export const contactFormSchema = z
       (value) => (value === true ? "yes" : value),
       z.literal("yes").optional(),
     ),
+    whatsappContactConsent: z.preprocess(
+      (value) => (value === true ? "yes" : value),
+      z.literal("yes").optional(),
+    ),
     talentPoolConsent: z.preprocess(
       (value) => (value === true ? "yes" : value),
       z.literal("yes").optional(),
@@ -103,6 +107,19 @@ export const contactFormSchema = z
         path: ["privacyNoticeAcknowledgement"],
         message:
           "Please confirm that you have read the Candidate Privacy Notice.",
+      });
+    }
+
+    if (
+      payload.type !== "client" &&
+      payload.preferredContactMethod === "whatsapp" &&
+      payload.whatsappContactConsent !== "yes"
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["whatsappContactConsent"],
+        message:
+          "Please confirm WhatsApp is okay if you choose it as your preferred contact method.",
       });
     }
   });

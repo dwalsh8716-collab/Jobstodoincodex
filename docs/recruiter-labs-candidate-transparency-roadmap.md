@@ -157,6 +157,7 @@ Build and verify:
 - safe application acknowledgement
 - future WhatsApp Business logistics only where consent and templates are approved
 - opt-out and preference handling
+- explicit WhatsApp reply consent when WhatsApp is selected
 
 Public soon: user-initiated WhatsApp questions and clear contact choices.
 
@@ -349,6 +350,7 @@ Supporting work already completed or linked:
 - `docs/candidate-data-journey.md`
 - `docs/data-boundaries.md`
 - `docs/recruiter-labs-whatsapp-crm-sync.md`
+- `docs/recruiter-labs-candidate-whatsapp-preferences.md`
 - `docs/feature-flags.md`
 
 ## Production Readiness

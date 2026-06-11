@@ -101,6 +101,10 @@ async function sendWithResend(payload: ContactFormPayload) {
       payload.linkedin ? `LinkedIn: ${payload.linkedin}` : "",
       payload.jobSlug ? `Job slug: ${payload.jobSlug}` : "",
       `Brief type: ${payload.briefType}`,
+      `Preferred contact method: ${payload.preferredContactMethod}`,
+      payload.type !== "client"
+        ? `WhatsApp reply consent: ${payload.whatsappContactConsent === "yes" ? "yes" : "no"}`
+        : "",
       payload.type !== "client"
         ? `Talent pool consent: ${payload.talentPoolConsent === "yes" ? "yes" : "no"}`
         : "",

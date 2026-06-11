@@ -22,36 +22,55 @@ const safeText = (max: number) =>
     )
     .pipe(z.string().max(max));
 
-export const candidateApplicationDropSchema = z.object({
-  name: safeText(80).pipe(z.string().min(2, "Please add your name.")),
-  email: z.string().trim().email("Please add a valid email address.").max(254),
-  phone: z.preprocess(emptyToUndefined, z.string().trim().max(32).optional()),
-  linkedin: z.preprocess(
-    emptyToUndefined,
-    z
+export const candidateApplicationDropSchema = z
+  .object({
+    name: safeText(80).pipe(z.string().min(2, "Please add your name.")),
+    email: z
       .string()
       .trim()
-      .url("Please add a full URL, including https://")
-      .max(240)
-      .optional(),
-  ),
-  note: z.preprocess(emptyToUndefined, safeText(2000).optional()),
-  preferredContactMethod: z
-    .enum(preferredContactMethods)
-    .default("no_preference"),
-  consent: z.literal("yes", {
-    errorMap: () => ({ message: "Consent is required." }),
-  }),
-  privacyNoticeAcknowledgement: z.literal("yes", {
-    errorMap: () => ({
-      message:
-        "Please confirm that you have read the Candidate Privacy Notice.",
+      .email("Please add a valid email address.")
+      .max(254),
+    phone: z.preprocess(emptyToUndefined, z.string().trim().max(32).optional()),
+    linkedin: z.preprocess(
+      emptyToUndefined,
+      z
+        .string()
+        .trim()
+        .url("Please add a full URL, including https://")
+        .max(240)
+        .optional(),
+    ),
+    note: z.preprocess(emptyToUndefined, safeText(2000).optional()),
+    preferredContactMethod: z
+      .enum(preferredContactMethods)
+      .default("no_preference"),
+    consent: z.literal("yes", {
+      errorMap: () => ({ message: "Consent is required." }),
     }),
-  }),
-  talentPoolConsent: z.literal("yes").optional(),
-  jobTitle: z.preprocess(emptyToUndefined, safeText(160).optional()),
-  jobSlug: z.preprocess(emptyToUndefined, safeText(160).optional()),
-});
+    privacyNoticeAcknowledgement: z.literal("yes", {
+      errorMap: () => ({
+        message:
+          "Please confirm that you have read the Candidate Privacy Notice.",
+      }),
+    }),
+    whatsappContactConsent: z.literal("yes").optional(),
+    talentPoolConsent: z.literal("yes").optional(),
+    jobTitle: z.preprocess(emptyToUndefined, safeText(160).optional()),
+    jobSlug: z.preprocess(emptyToUndefined, safeText(160).optional()),
+  })
+  .superRefine((payload, ctx) => {
+    if (
+      payload.preferredContactMethod === "whatsapp" &&
+      payload.whatsappContactConsent !== "yes"
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["whatsappContactConsent"],
+        message:
+          "Please confirm WhatsApp is okay if you choose it as your preferred contact method.",
+      });
+    }
+  });
 
 export type CandidateApplicationDropPayload = z.infer<
   typeof candidateApplicationDropSchema
@@ -114,6 +133,7 @@ export function formDataToCandidateApplicationDropInput(formData: FormData) {
     preferredContactMethod: formData.get("preferredContactMethod"),
     consent: formData.get("consent"),
     privacyNoticeAcknowledgement: formData.get("privacyNoticeAcknowledgement"),
+    whatsappContactConsent: formData.get("whatsappContactConsent") || undefined,
     talentPoolConsent: formData.get("talentPoolConsent") || undefined,
     jobTitle: formData.get("jobTitle"),
     jobSlug: formData.get("jobSlug"),

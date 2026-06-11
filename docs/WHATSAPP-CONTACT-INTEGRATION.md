@@ -17,6 +17,7 @@ discovery item, not part of these public contact buttons:
 
 ```txt
 docs/recruiter-labs-whatsapp-crm-sync.md
+docs/recruiter-labs-candidate-whatsapp-preferences.md
 ```
 
 ## Current Decision
@@ -104,7 +105,7 @@ Hi David, I've seen Essential Resourcing and wanted to speak to you about my nex
 Jobs:
 
 ```txt
-Hi David, I've seen the role on Essential Resourcing and wanted to ask about it.
+Hi David, I've got a quick question about the [Job Title] role on Essential Resourcing. Job ref: [job-slug].
 ```
 
 ## CMS Support
@@ -145,6 +146,10 @@ Tracking uses the existing consent-aware analytics layer. No WhatsApp pixel or t
 The Privacy Policy and Terms now mention WhatsApp as an external third-party service. Clicking a WhatsApp link opens WhatsApp and is subject to WhatsApp's own terms and privacy policy.
 
 This is a technical implementation note, not legal advice. David should still have privacy and cookie wording reviewed before launch.
+
+Candidate/job forms now require explicit WhatsApp reply consent when WhatsApp is
+selected as the preferred contact method. This is not marketing consent and does
+not allow broadcasts.
 
 ## Fallback Behaviour
 

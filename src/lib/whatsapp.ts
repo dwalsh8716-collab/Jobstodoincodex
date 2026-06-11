@@ -9,8 +9,7 @@ export const whatsAppMessages = {
     "Hi David, I'd like to speak to you about strategic interim support.",
   candidates:
     "Hi David, I've seen Essential Resourcing and wanted to speak to you about my next move.",
-  jobs:
-    "Hi David, I've seen the role on Essential Resourcing and wanted to ask about it.",
+  jobs: "Hi David, I've seen the role on Essential Resourcing and wanted to ask about it.",
 } as const;
 
 export type WhatsAppIntent = keyof typeof whatsAppMessages;
@@ -30,9 +29,7 @@ export function buildWhatsAppUrl({
   const safeNumber = normaliseWhatsAppNumber(number);
   if (!safeNumber) return "";
 
-  const params = message
-    ? `?text=${encodeURIComponent(message.trim())}`
-    : "";
+  const params = message ? `?text=${encodeURIComponent(message.trim())}` : "";
 
   return `https://wa.me/${safeNumber}${params}`;
 }
@@ -42,4 +39,19 @@ export function whatsAppMessageForIntent(
   fallback = whatsAppMessages.general,
 ) {
   return whatsAppMessages[intent] || fallback;
+}
+
+export function candidateJobWhatsAppMessage({
+  jobTitle,
+  jobSlug,
+}: {
+  jobTitle?: string;
+  jobSlug?: string;
+}) {
+  const title = jobTitle?.trim();
+  const slug = jobSlug?.trim();
+  const roleContext = title ? `the ${title} role` : "a role";
+  const reference = slug ? ` Job ref: ${slug}.` : "";
+
+  return `Hi David, I've got a quick question about ${roleContext} on Essential Resourcing.${reference}`;
 }

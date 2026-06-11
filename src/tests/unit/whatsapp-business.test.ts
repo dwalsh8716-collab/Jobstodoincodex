@@ -46,6 +46,7 @@ const payload = contactFormSchema.parse({
   message: "I would like to apply for this role.",
   consent: "yes",
   privacyNoticeAcknowledgement: "yes",
+  whatsappContactConsent: "yes",
   startedAt: Date.now() - 5000,
   jobTitle: "Marketing Director",
   jobSlug: "marketing-director",
@@ -76,6 +77,12 @@ describe("whatsapp business cloud api", () => {
       shouldSendWhatsAppBusinessMessage({
         ...payload,
         preferredContactMethod: "email",
+      }),
+    ).toBe(false);
+    expect(
+      shouldSendWhatsAppBusinessMessage({
+        ...payload,
+        whatsappContactConsent: undefined,
       }),
     ).toBe(false);
   });

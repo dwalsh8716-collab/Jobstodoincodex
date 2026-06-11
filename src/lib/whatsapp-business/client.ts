@@ -42,9 +42,13 @@ export function getWhatsAppBusinessStatus(
 }
 
 export function shouldSendWhatsAppBusinessMessage(payload: ContactFormPayload) {
+  const hasCandidateWhatsAppConsent =
+    payload.type === "client" || payload.whatsappContactConsent === "yes";
+
   return Boolean(
     payload.preferredContactMethod === "whatsapp" &&
     payload.consent === "yes" &&
+    hasCandidateWhatsAppConsent &&
     normaliseWhatsAppNumber(payload.phone),
   );
 }

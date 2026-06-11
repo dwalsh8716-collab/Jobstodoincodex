@@ -50,6 +50,31 @@ describe("candidate application drop", () => {
     expect(result.success).toBe(true);
   });
 
+  it("requires WhatsApp consent when WhatsApp is the preferred candidate route", () => {
+    const missingConsent = candidateApplicationDropSchema.safeParse({
+      name: "Candidate Name",
+      email: "candidate@example.com",
+      phone: "+44 7824 514296",
+      note: "Short note about a relevant role.",
+      preferredContactMethod: "whatsapp",
+      consent: "yes",
+      privacyNoticeAcknowledgement: "yes",
+    });
+    const validConsent = candidateApplicationDropSchema.safeParse({
+      name: "Candidate Name",
+      email: "candidate@example.com",
+      phone: "+44 7824 514296",
+      note: "Short note about a relevant role.",
+      preferredContactMethod: "whatsapp",
+      consent: "yes",
+      privacyNoticeAcknowledgement: "yes",
+      whatsappContactConsent: "yes",
+    });
+
+    expect(missingConsent.success).toBe(false);
+    expect(validConsent.success).toBe(true);
+  });
+
   it("allows only sensible staged CV file types and size", () => {
     const pdf = new File(["test"], "cv.pdf", { type: "application/pdf" });
     const badType = new File(["test"], "cv.exe", {

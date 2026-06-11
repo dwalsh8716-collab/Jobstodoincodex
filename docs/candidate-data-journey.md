@@ -69,6 +69,8 @@ Before applying or sending a note, candidates now see:
 - how to ask for deletion or export
 - where to submit a formal data/privacy request
 - optional talent-pool consent, kept separate from marketing consent
+- explicit WhatsApp reply consent when WhatsApp is selected as the preferred
+  candidate route
 - a staged CV upload control that explains why upload is not live yet
 
 ## Consent
@@ -105,6 +107,7 @@ Candidate/application schema fields include:
 - archived/deleted fields
 - audit-log support
 - future WhatsApp preference, opt-in and opt-out metadata
+- email, phone and WhatsApp contact preference consent flags
 - future Loxo reference IDs and CRM sync audit events
 
 Hard boundary:
@@ -120,6 +123,7 @@ discovery notes live in:
 
 ```txt
 docs/recruiter-labs-whatsapp-crm-sync.md
+docs/recruiter-labs-candidate-whatsapp-preferences.md
 ```
 
 Full boundary notes:

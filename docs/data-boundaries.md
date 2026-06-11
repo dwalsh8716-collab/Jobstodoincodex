@@ -55,6 +55,7 @@ Railway Postgres is the staged private operations store for:
 - WhatsApp Business message status logs
 - WhatsApp/Loxo CRM sync metadata, conversation hashes and communication
   preferences
+- email, phone and WhatsApp contact preference consent flags
 - Recruiter Labs shortlists, hashed access tokens, feedback, private portal
   engagement events, David's Take audio-note metadata, retained search
   dashboard aggregates and interview requests
@@ -159,6 +160,7 @@ No CV upload flow exists on the public website.
 - integration sync events for future handoff/sync audit
 - WhatsApp/Loxo sync metadata, hashed conversation references and candidate
   communication preferences
+- candidate WhatsApp reply consent, kept separate from marketing consent
 - salary guide lead requests, consent records, delivery status and follow-up
   tasks
 

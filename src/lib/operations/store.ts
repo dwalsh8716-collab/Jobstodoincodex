@@ -58,6 +58,35 @@ function contactRetentionCategory(
   return "general_candidate_enquiry";
 }
 
+function contactPreferenceRecord(payload: ContactFormPayload) {
+  const hasContactConsent = payload.consent === "yes";
+  const whatsappConsent = Boolean(
+    payload.preferredContactMethod === "whatsapp" &&
+    hasContactConsent &&
+    (payload.type === "client" || payload.whatsappContactConsent === "yes"),
+  );
+  const phoneConsent = Boolean(
+    payload.phone &&
+    hasContactConsent &&
+    ["phone", "no_preference"].includes(payload.preferredContactMethod),
+  );
+  const emailConsent = Boolean(payload.email && hasContactConsent);
+
+  return {
+    preferredContactMethod: payload.preferredContactMethod,
+    whatsappConsent,
+    phoneConsent,
+    emailConsent,
+    communicationNotes: [
+      `Preferred contact method: ${payload.preferredContactMethod}.`,
+      whatsappConsent
+        ? "WhatsApp replies explicitly permitted for this enquiry."
+        : "No WhatsApp reply consent captured.",
+      "No broadcasts or marketing list consent implied.",
+    ].join(" "),
+  };
+}
+
 export async function saveContactEnquiryToOperations(
   payload: ContactFormPayload,
   meta: RequestMeta = {},
@@ -75,6 +104,7 @@ export async function saveContactEnquiryToOperations(
 
   const retentionCategory = contactRetentionCategory(payload.type);
   const retentionDates = retentionDatesForCategory(retentionCategory);
+  const contactPreferences = contactPreferenceRecord(payload);
   const record = {
     source: "website_contact_form",
     enquiryType: payload.type,
@@ -87,7 +117,11 @@ export async function saveContactEnquiryToOperations(
     linkedInUrl: payload.linkedin,
     message: payload.message,
     serviceInterest: payload.briefType,
-    preferredContactMethod: payload.preferredContactMethod,
+    preferredContactMethod: contactPreferences.preferredContactMethod,
+    whatsappConsent: contactPreferences.whatsappConsent,
+    phoneConsent: contactPreferences.phoneConsent,
+    emailConsent: contactPreferences.emailConsent,
+    communicationNotes: contactPreferences.communicationNotes,
     consentToContact: payload.consent === "yes",
     privacyNoticeAcknowledged: payload.privacyNoticeAcknowledgement === "yes",
     talentPoolConsent: payload.talentPoolConsent === "yes",
@@ -124,6 +158,10 @@ export async function saveContactEnquiryToOperations(
             message,
             service_interest,
             preferred_contact_method,
+            whatsapp_contact_consent,
+            phone_contact_consent,
+            email_contact_consent,
+            communication_notes,
             consent_to_contact,
             marketing_consent,
             priority,
@@ -145,6 +183,10 @@ export async function saveContactEnquiryToOperations(
             data->>'message',
             nullif(data->>'serviceInterest', ''),
             nullif(data->>'preferredContactMethod', ''),
+            coalesce((data->>'whatsappConsent')::boolean, false),
+            coalesce((data->>'phoneConsent')::boolean, false),
+            coalesce((data->>'emailConsent')::boolean, false),
+            nullif(data->>'communicationNotes', ''),
             coalesce((data->>'consentToContact')::boolean, false),
             coalesce((data->>'marketingConsent')::boolean, false),
             coalesce(nullif(data->>'priority', ''), 'normal'),
@@ -157,6 +199,12 @@ export async function saveContactEnquiryToOperations(
               'privacyNoticeVersion', data->>'privacyNoticeVersion',
               'privacyNoticeAcknowledged', coalesce((data->>'privacyNoticeAcknowledged')::boolean, false),
               'talentPoolConsent', coalesce((data->>'talentPoolConsent')::boolean, false),
+              'contactPreferences', jsonb_build_object(
+                'preferredContactMethod', nullif(data->>'preferredContactMethod', ''),
+                'whatsappConsent', coalesce((data->>'whatsappConsent')::boolean, false),
+                'phoneConsent', coalesce((data->>'phoneConsent')::boolean, false),
+                'emailConsent', coalesce((data->>'emailConsent')::boolean, false)
+              ),
               'linkedInUrl', nullif(data->>'linkedInUrl', ''),
               'jobSlug', nullif(data->>'jobSlug', '')
             )

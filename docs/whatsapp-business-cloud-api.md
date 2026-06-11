@@ -83,6 +83,7 @@ The app only attempts a WhatsApp Business message when:
 - the user selected WhatsApp as preferred contact method
 - the user provided a valid phone number
 - the user accepted operational contact consent
+- candidate/job submissions include explicit WhatsApp reply consent
 
 If WhatsApp fails, the form does not fail. The error is logged without the candidate message, email, phone or CV data.
 

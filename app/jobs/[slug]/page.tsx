@@ -11,6 +11,7 @@ import {
 import { isJobClosed, isJobLive } from "@/lib/content";
 import { getPublicJob, getPublicJobs } from "@/lib/public-content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
+import { candidateJobWhatsAppMessage } from "@/lib/whatsapp";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -48,6 +49,10 @@ export default async function JobPage({ params }: Props) {
   const relatedLiveJobs = jobs
     .filter((item) => item.slug !== job.slug && isJobLive(item))
     .slice(0, 3);
+  const jobWhatsAppMessage = candidateJobWhatsAppMessage({
+    jobTitle: job.title,
+    jobSlug: job.slug,
+  });
 
   return (
     <>
@@ -85,7 +90,7 @@ export default async function JobPage({ params }: Props) {
           {job.quickQuestionEnabled ? (
             <article className="card">
               <span className="tag">Quick question</span>
-              <h2>Ask David before you apply.</h2>
+              <h2>Got a quick question before applying?</h2>
               <p>{job.quickQuestionRoute}</p>
               {job.whatsappQuestionEnabled ? (
                 <WhatsAppButton
@@ -93,9 +98,17 @@ export default async function JobPage({ params }: Props) {
                   label="Message David on WhatsApp"
                   location="job_detail_transparency"
                   jobSlug={job.slug}
+                  message={jobWhatsAppMessage}
                   variant="secondary"
                 />
               ) : null}
+              <p className="form-note">
+                Prefer email? Use the short application note below. A quick call
+                can be booked if it is useful.
+              </p>
+              <Link className="text-link" href="/book-a-call">
+                Book a quick call
+              </Link>
             </article>
           ) : null}
         </div>
@@ -241,15 +254,6 @@ export default async function JobPage({ params }: Props) {
                       Candidate Privacy Notice
                     </Link>
                   </div>
-                  {job.whatsappQuestionEnabled ? (
-                    <WhatsAppButton
-                      intent="jobs"
-                      label="Quick question about this role? WhatsApp David"
-                      location="job_detail_page"
-                      jobSlug={job.slug}
-                      variant="secondary"
-                    />
-                  ) : null}
                 </div>
                 <CandidateApplicationDrop
                   type="job"

@@ -172,6 +172,8 @@ Allowed now:
 
 - user-initiated WhatsApp links for quick questions
 - consent-aware click tracking without candidate PII
+- explicit WhatsApp reply consent when WhatsApp is selected on candidate/job
+  forms
 
 Still blocked until approved:
 
@@ -179,6 +181,12 @@ Still blocked until approved:
 - interview logistics templates
 - CRM/Loxo matching
 - WhatsApp message storage beyond safe status metadata
+
+Detailed preference notes live in:
+
+```txt
+docs/recruiter-labs-candidate-whatsapp-preferences.md
+```
 
 ## Launch Checklist
 

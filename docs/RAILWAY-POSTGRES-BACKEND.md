@@ -336,8 +336,10 @@ database/migrations/002_whatsapp_business_messages.sql
 database/migrations/014_whatsapp_crm_sync.sql
 database/migrations/015_whatsapp_interview_logistics.sql
 database/migrations/025_whatsapp_loxo_crm_discovery.sql
+database/migrations/026_candidate_communication_preferences.sql
 docs/whatsapp-business-cloud-api.md
 docs/recruiter-labs-whatsapp-crm-sync.md
+docs/recruiter-labs-candidate-whatsapp-preferences.md
 ```
 
 Recruiter Labs AI follow-up:

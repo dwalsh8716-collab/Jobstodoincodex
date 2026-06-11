@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildWhatsAppUrl,
+  candidateJobWhatsAppMessage,
   normaliseWhatsAppNumber,
   whatsAppMessageForIntent,
 } from "@/lib/whatsapp";
@@ -27,6 +28,17 @@ describe("whatsapp utilities", () => {
   it("uses context-specific messages", () => {
     expect(whatsAppMessageForIntent("strategicInterim")).toContain(
       "strategic interim",
+    );
+  });
+
+  it("builds candidate job question messages with role context", () => {
+    expect(
+      candidateJobWhatsAppMessage({
+        jobTitle: "Marketing Director",
+        jobSlug: "marketing-director",
+      }),
+    ).toBe(
+      "Hi David, I've got a quick question about the Marketing Director role on Essential Resourcing. Job ref: marketing-director.",
     );
   });
 });
