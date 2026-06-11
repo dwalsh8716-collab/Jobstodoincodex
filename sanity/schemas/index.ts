@@ -729,6 +729,69 @@ const siteSettings = defineType({
     }),
     defineField({ name: "bookingUrl", title: "Booking link", type: "url" }),
     defineField({
+      name: "googleBookingUrl",
+      title: "Google Calendar booking link",
+      type: "url",
+      description:
+        "Paste David's Google Calendar Appointment Schedule booking link. Leave blank to hide booking buttons.",
+    }),
+    defineField({
+      name: "bookingEnabled",
+      title: "Show booking option on the site?",
+      type: "boolean",
+      description:
+        "Turn this on only when the Google Calendar booking link is ready and tested.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "bookingButtonText",
+      title: "Booking button text",
+      type: "string",
+      description: "Short button copy, for example: Book a 15-minute call.",
+      validation: (rule) => rule.max(42),
+    }),
+    defineField({
+      name: "bookingSectionHeading",
+      title: "Booking section heading",
+      type: "string",
+      description:
+        "Heading used on booking-focused sections, for example: Book a 15-minute call with David.",
+      validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: "bookingIntroText",
+      title: "Booking section intro",
+      type: "text",
+      rows: 3,
+      description:
+        "Explain what the call is for. Keep it plain English and specific.",
+      validation: (rule) => rule.max(220),
+    }),
+    defineField({
+      name: "showBookingInHeader",
+      title: "Show booking in the mobile menu?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showBookingInFooter",
+      title: "Show booking in the footer?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showBookingOnContactPage",
+      title: "Show booking on the contact page?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showBookingOnServicePages",
+      title: "Show booking on service pages?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "whatsAppEnabled",
       title: "Show WhatsApp buttons on the website?",
       type: "boolean",

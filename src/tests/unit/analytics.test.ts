@@ -75,6 +75,23 @@ describe("analytics utility", () => {
     });
   });
 
+  it("creates safe data attributes for booking tracking", () => {
+    const attrs = analyticsAttributes("booking_click", {
+      label: "Book a 15-minute call",
+      href: "/book-a-call",
+      location: "contact_page",
+      booking_type: "google_calendar",
+    });
+
+    expect(attrs).toMatchObject({
+      "data-analytics-event": "booking_click",
+      "data-analytics-label": "Book a 15-minute call",
+      "data-analytics-href": "/book-a-call",
+      "data-analytics-location": "contact_page",
+      "data-analytics-booking-type": "google_calendar",
+    });
+  });
+
   it("reads analytics params from an element", () => {
     const element = {
       getAttribute: (name: string) =>

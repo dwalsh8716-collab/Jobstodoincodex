@@ -217,7 +217,7 @@ No fake reviews, ratings, salaries, logos or client claims are marked up.
 - LinkedIn Insight env support.
 - Meta Pixel, Clarity and Hotjar env support.
 - CTA clicks.
-- Book-a-call clicks.
+- Booking clicks.
 - Email clicks.
 - Phone clicks.
 - LinkedIn clicks.
@@ -304,6 +304,7 @@ Core:
 - `NEXT_PUBLIC_PHONE`
 - `NEXT_PUBLIC_LINKEDIN_URL`
 - `NEXT_PUBLIC_BOOKING_URL`
+- `NEXT_PUBLIC_GOOGLE_BOOKING_URL`
 - `GOOGLE_SITE_VERIFICATION`
 
 Analytics:
@@ -364,7 +365,7 @@ Additional checks used during the build:
 - Final David Walsh portrait.
 - Real phone number.
 - Real LinkedIn URL.
-- Real booking URL if used.
+- Real Google Calendar booking URL if used.
 - Real salary data.
 - Permissioned case studies.
 - Permissioned testimonials and logos.

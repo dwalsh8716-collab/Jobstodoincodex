@@ -186,7 +186,7 @@ Manual setup:
 Supported events:
 
 - CTA clicks.
-- Book-a-call clicks.
+- Booking clicks.
 - Email clicks.
 - Phone clicks.
 - LinkedIn clicks.
@@ -257,7 +257,7 @@ Checklist:
    - Employment agency.
    - Executive search firm.
 5. Do not use Marketing agency unless the business genuinely provides marketing services.
-6. Add accurate phone, website and booking URL.
+6. Add accurate phone, website and Google Calendar booking URL.
 7. Add service areas:
    - Manchester.
    - North West.

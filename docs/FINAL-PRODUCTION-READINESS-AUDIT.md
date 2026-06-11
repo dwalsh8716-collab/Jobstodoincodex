@@ -108,7 +108,7 @@ It is not final-live until the manual content, credential, legal and launch setu
 - Add real phone number.
 - Add real LinkedIn URL.
 - Confirm WhatsApp Business number and message wording.
-- Add real booking URL if booking should happen outside the contact form.
+- Add real Google Calendar booking URL if booking should happen outside the contact form.
 - Add verified salary data.
 - Replace draft case studies with verified outcomes.
 - Add real testimonials and logos only with permission.
@@ -127,6 +127,7 @@ It is not final-live until the manual content, credential, legal and launch setu
 - `NEXT_PUBLIC_PHONE`
 - `NEXT_PUBLIC_LINKEDIN_URL`
 - `NEXT_PUBLIC_BOOKING_URL`
+- `NEXT_PUBLIC_GOOGLE_BOOKING_URL`
 - `GOOGLE_SITE_VERIFICATION`
 - `NEXT_PUBLIC_GA_ID` or `NEXT_PUBLIC_GTM_ID` when tracking is approved
 - `NEXT_PUBLIC_LINKEDIN_PARTNER_ID` when LinkedIn Insight is approved

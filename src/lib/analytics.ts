@@ -2,6 +2,7 @@ export type AnalyticsEventName =
   | "form_submission"
   | "form_error"
   | "cta_click"
+  | "booking_click"
   | "book_call_click"
   | "email_click"
   | "phone_click"
@@ -23,6 +24,7 @@ export type AnalyticsEventParams = {
   cta_text?: string;
   intent?: string;
   service?: string;
+  booking_type?: string;
   job_slug?: string;
   form_type?: string;
   brief_type?: string;
@@ -98,6 +100,7 @@ const dataAttributeMap: Record<keyof AnalyticsEventParams, string> = {
   cta_text: "data-analytics-cta-text",
   intent: "data-analytics-intent",
   service: "data-analytics-service",
+  booking_type: "data-analytics-booking-type",
   job_slug: "data-analytics-job-slug",
   form_type: "data-analytics-form-type",
   brief_type: "data-analytics-brief-type",

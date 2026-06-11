@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import type { WhatsAppIntent } from "@/lib/whatsapp";
@@ -13,6 +14,8 @@ export function CTASection({
   whatsAppIntent = "general",
   whatsAppLabel = "Message David on WhatsApp",
   whatsAppService,
+  showBooking = false,
+  bookingLabel = "Book a 15-minute call",
 }: {
   eyebrow?: string;
   title?: string;
@@ -23,6 +26,8 @@ export function CTASection({
   whatsAppIntent?: WhatsAppIntent;
   whatsAppLabel?: string;
   whatsAppService?: string;
+  showBooking?: boolean;
+  bookingLabel?: string;
 }) {
   return (
     <section className={`section-tight ${dark ? "dark" : "muted"}`}>
@@ -51,6 +56,15 @@ export function CTASection({
             service={whatsAppService}
             variant={dark ? "secondary" : "primary"}
           />
+          {showBooking ? (
+            <BookingButton
+              label={bookingLabel}
+              location={title}
+              intent="hiring"
+              service={whatsAppService}
+              variant={dark ? "secondary" : "primary"}
+            />
+          ) : null}
         </div>
       </div>
     </section>

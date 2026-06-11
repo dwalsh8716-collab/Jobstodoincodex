@@ -23,8 +23,8 @@ export default function PrivacyPolicyPage() {
           <h1>Privacy Policy</h1>
           <p className="lede">
             This page is structured and editable, but should be reviewed against
-            the final form provider, analytics setup, consent management and data
-            handling processes by a qualified adviser before launch.
+            the final form provider, analytics setup, consent management and
+            data handling processes by a qualified adviser before launch.
           </p>
         </div>
       </section>
@@ -79,11 +79,18 @@ export default function PrivacyPolicyPage() {
             send a transactional acknowledgement about that enquiry. This must
             not be used for marketing broadcasts without separate approval.
           </p>
+          <h2>Google Calendar bookings</h2>
+          <p>
+            If you book a call through the website, the booking is handled by
+            Google Calendar. Google may process the details you enter into the
+            booking form and may generate a Google Meet link if David has set
+            that up in the appointment schedule.
+          </p>
           <h2>Legal review</h2>
           <p>
             This policy is not legal advice. It must be checked against the
-            final live tools, providers, retention process and any candidate data
-            handling requirements before launch.
+            final live tools, providers, retention process and any candidate
+            data handling requirements before launch.
           </p>
           <h2>Your rights</h2>
           <p>

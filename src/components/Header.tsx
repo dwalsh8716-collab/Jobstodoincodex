@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
@@ -41,19 +42,33 @@ export function Header() {
         <span />
         <span />
         <span />
-        <span className="sr-only">{open ? "Close navigation" : "Open navigation"}</span>
+        <span className="sr-only">
+          {open ? "Close navigation" : "Open navigation"}
+        </span>
       </button>
 
-      <nav className={`primary-nav ${open ? "is-open" : ""}`} id="primary-navigation" aria-label="Primary navigation">
+      <nav
+        className={`primary-nav ${open ? "is-open" : ""}`}
+        id="primary-navigation"
+        aria-label="Primary navigation"
+      >
         {primaryNavigation.map((item) =>
           item.label === "Services" ? (
             <div className="nav-group" key={item.href}>
-              <Link href={item.href} aria-current={currentFor(item.href) ? "page" : undefined} onClick={() => setOpen(false)}>
+              <Link
+                href={item.href}
+                aria-current={currentFor(item.href) ? "page" : undefined}
+                onClick={() => setOpen(false)}
+              >
                 {item.label}
               </Link>
               <div className="nav-dropdown" aria-label="Services menu">
                 {serviceNavigation.map((service) => (
-                  <Link key={service.href} href={service.href} onClick={() => setOpen(false)}>
+                  <Link
+                    key={service.href}
+                    href={service.href}
+                    onClick={() => setOpen(false)}
+                  >
                     {service.label}
                   </Link>
                 ))}
@@ -76,7 +91,7 @@ export function Header() {
             >
               {"cta" in item && item.cta ? "Talk to David" : item.label}
             </Link>
-          )
+          ),
         )}
         <WhatsAppButton
           className="nav-whatsapp"
@@ -84,6 +99,12 @@ export function Header() {
           label="WhatsApp David"
           location="mobile_menu"
           variant="secondary"
+        />
+        <BookingButton
+          className="button button-secondary nav-booking"
+          label="Book a 15-minute call"
+          location="mobile_menu"
+          intent="book_call"
         />
       </nav>
     </header>

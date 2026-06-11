@@ -42,6 +42,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
+  if (siteConfig.booking.enabled) {
+    addEntry({
+      path: siteConfig.booking.pagePath,
+      changeFrequency: "monthly",
+      priority: 0.78,
+    });
+  }
+
   services.forEach((service) => {
     addEntry({
       path: `/services/${service.slug}`,

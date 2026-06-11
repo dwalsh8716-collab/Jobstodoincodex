@@ -85,6 +85,15 @@ export type SanitySiteSettings = SanitySeo & {
   email?: string;
   phone?: string;
   bookingUrl?: string;
+  googleBookingUrl?: string;
+  bookingEnabled?: boolean;
+  bookingButtonText?: string;
+  bookingSectionHeading?: string;
+  bookingIntroText?: string;
+  showBookingInHeader?: boolean;
+  showBookingInFooter?: boolean;
+  showBookingOnContactPage?: boolean;
+  showBookingOnServicePages?: boolean;
   whatsAppEnabled?: boolean;
   whatsAppNumber?: string;
   whatsAppButtonText?: string;

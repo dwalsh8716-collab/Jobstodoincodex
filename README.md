@@ -68,6 +68,7 @@ Optional tracking:
 - `NEXT_PUBLIC_HOTJAR_ID`
 - `GOOGLE_SITE_VERIFICATION`
 - `NEXT_PUBLIC_BOOKING_URL`
+- `NEXT_PUBLIC_GOOGLE_BOOKING_URL`
 - `NEXT_PUBLIC_WHATSAPP_NUMBER`
 - `NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE`
 
@@ -145,6 +146,7 @@ docs/consent-mode-v2-setup.md
 docs/sanity-editor-guide.md
 docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
+docs/google-calendar-booking-setup.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md
@@ -277,7 +279,7 @@ docs/RAILWAY-POSTGRES-BACKEND.md
 ## Manual Items Before True Production
 
 - Add final David Walsh portrait.
-- Add real phone number, LinkedIn URL and booking URL.
+- Add real phone number, LinkedIn URL and Google booking URL.
 - Add verified salary data.
 - Replace draft case studies with verified outcomes.
 - Add real testimonials only with permission.

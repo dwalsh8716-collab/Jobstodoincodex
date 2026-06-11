@@ -122,6 +122,43 @@ Update navigation or footer:
 2. Use Navigation for menu links.
 3. Use Site Settings for footer copy, contact details and social links.
 
+## Google Calendar Booking Settings
+
+Booking is managed from Site Settings when Sanity is connected.
+
+Open:
+
+```txt
+Studio > Main Site > Site Settings
+```
+
+Fields:
+
+- Google Calendar booking link.
+- Show booking option on the site?
+- Booking button text.
+- Booking section heading.
+- Booking section intro.
+- Show booking in the mobile menu?
+- Show booking in the footer?
+- Show booking on the contact page?
+- Show booking on service pages?
+
+Paste the Google Calendar Appointment Schedule booking page link. This lets
+visitors book directly into David's Google Calendar when David has configured
+Google Meet in the appointment schedule.
+
+If the booking page changes:
+
+1. Copy the new Google Calendar booking link.
+2. Replace the old link in Site Settings or Railway env vars.
+3. Check `/book-a-call`.
+4. Test a booking with another email.
+5. Confirm the Google Meet link is generated.
+
+Leave the booking link blank to hide booking CTAs. WhatsApp, email and the
+contact form will still work.
+
 Invite another editor:
 
 1. Go to `https://www.sanity.io/manage`.

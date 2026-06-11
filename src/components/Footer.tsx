@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BookingButton } from "@/components/BookingButton";
 import { CookiePreferencesButton } from "@/components/CookiePreferencesButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
@@ -8,11 +9,11 @@ import { serviceNavigation, siteConfig } from "@/lib/site";
 export function Footer() {
   const hasTrackingConfig = Boolean(
     process.env.NEXT_PUBLIC_GA_ID ||
-      process.env.NEXT_PUBLIC_GTM_ID ||
-      process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID ||
-      process.env.NEXT_PUBLIC_META_PIXEL_ID ||
-      process.env.NEXT_PUBLIC_CLARITY_ID ||
-      process.env.NEXT_PUBLIC_HOTJAR_ID,
+    process.env.NEXT_PUBLIC_GTM_ID ||
+    process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID ||
+    process.env.NEXT_PUBLIC_META_PIXEL_ID ||
+    process.env.NEXT_PUBLIC_CLARITY_ID ||
+    process.env.NEXT_PUBLIC_HOTJAR_ID,
   );
 
   return (
@@ -41,6 +42,12 @@ export function Footer() {
               intent="general"
               label="Message David on WhatsApp"
               location="footer"
+              variant="text"
+            />
+            <BookingButton
+              label="Book a 15-minute call"
+              location="footer"
+              intent="book_call"
               variant="text"
             />
             <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
@@ -92,7 +99,10 @@ export function Footer() {
         </nav>
       </div>
       <div className="container footer-bottom">
-        <p>© {new Date().getFullYear()} Essential Resourcing. Founder-led recruitment, search and strategic interim.</p>
+        <p>
+          © {new Date().getFullYear()} Essential Resourcing. Founder-led
+          recruitment, search and strategic interim.
+        </p>
         <p>
           Manchester-led. UK-wide. <Link href="/cms">Editor login</Link>
         </p>

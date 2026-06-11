@@ -8,6 +8,23 @@ const whatsAppNumber =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || defaultWhatsAppNumber;
 const whatsAppDefaultMessage =
   process.env.NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE || whatsAppMessages.general;
+const normaliseExternalUrl = (value: string | undefined) => {
+  if (!value) return "";
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:"
+      ? url.toString()
+      : "";
+  } catch {
+    return "";
+  }
+};
+
+const googleBookingUrl = normaliseExternalUrl(
+  process.env.NEXT_PUBLIC_GOOGLE_BOOKING_URL ||
+    process.env.NEXT_PUBLIC_BOOKING_URL,
+);
 
 export const siteConfig = {
   name: "Essential Resourcing",
@@ -16,7 +33,17 @@ export const siteConfig = {
   email: "david@essentialresourcing.co.uk",
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   linkedIn: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
-  bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact",
+  bookingUrl: googleBookingUrl || "/contact",
+  booking: {
+    enabled: Boolean(googleBookingUrl),
+    url: googleBookingUrl,
+    pagePath: "/book-a-call",
+    label: "Book a 15-minute call",
+    shortLabel: "Book 15 minutes",
+    heading: "Book a 15-minute call with David",
+    intro:
+      "Got a hiring challenge, interim gap or quick question? Book 15 minutes and we will sense-check it properly.",
+  },
   whatsApp: {
     enabled: Boolean(buildWhatsAppUrl({ number: whatsAppNumber })),
     number: whatsAppNumber,

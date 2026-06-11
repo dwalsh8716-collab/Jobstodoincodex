@@ -257,7 +257,11 @@ p {
 .dark .card {
   border-color: var(--color-dark-line);
   background:
-    linear-gradient(180deg, rgba(246, 244, 239, 0.08), rgba(246, 244, 239, 0.045)),
+    linear-gradient(
+      180deg,
+      rgba(246, 244, 239, 0.08),
+      rgba(246, 244, 239, 0.045)
+    ),
     rgba(246, 244, 239, 0.04);
 }
 
@@ -345,6 +349,10 @@ p {
 }
 
 .nav-whatsapp {
+  display: none;
+}
+
+.nav-booking {
   display: none;
 }
 
@@ -540,7 +548,9 @@ p {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.2fr) minmax(160px, 0.45fr) minmax(160px, 0.45fr);
+  grid-template-columns:
+    minmax(220px, 0.7fr) minmax(0, 1.2fr) minmax(160px, 0.45fr)
+    minmax(160px, 0.45fr);
   gap: clamp(28px, 5vw, 70px);
   align-items: start;
 }
@@ -707,7 +717,11 @@ p {
   border-radius: var(--radius-sm);
   overflow: hidden;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 24%, transparent), transparent 44%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-accent) 24%, transparent),
+      transparent 44%
+    ),
     linear-gradient(180deg, rgba(16, 17, 20, 0.02), rgba(16, 17, 20, 0.78));
   box-shadow: var(--shadow-soft);
 }
@@ -788,7 +802,8 @@ p {
   min-height: 82px;
   display: flex;
   align-items: center;
-  border-right: 1px solid color-mix(in srgb, var(--color-primary-ink) 20%, transparent);
+  border-right: 1px solid
+    color-mix(in srgb, var(--color-primary-ink) 20%, transparent);
   padding: 18px clamp(18px, 3vw, 32px);
   font-family: var(--font-heading);
   font-weight: 800;
@@ -917,7 +932,11 @@ p {
   justify-content: flex-end;
   border-radius: var(--radius-sm);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 80%, transparent), transparent 65%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 80%, transparent),
+      transparent 65%
+    ),
     var(--color-ink);
   color: var(--color-bg);
   padding: clamp(24px, 4vw, 40px);
@@ -1079,7 +1098,11 @@ p {
   justify-content: flex-end;
   gap: 12px;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 68%, transparent), transparent 62%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 68%, transparent),
+      transparent 62%
+    ),
     linear-gradient(180deg, rgba(16, 17, 20, 0.12), rgba(16, 17, 20, 0.92)),
     var(--color-ink);
   color: var(--color-bg);
@@ -1194,6 +1217,32 @@ p {
   color: var(--color-text-muted);
 }
 
+.booking-panel {
+  display: grid;
+  gap: 14px;
+  border: 1px solid var(--color-dark-line);
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(246, 244, 239, 0.1),
+      rgba(246, 244, 239, 0.045)
+    ),
+    rgba(246, 244, 239, 0.05);
+  padding: clamp(22px, 4vw, 34px);
+  box-shadow: var(--shadow-card);
+}
+
+.booking-panel h2 {
+  color: var(--color-bg);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.02;
+}
+
+.booking-panel p {
+  color: rgba(246, 244, 239, 0.78);
+}
+
 .form-assurance {
   display: grid;
   gap: 4px;
@@ -1294,7 +1343,8 @@ p {
 .form-row select:focus {
   border-color: var(--color-primary);
   background: var(--color-surface);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 14%, transparent);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--color-primary) 14%, transparent);
 }
 
 .form-row textarea {
@@ -1533,7 +1583,11 @@ p {
   display: flex;
   align-items: center;
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 38%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary) 12%, transparent),
+      transparent 38%
+    ),
     var(--color-bg);
 }
 
@@ -1629,7 +1683,8 @@ p {
 }
 
 .cms-alert {
-  border: 1px solid color-mix(in srgb, var(--color-accent) 44%, var(--color-line));
+  border: 1px solid
+    color-mix(in srgb, var(--color-accent) 44%, var(--color-line));
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
   color: var(--color-ink);
@@ -1705,6 +1760,11 @@ p {
   }
 
   .nav-whatsapp {
+    display: inline-flex;
+    margin-top: 8px;
+  }
+
+  .nav-booking {
     display: inline-flex;
     margin-top: 8px;
   }

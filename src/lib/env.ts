@@ -16,6 +16,10 @@ const publicEnvSchema = z.object({
     emptyToUndefined,
     z.string().optional(),
   ),
+  NEXT_PUBLIC_GOOGLE_BOOKING_URL: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
   NEXT_PUBLIC_LINKEDIN_URL: z.preprocess(
     emptyToUndefined,
     z.string().url().optional(),

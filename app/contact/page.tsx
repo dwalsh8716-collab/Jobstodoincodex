@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -17,8 +18,6 @@ export default function ContactPage() {
   const phoneHref = siteConfig.phone
     ? `tel:${siteConfig.phone.replace(/[^+\d]/g, "")}`
     : "";
-  const hasBookingUrl =
-    siteConfig.bookingUrl && siteConfig.bookingUrl !== "/contact";
 
   return (
     <>
@@ -45,6 +44,12 @@ export default function ContactPage() {
                 label="Fastest way to reach me? Message me on WhatsApp"
                 location="contact_page"
                 variant="primary"
+              />
+              <BookingButton
+                label="Book a 15-minute call"
+                location="contact_hero"
+                intent="hiring"
+                variant="secondary"
               />
               <Link
                 className="button button-secondary"
@@ -105,19 +110,6 @@ export default function ContactPage() {
                   LinkedIn
                 </Link>
               ) : null}
-              {hasBookingUrl ? (
-                <Link
-                  className="button button-primary"
-                  href={siteConfig.bookingUrl}
-                  {...analyticsAttributes("book_call_click", {
-                    label: "Talk to David",
-                    href: siteConfig.bookingUrl,
-                    location: "contact hero",
-                  })}
-                >
-                  Talk to David
-                </Link>
-              ) : null}
             </div>
             <div className="trust-callout hero-actions">
               <h2>What happens next?</h2>
@@ -133,8 +125,8 @@ export default function ContactPage() {
               <p className="eyebrow">Fast route</p>
               <h2>Message David directly.</h2>
               <p>
-                Fastest way to reach me? Message me on WhatsApp. Forms and
-                email still work if you prefer to send more detail.
+                Fastest way to reach me? Message me on WhatsApp. Forms and email
+                still work if you prefer to send more detail.
               </p>
               <WhatsAppButton
                 intent="hiring"
@@ -142,8 +134,15 @@ export default function ContactPage() {
                 location="contact_options"
                 variant="primary"
               />
+              <BookingButton
+                label="Book a 15-minute call"
+                location="contact_options"
+                intent="hiring"
+                variant="secondary"
+              />
               <p className="meta">
-                Opens WhatsApp. WhatsApp has its own terms and privacy policy.
+                WhatsApp opens in WhatsApp. Booking opens the Google Calendar
+                route when David has connected it.
               </p>
             </div>
             <ContactForm type="client" />

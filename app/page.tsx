@@ -6,22 +6,35 @@ import { RichMediaBlock } from "@/components/RichMedia";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
-import { caseStudies, homepageFeatureVideo, insights, proofPoints, richMediaExamples, services, specialisms, whyEssential } from "@/lib/content";
+import {
+  caseStudies,
+  homepageFeatureVideo,
+  insights,
+  proofPoints,
+  richMediaExamples,
+  services,
+  specialisms,
+  whyEssential,
+} from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
   title: siteConfig.defaultTitle,
-  description: siteConfig.defaultDescription
+  description: siteConfig.defaultDescription,
 });
 
 export default function HomePage() {
   const coreServices = services.filter((service) =>
-    ["leadership-search", "strategic-interim", "senior-recruitment"].includes(service.slug)
+    ["leadership-search", "strategic-interim", "senior-recruitment"].includes(
+      service.slug,
+    ),
   );
   const featuredInsights = insights.slice(0, 3);
   const featuredCases = caseStudies
-    .filter((caseStudy) => caseStudy.status === "published" && caseStudy.featured)
+    .filter(
+      (caseStudy) => caseStudy.status === "published" && caseStudy.featured,
+    )
     .slice(0, 3);
 
   return (
@@ -37,10 +50,14 @@ export default function HomePage() {
               <span aria-hidden="true">No d!ckheads.</span>
             </h1>
             <p className="lede">
-              Straight-talking search and recruitment for marketing, communications and agency leadership across
-              Manchester, the North West and beyond.
+              Straight-talking search and recruitment for marketing,
+              communications and agency leadership across Manchester, the North
+              West and beyond.
             </p>
-            <p className="hero-reassurance">Direct with David. Confidential when needed. No CVs sent without context.</p>
+            <p className="hero-reassurance">
+              Direct with David. Confidential when needed. No CVs sent without
+              context.
+            </p>
             <div className="button-row hero-actions">
               <Link
                 className="button button-primary"
@@ -119,7 +136,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="proof-strip" aria-label="Essential Resourcing proof points">
+      <section
+        className="proof-strip"
+        aria-label="Essential Resourcing proof points"
+      >
         {proofPoints.map((point) => (
           <p key={point}>{point}</p>
         ))}
@@ -138,8 +158,8 @@ export default function HomePage() {
               slipping, or the growth plan that needs proper senior judgement.
             </p>
             <p className="editorial-note">
-              Start there and the shortlist gets sharper. Ignore it and you
-              lose six weeks interviewing the wrong people.
+              Start there and the shortlist gets sharper. Ignore it and you lose
+              six weeks interviewing the wrong people.
             </p>
             <Link className="text-link" href="/services">
               Choose the right route
@@ -154,8 +174,10 @@ export default function HomePage() {
             <p className="eyebrow">Founder video</p>
             <h2>A quick word before you brief the market.</h2>
             <p className="lede">
-              The useful bit usually sits behind the job title: growth pressure, founder overload, a team that needs
-              direction, or a market that will not buy a vague brief. Start there and the hiring gets sharper.
+              The useful bit usually sits behind the job title: growth pressure,
+              founder overload, a team that needs direction, or a market that
+              will not buy a vague brief. Start there and the hiring gets
+              sharper.
             </p>
             <div className="button-row hero-actions">
               <Link
@@ -189,8 +211,9 @@ export default function HomePage() {
           <p className="eyebrow">What we do</p>
           <h2>Senior marketing and comms hiring, done properly.</h2>
           <p className="lede">
-            Essential Resourcing helps agencies, brands and growth businesses hire marketing and communications people
-            who actually move the business forward.
+            Essential Resourcing helps agencies, brands and growth businesses
+            hire marketing and communications people who actually move the
+            business forward.
           </p>
         </div>
         <div className="container grid grid-3">
@@ -210,18 +233,16 @@ export default function HomePage() {
             {[
               {
                 title: "Agencies",
-                text:
-                  "For independent, integrated, PR, digital, creative and performance agencies that need people who can handle clients, teams and commercial pressure."
+                text: "For independent, integrated, PR, digital, creative and performance agencies that need people who can handle clients, teams and commercial pressure.",
               },
               {
                 title: "Brands",
-                text:
-                  "For in-house marketing teams hiring senior marketers, comms leaders, digital specialists and growth talent."
+                text: "For in-house marketing teams hiring senior marketers, comms leaders, digital specialists and growth talent.",
               },
               {
                 title: "Growth Businesses",
-                text: "For businesses where the next marketing hire needs to make a measurable commercial difference."
-              }
+                text: "For businesses where the next marketing hire needs to make a measurable commercial difference.",
+              },
             ].map((audience) => (
               <article className="card" key={audience.title}>
                 <h3>{audience.title}</h3>
@@ -238,8 +259,9 @@ export default function HomePage() {
             <p className="eyebrow">Why Essential</p>
             <h2>Recruitment should reduce risk, not create noise.</h2>
             <p className="lede">
-              Good senior candidates are rarely sitting there waiting to apply. They need the right brief, the right
-              timing, and someone who can talk to them like a grown-up.
+              Good senior candidates are rarely sitting there waiting to apply.
+              They need the right brief, the right timing, and someone who can
+              talk to them like a grown-up.
             </p>
           </div>
           <div className="statement-list">
@@ -260,12 +282,15 @@ export default function HomePage() {
             <p className="eyebrow">About David Walsh</p>
             <h2>Founder-led recruitment. Without the founder ego.</h2>
             <p className="lede">
-              I’m David Walsh, founder of Essential Resourcing. I’ve spent over a decade helping agencies, brands and
-              marketing teams hire properly. That usually means being honest about the brief, the salary, the process
-              and whether the market will actually buy what you’re selling.
+              I’m David Walsh, founder of Essential Resourcing. I’ve spent over
+              a decade helping agencies, brands and marketing teams hire
+              properly. That usually means being honest about the brief, the
+              salary, the process and whether the market will actually buy what
+              you’re selling.
             </p>
             <p className="lede">
-              No CV flinging. No recruitment theatre. Just straight advice and good people.
+              No CV flinging. No recruitment theatre. Just straight advice and
+              good people.
             </p>
             <div className="button-row hero-actions">
               <Link className="button button-dark" href="/about-david-walsh">
@@ -284,7 +309,8 @@ export default function HomePage() {
           <p className="eyebrow">Case studies</p>
           <h2>Specific proof beats anonymous waffle.</h2>
           <p className="lede">
-            Case studies are only published when the outcome, quote and client permission are solid enough to stand up.
+            Case studies are only published when the outcome, quote and client
+            permission are solid enough to stand up.
           </p>
         </div>
         {featuredCases.length ? (
@@ -296,9 +322,18 @@ export default function HomePage() {
         ) : (
           <div className="container grid grid-3">
             {[
-              ["Permission first", "Named proof, logos and quotes only go live when permission is clear."],
-              ["Outcome-led", "A useful case study explains context, constraints, approach and commercial impact."],
-              ["No theatre", "Until proof is verified, the site talks about the working method rather than pretending."]
+              [
+                "Permission first",
+                "Named proof, logos and quotes only go live when permission is clear.",
+              ],
+              [
+                "Outcome-led",
+                "A useful case study explains context, constraints, approach and commercial impact.",
+              ],
+              [
+                "No theatre",
+                "Until proof is verified, the site talks about the working method rather than pretending.",
+              ],
             ].map(([title, text]) => (
               <article className="card proof-card" key={title}>
                 <span className="tag">Proof standard</span>
@@ -314,15 +349,21 @@ export default function HomePage() {
         <div className="container split split-start">
           <div>
             <p className="eyebrow">Insights and salary snapshots</p>
-            <h2>Built for SEO, AI discovery and proper first-party expertise.</h2>
+            <h2>
+              Built for SEO, AI discovery and proper first-party expertise.
+            </h2>
             <p className="lede">
-              Every article is crawlable, structured and authored. Salary snapshots use semantic tables, not flat images.
+              Every article is crawlable, structured and authored. Salary
+              snapshots use semantic tables, not flat images.
             </p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="/insights">
                 View insights
               </Link>
-              <Link className="button button-secondary" href="/salary-snapshots">
+              <Link
+                className="button button-secondary"
+                href="/salary-snapshots"
+              >
                 View salary snapshots
               </Link>
             </div>
@@ -339,10 +380,13 @@ export default function HomePage() {
         <div className="container split">
           <div>
             <p className="eyebrow">Strategic Interim</p>
-            <h2>Senior brains in the business. Without another full-time salary.</h2>
+            <h2>
+              Senior brains in the business. Without another full-time salary.
+            </h2>
             <p className="lede">
-              Strategic Interim is for founders, MDs and marketing leaders who need experienced senior support, but do
-              not necessarily need another full-time hire.
+              Strategic Interim is for founders, MDs and marketing leaders who
+              need experienced senior support, but do not necessarily need
+              another full-time hire.
             </p>
             <ul className="statement-list">
               <li>When the team needs senior direction</li>
@@ -351,7 +395,10 @@ export default function HomePage() {
               <li>When the business needs execution, not another slide deck</li>
             </ul>
             <div className="button-row hero-actions">
-              <Link className="button button-primary" href="/services/strategic-interim">
+              <Link
+                className="button button-primary"
+                href="/services/strategic-interim"
+              >
                 Explore Strategic Interim
               </Link>
               <WhatsAppButton
@@ -371,7 +418,10 @@ export default function HomePage() {
         <div className="container section-heading">
           <p className="eyebrow">Specialisms</p>
           <h2>Not a boring list of functions.</h2>
-          <p className="lede">Each hiring area is framed around context, judgement and commercial consequence.</p>
+          <p className="lede">
+            Each hiring area is framed around context, judgement and commercial
+            consequence.
+          </p>
         </div>
         <div className="container grid grid-4">
           {specialisms.map((specialism) => (
@@ -387,6 +437,8 @@ export default function HomePage() {
         title="Need good marketing, PR or digital people?"
         text="Give me a shout before it becomes a hiring headache."
         ctaLabel="Talk to David"
+        showBooking
+        bookingLabel="Book a 15-minute call"
         whatsAppIntent="hiring"
         whatsAppLabel="Fastest way to reach me? Message me on WhatsApp"
       />

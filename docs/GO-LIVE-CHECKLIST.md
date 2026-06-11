@@ -13,6 +13,7 @@ Treat it as preview-ready now, not fully public-live until the items below are c
 - Confirm David's WhatsApp Business number and default message.
 - Keep WhatsApp Business Cloud API disabled until Meta setup, templates and consent wording are approved.
 - Add the booking URL, if calls should go through a booking tool.
+- Create the Google Calendar Appointment Schedule and set `NEXT_PUBLIC_GOOGLE_BOOKING_URL`.
 - Configure `RESEND_API_KEY`, `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` so forms send email.
 - Create or connect the real Sanity project.
 - Add `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_VERSION` and any required read token.

@@ -25,7 +25,7 @@ If `NEXT_PUBLIC_GTM_ID` is set, the direct GA4 script is suppressed to reduce du
 Current tracked actions:
 
 - CTA clicks
-- Book-a-call clicks
+- Booking clicks through `booking_click`
 - Email clicks
 - Phone clicks
 - WhatsApp clicks

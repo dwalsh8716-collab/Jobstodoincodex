@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
@@ -8,6 +9,7 @@ import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { caseStudies, getService, insights, services } from "@/lib/content";
 import { createMetadata, serviceSchema } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 import type { WhatsAppIntent } from "@/lib/whatsapp";
 
 type Props = {
@@ -80,6 +82,10 @@ export default async function ServicePage({ params }: Props) {
     service.slug === "strategic-interim"
       ? "Need interim help quickly? WhatsApp David"
       : "Message David on WhatsApp";
+  const bookingLabel =
+    service.slug === "strategic-interim"
+      ? "Need interim help quickly? Book 15 minutes"
+      : "Sense-check the brief";
 
   return (
     <>
@@ -105,9 +111,18 @@ export default async function ServicePage({ params }: Props) {
               service={service.title}
               variant="secondary"
             />
-            <Link className="button button-secondary" href="/case-studies">
-              View proof standards
-            </Link>
+            <BookingButton
+              label={bookingLabel}
+              location={`${service.slug}_hero`}
+              intent="hiring"
+              service={service.title}
+              variant="secondary"
+            />
+            {siteConfig.booking.enabled ? null : (
+              <Link className="button button-secondary" href="/case-studies">
+                View proof standards
+              </Link>
+            )}
           </div>
         </div>
       </section>
