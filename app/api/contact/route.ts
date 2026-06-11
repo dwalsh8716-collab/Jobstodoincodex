@@ -9,7 +9,11 @@ async function requestToObject(request: NextRequest) {
     return (await request.json().catch(() => ({}))) as Record<string, unknown>;
   }
 
-  return formDataToContactInput(await request.formData());
+  try {
+    return formDataToContactInput(await request.formData());
+  } catch {
+    return {};
+  }
 }
 
 function getClientIp(request: NextRequest) {

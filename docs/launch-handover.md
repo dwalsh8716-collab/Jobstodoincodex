@@ -7,6 +7,12 @@ Partially ready.
 The website is technically prepared for Railway deployment, but it is not
 actually deployed or linked to a Railway project from this workspace.
 
+Final QA launch report:
+
+```txt
+docs/final-qa-launch-report.md
+```
+
 Reason:
 
 - the Railway CLI is not installed locally
@@ -415,6 +421,13 @@ Google:
 ```txt
 Partially ready.
 ```
+
+Final QA fixes completed in the launch-gate pass:
+
+- common old/short launch URLs now redirect to canonical pages
+- empty or malformed public form API posts now return safe validation responses
+- final launch decision report created
+- redirect and API response tests added
 
 Blocks before true launch:
 

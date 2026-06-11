@@ -9,7 +9,11 @@ async function requestToObject(request: NextRequest) {
     return (await request.json().catch(() => ({}))) as Record<string, unknown>;
   }
 
-  return formDataToDataSubjectRequestInput(await request.formData());
+  try {
+    return formDataToDataSubjectRequestInput(await request.formData());
+  } catch {
+    return {};
+  }
 }
 
 function getClientIp(request: NextRequest) {
@@ -19,10 +23,13 @@ function getClientIp(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const result = await submitDataSubjectRequest(await requestToObject(request), {
-    ip: getClientIp(request),
-    userAgent: request.headers.get("user-agent") || undefined,
-  });
+  const result = await submitDataSubjectRequest(
+    await requestToObject(request),
+    {
+      ip: getClientIp(request),
+      userAgent: request.headers.get("user-agent") || undefined,
+    },
+  );
 
   return NextResponse.json(
     {

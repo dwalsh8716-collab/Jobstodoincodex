@@ -114,6 +114,25 @@ test("search control routes respond and exclude private areas", async ({
   expect(robotsTxt).toContain("Disallow: /api");
 });
 
+test("common short launch URLs redirect to canonical pages", async ({
+  request,
+}) => {
+  const redirects = [
+    ["/about-david", "/about-david-walsh"],
+    ["/strategic-interim", "/services/strategic-interim"],
+    ["/leadership-search", "/services/leadership-search"],
+    ["/marketing-recruitment", "/services/client-side-marketing-recruitment"],
+    ["/privacy", "/privacy-policy"],
+    ["/cookies", "/cookie-policy"],
+  ];
+
+  for (const [source, destination] of redirects) {
+    const response = await request.get(source, { maxRedirects: 0 });
+    expect(response.status()).toBe(308);
+    expect(response.headers().location).toBe(destination);
+  }
+});
+
 test("404 page displays correctly", async ({ page }) => {
   await page.goto("/definitely-not-a-real-page");
 

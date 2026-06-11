@@ -53,6 +53,60 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/about",
+        destination: "/about-essential",
+        permanent: true,
+      },
+      {
+        source: "/about-david",
+        destination: "/about-david-walsh",
+        permanent: true,
+      },
+      {
+        source: "/leadership-search",
+        destination: "/services/leadership-search",
+        permanent: true,
+      },
+      {
+        source: "/strategic-interim",
+        destination: "/services/strategic-interim",
+        permanent: true,
+      },
+      {
+        source: "/agency-recruitment",
+        destination: "/services/agency-recruitment",
+        permanent: true,
+      },
+      {
+        source: "/client-side-recruitment",
+        destination: "/services/client-side-marketing-recruitment",
+        permanent: true,
+      },
+      {
+        source: "/marketing-recruitment",
+        destination: "/services/client-side-marketing-recruitment",
+        permanent: true,
+      },
+      {
+        source: "/salary-guides",
+        destination: "/salary-snapshots",
+        permanent: true,
+      },
+      {
+        source: "/privacy",
+        destination: "/privacy-policy",
+        permanent: true,
+      },
+      {
+        source: "/cookies",
+        destination: "/cookie-policy",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
