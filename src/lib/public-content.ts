@@ -303,8 +303,20 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     salaryRange,
     salaryMin: item.salaryMin ?? fallback?.salaryMin,
     salaryMax: item.salaryMax ?? fallback?.salaryMax,
+    salaryCurrency: (
+      item.salaryCurrency ||
+      fallback?.salaryCurrency ||
+      "GBP"
+    ).toUpperCase(),
     salaryPeriod:
       item.salaryPeriod || fallback?.salaryPeriod || "to_be_confirmed",
+    salaryVisibility:
+      item.salaryVisibility ||
+      fallback?.salaryVisibility ||
+      "to_be_confirmed",
+    rateMin: item.rateMin ?? fallback?.rateMin,
+    rateMax: item.rateMax ?? fallback?.rateMax,
+    ratePeriod: item.ratePeriod || fallback?.ratePeriod || "to_be_confirmed",
     salary: salaryRange,
     salaryStatus: item.salaryStatus || fallback?.salaryStatus || "unverified",
     salaryTransparencyNote:
@@ -332,6 +344,11 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       item.locationExpectation ||
       fallback?.locationExpectation ||
       "Location expectations to confirm.",
+    travelExpectation:
+      item.travelExpectation ||
+      fallback?.travelExpectation ||
+      item.locationExpectation ||
+      "Travel expectations to confirm.",
     employmentType:
       item.employmentType || fallback?.employmentType || "Permanent",
     sector: item.sector || fallback?.sector || "",
@@ -349,6 +366,12 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       "to_be_confirmed",
     whyRoleExists,
     whyThisRoleMatters: whyRoleExists || fallback?.whyThisRoleMatters || "",
+    successInThreeMonths:
+      item.successInThreeMonths || fallback?.successInThreeMonths || "",
+    successInSixMonths:
+      item.successInSixMonths || fallback?.successInSixMonths || "",
+    successInTwelveMonths:
+      item.successInTwelveMonths || fallback?.successInTwelveMonths || "",
     summary: item.summary || fallback?.summary || "",
     description: description.length ? description : fallback?.description || [],
     davidsTake: davidsTake.length ? davidsTake : fallback?.davidsTake || [],
@@ -400,6 +423,11 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       "David reviews applications directly.",
     applicationProcess:
       item.applicationProcess || fallback?.applicationProcess || [],
+    applicationProcessNotes:
+      item.applicationProcessNotes ||
+      item.applicationNotes ||
+      fallback?.applicationProcessNotes ||
+      "",
     applicationNotes: item.applicationNotes || fallback?.applicationNotes || "",
     candidatePrivacyNote,
     candidateDataHandling:

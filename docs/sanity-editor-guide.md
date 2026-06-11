@@ -119,16 +119,19 @@ Add a job:
 1. Open Recruitment.
 2. Open Jobs.
 3. Add title, slug, salary or rate range, salary status, working pattern,
-   location, office location, seniority and role details.
-4. Add the real hybrid rhythm, location expectation, must-haves,
+   salary visibility, currency, any interim rate fields, location, office
+   location, seniority and role details.
+4. Add the real hybrid rhythm, location expectation, travel expectation, must-haves,
    nice-to-haves, what good looks like, David's Take, interview steps,
    application notes and candidate privacy note.
-5. Add the process overview, process steps, expected timeline, task or
+5. Add 3/6/12 month success indicators only where the client has confirmed
+   them. Otherwise use the general "what good looks like" list.
+6. Add the process overview, process steps, expected timeline, task or
    presentation position, first-stage format, final-stage format, feedback
    expectation and application review timeframe where known.
-6. Use "typical process for this kind of role" if the exact client process is
+7. Use "typical process for this kind of role" if the exact client process is
    not confirmed. Do not pretend certainty.
-7. Keep status as draft until the salary/rate, location, hybrid setup, process
+8. Keep status as draft until the salary/rate, location, hybrid setup, travel, process
    and privacy note are clear enough for candidates.
 
 Detailed job standards live in:
@@ -142,6 +145,7 @@ Do not publish a role with:
 
 - hidden or unverified salary
 - vague hybrid wording
+- unclear travel expectation
 - no interview-process detail
 - no clear data-handling note
 - "Rockstar", "Ninja" or other recruitment nonsense

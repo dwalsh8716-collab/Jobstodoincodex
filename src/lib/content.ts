@@ -1018,7 +1018,12 @@ export const jobs: Job[] = [
     slug: "senior-account-director-draft",
     status: "draft",
     salaryRange: "Add confirmed salary",
+    salaryCurrency: "GBP",
     salaryPeriod: "to_be_confirmed",
+    salaryVisibility: "to_be_confirmed",
+    rateMin: undefined,
+    rateMax: undefined,
+    ratePeriod: "to_be_confirmed",
     salary: "Add confirmed salary",
     salaryStatus: "unverified",
     salaryTransparencyNote:
@@ -1034,6 +1039,8 @@ export const jobs: Job[] = [
       "Add the actual office rhythm before this role is published.",
     locationExpectation:
       "Add the real location expectation, including any client-site or office days.",
+    travelExpectation:
+      "Add any travel, client-site or regional meeting expectations before publication.",
     employmentType: "Full-time",
     sector: "Agency",
     specialism: "PR & Communications",
@@ -1044,6 +1051,12 @@ export const jobs: Job[] = [
       "This draft exists so David can prepare the role properly before it is shown as a live opportunity.",
     whyThisRoleMatters:
       "This draft exists so David can prepare the role properly before it is shown as a live opportunity.",
+    successInThreeMonths:
+      "Add the first practical outcomes the person should have delivered.",
+    successInSixMonths:
+      "Add what should be working better by month six.",
+    successInTwelveMonths:
+      "Add the longer-term impact only if the client has agreed it.",
     summary:
       "Draft role note for a senior agency hire. This is not a live vacancy until David marks it live.",
     description: [
@@ -1112,6 +1125,8 @@ export const jobs: Job[] = [
       "If it looks like a possible fit, David contacts the candidate to discuss the role properly.",
       "Nothing is sent to a client without the candidate's permission.",
     ],
+    applicationProcessNotes:
+      "Add any role-specific notes about application review, shortlisting or likely timings before publication.",
     applicationNotes:
       "Add any role-specific application notes before publication.",
     candidatePrivacyNote:
@@ -1175,7 +1190,9 @@ const vagueSalaryPattern =
 const emptyJobListPattern =
   /\b(add |to be confirmed|tbc|confirm |before publication|draft only|draft role|this draft)\b/i;
 const candidateBuzzwordPattern =
-  /\b(ninja|rockstar|superstar|wizard|guru|unicorn|exciting opportunity|fast-paced environment)\b/i;
+  /\b(ninja|rockstar|superstar|wizard|guru|unicorn|exciting opportunity|fast-paced environment|dynamic team|hit the ground running|wear many hats)\b/i;
+const publishableSalaryVisibility = ["public_range", "indicative_range"];
+const ratePeriods = ["daily", "hourly", "weekly", "monthly", "fixed"];
 
 export function getJobTransparencyIssues(job: Job) {
   const issues: string[] = [];
@@ -1194,6 +1211,7 @@ export function getJobTransparencyIssues(job: Job) {
 
   if (
     job.salaryStatus === "unverified" ||
+    !publishableSalaryVisibility.includes(job.salaryVisibility) ||
     vagueSalaryPattern.test(job.salary) ||
     vagueSalaryPattern.test(job.salaryRange)
   ) {
@@ -1201,10 +1219,26 @@ export function getJobTransparencyIssues(job: Job) {
   }
 
   if (
+    publishableSalaryVisibility.includes(job.salaryVisibility) &&
+    !job.salaryCurrency.trim()
+  ) {
+    issues.push("salary_currency_missing");
+  }
+
+  if (
     job.salaryStatus !== "unverified" &&
     (typeof job.salaryMin !== "number" || typeof job.salaryMax !== "number")
   ) {
     issues.push("salary_min_max_missing");
+  }
+
+  if (
+    publishableSalaryVisibility.includes(job.salaryVisibility) &&
+    ratePeriods.includes(job.ratePeriod) &&
+    (typeof job.rateMin !== "number" || typeof job.rateMax !== "number") &&
+    (typeof job.salaryMin !== "number" || typeof job.salaryMax !== "number")
+  ) {
+    issues.push("rate_min_max_missing");
   }
 
   if (
@@ -1255,6 +1289,13 @@ export function getJobTransparencyIssues(job: Job) {
     issues.push("location_expectation_missing");
   }
 
+  if (
+    !job.travelExpectation.trim() ||
+    emptyJobListPattern.test(job.travelExpectation)
+  ) {
+    issues.push("travel_expectation_missing");
+  }
+
   if (!job.roleType.trim()) issues.push("role_type_missing");
   if (!job.seniority.trim()) issues.push("seniority_missing");
   if (!job.sector.trim()) issues.push("sector_missing");
@@ -1276,6 +1317,15 @@ export function getJobTransparencyIssues(job: Job) {
   if (job.whatGoodLooksLike.length === 0) {
     issues.push("what_good_looks_like_missing");
   }
+  if (
+    ![
+      job.successInThreeMonths,
+      job.successInSixMonths,
+      job.successInTwelveMonths,
+    ].some((item) => item.trim())
+  ) {
+    issues.push("success_indicators_missing");
+  }
   if (job.interviewSteps.length === 0) {
     issues.push("interview_steps_missing");
   }
@@ -1296,7 +1346,9 @@ export function getJobTransparencyIssues(job: Job) {
     job.hybridReality,
     job.hybridPattern,
     job.locationExpectation,
+    job.travelExpectation,
     job.applicationNotes,
+    job.applicationProcessNotes,
     job.candidatePrivacyNote,
     job.candidateDataHandling,
     job.quickQuestionRoute,
@@ -1306,6 +1358,9 @@ export function getJobTransparencyIssues(job: Job) {
     ...job.mustHaves,
     ...job.niceToHaves,
     ...job.whatGoodLooksLike,
+    job.successInThreeMonths,
+    job.successInSixMonths,
+    job.successInTwelveMonths,
     ...job.requirements,
     ...job.benefits,
     ...job.interviewSteps,
@@ -1327,6 +1382,10 @@ export function getJobTransparencyIssues(job: Job) {
 
   if (!job.applicationNotes.trim()) {
     issues.push("application_notes_missing");
+  }
+
+  if (!job.applicationProcessNotes.trim()) {
+    issues.push("application_process_notes_missing");
   }
 
   if (!job.quickQuestionRoute.trim()) {

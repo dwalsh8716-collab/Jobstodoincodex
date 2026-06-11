@@ -102,9 +102,18 @@ describe("Sanity CMS core", () => {
   it("projects the public job advert transparency fields from Sanity", () => {
     for (const field of [
       "salaryStatus",
+      "salaryCurrency",
+      "salaryVisibility",
+      "rateMin",
+      "rateMax",
+      "ratePeriod",
       "salaryTransparencyNote",
       "hybridReality",
       "locationExpectation",
+      "travelExpectation",
+      "successInThreeMonths",
+      "successInSixMonths",
+      "successInTwelveMonths",
       "mustHaves",
       "niceToHaves",
       "interviewProcess",
@@ -118,6 +127,7 @@ describe("Sanity CMS core", () => {
       "feedbackExpectation",
       "applicationReviewTimeframe",
       "applicationProcess",
+      "applicationProcessNotes",
       "candidateDataHandling",
       "quickQuestionRoute",
     ]) {

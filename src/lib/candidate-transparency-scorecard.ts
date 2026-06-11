@@ -68,7 +68,16 @@ const criterionTemplates: readonly CriterionTemplate[] = [
   {
     id: "salary_rate_shown",
     label: "Salary/rate shown",
-    checkedFields: ["salaryRange", "salary", "salaryStatus"],
+    checkedFields: [
+      "salaryRange",
+      "salary",
+      "salaryStatus",
+      "salaryVisibility",
+      "salaryCurrency",
+      "rateMin",
+      "rateMax",
+      "ratePeriod",
+    ],
     passGuidance:
       "Candidates can see a real salary or rate position before applying.",
     failGuidance:
@@ -86,7 +95,12 @@ const criterionTemplates: readonly CriterionTemplate[] = [
   {
     id: "location_clear",
     label: "Location clear",
-    checkedFields: ["location", "officeLocation", "locationExpectation"],
+    checkedFields: [
+      "location",
+      "officeLocation",
+      "locationExpectation",
+      "travelExpectation",
+    ],
     passGuidance:
       "The role explains where the work is based and what travel or office rhythm is expected.",
     failGuidance:
@@ -117,7 +131,14 @@ const criterionTemplates: readonly CriterionTemplate[] = [
   {
     id: "why_role_exists_explained",
     label: "Why role exists explained",
-    checkedFields: ["whyRoleExists", "whyThisRoleMatters", "davidsTake"],
+    checkedFields: [
+      "whyRoleExists",
+      "whyThisRoleMatters",
+      "davidsTake",
+      "successInThreeMonths",
+      "successInSixMonths",
+      "successInTwelveMonths",
+    ],
     passGuidance: "The advert says why the hire matters, not just the title.",
     failGuidance:
       "Explain the business reason for the hire and add David's plain-English take.",
@@ -151,7 +172,11 @@ const criterionTemplates: readonly CriterionTemplate[] = [
   {
     id: "after_applying_explained",
     label: "What happens after applying explained",
-    checkedFields: ["applicationProcess", "applicationNotes"],
+    checkedFields: [
+      "applicationProcess",
+      "applicationProcessNotes",
+      "applicationNotes",
+    ],
     passGuidance: "Candidates know what happens after they send a note.",
     failGuidance:
       "Add plain next-step wording so the application does not feel like a black hole.",
@@ -199,7 +224,12 @@ const criterionTemplates: readonly CriterionTemplate[] = [
       "status",
       "salaryMin",
       "salaryMax",
+      "salaryCurrency",
       "salaryPeriod",
+      "salaryVisibility",
+      "rateMin",
+      "rateMax",
+      "ratePeriod",
       "postedDate",
       "seoTitle",
       "metaDescription",

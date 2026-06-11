@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
 import { CandidateProcessTimeline } from "@/components/CandidateProcessTimeline";
+import { JobRoleSnapshot } from "@/components/JobRoleSnapshot";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
@@ -54,6 +55,11 @@ export default async function JobPage({ params }: Props) {
     jobTitle: job.title,
     jobSlug: job.slug,
   });
+  const successIndicators = [
+    { label: "3 months", value: job.successInThreeMonths },
+    { label: "6 months", value: job.successInSixMonths },
+    { label: "12 months", value: job.successInTwelveMonths },
+  ].filter((item) => item.value);
 
   return (
     <>
@@ -75,19 +81,14 @@ export default async function JobPage({ params }: Props) {
         </div>
       </section>
       <section className="section surface">
-        <div className="container grid grid-3">
-          <article className="card">
-            <span className="tag">Salary / rate</span>
-            <h2>{job.salaryRange}</h2>
-            <p>{job.salaryTransparencyNote}</p>
-            <p className="meta">Status: {job.salaryStatus}</p>
-          </article>
-          <article className="card">
-            <span className="tag">Working pattern</span>
-            <h2>{job.workingPattern}</h2>
-            <p>{job.hybridPattern}</p>
-            <p className="meta">{job.locationExpectation}</p>
-          </article>
+        <div
+          className={
+            job.quickQuestionEnabled
+              ? "container split split-start"
+              : "container"
+          }
+        >
+          <JobRoleSnapshot job={job} />
           {job.quickQuestionEnabled ? (
             <article className="card">
               <span className="tag">Quick question</span>
@@ -168,6 +169,13 @@ export default async function JobPage({ params }: Props) {
               </p>
             </section>
             <section>
+              <h2>Salary, hybrid and travel reality</h2>
+              <p>{job.salaryTransparencyNote}</p>
+              <p>{job.hybridReality}</p>
+              <p>{job.locationExpectation}</p>
+              <p>{job.travelExpectation}</p>
+            </section>
+            <section>
               <h2>Overview</h2>
               {job.description.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
@@ -194,6 +202,16 @@ export default async function JobPage({ params }: Props) {
             {job.whatGoodLooksLike.length ? (
               <section>
                 <h2>What good looks like</h2>
+                {successIndicators.length ? (
+                  <dl className="candidate-process-facts">
+                    {successIndicators.map((item) => (
+                      <div key={item.label}>
+                        <dt>{item.label}</dt>
+                        <dd>{item.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
                 {job.whatGoodLooksLike.map((item) => (
                   <p key={item}>{item}</p>
                 ))}
@@ -229,9 +247,12 @@ export default async function JobPage({ params }: Props) {
                 applicationReviewTimeframe={job.applicationReviewTimeframe}
               />
             </section>
-            {job.applicationNotes ? (
+            {job.applicationNotes || job.applicationProcessNotes ? (
               <section>
                 <h2>Application notes</h2>
+                {job.applicationProcessNotes ? (
+                  <p>{job.applicationProcessNotes}</p>
+                ) : null}
                 <p>{job.applicationNotes}</p>
               </section>
             ) : null}

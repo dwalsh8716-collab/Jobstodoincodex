@@ -202,13 +202,34 @@ export function articleSchema(insight: Insight) {
 }
 
 export function jobPostingSchema(job: Job) {
-  const unitTextBySalaryPeriod: Record<Job["salaryPeriod"], string> = {
+  const unitTextBySalaryPeriod: Record<
+    Job["salaryPeriod"] | Job["ratePeriod"],
+    string
+  > = {
     annual: "YEAR",
     daily: "DAY",
     hourly: "HOUR",
+    weekly: "WEEK",
+    monthly: "MONTH",
     fixed: "PROJECT",
     to_be_confirmed: "YEAR",
   };
+  const canPublishSalary = ["public_range", "indicative_range"].includes(
+    job.salaryVisibility,
+  );
+  const salaryMin =
+    typeof job.salaryMin === "number" ? job.salaryMin : job.rateMin;
+  const salaryMax =
+    typeof job.salaryMax === "number" ? job.salaryMax : job.rateMax;
+  const salaryPeriod =
+    typeof job.salaryMin === "number" && typeof job.salaryMax === "number"
+      ? job.salaryPeriod
+      : job.ratePeriod;
+  const hasStructuredSalary =
+    canPublishSalary &&
+    typeof salaryMin === "number" &&
+    typeof salaryMax === "number" &&
+    salaryPeriod !== "to_be_confirmed";
 
   return {
     "@context": "https://schema.org",
@@ -227,16 +248,16 @@ export function jobPostingSchema(job: Job) {
     industry: job.sector,
     occupationalCategory: job.specialism,
     directApply: true,
-    ...(typeof job.salaryMin === "number" && typeof job.salaryMax === "number"
+    ...(hasStructuredSalary
       ? {
           baseSalary: {
             "@type": "MonetaryAmount",
-            currency: "GBP",
+            currency: job.salaryCurrency || "GBP",
             value: {
               "@type": "QuantitativeValue",
-              minValue: job.salaryMin,
-              maxValue: job.salaryMax,
-              unitText: unitTextBySalaryPeriod[job.salaryPeriod],
+              minValue: salaryMin,
+              maxValue: salaryMax,
+              unitText: unitTextBySalaryPeriod[salaryPeriod],
             },
           },
         }
@@ -255,5 +276,14 @@ export function jobPostingSchema(job: Job) {
         addressCountry: "GB",
       },
     },
+    ...(job.remotePossible === "yes"
+      ? {
+          jobLocationType: "TELECOMMUTE",
+          applicantLocationRequirements: {
+            "@type": "Country",
+            name: "United Kingdom",
+          },
+        }
+      : {}),
   };
 }

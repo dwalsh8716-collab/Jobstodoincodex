@@ -24,7 +24,12 @@ const liveJob: Job = {
   salaryRange: "£80,000 to £90,000",
   salaryMin: 80000,
   salaryMax: 90000,
+  salaryCurrency: "GBP",
   salaryPeriod: "annual",
+  salaryVisibility: "public_range",
+  rateMin: undefined,
+  rateMax: undefined,
+  ratePeriod: "to_be_confirmed",
   salary: "£80,000 to £90,000",
   salaryStatus: "verified",
   salaryTransparencyNote:
@@ -36,6 +41,7 @@ const liveJob: Job = {
   hybridReality: "Two days a week in Manchester, three days flexible.",
   locationExpectation:
     "The person needs to be close enough to Manchester for senior meetings.",
+  travelExpectation: "No regular travel beyond senior Manchester meetings.",
   agencyOrClientSide: "client-side",
   whyRoleExists:
     "The business needs a senior marketing leader to bring structure and pace.",
@@ -49,6 +55,12 @@ const liveJob: Job = {
   davidsTake: [
     "This needs someone who can make decisions, not just manage channels.",
   ],
+  successInThreeMonths:
+    "The team has clearer priorities and leadership rhythm.",
+  successInSixMonths:
+    "Reporting and planning are sharper across the marketing function.",
+  successInTwelveMonths:
+    "The business has a more confident senior marketing function.",
   responsibilities: ["Lead planning", "Improve reporting"],
   requirements: ["Senior marketing leadership"],
   whatGoodLooksLike: ["Clear priorities and a confident team"],
@@ -60,6 +72,8 @@ const liveJob: Job = {
     "David reviews the application directly.",
     "Nothing goes to the client without permission.",
   ],
+  applicationProcessNotes:
+    "David reviews profile links or short notes before any client introduction.",
   applicationNotes: "Send a short note about relevant senior marketing work.",
   candidatePrivacyNote:
     "Candidate details are handled under the Candidate Privacy Notice.",

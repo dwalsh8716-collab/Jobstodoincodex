@@ -1261,6 +1261,14 @@ const job = defineType({
         "Number only. Keep this honest and leave draft if the range is not confirmed.",
     }),
     defineField({
+      name: "salaryCurrency",
+      title: "Salary / rate currency",
+      type: "string",
+      description:
+        "Use ISO currency code such as GBP. This feeds JobPosting schema when pay is publishable.",
+      initialValue: "GBP",
+    }),
+    defineField({
       name: "salaryPeriod",
       title: "Salary / rate period",
       type: "string",
@@ -1269,6 +1277,54 @@ const job = defineType({
           { title: "Annual salary", value: "annual" },
           { title: "Daily rate", value: "daily" },
           { title: "Hourly rate", value: "hourly" },
+          { title: "Fixed project fee", value: "fixed" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
+    defineField({
+      name: "salaryVisibility",
+      title: "Salary visibility",
+      type: "string",
+      description:
+        "Choose what candidates can safely see. Do not publish a live role with hidden pay unless David has approved the exception.",
+      options: {
+        list: [
+          { title: "Published range", value: "public_range" },
+          { title: "Indicative range", value: "indicative_range" },
+          { title: "Confidential / withheld", value: "confidential" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
+    defineField({
+      name: "rateMin",
+      title: "Interim rate minimum",
+      type: "number",
+      description:
+        "Use only where a day/hour/week/month rate is publishable. Number only, no currency symbols.",
+    }),
+    defineField({
+      name: "rateMax",
+      title: "Interim rate maximum",
+      type: "number",
+      description:
+        "Use only where a rate range is publishable. Leave blank if the rate cannot be shared.",
+    }),
+    defineField({
+      name: "ratePeriod",
+      title: "Interim rate period",
+      type: "string",
+      options: {
+        list: [
+          { title: "Day rate", value: "daily" },
+          { title: "Hourly rate", value: "hourly" },
+          { title: "Weekly rate", value: "weekly" },
+          { title: "Monthly rate", value: "monthly" },
           { title: "Fixed project fee", value: "fixed" },
           { title: "To be confirmed", value: "to_be_confirmed" },
         ],
@@ -1379,6 +1435,14 @@ const job = defineType({
         "Explain office, client-site or travel expectations clearly before publishing.",
     }),
     defineField({
+      name: "travelExpectation",
+      title: "Travel expectation",
+      type: "text",
+      rows: 2,
+      description:
+        "Say whether travel, client-site days or regional meetings are expected. If there is none, say that plainly.",
+    }),
+    defineField({
       name: "employmentType",
       title: "Employment type",
       type: "string",
@@ -1429,6 +1493,30 @@ const job = defineType({
       rows: 3,
       description:
         "Kept for existing content. Prefer Why the role exists for new roles.",
+    }),
+    defineField({
+      name: "successInThreeMonths",
+      title: "Success in 3 months",
+      type: "text",
+      rows: 2,
+      description:
+        "Plain-English early success indicator. Do not invent a client outcome if it is not confirmed.",
+    }),
+    defineField({
+      name: "successInSixMonths",
+      title: "Success in 6 months",
+      type: "text",
+      rows: 2,
+      description:
+        "Useful medium-term success indicator. Keep it honest and specific.",
+    }),
+    defineField({
+      name: "successInTwelveMonths",
+      title: "Success in 12 months",
+      type: "text",
+      rows: 2,
+      description:
+        "Longer-term outcome if the client has agreed what good looks like.",
     }),
     defineField({
       name: "summary",
@@ -1550,6 +1638,14 @@ const job = defineType({
         "How quickly David normally reviews applications or notes. Keep it honest.",
     }),
     stringListField("applicationProcess", "What happens after applying"),
+    defineField({
+      name: "applicationProcessNotes",
+      title: "Application process notes",
+      type: "text",
+      rows: 3,
+      description:
+        "Optional public note about what happens after applying. Do not paste private candidate messages here.",
+    }),
     defineField({
       name: "applicationNotes",
       title: "Application notes",

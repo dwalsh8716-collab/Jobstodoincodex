@@ -31,13 +31,18 @@ Required public fields:
 - status
 - salary range
 - salary minimum and maximum when the range is publishable
+- salary/rate currency
 - salary period
+- salary visibility
+- interim rate minimum and maximum when a rate is publishable
+- interim rate period
 - salary status
 - working pattern
 - location
 - office location
 - hybrid pattern
 - whether remote work is possible
+- travel expectation
 - role type
 - seniority
 - sector
@@ -49,7 +54,9 @@ Required public fields:
 - must-haves
 - useful extras
 - what good looks like
+- 3/6/12 month success indicators where the client has confirmed them
 - application notes
+- application process notes
 - candidate privacy note
 - quick-question route
 - WhatsApp question setting
@@ -88,6 +95,10 @@ Use:
 - `verified` when David has confirmed the range or rate
 - `indicative` only when the caveat is genuinely useful and clear
 - `unverified` only for draft roles
+- `public_range` when the range can be published
+- `indicative_range` when a range is useful but needs caveat wording
+- `confidential` only with a clear reason and David approval
+- `to_be_confirmed` only while the role is draft
 
 No fake numbers. If the salary is not ready, the role stays draft.
 
@@ -101,6 +112,23 @@ Every live role should say:
 - whether remote work is possible
 
 `Hybrid` on its own is not enough.
+
+## Success Indicator Rules
+
+Use 3/6/12 month indicators only when they help candidates understand the real
+job.
+
+Good:
+
+- "By month three, the client has a clearer campaign rhythm and fewer loose ends."
+- "By month six, the senior team trusts the marketing plan and reporting."
+
+Not good:
+
+- fake commercial outcomes
+- named client results
+- vague promises
+- anything David cannot defend in a candidate conversation
 
 ## Process Rules
 
@@ -126,6 +154,9 @@ Do not use:
 - competitive salary without a range
 - exciting opportunity as filler
 - fast-paced environment without a useful explanation
+- dynamic team as filler
+- hit the ground running without context
+- wear many hats without explanation
 
 Use plain role language instead. Say what the job is, why it exists and what
 the person needs to deliver.

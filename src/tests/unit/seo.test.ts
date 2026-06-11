@@ -103,4 +103,43 @@ describe("structured data builders", () => {
       directApply: true,
     });
   });
+
+  it("omits salary schema when pay is not publishable", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      salaryVisibility: "confidential",
+      salaryStatus: "verified",
+      salaryMin: 55000,
+      salaryMax: 65000,
+      salaryPeriod: "annual",
+    });
+
+    expect(schema).not.toHaveProperty("baseSalary");
+  });
+
+  it("uses publishable rate fields for interim JobPosting salary", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      salaryRange: "GBP 500 to GBP 650 per day",
+      salaryVisibility: "public_range",
+      salaryStatus: "verified",
+      salaryMin: undefined,
+      salaryMax: undefined,
+      salaryCurrency: "GBP",
+      rateMin: 500,
+      rateMax: 650,
+      ratePeriod: "daily",
+    });
+
+    expect(schema).toMatchObject({
+      baseSalary: {
+        currency: "GBP",
+        value: {
+          minValue: 500,
+          maxValue: 650,
+          unitText: "DAY",
+        },
+      },
+    });
+  });
 });

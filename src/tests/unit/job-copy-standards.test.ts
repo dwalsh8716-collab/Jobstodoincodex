@@ -17,17 +17,26 @@ describe("job copy standards", () => {
         "salaryRange",
         "salaryMin",
         "salaryMax",
+        "salaryCurrency",
         "salaryPeriod",
+        "salaryVisibility",
+        "rateMin",
+        "rateMax",
+        "ratePeriod",
         "salaryStatus",
         "workingPattern",
         "location",
         "officeLocation",
         "hybridPattern",
         "remotePossible",
+        "travelExpectation",
         "roleType",
         "seniority",
         "sector",
         "agencyOrClientSide",
+        "successInThreeMonths",
+        "successInSixMonths",
+        "successInTwelveMonths",
         "interviewSteps",
         "interviewProcessConfirmed",
         "processOverview",
@@ -39,6 +48,7 @@ describe("job copy standards", () => {
         "finalStageFormat",
         "feedbackExpectation",
         "applicationReviewTimeframe",
+        "applicationProcessNotes",
         "davidsTake",
         "whyRoleExists",
         "mustHaves",
@@ -64,6 +74,9 @@ describe("job copy standards", () => {
     expect(standards).toContain("No fake numbers");
     expect(standards).toContain("David's Take");
     expect(standards).toContain("competitive salary");
+    expect(standards).toContain("salary visibility");
+    expect(standards).toContain("travel expectation");
+    expect(standards).toContain("Success Indicator Rules");
     expect(standards).toContain("Private candidate and application records");
     expect(editorGuide).toContain("docs/job-copy-standards.md");
     expect(readme).toContain("docs/job-copy-standards.md");

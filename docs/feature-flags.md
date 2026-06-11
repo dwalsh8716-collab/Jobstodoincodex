@@ -94,7 +94,7 @@ notes in feature flag values.
 | `FEATURE_AI_CANDIDATE_SUMMARIES`           | `false` | No                   | Future AI-assisted candidate summary drafts.                      |
 | `FEATURE_DAVIDS_AUDIO_NOTES`               | `false` | No                   | Future David-approved private audio notes for client profiles.    |
 | `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                           |
-| `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page standards.                               |
+| `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page publishing gate. Public clarity fields are safe now. |
 | `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future live CV upload route. Profile-or-note applications are safe without it. |
 | `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future richer LinkedIn/profile parsing. Candidate-supplied profile links are allowed. |
 | `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
@@ -185,6 +185,12 @@ automatic parsing is implied. The implementation note lives in
 `FEATURE_LINKEDIN_PROFILE_APPLICATION` remains `false` for any richer
 LinkedIn/profile parsing or API-based workflow. The current site only accepts a
 URL typed by the candidate.
+
+`FEATURE_FLUFF_FREE_JOB_PAGES` remains `false` as a future publishing gate, not
+because the public clarity fields are unsafe. The site can show the role
+snapshot, salary/rate visibility, hybrid/travel expectations, process timeline
+and privacy notes today. The flag is for a stricter automated gate before roles
+go live.
 
 ## Salary Guide Gate
 

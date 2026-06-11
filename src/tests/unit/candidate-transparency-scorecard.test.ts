@@ -23,7 +23,12 @@ const transparentJob: Job = {
   salaryRange: "GBP 55,000 to GBP 65,000",
   salaryMin: 55000,
   salaryMax: 65000,
+  salaryCurrency: "GBP",
   salaryPeriod: "annual",
+  salaryVisibility: "public_range",
+  rateMin: undefined,
+  rateMax: undefined,
+  ratePeriod: "to_be_confirmed",
   salary: "GBP 55,000 to GBP 65,000",
   salaryStatus: "verified",
   salaryTransparencyNote: "Salary range confirmed with the client.",
@@ -36,6 +41,7 @@ const transparentJob: Job = {
   hybridReality: "Two days a week in the Manchester office.",
   locationExpectation:
     "Manchester office access is needed; no regular client-site travel.",
+  travelExpectation: "No regular client-site travel expected.",
   employmentType: "Permanent",
   roleType: "Permanent senior agency role",
   seniority: "Senior",
@@ -45,6 +51,12 @@ const transparentJob: Job = {
     "The agency needs senior client leadership that can reduce founder pressure and steady the account team.",
   whyThisRoleMatters:
     "The agency needs senior client leadership that can reduce founder pressure and steady the account team.",
+  successInThreeMonths:
+    "The account team has clearer priorities and fewer avoidable client escalations.",
+  successInSixMonths:
+    "Clients feel better led and the founder is pulled into fewer day-to-day conversations.",
+  successInTwelveMonths:
+    "The agency has stronger senior client leadership and a calmer account rhythm.",
   summary:
     "Senior agency role for a PR operator who can lead clients, support teams and bring calm commercial judgement.",
   description: [
@@ -98,6 +110,8 @@ const transparentJob: Job = {
     "If there is a fit, David contacts the candidate to discuss the role.",
     "Nothing is sent to the client without the candidate's permission.",
   ],
+  applicationProcessNotes:
+    "David reviews profile links or short notes directly before any client introduction.",
   applicationNotes:
     "Send a short note or LinkedIn URL first. David will ask for more only if the role looks relevant.",
   candidatePrivacyNote:

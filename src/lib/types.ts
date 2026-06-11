@@ -137,7 +137,22 @@ export type Job = {
   salaryRange: string;
   salaryMin?: number;
   salaryMax?: number;
+  salaryCurrency: string;
   salaryPeriod: "annual" | "daily" | "hourly" | "fixed" | "to_be_confirmed";
+  salaryVisibility:
+    | "public_range"
+    | "indicative_range"
+    | "confidential"
+    | "to_be_confirmed";
+  rateMin?: number;
+  rateMax?: number;
+  ratePeriod:
+    | "daily"
+    | "hourly"
+    | "weekly"
+    | "monthly"
+    | "fixed"
+    | "to_be_confirmed";
   salary: string;
   salaryStatus: "verified" | "indicative" | "unverified";
   salaryTransparencyNote: string;
@@ -149,6 +164,7 @@ export type Job = {
   hybrid: string;
   hybridReality: string;
   locationExpectation: string;
+  travelExpectation: string;
   employmentType: string;
   sector: string;
   specialism: string;
@@ -157,6 +173,9 @@ export type Job = {
   agencyOrClientSide: "agency" | "client-side" | "either" | "to_be_confirmed";
   whyRoleExists: string;
   whyThisRoleMatters: string;
+  successInThreeMonths: string;
+  successInSixMonths: string;
+  successInTwelveMonths: string;
   summary: string;
   description: string[];
   davidsTake: string[];
@@ -179,6 +198,7 @@ export type Job = {
   feedbackExpectation: string;
   applicationReviewTimeframe: string;
   applicationProcess: string[];
+  applicationProcessNotes: string;
   applicationNotes: string;
   candidatePrivacyNote: string;
   candidateDataHandling: string;
