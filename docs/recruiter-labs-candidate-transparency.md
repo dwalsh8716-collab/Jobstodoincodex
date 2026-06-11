@@ -21,6 +21,12 @@ Already good:
 - CV upload is deliberately not enabled until secure storage exists.
 - Candidate form analytics uses safe event names and does not include PII.
 
+The full build roadmap now lives in:
+
+```txt
+docs/recruiter-labs-candidate-transparency-roadmap.md
+```
+
 Improved in this pass:
 
 - Candidate page now lists the practical questions a decent journey should
