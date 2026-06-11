@@ -133,6 +133,10 @@ export default async function AdminLabsPage() {
             <strong>{overview.stats.totalIdeas}</strong>
           </div>
           <div className={styles.adminStat}>
+            <span>Roadmap phases</span>
+            <strong>{overview.stats.totalRoadmapPhases}</strong>
+          </div>
+          <div className={styles.adminStat}>
             <span>Enabled flags</span>
             <strong>{overview.stats.enabledFlags}</strong>
           </div>
@@ -147,6 +151,49 @@ export default async function AdminLabsPage() {
         </div>
 
         <div className={styles.adminPanels}>
+          <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">12-month roadmap</p>
+                <h2>Build future advantage without derailing launch.</h2>
+              </div>
+            </div>
+            <div className={styles.labsRoadmap}>
+              {overview.roadmapPhases.map((phase) => (
+                <article className={styles.labsCard} key={phase.phase}>
+                  <div className={styles.labsCardHeader}>
+                    <div>
+                      <span className="tag">Phase {phase.phase}</span>
+                      <h3>{phase.title}</h3>
+                    </div>
+                    <span className={styles.labsRisk}>
+                      Months {phase.months}
+                    </span>
+                  </div>
+                  <p>{phase.focus}</p>
+                  <dl className={styles.labsMetaGrid}>
+                    <div>
+                      <dt>Do now</dt>
+                      <dd>{phase.doNow.join(", ")}</dd>
+                    </div>
+                    <div>
+                      <dt>Dependencies</dt>
+                      <dd>{phase.dependencies.join(", ")}</dd>
+                    </div>
+                    <div>
+                      <dt>Issues</dt>
+                      <dd>{phase.relatedIssues.join(", ")}</dd>
+                    </div>
+                    <div>
+                      <dt>Codex</dt>
+                      <dd>{phase.codexReasoning}</dd>
+                    </div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
             <div className={styles.adminPanelHeading}>
               <div>

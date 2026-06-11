@@ -40,6 +40,12 @@ Labs can hold planning for:
 - future client and candidate portal ideas
 - digital PR data products
 
+The 12-month dependency-aware roadmap lives in:
+
+```txt
+docs/essential-resourcing-labs-roadmap.md
+```
+
 Each idea should explain:
 
 - commercial purpose

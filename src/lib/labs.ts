@@ -103,6 +103,18 @@ export type LabsIdea = {
   launchRule: string;
 };
 
+export type LabsRoadmapPhase = {
+  phase: number;
+  months: string;
+  title: string;
+  focus: string;
+  doNow: string[];
+  doLater: string[];
+  dependencies: string[];
+  relatedIssues: string[];
+  codexReasoning: "medium" | "high";
+};
+
 type LabsEnv = Record<string, string | undefined>;
 
 export const labsIdeas: LabsIdea[] = [
@@ -260,6 +272,121 @@ export const labsIdeas: LabsIdea[] = [
   },
 ];
 
+export const labsRoadmapPhases: LabsRoadmapPhase[] = [
+  {
+    phase: 1,
+    months: "0-1",
+    title: "Labs foundation",
+    focus: "Keep the future-work area private, documented and feature-flagged.",
+    doNow: [
+      "Protect /admin/labs",
+      "Keep Labs flags server-side",
+      "Document noindex and no-public-route rules",
+    ],
+    doLater: ["Public Labs storytelling"],
+    dependencies: ["CMS admin session gate", "Feature flag discipline"],
+    relatedIssues: ["#67"],
+    codexReasoning: "medium",
+  },
+  {
+    phase: 2,
+    months: "1-2",
+    title: "Lead capture assets",
+    focus:
+      "Build useful public conversion routes before touching private candidate workflows.",
+    doNow: [
+      "Gated salary guides",
+      "Salary benchmark request flow",
+      "Hiring health-check framing",
+    ],
+    doLater: ["Live salary data products"],
+    dependencies: ["Consent-aware forms", "CRM routing", "Clear follow-up copy"],
+    relatedIssues: ["#58", "#59"],
+    codexReasoning: "medium",
+  },
+  {
+    phase: 3,
+    months: "2-4",
+    title: "Advisory tools",
+    focus:
+      "Create high-value guidance tools that prove David's thinking without storing sensitive records.",
+    doNow: [
+      "Bad hire calculator",
+      "Functional matrix mapping",
+      "AI brief builder prototype using safe inputs",
+    ],
+    doLater: ["Automated brief scoring", "Candidate matching"],
+    dependencies: ["Plain-English assumptions", "No automated hiring decisions"],
+    relatedIssues: ["#61", "#62", "#64"],
+    codexReasoning: "high",
+  },
+  {
+    phase: 4,
+    months: "3-6",
+    title: "Private data infrastructure",
+    focus:
+      "Make the operational backend safe before private portals or candidate data go near clients.",
+    doNow: [
+      "Railway Postgres",
+      "Audit logging",
+      "DSAR and retention checks",
+      "Admin dashboard foundations",
+    ],
+    doLater: ["Private CV access until storage and legal review are ready"],
+    dependencies: ["DATABASE_URL", "Admin auth", "Retention policy"],
+    relatedIssues: ["#69", "#70"],
+    codexReasoning: "high",
+  },
+  {
+    phase: 5,
+    months: "5-8",
+    title: "Client portal features",
+    focus:
+      "Move shortlists and feedback into one secure branded client experience.",
+    doNow: [
+      "Passwordless shortlists",
+      "Client feedback",
+      "Market mapping with anonymised data only",
+    ],
+    doLater: ["Real client links until private beta is approved"],
+    dependencies: ["Magic links", "Candidate consent", "Audit proof"],
+    relatedIssues: ["#60", "#63", "#69"],
+    codexReasoning: "high",
+  },
+  {
+    phase: 6,
+    months: "7-10",
+    title: "Interim bench",
+    focus:
+      "Keep Strategic Interim availability current without making candidate data public.",
+    doNow: [
+      "Availability toggle",
+      "Private interim profile model",
+      "Consent and retention workflow",
+    ],
+    doLater: ["Client-visible matching views"],
+    dependencies: ["Magic links", "Candidate consent", "Private Postgres"],
+    relatedIssues: ["#65"],
+    codexReasoning: "high",
+  },
+  {
+    phase: 7,
+    months: "9-12",
+    title: "Market intelligence",
+    focus:
+      "Turn reviewed market knowledge into data-led authority and digital PR assets.",
+    doNow: [
+      "Live market dashboards with sourced data",
+      "Salary intelligence products",
+      "Public data assets with caveats",
+    ],
+    doLater: ["Automated live feeds until data quality is proven"],
+    dependencies: ["Verified data", "Performance budget", "Methodology notes"],
+    relatedIssues: ["#66"],
+    codexReasoning: "high",
+  },
+];
+
 export function isLabsFeatureEnabled(
   flagName: LabsFeatureFlagName,
   env: LabsEnv = process.env,
@@ -286,8 +413,10 @@ export function getLabsOverview(env: LabsEnv = process.env) {
   return {
     flags,
     ideas,
+    roadmapPhases: labsRoadmapPhases,
     stats: {
       totalIdeas: ideas.length,
+      totalRoadmapPhases: labsRoadmapPhases.length,
       enabledFlags: flags.filter((flag) => flag.enabled).length,
       highRiskIdeas: ideas.filter(
         (idea) =>
