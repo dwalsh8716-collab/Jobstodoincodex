@@ -3,6 +3,8 @@ import { saveRecruiterLabsClientFeedback } from "@/lib/recruiter-labs-feedback";
 
 const responseMessages = {
   ok: "Feedback received. David will review it.",
+  request_interview_ok:
+    "Thanks - David has the request and will coordinate the next step.",
   invalid_payload: "That feedback could not be accepted.",
   feedback_disabled: "Client portal feedback is not live yet.",
   database_unavailable: "Client portal feedback is not connected yet.",
@@ -28,11 +30,15 @@ export async function POST(request: Request) {
   }
 
   const result = await saveRecruiterLabsClientFeedback(body);
+  const message =
+    result.code === "ok" && result.action === "request_interview"
+      ? responseMessages.request_interview_ok
+      : responseMessages[result.code];
 
   return NextResponse.json(
     {
       ok: result.ok,
-      message: responseMessages[result.code],
+      message,
       code: result.code,
     },
     { status: result.status },

@@ -18,6 +18,7 @@ Already in the repo:
 - `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false`
 - `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false`
 - staged interview request records in `recruiter_lab_interview_requests`
+- interview request workflow notes in `docs/recruiter-labs-interview-requests.md`
 - server-side WhatsApp interview logistics helper
 - WhatsApp templates for confirmation, reminder, reschedule, location and
   availability checks

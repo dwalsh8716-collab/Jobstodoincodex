@@ -47,6 +47,24 @@ const recruiterLabsFeedbackPayloadSchema = z
       .max(1000)
       .optional()
       .transform((value) => (value ? value : undefined)),
+    interviewType: z
+      .enum(["video", "phone", "in_person", "to_be_confirmed"])
+      .optional(),
+    locationPreference: z
+      .enum(["google_meet", "phone", "physical", "to_be_confirmed"])
+      .optional(),
+    preferredTimes: z
+      .string()
+      .trim()
+      .max(1000)
+      .optional()
+      .transform((value) => (value ? value : undefined)),
+    clientNotes: z
+      .string()
+      .trim()
+      .max(1000)
+      .optional()
+      .transform((value) => (value ? value : undefined)),
   })
   .superRefine((payload, ctx) => {
     if (payload.action === "decline" && !payload.declineReason) {
@@ -64,6 +82,20 @@ const recruiterLabsFeedbackPayloadSchema = z
         message: "Decline reason only applies to declined candidates.",
       });
     }
+
+    if (
+      payload.action !== "request_interview" &&
+      (payload.interviewType ||
+        payload.locationPreference ||
+        payload.preferredTimes ||
+        payload.clientNotes)
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["action"],
+        message: "Interview request details only apply to interview requests.",
+      });
+    }
   });
 
 export type RecruiterLabsFeedbackPayload = z.infer<
@@ -79,6 +111,7 @@ export type RecruiterLabsFeedbackReadiness = {
 
 export type RecruiterLabsFeedbackResult = OperationWriteResult & {
   status: number;
+  action?: RecruiterLabsFeedbackAction;
   code:
     | "ok"
     | "invalid_payload"
@@ -146,6 +179,7 @@ function result(
   status: number,
   reason?: string,
   id?: string,
+  action?: RecruiterLabsFeedbackAction,
 ): RecruiterLabsFeedbackResult {
   return {
     ok: code === "ok",
@@ -154,6 +188,7 @@ function result(
     code,
     reason,
     id,
+    action,
   };
 }
 
@@ -167,7 +202,7 @@ async function insertRecruiterLabsFeedback(
         select convert_from(decode(:'payload', 'base64'), 'utf8')::jsonb as data
       ),
       token_record as (
-        select id, shortlist_id
+        select id, shortlist_id, client_contact_id
         from recruiter_lab_client_access_tokens
         where token_hash = (select data->>'tokenHash' from payload)
           and revoked_at is null
@@ -175,8 +210,15 @@ async function insertRecruiterLabsFeedback(
         limit 1
       ),
       scoped_candidate as (
-        select c.id
+        select
+          c.id,
+          c.shortlist_id,
+          c.candidate_id,
+          c.application_id,
+          s.client_company_id,
+          t.client_contact_id
         from recruiter_lab_shortlist_candidates c
+        join recruiter_lab_shortlists s on s.id = c.shortlist_id
         join token_record t on t.shortlist_id = c.shortlist_id
         where c.id = ((select data->>'shortlistCandidateId' from payload))::uuid
         limit 1
@@ -197,14 +239,18 @@ async function insertRecruiterLabsFeedback(
           t.id,
           data->>'action',
           nullif(data->>'declineReason', ''),
-          nullif(data->>'comment', ''),
+          coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')),
           data->>'statusUpdate',
           coalesce((data->>'notificationRequired')::boolean, true),
           jsonb_build_object(
             'source', 'client_shortlist_portal',
             'declineReason', nullif(data->>'declineReason', ''),
             'statusUpdate', data->>'statusUpdate',
-            'notificationRequired', coalesce((data->>'notificationRequired')::boolean, true)
+            'notificationRequired', coalesce((data->>'notificationRequired')::boolean, true),
+            'interviewType', nullif(data->>'interviewType', ''),
+            'locationPreference', nullif(data->>'locationPreference', ''),
+            'preferredTimesSupplied', nullif(data->>'preferredTimes', '') is not null,
+            'clientNotesSupplied', coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')) is not null
           )
         from payload, token_record t, scoped_candidate c
         returning id, shortlist_candidate_id, feedback_action, decline_reason, status_update
@@ -258,18 +304,67 @@ async function insertRecruiterLabsFeedback(
       ),
       interview_request as (
         insert into recruiter_lab_interview_requests (
+          shortlist_id,
           shortlist_candidate_id,
+          candidate_id,
+          application_id,
+          client_company_id,
+          client_contact_id,
+          requested_by,
           feedback_id,
           status,
+          request_source,
+          interview_type,
+          location_preference,
+          preferred_times,
+          client_notes,
           metadata
         )
         select
-          shortlist_candidate_id,
-          id,
+          c.shortlist_id,
+          c.id,
+          c.candidate_id,
+          c.application_id,
+          c.client_company_id,
+          c.client_contact_id,
+          c.client_contact_id,
+          f.id,
           'requested',
-          jsonb_build_object('source', 'client_shortlist_portal')
-        from created_feedback
-        where feedback_action = 'request_interview'
+          'client_shortlist_portal',
+          coalesce(nullif(data->>'interviewType', ''), 'to_be_confirmed'),
+          coalesce(nullif(data->>'locationPreference', ''), 'to_be_confirmed'),
+          nullif(data->>'preferredTimes', ''),
+          coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')),
+          jsonb_build_object(
+            'source', 'client_shortlist_portal',
+            'preferredTimesSupplied', nullif(data->>'preferredTimes', '') is not null,
+            'clientNotesSupplied', coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')) is not null,
+            'candidateContactAutomatic', false,
+            'calendarAutomatic', false
+          )
+        from payload, scoped_candidate c, created_feedback f
+        where f.feedback_action = 'request_interview'
+        returning id
+      ),
+      interview_activity as (
+        insert into recruiter_lab_interview_request_activity (
+          interview_request_id,
+          activity_type,
+          actor_type,
+          actor_id,
+          metadata
+        )
+        select
+          id,
+          'created_from_client_portal',
+          'client',
+          (select client_contact_id from scoped_candidate),
+          jsonb_build_object(
+            'source', 'client_shortlist_portal',
+            'candidateContactAutomatic', false,
+            'calendarAutomatic', false
+          )
+        from interview_request
         returning id
       ),
       candidate_update as (
@@ -291,7 +386,8 @@ async function insertRecruiterLabsFeedback(
             jsonb_build_object(
               'activityEventId', (select id from activity),
               'adminTaskId', (select id from task),
-              'interviewRequestId', (select id from interview_request)
+              'interviewRequestId', (select id from interview_request),
+              'interviewRequestActivityId', (select id from interview_activity)
             )
         from created_feedback cf
         where f.id = cf.id
@@ -323,16 +419,34 @@ export async function saveRecruiterLabsClientFeedback(
 
   const readiness = getRecruiterLabsFeedbackReadiness(env);
   if (!readiness.portalEnabled || !readiness.feedbackEnabled) {
-    return result("feedback_disabled", 503, "feature_flag_disabled");
+    return result(
+      "feedback_disabled",
+      503,
+      "feature_flag_disabled",
+      undefined,
+      parsed.data.action,
+    );
   }
 
   if (!readiness.ready) {
-    return result("database_unavailable", 503, readiness.databaseStatus.state);
+    return result(
+      "database_unavailable",
+      503,
+      readiness.databaseStatus.state,
+      undefined,
+      parsed.data.action,
+    );
   }
 
   const tokenHash = hashRecruiterLabsClientToken(parsed.data.token);
   if (!tokenHash) {
-    return result("invalid_payload", 400, "invalid_payload");
+    return result(
+      "invalid_payload",
+      400,
+      "invalid_payload",
+      undefined,
+      parsed.data.action,
+    );
   }
 
   const portalView = await getRecruiterLabsClientPortalView(
@@ -341,7 +455,13 @@ export async function saveRecruiterLabsClientFeedback(
   );
 
   if (!portalView.decision.allowed || !portalView.shortlist) {
-    return result("portal_access_denied", 403, portalView.decision.state);
+    return result(
+      "portal_access_denied",
+      403,
+      portalView.decision.state,
+      undefined,
+      parsed.data.action,
+    );
   }
 
   const scopedCandidate = portalView.shortlist.candidates.some(
@@ -349,7 +469,13 @@ export async function saveRecruiterLabsClientFeedback(
   );
 
   if (!scopedCandidate) {
-    return result("candidate_not_scoped", 403, "candidate_not_scoped");
+    return result(
+      "candidate_not_scoped",
+      403,
+      "candidate_not_scoped",
+      undefined,
+      parsed.data.action,
+    );
   }
 
   let writeResult: { id: string };
@@ -357,7 +483,13 @@ export async function saveRecruiterLabsClientFeedback(
   try {
     writeResult = await insertRecruiterLabsFeedback(parsed.data, tokenHash);
   } catch {
-    return result("database_write_failed", 500, "database_write_failed");
+    return result(
+      "database_write_failed",
+      500,
+      "database_write_failed",
+      undefined,
+      parsed.data.action,
+    );
   }
 
   const auditResult = await logAuditEvent(
@@ -375,7 +507,13 @@ export async function saveRecruiterLabsClientFeedback(
   );
 
   if (!auditResult.ok) {
-    return result("audit_log_failed", 500, auditResult.reason, writeResult.id);
+    return result(
+      "audit_log_failed",
+      500,
+      auditResult.reason,
+      writeResult.id,
+      parsed.data.action,
+    );
   }
 
   await saveRecruiterLabsPortalEngagement(
@@ -388,5 +526,5 @@ export async function saveRecruiterLabsClientFeedback(
     env,
   ).catch(() => undefined);
 
-  return result("ok", 200, undefined, writeResult.id);
+  return result("ok", 200, undefined, writeResult.id, parsed.data.action);
 }

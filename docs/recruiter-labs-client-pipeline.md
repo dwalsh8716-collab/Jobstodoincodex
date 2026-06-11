@@ -239,6 +239,12 @@ The interview scheduling orchestration notes live in:
 docs/recruiter-labs-interview-scheduling.md
 ```
 
+The interview request workflow notes live in:
+
+```txt
+docs/recruiter-labs-interview-requests.md
+```
+
 ## Required Dependencies
 
 Before any client portal goes live:

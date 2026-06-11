@@ -19,7 +19,6 @@ const quickActions: RecruiterLabsFeedbackAction[] = [
   "shortlist",
   "interested",
   "maybe",
-  "request_interview",
   "need_more_info",
 ];
 
@@ -49,11 +48,18 @@ export function ClientShortlistFeedback({
   );
   const [message, setMessage] = useState("");
   const [declineOpen, setDeclineOpen] = useState(false);
+  const [interviewOpen, setInterviewOpen] = useState(false);
   const declineWasOpenedRef = useRef(false);
+  const interviewPanelRef = useRef<HTMLDivElement>(null);
   const declinePanelRef = useRef<HTMLDivElement>(null);
   const [declineReason, setDeclineReason] =
     useState<RecruiterLabsDeclineReason>("experience_mismatch");
   const [comment, setComment] = useState("");
+  const [preferredTimes, setPreferredTimes] = useState("");
+  const [clientNotes, setClientNotes] = useState("");
+  const [locationPreference, setLocationPreference] = useState<
+    "to_be_confirmed" | "google_meet" | "phone" | "physical"
+  >("to_be_confirmed");
   const disabledReason = useMemo(
     () =>
       enabled
@@ -62,7 +68,20 @@ export function ClientShortlistFeedback({
     [enabled],
   );
 
-  async function submitFeedback(action: RecruiterLabsFeedbackAction) {
+  function interviewTypeFromLocationPreference() {
+    if (locationPreference === "google_meet") return "video";
+    if (locationPreference === "phone") return "phone";
+    if (locationPreference === "physical") return "in_person";
+    return "to_be_confirmed";
+  }
+
+  async function submitFeedback(
+    action: RecruiterLabsFeedbackAction,
+    interviewDetails?: {
+      preferredTimes?: string;
+      clientNotes?: string;
+    },
+  ) {
     if (!enabled || status === "sending") return;
 
     setStatus("sending");
@@ -77,6 +96,20 @@ export function ClientShortlistFeedback({
         action,
         declineReason: action === "decline" ? declineReason : undefined,
         comment: comment || undefined,
+        interviewType:
+          action === "request_interview"
+            ? interviewTypeFromLocationPreference()
+            : undefined,
+        locationPreference:
+          action === "request_interview" ? locationPreference : undefined,
+        preferredTimes:
+          action === "request_interview"
+            ? interviewDetails?.preferredTimes || undefined
+            : undefined,
+        clientNotes:
+          action === "request_interview"
+            ? interviewDetails?.clientNotes || undefined
+            : undefined,
       }),
     });
     const result = (await response.json()) as { message?: string };
@@ -84,7 +117,10 @@ export function ClientShortlistFeedback({
     if (response.ok) {
       setStatus("done");
       setDeclineOpen(false);
+      setInterviewOpen(false);
       setComment("");
+      setPreferredTimes("");
+      setClientNotes("");
       setMessage(result.message || "Feedback received.");
       return;
     }
@@ -104,6 +140,18 @@ export function ClientShortlistFeedback({
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [declineOpen]);
+
+  useEffect(() => {
+    if (!interviewOpen) return;
+    interviewPanelRef.current?.focus();
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setInterviewOpen(false);
+    }
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [interviewOpen]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -137,6 +185,16 @@ export function ClientShortlistFeedback({
             {recruiterLabsFeedbackActionLabels[action]}
           </button>
         ))}
+        <button
+          className="button button-primary"
+          disabled={!enabled || status === "sending"}
+          title={disabledReason}
+          type="button"
+          aria-expanded={interviewOpen}
+          onClick={() => setInterviewOpen((open) => !open)}
+        >
+          {recruiterLabsFeedbackActionLabels.request_interview}
+        </button>
         <button
           className="button button-secondary"
           disabled={!enabled || status === "sending"}
@@ -194,6 +252,77 @@ export function ClientShortlistFeedback({
               className="button button-secondary"
               type="button"
               onClick={() => setDeclineOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {interviewOpen ? (
+        <div
+          ref={interviewPanelRef}
+          aria-labelledby={`interview-request-${candidateId}`}
+          aria-modal="true"
+          className="client-feedback-panel"
+          role="dialog"
+          tabIndex={-1}
+        >
+          <h4 id={`interview-request-${candidateId}`}>Request interview</h4>
+          <p className="meta">
+            This asks David to coordinate the next step. It does not book the
+            interview yet.
+          </p>
+          <label className="client-feedback-comment">
+            <span>Preferred format</span>
+            <select
+              value={locationPreference}
+              onChange={(event) =>
+                setLocationPreference(
+                  event.target.value as typeof locationPreference,
+                )
+              }
+            >
+              <option value="to_be_confirmed">Let David advise</option>
+              <option value="google_meet">Google Meet</option>
+              <option value="phone">Phone</option>
+              <option value="physical">In person</option>
+            </select>
+          </label>
+          <label className="client-feedback-comment">
+            <span>Preferred times (optional)</span>
+            <textarea
+              maxLength={1000}
+              value={preferredTimes}
+              onChange={(event) => setPreferredTimes(event.target.value)}
+            />
+          </label>
+          <label className="client-feedback-comment">
+            <span>Notes for David (optional)</span>
+            <textarea
+              maxLength={1000}
+              value={clientNotes}
+              onChange={(event) => setClientNotes(event.target.value)}
+            />
+          </label>
+          <div className="button-row">
+            <button
+              className="button button-primary"
+              disabled={status === "sending"}
+              type="button"
+              onClick={() =>
+                submitFeedback("request_interview", {
+                  preferredTimes,
+                  clientNotes,
+                })
+              }
+            >
+              Send request to David
+            </button>
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={() => setInterviewOpen(false)}
             >
               Cancel
             </button>
