@@ -258,6 +258,10 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     item.interviewSteps,
     stringsOrFallback(item.interviewProcess, fallback?.interviewSteps),
   );
+  const processSteps = stringsOrFallback(
+    item.processSteps,
+    stringsOrFallback(item.interviewSteps, fallback?.processSteps),
+  );
   const postedDate =
     item.postedDate || item.publishedDate || fallback?.postedDate || "";
   const salaryRange =
@@ -363,6 +367,37 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     interviewProcess: interviewSteps.length
       ? interviewSteps
       : fallback?.interviewProcess || [],
+    processOverview:
+      item.processOverview ||
+      fallback?.processOverview ||
+      "Typical process for this kind of role.",
+    processSteps,
+    expectedTimeline:
+      item.expectedTimeline ||
+      fallback?.expectedTimeline ||
+      "Timeline to confirm.",
+    taskRequired:
+      item.taskRequired || fallback?.taskRequired || "to_be_confirmed",
+    presentationRequired:
+      item.presentationRequired ||
+      fallback?.presentationRequired ||
+      "to_be_confirmed",
+    firstStageFormat:
+      item.firstStageFormat ||
+      fallback?.firstStageFormat ||
+      "First-stage format to confirm.",
+    finalStageFormat:
+      item.finalStageFormat ||
+      fallback?.finalStageFormat ||
+      "Final-stage format to confirm.",
+    feedbackExpectation:
+      item.feedbackExpectation ||
+      fallback?.feedbackExpectation ||
+      "David will explain the next step when there is a relevant fit.",
+    applicationReviewTimeframe:
+      item.applicationReviewTimeframe ||
+      fallback?.applicationReviewTimeframe ||
+      "David reviews applications directly.",
     applicationProcess:
       item.applicationProcess || fallback?.applicationProcess || [],
     applicationNotes: item.applicationNotes || fallback?.applicationNotes || "",

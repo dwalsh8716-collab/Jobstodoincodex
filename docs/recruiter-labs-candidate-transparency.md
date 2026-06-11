@@ -34,6 +34,8 @@ Improved in this pass:
 - Jobs page now states what a live job advert should tell a candidate.
 - Job detail pages now surface salary/rate status, hybrid reality, location
   expectation, process, data handling and quick-question route.
+- Job detail pages now render a process timeline that says whether stages are
+  confirmed or typical.
 - Application form now supports a LinkedIn or profile URL without requiring a
   CV upload.
 

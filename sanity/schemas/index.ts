@@ -1468,6 +1468,87 @@ const job = defineType({
       initialValue: "to_be_confirmed",
     }),
     stringListField("interviewProcess", "Interview process"),
+    defineField({
+      name: "processOverview",
+      title: "Process overview",
+      type: "text",
+      rows: 3,
+      description:
+        "Plain-English summary of the process. Use typical process for this kind of role if the exact client process is not confirmed.",
+    }),
+    stringListField(
+      "processSteps",
+      "Candidate process steps",
+      "Show what happens from applying through David review, client stages and feedback. Do not promise steps that are not confirmed.",
+    ),
+    defineField({
+      name: "expectedTimeline",
+      title: "Expected timeline",
+      type: "string",
+      description:
+        "Example: David review within two working days, first client stage the following week. Use typical if not confirmed.",
+    }),
+    defineField({
+      name: "taskRequired",
+      title: "Task required?",
+      type: "string",
+      options: {
+        list: [
+          { title: "Yes", value: "yes" },
+          { title: "No", value: "no" },
+          { title: "Possible", value: "possible" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
+    defineField({
+      name: "presentationRequired",
+      title: "Presentation required?",
+      type: "string",
+      options: {
+        list: [
+          { title: "Yes", value: "yes" },
+          { title: "No", value: "no" },
+          { title: "Possible", value: "possible" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
+    defineField({
+      name: "firstStageFormat",
+      title: "First-stage format",
+      type: "text",
+      rows: 2,
+      description:
+        "Who the candidate is likely to speak to and whether this is call, video, in-person or to be confirmed.",
+    }),
+    defineField({
+      name: "finalStageFormat",
+      title: "Final-stage format",
+      type: "text",
+      rows: 2,
+      description:
+        "What the final stage looks like if known. Use typical wording if not confirmed.",
+    }),
+    defineField({
+      name: "feedbackExpectation",
+      title: "Feedback expectation",
+      type: "text",
+      rows: 2,
+      description:
+        "Set honest expectations. Do not promise feedback timings the client has not agreed.",
+    }),
+    defineField({
+      name: "applicationReviewTimeframe",
+      title: "Application review timeframe",
+      type: "string",
+      description:
+        "How quickly David normally reviews applications or notes. Keep it honest.",
+    }),
     stringListField("applicationProcess", "What happens after applying"),
     defineField({
       name: "applicationNotes",

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useId, useState } from "react";
+import { CandidateProcessTimeline } from "@/components/CandidateProcessTimeline";
 import { trackEvent } from "@/lib/analytics";
 import {
   candidateConsentCopy,
@@ -363,6 +364,17 @@ export function ContactForm({
               View live roles
             </Link>
           </div>
+          <CandidateProcessTimeline
+            compact
+            processConfirmed="indicative"
+            overview="Typical next steps after you send a note or application."
+            steps={candidateNextSteps}
+            expectedTimeline="David reviews candidate notes directly. If it looks relevant, he will come back to you."
+            taskRequired="to_be_confirmed"
+            presentationRequired="to_be_confirmed"
+            feedbackExpectation="No black hole. If there is a sensible next step, David will make it clear."
+            applicationReviewTimeframe="David reviews the note or application directly."
+          />
         </div>
       ) : null}
     </form>

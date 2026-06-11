@@ -346,6 +346,7 @@ Supporting work already completed or linked:
 
 - `docs/job-copy-standards.md`
 - `docs/recruiter-labs-candidate-transparency.md`
+- `docs/recruiter-labs-candidate-process-transparency.md`
 - `docs/candidate-application-drop.md`
 - `docs/candidate-data-journey.md`
 - `docs/data-boundaries.md`

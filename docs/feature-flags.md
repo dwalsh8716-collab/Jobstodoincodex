@@ -99,7 +99,7 @@ notes in feature flag values.
 | `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future LinkedIn/profile-first application option.                 |
 | `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
 | `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Candidate WhatsApp quick questions and preference workflow.       |
-| `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Future interview-process transparency on roles.                   |
+| `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Interview process timeline and next-step clarity on roles.        |
 | `FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD` | `false` | No                   | Private job-advert readiness checker before publishing.           |
 | `FEATURE_AI_OPS_COMPRESSION`               | `false` | No                   | Future AI support for reducing admin typing.                      |
 | `FEATURE_AI_INTERVIEW_NOTES`               | `false` | No                   | Future interview note structuring.                                |
@@ -167,6 +167,12 @@ WhatsApp reply consent when WhatsApp is selected, but future automated WhatsApp
 Business updates still need templates, opt-out handling and privacy review. The
 implementation note lives in
 `docs/recruiter-labs-candidate-whatsapp-preferences.md`.
+
+`FEATURE_INTERVIEW_PROCESS_TRANSPARENCY` remains `false` as a release-control
+flag while the public timeline component uses safe exact/typical process
+wording. Future private candidate status tracking still needs backend, access
+and privacy review. The implementation note lives in
+`docs/recruiter-labs-candidate-process-transparency.md`.
 
 ## Salary Guide Gate
 

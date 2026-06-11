@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
+import { CandidateProcessTimeline } from "@/components/CandidateProcessTimeline";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
@@ -211,10 +212,22 @@ export default async function JobPage({ params }: Props) {
               ))}
             </section>
             <section>
-              <h2>Interview process</h2>
-              {job.interviewSteps.map((item) => (
-                <p key={item}>{item}</p>
-              ))}
+              <CandidateProcessTimeline
+                processConfirmed={job.interviewProcessConfirmed}
+                overview={job.processOverview}
+                steps={
+                  job.processSteps.length
+                    ? job.processSteps
+                    : job.interviewSteps
+                }
+                expectedTimeline={job.expectedTimeline}
+                taskRequired={job.taskRequired}
+                presentationRequired={job.presentationRequired}
+                firstStageFormat={job.firstStageFormat}
+                finalStageFormat={job.finalStageFormat}
+                feedbackExpectation={job.feedbackExpectation}
+                applicationReviewTimeframe={job.applicationReviewTimeframe}
+              />
             </section>
             {job.applicationNotes ? (
               <section>

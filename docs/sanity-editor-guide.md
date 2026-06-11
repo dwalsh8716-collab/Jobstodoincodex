@@ -123,13 +123,19 @@ Add a job:
 4. Add the real hybrid rhythm, location expectation, must-haves,
    nice-to-haves, what good looks like, David's Take, interview steps,
    application notes and candidate privacy note.
-5. Keep status as draft until the salary/rate, location, hybrid setup, process
+5. Add the process overview, process steps, expected timeline, task or
+   presentation position, first-stage format, final-stage format, feedback
+   expectation and application review timeframe where known.
+6. Use "typical process for this kind of role" if the exact client process is
+   not confirmed. Do not pretend certainty.
+7. Keep status as draft until the salary/rate, location, hybrid setup, process
    and privacy note are clear enough for candidates.
 
 Detailed job standards live in:
 
 ```txt
 docs/job-copy-standards.md
+docs/recruiter-labs-candidate-process-transparency.md
 ```
 
 Do not publish a role with:

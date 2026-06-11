@@ -169,6 +169,15 @@ export type Job = {
   interviewSteps: string[];
   interviewProcessConfirmed: "confirmed" | "indicative" | "to_be_confirmed";
   interviewProcess: string[];
+  processOverview: string;
+  processSteps: string[];
+  expectedTimeline: string;
+  taskRequired: "yes" | "no" | "possible" | "to_be_confirmed";
+  presentationRequired: "yes" | "no" | "possible" | "to_be_confirmed";
+  firstStageFormat: string;
+  finalStageFormat: string;
+  feedbackExpectation: string;
+  applicationReviewTimeframe: string;
   applicationProcess: string[];
   applicationNotes: string;
   candidatePrivacyNote: string;

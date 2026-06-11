@@ -246,6 +246,7 @@ docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-candidate-transparency-roadmap.md
 docs/recruiter-labs-candidate-transparency-scorecard.md
 docs/recruiter-labs-candidate-whatsapp-preferences.md
+docs/recruiter-labs-candidate-process-transparency.md
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
 docs/recruiter-labs-ai-ops-roadmap.md

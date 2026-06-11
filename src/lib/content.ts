@@ -1085,6 +1085,28 @@ export const jobs: Job[] = [
       "Add the expected interview steps before publication.",
       "Confirm who the candidate will meet and likely timings.",
     ],
+    processOverview:
+      "Typical process for this kind of role. Confirm the exact client stages before publication.",
+    processSteps: [
+      "Apply or send a LinkedIn/profile note.",
+      "David reviews the application directly.",
+      "Quick call with David if there is a possible fit.",
+      "Client first stage when the role is confirmed.",
+      "Task, presentation or final stage only if the client genuinely needs it.",
+      "Offer, feedback or clear next step.",
+    ],
+    expectedTimeline:
+      "Typical process timing to confirm before this role is published.",
+    taskRequired: "to_be_confirmed",
+    presentationRequired: "to_be_confirmed",
+    firstStageFormat:
+      "Typical first stage to confirm with the client before publication.",
+    finalStageFormat:
+      "Typical final stage to confirm with the client before publication.",
+    feedbackExpectation:
+      "David will keep candidates updated where there is a relevant next step. Do not promise feedback timings until the client process is confirmed.",
+    applicationReviewTimeframe:
+      "David reviews applications directly. Confirm any role-specific response timings before publication.",
     applicationProcess: [
       "David reviews the note or application directly.",
       "If it looks like a possible fit, David contacts the candidate to discuss the role properly.",
