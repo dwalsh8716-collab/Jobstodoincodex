@@ -52,6 +52,12 @@ The staged live market dashboard methodology lives in:
 docs/labs-live-market-dashboards.md
 ```
 
+The staged Strategic Interim bench notes live in:
+
+```txt
+docs/labs-strategic-interim-bench.md
+```
+
 Each idea should explain:
 
 - commercial purpose

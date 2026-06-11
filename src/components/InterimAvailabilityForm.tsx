@@ -11,6 +11,12 @@ type CurrentAvailability = {
   status?: InterimAvailabilityStatus | "not_confirmed" | null;
   availableFrom?: string | null;
   dayRate?: string | null;
+  preferredContractType?: string | null;
+  sectors?: string | null;
+  functions?: string | null;
+  locationPreference?: string | null;
+  remotePreference?: string | null;
+  contactPreference?: string | null;
   notes?: string | null;
   optedOutAt?: string | null;
 };
@@ -55,6 +61,12 @@ export function InterimAvailabilityForm({
       status: formData.get("status"),
       availableFrom: formData.get("availableFrom"),
       dayRate: formData.get("dayRate"),
+      preferredContractType: formData.get("preferredContractType"),
+      sectors: formData.get("sectors"),
+      functions: formData.get("functions"),
+      locationPreference: formData.get("locationPreference"),
+      remotePreference: formData.get("remotePreference"),
+      contactPreference: formData.get("contactPreference"),
       notes: formData.get("notes"),
       optOut: formData.get("optOut") === "on",
     };
@@ -148,6 +160,90 @@ export function InterimAvailabilityForm({
       </div>
 
       <div className="form-row">
+        <label htmlFor="interim-contract-type">
+          Preferred work <span className="optional-label">optional</span>
+        </label>
+        <input
+          id="interim-contract-type"
+          name="preferredContractType"
+          type="text"
+          maxLength={120}
+          defaultValue={current?.preferredContractType || ""}
+          placeholder="e.g. interim, fractional, fixed project"
+        />
+      </div>
+
+      <div className="form-row">
+        <label htmlFor="interim-sectors">
+          Sectors <span className="optional-label">optional</span>
+        </label>
+        <textarea
+          id="interim-sectors"
+          name="sectors"
+          rows={3}
+          maxLength={500}
+          defaultValue={current?.sectors || ""}
+          placeholder="Sectors where you have proper evidence."
+        />
+      </div>
+
+      <div className="form-row">
+        <label htmlFor="interim-functions">
+          Functions <span className="optional-label">optional</span>
+        </label>
+        <textarea
+          id="interim-functions"
+          name="functions"
+          rows={3}
+          maxLength={500}
+          defaultValue={current?.functions || ""}
+          placeholder="Marketing, comms, digital, agency leadership, transformation..."
+        />
+      </div>
+
+      <div className="form-row">
+        <label htmlFor="interim-location">
+          Location or travel <span className="optional-label">optional</span>
+        </label>
+        <input
+          id="interim-location"
+          name="locationPreference"
+          type="text"
+          maxLength={160}
+          defaultValue={current?.locationPreference || ""}
+          placeholder="e.g. Manchester, North West, London hybrid, UK-wide remote"
+        />
+      </div>
+
+      <div className="form-row">
+        <label htmlFor="interim-remote">
+          Remote preference <span className="optional-label">optional</span>
+        </label>
+        <input
+          id="interim-remote"
+          name="remotePreference"
+          type="text"
+          maxLength={160}
+          defaultValue={current?.remotePreference || ""}
+          placeholder="e.g. hybrid, mostly remote, on-site for first month"
+        />
+      </div>
+
+      <div className="form-row">
+        <label htmlFor="interim-contact">
+          Best contact route <span className="optional-label">optional</span>
+        </label>
+        <input
+          id="interim-contact"
+          name="contactPreference"
+          type="text"
+          maxLength={160}
+          defaultValue={current?.contactPreference || ""}
+          placeholder="e.g. WhatsApp first, email first, call if urgent"
+        />
+      </div>
+
+      <div className="form-row">
         <label htmlFor="interim-notes">
           Notes <span className="optional-label">optional</span>
         </label>
@@ -168,6 +264,11 @@ export function InterimAvailabilityForm({
           still need to keep minimal records where required.
         </span>
       </label>
+
+      <p className="form-note">
+        CV or profile uploads are not live here yet. Message David directly if
+        your CV needs replacing.
+      </p>
 
       <button
         className="button button-primary"

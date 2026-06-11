@@ -226,6 +226,12 @@ Suggested issue: `#65`.
 
 Codex effort: high.
 
+Implementation and privacy notes live in:
+
+```txt
+docs/labs-strategic-interim-bench.md
+```
+
 ### Live Market Dashboards
 
 Commercial value: authority, data-led content, digital PR and stronger client

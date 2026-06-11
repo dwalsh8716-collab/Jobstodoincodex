@@ -31,6 +31,12 @@ export type InterimAvailabilityCurrent = {
   status?: InterimAvailabilityStatus | "not_confirmed" | null;
   availableFrom?: string | null;
   dayRate?: string | null;
+  preferredContractType?: string | null;
+  sectors?: string | null;
+  functions?: string | null;
+  locationPreference?: string | null;
+  remotePreference?: string | null;
+  contactPreference?: string | null;
   notes?: string | null;
   optedOutAt?: string | null;
 };
@@ -202,6 +208,12 @@ export async function getInterimAvailabilityView(
           a.availability_status,
           a.available_from,
           a.day_rate,
+          a.preferred_contract_type,
+          a.sectors,
+          a.functions,
+          a.location_preference,
+          a.remote_preference,
+          a.contact_preference,
           a.notes,
           a.opted_out_at
         from interim_availability_tokens t
@@ -221,6 +233,12 @@ export async function getInterimAvailabilityView(
             'status', availability_status,
             'availableFrom', available_from,
             'dayRate', day_rate,
+            'preferredContractType', preferred_contract_type,
+            'sectors', sectors,
+            'functions', functions,
+            'locationPreference', location_preference,
+            'remotePreference', remote_preference,
+            'contactPreference', contact_preference,
             'notes', notes,
             'optedOutAt', opted_out_at
           )
@@ -295,6 +313,12 @@ export async function submitInterimAvailabilityUpdate(
             availability_status,
             available_from,
             day_rate,
+            preferred_contract_type,
+            sectors,
+            functions,
+            location_preference,
+            remote_preference,
+            contact_preference,
             notes,
             opted_out_at,
             last_updated_at,
@@ -306,6 +330,12 @@ export async function submitInterimAvailabilityUpdate(
             data->>'status',
             nullif(data->>'availableFrom', '')::date,
             nullif(data->>'dayRate', ''),
+            nullif(data->>'preferredContractType', ''),
+            nullif(data->>'sectors', ''),
+            nullif(data->>'functions', ''),
+            nullif(data->>'locationPreference', ''),
+            nullif(data->>'remotePreference', ''),
+            nullif(data->>'contactPreference', ''),
             nullif(data->>'notes', ''),
             case
               when coalesce((data->>'optOut')::boolean, false) then now()
@@ -322,6 +352,12 @@ export async function submitInterimAvailabilityUpdate(
             availability_status = excluded.availability_status,
             available_from = excluded.available_from,
             day_rate = excluded.day_rate,
+            preferred_contract_type = excluded.preferred_contract_type,
+            sectors = excluded.sectors,
+            functions = excluded.functions,
+            location_preference = excluded.location_preference,
+            remote_preference = excluded.remote_preference,
+            contact_preference = excluded.contact_preference,
             notes = excluded.notes,
             opted_out_at = excluded.opted_out_at,
             last_updated_at = now(),
@@ -390,6 +426,12 @@ export async function submitInterimAvailabilityUpdate(
         availableFrom:
           finalStatus === "available_from" ? payload.availableFrom : undefined,
         dayRate: payload.dayRate,
+        preferredContractType: payload.preferredContractType,
+        sectors: payload.sectors,
+        functions: payload.functions,
+        locationPreference: payload.locationPreference,
+        remotePreference: payload.remotePreference,
+        contactPreference: payload.contactPreference,
         notes: payload.notes,
         optOut: payload.optOut,
       },

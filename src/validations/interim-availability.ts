@@ -33,6 +33,12 @@ export const interimAvailabilityUpdateSchema = z
     }),
     availableFrom: optionalDate,
     dayRate: optionalText(80),
+    preferredContractType: optionalText(120),
+    sectors: optionalText(500),
+    functions: optionalText(500),
+    locationPreference: optionalText(160),
+    remotePreference: optionalText(160),
+    contactPreference: optionalText(160),
     notes: optionalText(1000),
     optOut: z.coerce.boolean().optional().default(false),
   })

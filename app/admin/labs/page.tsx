@@ -108,6 +108,12 @@ export default async function AdminLabsPage() {
             >
               Market dashboards
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/labs/interim-bench"
+            >
+              Interim bench
+            </Link>
           </div>
         </div>
 
