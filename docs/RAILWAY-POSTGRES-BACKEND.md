@@ -20,6 +20,8 @@ Railway Postgres is now staged as the private operations database for:
 - audit logs
 - data/privacy requests
 - retention review queue
+- optional Loxo reference IDs
+- integration sync event records
 
 No public website content has moved from Sanity to Postgres.
 
@@ -96,6 +98,8 @@ Postgres is for private business operations only:
 - consent records
 - audit logs
 - data/privacy requests
+- Loxo handoff/reference IDs where a website workflow record maps to Loxo
+- integration sync events for future manual handoff or approved API sync
 
 Public jobs can still live in Sanity. Private applications can store a Sanity job ID or slug when that flow is extended.
 
@@ -112,6 +116,7 @@ database/migrations/006_recruiter_labs_foundation.sql
 database/migrations/007_recruiter_labs_launch_gate.sql
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/009_recruiter_labs_ai_launch_gate.sql
+database/migrations/010_loxo_reference_boundary.sql
 ```
 
 Tables:
@@ -130,6 +135,7 @@ Tables:
 - `consent_records`
 - `audit_logs`
 - `data_subject_requests`
+- `integration_sync_events`
 - `retention_review_queue` view
 
 Important privacy fields are included for candidate/application records:
@@ -149,6 +155,8 @@ Important privacy fields are included for candidate/application records:
 - `deletion_reason`
 
 CV files are not stored in Postgres. Only metadata is modelled. Actual CV storage must use private object storage with signed access URLs before upload is enabled.
+
+Loxo reference fields are optional. They exist to connect a private website workflow record to the matching Loxo record later. They do not mean the website database is now the CRM.
 
 ## Admin Dashboard Summary
 

@@ -56,6 +56,8 @@ The migration set stages:
 - WhatsApp message records
 - data subject requests
 - retention review views
+- optional Loxo reference IDs for private handoff/sync mapping
+- integration sync event records
 - Recruiter Labs shortlists and feedback
 - Recruiter Labs AI draft governance tables
 
@@ -64,6 +66,41 @@ The migration set stages:
 These tables are for private website workflows and prototypes.
 
 They must not be treated as the main recruitment CRM unless David explicitly chooses that. Loxo remains the source of truth for recruitment records.
+
+## Loxo Reference Boundary
+
+Issue #94 added optional Loxo reference fields to the private Postgres schema:
+
+- `companies.loxo_company_id`
+- `contacts.loxo_contact_id`
+- `candidates.loxo_candidate_id`
+- `jobs.loxo_job_id`
+- `applications.loxo_application_id`
+- `applications.loxo_candidate_id`
+- `applications.loxo_job_id`
+- `enquiries.loxo_handoff_id`
+
+These fields are not a live integration.
+
+They exist so future Loxo handoff or sync work can link a website workflow record to the matching Loxo record without duplicating the whole CRM inside the website.
+
+The migration also adds `integration_sync_events` so future integrations can log:
+
+- which integration was involved
+- whether it was inbound, outbound or manual handoff
+- the local record
+- the external record ID
+- the operation
+- current status
+- safe metadata
+
+Do not store Loxo API keys, access tokens or private payload dumps in these fields.
+
+## ORM Decision
+
+No ORM was introduced.
+
+The existing project already uses SQL migrations plus a small server-only operations helper that calls `psql`. Adding Prisma or Drizzle here would create another abstraction layer without solving a current problem.
 
 ## Current Local State
 
@@ -111,6 +148,7 @@ Data/privacy request form:
 - Production rate limiting is currently in-memory and not shared across instances.
 - Private CV storage is not implemented.
 - Loxo integration is not implemented.
+- Loxo IDs are staged for future reference only; there is no live sync, webhook or API client.
 - Migration execution is manual until Railway deploy workflow is finalised.
 
 ## Manual Actions

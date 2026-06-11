@@ -101,8 +101,11 @@ Use Postgres for:
 - shortlist feedback staging
 - Recruiter Labs prototypes
 - integration sync staging
+- optional Loxo reference IDs so website workflow records can be matched back to Loxo
 
 Do not use Postgres to replace Loxo without a separate business decision.
+
+Do not store Loxo API keys, access tokens or full raw Loxo payload dumps in Postgres.
 
 ## GitHub
 

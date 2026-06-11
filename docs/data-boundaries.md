@@ -45,11 +45,13 @@ Railway Postgres is the staged private operations store for:
 - retention dates
 - statuses
 - candidate communication preferences
+- optional Loxo reference IDs for handoff/sync mapping
 - tasks
 - notes
 - DSAR requests
 - audit logs
 - admin workflow records
+- integration sync event records
 - WhatsApp Business message status logs
 - Recruiter Labs shortlists, hashed access tokens, feedback and interview
   requests
@@ -105,6 +107,8 @@ No CV upload flow exists on the public website.
 - audit logs
 - private consent records
 - private WhatsApp messaging logs
+- Loxo API payload dumps
+- Loxo access tokens or secrets
 - sensitive admin-only records
 - AI prompts, transcripts, candidate summaries or client profile drafts that
   contain private candidate/client data
@@ -118,6 +122,7 @@ No CV upload flow exists on the public website.
 - private client/contact records
 - CV metadata
 - LinkedIn/profile URLs submitted through candidate/application forms
+- optional Loxo IDs that link private website workflow records back to Loxo
 - consent records
 - retention dates
 - statuses
@@ -135,6 +140,7 @@ No CV upload flow exists on the public website.
 - shortlist feedback
 - interview requests
 - AI draft metadata, source summaries, prompt versions and David approval state
+- integration sync events for future handoff/sync audit
 
 ## Public Job To Private Application Pattern
 
@@ -174,6 +180,29 @@ Private fields:
 - created and updated timestamps
 
 The public job page reads from Sanity. The application form must write private candidate/application data to the private backend only.
+
+## Loxo Reference Pattern
+
+Loxo remains the CRM/ATS source of truth.
+
+The private website database may store optional Loxo reference IDs so a local enquiry, candidate, application, company, contact or job handoff can be matched back to Loxo later.
+
+Allowed:
+
+- `loxo_candidate_id`
+- `loxo_company_id`
+- `loxo_contact_id`
+- `loxo_job_id`
+- `loxo_application_id`
+- `loxo_handoff_id`
+- sync status rows in `integration_sync_events`
+
+Not allowed:
+
+- Loxo API keys in the database
+- raw Loxo payload dumps containing unnecessary PII
+- rebuilding a full CRM workflow in Postgres without David's explicit decision
+- treating local website records as more authoritative than Loxo records
 
 ## CV And File Boundary
 
