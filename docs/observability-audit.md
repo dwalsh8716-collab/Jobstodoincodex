@@ -39,6 +39,10 @@ Code-level visibility:
 - Form failure dashboard outside logs.
 - Production Railway logs have not been inspected in this local audit.
 
+Detailed setup guide:
+
+- `docs/observability-and-alerts.md`
+
 ## Recommended Layers
 
 ## Railway
@@ -92,6 +96,8 @@ Watch:
 3. Decide whether to add Sentry.
 4. Decide who receives alerts.
 5. Run a monthly health check.
+
+Use `docs/observability-and-alerts.md` for the step-by-step setup and privacy rules.
 
 ## Recommendation
 
