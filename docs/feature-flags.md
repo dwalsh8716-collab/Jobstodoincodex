@@ -123,6 +123,12 @@ preview with real role or client data. The protected preview lives at
 `docs/labs-functional-matrix.md`. It is an advisory scoping tool, not candidate
 scoring or automated matching.
 
+`FEATURE_BAD_HIRE_CALCULATOR` must stay `false` until assumptions, source
+caveats, privacy wording and lead capture are approved. The protected preview
+lives at `/admin/labs/bad-hire-calculator`; the methodology note lives in
+`docs/bad-hire-calculator-methodology.md`. Outputs are estimates for a
+conversation, not financial advice.
+
 `INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Strategic Interim
 availability magic links. It defaults to 14 days and is capped in code at 45
 days. It is not a secret and must not contain a token.

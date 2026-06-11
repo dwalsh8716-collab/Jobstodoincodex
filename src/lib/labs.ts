@@ -169,7 +169,7 @@ export const labsIdeas: LabsIdea[] = [
   {
     title: "Bad hire calculator",
     category: "Lead generation",
-    status: "idea",
+    status: "private_preview",
     priority: "future",
     targetUser: "Founders, MDs and marketing leaders",
     commercialPurpose:
@@ -179,6 +179,7 @@ export const labsIdeas: LabsIdea[] = [
     dependencies: ["Calculator assumptions", "Plain-English caveats"],
     featureFlagName: "FEATURE_BAD_HIRE_CALCULATOR",
     relatedGitHubIssue: "#61",
+    relatedRoute: "/admin/labs/bad-hire-calculator",
     launchRule:
       "Launch only when assumptions are transparent and not gimmicky.",
   },

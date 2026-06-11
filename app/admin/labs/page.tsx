@@ -126,6 +126,12 @@ export default async function AdminLabsPage() {
             >
               Functional matrix
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/labs/bad-hire-calculator"
+            >
+              Bad hire calculator
+            </Link>
           </div>
         </div>
 

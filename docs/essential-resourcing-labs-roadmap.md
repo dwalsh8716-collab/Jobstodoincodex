@@ -128,6 +128,12 @@ Suggested issue: `#61`.
 
 Codex effort: medium.
 
+Calculator methodology and launch caveats live in:
+
+```txt
+docs/bad-hire-calculator-methodology.md
+```
+
 ### Functional Matrix Mapping
 
 Commercial value: helps David shape better briefs before clients go to market.

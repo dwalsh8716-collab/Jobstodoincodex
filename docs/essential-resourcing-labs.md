@@ -76,6 +76,12 @@ The staged functional matrix notes live in:
 docs/labs-functional-matrix.md
 ```
 
+The staged bad hire calculator methodology lives in:
+
+```txt
+docs/bad-hire-calculator-methodology.md
+```
+
 Each idea should explain:
 
 - commercial purpose
