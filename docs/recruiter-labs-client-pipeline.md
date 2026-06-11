@@ -32,6 +32,8 @@ Staged now:
 - launch-gate hardening migration: `007_recruiter_labs_launch_gate.sql`
 - private portal engagement migration:
   `019_recruiter_labs_portal_engagement.sql`
+- David's Take audio-note migration:
+  `020_recruiter_labs_audio_notes.sql`
 - server-side launch-gate, token and candidate sharing decision helpers
 - admin launch-gate visibility inside `/admin/recruiter-labs`
 - hashed-token table for future magic links
@@ -52,6 +54,7 @@ FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
+FEATURE_DAVIDS_AUDIO_NOTES=false
 ```
 
 These are server-side flags. They are not public launch switches.
@@ -93,6 +96,9 @@ The staged client route now has:
 - WhatsApp interview logistics staged behind `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
 - automated WhatsApp is operational-template only and falls back to manual/email
 - structured decline reasons for client feedback
+- David's Take audio-note metadata staged behind `FEATURE_DAVIDS_AUDIO_NOTES`
+- audio-note admin and client playback APIs fail closed until private storage,
+  compression and signed playback are built
 
 Before real client use, it still needs:
 
@@ -121,6 +127,7 @@ Postgres/private backend is for:
 - client contacts
 - shortlist feedback
 - shortlist portal engagement events
+- David's Take audio-note metadata and access logs
 - interview requests
 - audit logs
 - WhatsApp message references
@@ -146,6 +153,7 @@ Important:
 - feedback actions write to `recruiter_lab_shortlist_feedback`, not GA4
 - portal engagement events write to
   `recruiter_lab_portal_engagement_events`, not GA4
+- audio-note metadata writes to Postgres/private file metadata only, not Sanity
 - decline feedback uses structured reasons plus optional comments
 - feedback creates a private activity, admin task and candidate feedback status
   update when the database is live
@@ -172,6 +180,12 @@ The private portal engagement notes live in:
 docs/recruiter-labs-portal-engagement.md
 ```
 
+The David's Take audio-note notes live in:
+
+```txt
+docs/recruiter-labs-davids-audio-notes.md
+```
+
 ## Required Dependencies
 
 Before any client portal goes live:
@@ -193,6 +207,8 @@ Before any client portal goes live:
 - Google Calendar/Meet booking configured and approved if used
 - no PII in analytics
 - private portal engagement wording and retention reviewed
+- private audio-note storage, compression, signed playback, retention and
+  privacy wording approved
 
 ## Build Phases
 
@@ -201,9 +217,10 @@ Before any client portal goes live:
 3. Candidate profile draft workflow with David approval.
 4. Magic-link route with hashed token validation.
 5. Feedback capture, private engagement records and audit logging.
-6. Interview request workflow.
-7. WhatsApp and Google scheduling only after approval.
-8. AI-assisted drafts only with human verification and no automated candidate
+6. David's Take audio notes only after private storage and signed playback.
+7. Interview request workflow.
+8. WhatsApp and Google scheduling only after approval.
+9. AI-assisted drafts only with human verification and no automated candidate
    evaluation.
 
 ## Launch Gate
@@ -220,6 +237,8 @@ Do not launch until:
 - audit logs record access and feedback
 - private engagement records stay in Postgres and are not treated as candidate
   quality scores
+- audio notes stay private, approved by David and played only through signed or
+  authenticated access
 - retention rules cover shortlist data
 - legal/privacy review is complete
 

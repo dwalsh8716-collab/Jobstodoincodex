@@ -88,6 +88,7 @@ notes in feature flag values.
 | `FEATURE_WHATSAPP_CRM_SYNC`                | `false` | No                   | Future WhatsApp webhook-to-candidate activity sync.        |
 | `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING` | `false` | No                   | Future Google Calendar and Meet orchestration.             |
 | `FEATURE_AI_CANDIDATE_SUMMARIES`           | `false` | No                   | Future AI-assisted candidate summary drafts.               |
+| `FEATURE_DAVIDS_AUDIO_NOTES`               | `false` | No                   | Future David-approved private audio notes for client profiles. |
 | `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                    |
 | `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page standards.                        |
 | `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future friction-light application route.                   |

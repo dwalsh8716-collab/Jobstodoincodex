@@ -88,6 +88,7 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_WHATSAPP_CRM_SYNC: optionalBooleanFlag,
   FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING: optionalBooleanFlag,
   FEATURE_AI_CANDIDATE_SUMMARIES: optionalBooleanFlag,
+  FEATURE_DAVIDS_AUDIO_NOTES: optionalBooleanFlag,
   FEATURE_CANDIDATE_TRANSPARENCY_LABS: optionalBooleanFlag,
   FEATURE_FLUFF_FREE_JOB_PAGES: optionalBooleanFlag,
   FEATURE_CANDIDATE_APPLICATION_DROP: optionalBooleanFlag,
@@ -163,6 +164,18 @@ const serverEnvSchema = publicEnvSchema.extend({
     z.string().optional(),
   ),
   CANDIDATE_CV_STORAGE_SIGNING_SECRET: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  DAVIDS_AUDIO_NOTE_STORAGE_PROVIDER: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  DAVIDS_AUDIO_NOTE_STORAGE_BUCKET: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  DAVIDS_AUDIO_NOTE_STORAGE_SIGNING_SECRET: z.preprocess(
     emptyToUndefined,
     z.string().optional(),
   ),

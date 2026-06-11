@@ -118,6 +118,7 @@ docs/feature-flags.md
 - `FEATURE_WHATSAPP_CRM_SYNC`
 - `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING`
 - `FEATURE_AI_CANDIDATE_SUMMARIES`
+- `FEATURE_DAVIDS_AUDIO_NOTES`
 - `FEATURE_CANDIDATE_TRANSPARENCY_LABS`
 - `FEATURE_FLUFF_FREE_JOB_PAGES`
 - `FEATURE_CANDIDATE_APPLICATION_DROP`
@@ -239,6 +240,7 @@ docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
+docs/recruiter-labs-davids-audio-notes.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

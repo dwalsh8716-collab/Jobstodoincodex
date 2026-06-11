@@ -81,6 +81,16 @@ Not safe yet:
 - Blocked: `cv_viewed` and `cv_downloaded` cannot be proven until CV routes are
   implemented.
 
+### David's Take Audio Notes
+
+- Staged: private audio-note metadata, approval states and access-log tables now
+  exist in Postgres.
+- Staged: admin and client audio-note API routes fail closed until storage,
+  compression and signed playback are built.
+- Blocked: private object storage, signed/authenticated playback, transcript
+  handling, retention and legal/privacy wording still need approval.
+- Passed: no audio note is stored in Sanity and no public audio URL is created.
+
 ### Audit Logging
 
 - Passed: central audit logging utility exists.
@@ -177,6 +187,7 @@ FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
+FEATURE_DAVIDS_AUDIO_NOTES=false
 FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=false
 ```
 
@@ -213,6 +224,7 @@ WHATSAPP_BUSINESS_INTERVIEW_LOCATION_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_AVAILABILITY_TEMPLATE=
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
+FEATURE_DAVIDS_AUDIO_NOTES=false
 FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=false
 ```
 

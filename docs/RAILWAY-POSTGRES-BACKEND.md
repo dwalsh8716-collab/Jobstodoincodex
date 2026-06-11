@@ -71,6 +71,8 @@ Added:
   deletion state and client-visibility blocking.
 - Recruiter Labs private portal engagement events for shortlist opens, candidate
   card review timing, modal activity, CV actions and feedback submission.
+- Recruiter Labs David's Take audio-note metadata, approval state and access-log
+  tables for future private signed playback.
 - Database migration and status scripts.
 
 ## Architecture Summary

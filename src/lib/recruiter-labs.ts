@@ -60,6 +60,12 @@ export const recruiterLabsFlagDefinitions = [
     description:
       "Future AI-assisted drafts only, with David verification before client view.",
   },
+  {
+    name: "FEATURE_DAVIDS_AUDIO_NOTES",
+    label: "David's Take audio notes",
+    description:
+      "Future admin-approved private audio notes for candidate shortlist profiles.",
+  },
 ] as const;
 
 export type RecruiterLabsFlagName =
@@ -230,6 +236,12 @@ export const recruiterLabsDependencies = [
     detail: "No public or private CV upload/storage flow is live yet.",
   },
   {
+    label: "Private audio-note storage",
+    status: "blocked",
+    detail:
+      "David's Take audio notes need private object storage, compression and signed playback before client use.",
+  },
+  {
     label: "Candidate consent model",
     status: "staged",
     detail: "Candidate privacy and consent records exist for future workflows.",
@@ -322,6 +334,15 @@ export const recruiterLabsLaunchGateChecks = [
     status: "blocked",
     evidence:
       "Private file metadata exists, but signed/authenticated CV access routes are not live.",
+    requiredBefore: ["private_beta", "real_client_launch"],
+  },
+  {
+    id: "audio-notes-private-storage",
+    category: "Audio notes",
+    label: "David's Take audio notes need private signed playback",
+    status: "blocked",
+    evidence:
+      "Audio-note metadata, approval states and locked APIs are staged. Private object storage, compression and signed playback are not live.",
     requiredBefore: ["private_beta", "real_client_launch"],
   },
   {
