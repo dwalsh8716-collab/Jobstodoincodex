@@ -15,6 +15,7 @@ const optionalText = (max: number) =>
   );
 
 export const salaryGuideLeadSchema = z.object({
+  guideId: optionalText(120),
   guideSlug: limitedText(120).default("senior-marketing-salary-guide"),
   name: limitedText(80).pipe(z.string().min(2, "Please add your name.")),
   company: limitedText(120).pipe(
@@ -48,6 +49,10 @@ export const salaryGuideLeadSchema = z.object({
     (value) => (value === true ? "yes" : value),
     z.literal("yes").optional(),
   ),
+  sourcePage: optionalText(240),
+  utmSource: optionalText(120),
+  utmMedium: optionalText(120),
+  utmCampaign: optionalText(120),
   website: z.string().max(0, "Spam check failed.").optional().default(""),
   startedAt: z.coerce
     .number()

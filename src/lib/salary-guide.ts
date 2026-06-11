@@ -162,6 +162,7 @@ async function saveSalaryGuideLeadToOperations(
       ),
       created as (
         insert into salary_guide_leads (
+          guide_id,
           guide_slug,
           guide_title,
           name,
@@ -173,12 +174,18 @@ async function saveSalaryGuideLeadToOperations(
           consent_to_contact,
           marketing_consent,
           lead_source,
+          source_page,
+          utm_source,
+          utm_medium,
+          utm_campaign,
+          status,
           delivery_status,
           ip_hash,
           user_agent_hash,
           metadata
         )
         select
+          nullif(data->>'guideId', ''),
           data->>'guideSlug',
           data->>'guideTitle',
           data->>'name',
@@ -190,6 +197,11 @@ async function saveSalaryGuideLeadToOperations(
           coalesce((data->>'consentToContact')::boolean, false),
           coalesce((data->>'marketingConsent')::boolean, false),
           'salary_guide_landing_page',
+          coalesce(nullif(data->>'sourcePage', ''), '/salary-guides'),
+          nullif(data->>'utmSource', ''),
+          nullif(data->>'utmMedium', ''),
+          nullif(data->>'utmCampaign', ''),
+          'new',
           'pending',
           nullif(data->>'ipHash', ''),
           nullif(data->>'userAgentHash', ''),

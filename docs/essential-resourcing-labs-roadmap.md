@@ -90,6 +90,12 @@ Suggested issue: `#58`.
 
 Codex effort: medium unless database/CRM routing is changed.
 
+Implementation notes live in:
+
+```txt
+docs/labs-salary-guides.md
+```
+
 ### Bespoke Salary Benchmarking
 
 Commercial value: turns David's market knowledge into a sharper client asset.

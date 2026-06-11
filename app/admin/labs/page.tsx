@@ -140,6 +140,12 @@ export default async function AdminLabsPage() {
             </Link>
             <Link
               className="button button-secondary"
+              href="/admin/labs/salary-guides"
+            >
+              Salary guides
+            </Link>
+            <Link
+              className="button button-secondary"
               href="/admin/labs/salary-benchmark"
             >
               Salary benchmark

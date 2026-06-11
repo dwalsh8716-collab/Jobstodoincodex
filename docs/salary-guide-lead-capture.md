@@ -6,9 +6,10 @@ Audit date: 11 June 2026
 
 Staged, not production-live by default.
 
-The website now has a dedicated `/salary-guides` route, lead-capture form,
-server validation, private Postgres migration and email-delivery path. It stays
-noindexed and out of the sitemap until `FEATURE_SALARY_GUIDE_GATE=true`.
+The website has a dedicated `/salary-guides` route, lead-capture form, server
+validation, private Postgres migrations, protected Labs preview and
+email-delivery path. It stays noindexed and out of the sitemap until
+`FEATURE_SALARY_GUIDE_GATE=true`.
 
 ## Audit Finding
 
@@ -22,6 +23,10 @@ Before this work:
 - docs already said private lead records should not live in Sanity
 
 No duplicate salary guide form was found.
+
+The private Labs report for this feature now lives at
+`/admin/labs/salary-guides`, with implementation notes in
+`docs/labs-salary-guides.md`.
 
 ## What The Flow Does
 
@@ -63,11 +68,15 @@ Sanity may store public salary guide editorial content.
 Private lead data belongs only in Railway Postgres:
 
 - name
+- guide id / guide slug
 - company
 - email
 - optional job title
 - optional phone
 - hiring interest
+- source page
+- UTM source, medium and campaign
+- lead status
 - consent records
 - delivery status
 - hashed request metadata
@@ -96,6 +105,7 @@ Before launch:
 - `FEATURE_SALARY_GUIDE_GATE=false` keeps the form disabled
 - `/salary-guides` is noindexed
 - `/salary-guides` is absent from `sitemap.xml`
+- `/admin/labs/salary-guides` is protected and noindexed
 - enabling the flag adds `/salary-guides` to the sitemap
 - invalid submissions return safe messages
 - honeypot submissions are rejected

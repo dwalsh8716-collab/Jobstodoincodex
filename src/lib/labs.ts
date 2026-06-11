@@ -121,18 +121,24 @@ export const labsIdeas: LabsIdea[] = [
   {
     title: "Gated salary guides",
     category: "Salary intelligence",
-    status: "idea",
+    status: "private_preview",
     priority: "future",
     targetUser: "Hiring leaders and agency owners",
     commercialPurpose:
       "Capture serious B2B demand around salary and market intelligence.",
     privacyRisk: "medium",
     complexity: "medium",
-    dependencies: ["Consent-aware lead capture", "PDF delivery workflow"],
+    dependencies: [
+      "Consent-aware lead capture",
+      "Railway Postgres",
+      "Approved guide asset",
+      "Email delivery workflow",
+    ],
     featureFlagName: "FEATURE_SALARY_GUIDE_GATE",
     relatedGitHubIssue: "#58",
+    relatedRoute: "/admin/labs/salary-guides",
     launchRule:
-      "Launch only after consent, delivery and CRM routing are reviewed.",
+      "Launch only after guide content, privacy wording, storage, delivery and follow-up ownership are approved.",
   },
   {
     title: "Bespoke salary benchmarking asset builder",

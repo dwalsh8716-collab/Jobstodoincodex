@@ -241,6 +241,7 @@ docs/release-process.md
 CHANGELOG.md
 docs/david-non-technical-owner-checklist.md
 docs/essential-resourcing-labs-roadmap.md
+docs/labs-salary-guides.md
 docs/bad-hire-calculator-methodology.md
 docs/labs-salary-benchmark-asset.md
 docs/labs-client-shortlists.md

@@ -58,6 +58,12 @@ The staged Strategic Interim bench notes live in:
 docs/labs-strategic-interim-bench.md
 ```
 
+The staged gated salary guide notes live in:
+
+```txt
+docs/labs-salary-guides.md
+```
+
 The staged AI brief builder notes live in:
 
 ```txt

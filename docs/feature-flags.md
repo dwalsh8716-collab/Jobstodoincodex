@@ -69,7 +69,7 @@ notes in feature flag values.
 | Flag                                       | Default | Safe for public now? | Controls                                                          |
 | ------------------------------------------ | ------- | -------------------- | ----------------------------------------------------------------- |
 | `FEATURE_LABS_ENABLED`                     | `false` | No                   | Protected Labs admin planning surface.                            |
-| `FEATURE_SALARY_GUIDE_GATE`                | `false` | No                   | Future gated salary guide lead-capture flow.                      |
+| `FEATURE_SALARY_GUIDE_GATE`                | `false` | No                   | Private-preview gated salary guide lead-capture flow.             |
 | `FEATURE_SALARY_BENCHMARK_ASSET`           | `false` | No                   | Future bespoke salary benchmarking asset builder.                 |
 | `FEATURE_MARKET_MAPPING`                   | `false` | No                   | Future market mapping visuals.                                    |
 | `FEATURE_BAD_HIRE_CALCULATOR`              | `false` | No                   | Future bad-hire cost calculator.                                  |
@@ -271,6 +271,9 @@ page. It must stay `false` until:
 
 When the flag is `false`, the form is disabled, the page is noindexed and the
 route is not included in `sitemap.xml`.
+
+The protected Labs status page is `/admin/labs/salary-guides`. Implementation
+notes live in `docs/labs-salary-guides.md`.
 
 `SALARY_GUIDE_DOWNLOAD_URL` is not a feature flag. It is the approved link sent
 to requesters after the lead is saved. Do not put private tokens or secrets in
