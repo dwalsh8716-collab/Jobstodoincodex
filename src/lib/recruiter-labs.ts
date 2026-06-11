@@ -417,7 +417,7 @@ export const recruiterLabsLaunchGateChecks = [
     label: "Google scheduling requires approval",
     status: "blocked",
     evidence:
-      "Booking links are safe, but Calendar/Meet orchestration is not implemented and must remain manual until approved.",
+      "Booking links are safe and manual-first calendar drafts can be prepared. OAuth, automatic event creation and Meet generation remain blocked until approved.",
     requiredBefore: ["real_client_launch"],
   },
   {

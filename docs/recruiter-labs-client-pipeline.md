@@ -233,6 +233,12 @@ The retained search dashboard notes live in:
 docs/recruiter-labs-retained-search-dashboard.md
 ```
 
+The interview scheduling orchestration notes live in:
+
+```txt
+docs/recruiter-labs-interview-scheduling.md
+```
+
 ## Required Dependencies
 
 Before any client portal goes live:

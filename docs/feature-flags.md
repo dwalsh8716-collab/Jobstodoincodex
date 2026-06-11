@@ -149,6 +149,12 @@ are migrated, WhatsApp consent/preference capture is clear, and the manual
 fallback route is agreed. It is for operational interview messages only, not
 rejection, sensitive feedback, salary negotiation or bulk marketing.
 
+`FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING` must stay `false` until David
+approves the Google Calendar account, OAuth scopes, Meet generation rules,
+calendar event wording and manual fallback. The staged architecture lives in
+`docs/recruiter-labs-interview-scheduling.md`; it prepares manual calendar
+drafts only and does not create Google Calendar events.
+
 `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS` must stay `false` until the AI provider,
 candidate consent wording, redaction/minimisation rules, edit/approve workflow
 and retention handling are approved. Drafts are not rankings, scores or

@@ -156,9 +156,10 @@ Not safe yet:
 
 - Passed: public booking links are configurable.
 - Passed: no Google password sharing or hardcoded OAuth secret has been added.
-- Blocked: Calendar/Meet orchestration is not built.
-- Blocked: scoped OAuth, approval steps and manual fallback need sign-off before
-  live scheduling automation.
+- Staged: manual-first calendar draft orchestration is documented and helper
+  code can prepare copyable event details.
+- Blocked: scoped OAuth, automatic event creation, Meet generation and approval
+  steps need sign-off before live scheduling automation.
 
 ### Analytics Boundary
 

@@ -257,6 +257,7 @@ docs/recruiter-labs-ai-brief-diagnostic.md
 docs/recruiter-labs-whatsapp-crm-sync.md
 docs/recruiter-labs-davids-audio-notes.md
 docs/recruiter-labs-retained-search-dashboard.md
+docs/recruiter-labs-interview-scheduling.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md
