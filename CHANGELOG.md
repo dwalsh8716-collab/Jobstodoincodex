@@ -5,6 +5,48 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-06-11 - DSAR Email Verification Staged
+
+### Summary
+
+Improved the candidate data/privacy request flow with a secure email
+confirmation step when Postgres and Resend are configured. The public site still
+does not reveal whether an email exists, and no export, deletion or
+anonymisation happens automatically.
+
+### Public Website Changes
+
+- Added a noindexed confirmation page at `/candidate-privacy/request/confirm`.
+- Added `/api/data-request/confirm` for the confirmation button.
+- Updated request page copy to explain inbox confirmation without legal faff.
+
+### Form Changes
+
+- Request submissions can now create a pending email-verification record.
+- Confirmation tokens are random, time-limited and stored only as hashes.
+- Confirmation requires a button press, so email link scanners do not verify a
+  request on page load.
+
+### Security / Privacy Changes
+
+- Added private DSAR email verification columns in Postgres.
+- Verified email moves a request into review; it does not release, change,
+  delete or anonymise data.
+- Added audit and activity records for email verification.
+
+### Manual Actions For David
+
+- Configure Railway Postgres and Resend before relying on self-serve
+  confirmation.
+- Keep legal/privacy review for DSAR wording, identity checks, exports,
+  deletion, anonymisation, backups and CV file handling.
+
+### Rollback Note
+
+- Revert the DSAR email verification commit. Existing manual DSAR capture still
+  works, but remove any pending verification-token rows if the migration has
+  already been applied.
+
 ## 2026-06-11 - AI Candidate Summary Drafts Staged
 
 ### Summary

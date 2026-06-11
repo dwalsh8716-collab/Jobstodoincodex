@@ -47,8 +47,16 @@ export default function CandidatePrivacyRequestPage() {
             <div className="mini-process">
               <h3>Important safeguards</h3>
               <ol>
-                <li>Identity may need to be verified before data is released.</li>
-                <li>Deletion requests are reviewed before records are changed.</li>
+                <li>
+                  If email confirmation is available, you will be asked to
+                  confirm the request from your inbox.
+                </li>
+                <li>
+                  Identity may need to be verified before data is released.
+                </li>
+                <li>
+                  Deletion requests are reviewed before records are changed.
+                </li>
                 <li>
                   Some records may need to be retained where there is a lawful
                   reason. This is not legal advice.

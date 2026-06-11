@@ -47,4 +47,4 @@ export const dataSubjectVerificationLabels = {
 } as const;
 
 export const dataSubjectRequestNeutralSuccess =
-  "Thanks. Your request has been received. If the details match records we hold, David will review it and respond using the contact details provided.";
+  "Thanks. Your request has been received. If email confirmation is needed, check your inbox. David will review it before any data is released, changed or deleted.";

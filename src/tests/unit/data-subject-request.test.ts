@@ -1,5 +1,16 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { submitDataSubjectRequest } from "@/actions/data-subject-request";
+import { readFileSync } from "node:fs";
+import {
+  confirmDataSubjectRequestEmail,
+  submitDataSubjectRequest,
+} from "@/actions/data-subject-request";
+import {
+  buildDataSubjectRequestVerificationUrl,
+  createDataSubjectRequestVerificationToken,
+  dataSubjectRequestVerificationPath,
+  getDataSubjectRequestVerificationTokenHours,
+  hashDataSubjectRequestVerificationToken,
+} from "@/lib/dsar-verification";
 import {
   dataSubjectRequestMinimumCompletionTimeMs,
   dataSubjectRequestSchema,
@@ -163,5 +174,53 @@ describe("data subject request action", () => {
     expect(requesterBody.text).toContain("Candidate Privacy Notice");
     expect(requesterBody.text).toContain("Identity verification");
     expect(requesterBody.text).not.toContain("confidential job search");
+  });
+
+  it("fails safely for invalid email confirmation tokens", async () => {
+    const result = await confirmDataSubjectRequestEmail("not valid");
+
+    expect(result).toMatchObject({
+      ok: false,
+      statusCode: 400,
+    });
+    expect(result.message).not.toMatch(/stack|DATABASE_URL|RESEND_API_KEY/i);
+  });
+
+  it("uses hashed, time-limited DSAR email confirmation tokens", () => {
+    process.env.NEXT_PUBLIC_SITE_URL = "https://example.com";
+    process.env.DSAR_EMAIL_VERIFICATION_TOKEN_HOURS = "48";
+
+    const token = createDataSubjectRequestVerificationToken();
+    const url = buildDataSubjectRequestVerificationUrl(token.token);
+
+    expect(token.token).not.toBe(token.tokenHash);
+    expect(token.tokenHash).toBe(
+      hashDataSubjectRequestVerificationToken(token.token),
+    );
+    expect(url).toContain(dataSubjectRequestVerificationPath);
+    expect(url).toContain(encodeURIComponent(token.token));
+    expect(getDataSubjectRequestVerificationTokenHours()).toBe(48);
+  });
+
+  it("stages DSAR email verification without one-click deletion or GET verification", () => {
+    const migration = readFileSync(
+      "database/migrations/017_dsar_email_verification.sql",
+      "utf8",
+    );
+    const confirmPage = readFileSync(
+      "app/candidate-privacy/request/confirm/page.tsx",
+      "utf8",
+    );
+    const confirmApi = readFileSync(
+      "app/api/data-request/confirm/route.ts",
+      "utf8",
+    );
+
+    expect(migration).toContain("email_verification_token_hash text");
+    expect(migration).toContain("email_verification_expires_at timestamptz");
+    expect(confirmPage).toContain("DataSubjectRequestConfirmForm");
+    expect(confirmApi).toContain("export async function POST");
+    expect(confirmApi).not.toContain("export async function GET");
+    expect(confirmApi).not.toMatch(/delete from candidates|delete from files/i);
   });
 });

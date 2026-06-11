@@ -11,7 +11,17 @@ import {
   dataSubjectRequestPath,
   dataSubjectRequestTypeOptions,
 } from "@/lib/dsar";
-import { saveDataSubjectRequestToOperations } from "@/lib/operations/store";
+import {
+  buildDataSubjectRequestVerificationUrl,
+  createDataSubjectRequestVerificationToken,
+  getDataSubjectRequestVerificationTokenHours,
+  hashDataSubjectRequestVerificationToken,
+} from "@/lib/dsar-verification";
+import {
+  getOperationsBackendStatus,
+  saveDataSubjectRequestToOperations,
+  verifyDataSubjectRequestEmailToken,
+} from "@/lib/operations/store";
 import { candidatePrivacyPath } from "@/lib/candidate-trust";
 import { siteConfig } from "@/lib/site";
 
@@ -55,67 +65,131 @@ function checkRateLimit(key: string, now: number) {
   return true;
 }
 
-async function sendDataSubjectRequestEmails(
-  payload: DataSubjectRequestPayload,
-  recordId?: string,
-) {
+function getDataSubjectRequestEmailConfig() {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
+  const adminTo = process.env.CONTACT_TO_EMAIL;
   const from =
     process.env.CONTACT_FROM_EMAIL || "website@essentialresourcing.co.uk";
 
-  if (!apiKey || !to) {
+  return {
+    apiKey,
+    adminTo,
+    from,
+    configured: Boolean(apiKey && adminTo),
+  };
+}
+
+type DataSubjectRequestEmailDetails = {
+  name: string;
+  email: string;
+  phone?: string | null;
+  requestType: DataSubjectRequestPayload["requestType"];
+};
+
+function emailDetailsFromPayload(
+  payload: DataSubjectRequestPayload,
+): DataSubjectRequestEmailDetails {
+  return {
+    name: payload.name,
+    email: payload.email,
+    phone: payload.phone,
+    requestType: payload.requestType,
+  };
+}
+
+async function sendEmail({
+  recipient,
+  subject,
+  text,
+}: {
+  recipient: string;
+  subject: string;
+  text: string;
+}) {
+  const { apiKey, from } = getDataSubjectRequestEmailConfig();
+
+  if (!apiKey) {
     return { sent: false };
   }
 
-  async function sendEmail({
-    recipient,
-    subject,
-    text,
-  }: {
-    recipient: string;
-    subject: string;
-    text: string;
-  }) {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from,
-        to: recipient,
-        subject,
-        text,
-      }),
-    });
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from,
+      to: recipient,
+      subject,
+      text,
+    }),
+  });
 
-    if (!response.ok) {
-      throw new Error("Email provider rejected the data request message.");
-    }
+  if (!response.ok) {
+    throw new Error("Email provider rejected the data request message.");
   }
 
-  await sendEmail({
-    recipient: to,
-    subject: "New data/privacy request received",
+  return { sent: true };
+}
+
+async function sendDataSubjectRequestAdminEmail({
+  details,
+  recordId,
+  emailVerified,
+}: {
+  details: DataSubjectRequestEmailDetails;
+  recordId?: string;
+  emailVerified: boolean;
+}) {
+  const { adminTo, configured } = getDataSubjectRequestEmailConfig();
+
+  if (!configured || !adminTo) {
+    return { sent: false };
+  }
+
+  return sendEmail({
+    recipient: adminTo,
+    subject: emailVerified
+      ? "Verified data/privacy request ready for review"
+      : "New data/privacy request received",
     text: [
       "A new data/privacy request has been submitted through Essential Resourcing.",
       "",
-      `Request type: ${requestTypeLabel(payload.requestType)}`,
-      `Requester: ${payload.name}`,
-      `Email: ${payload.email}`,
-      payload.phone ? `Phone: ${payload.phone}` : "",
+      `Request type: ${requestTypeLabel(details.requestType)}`,
+      `Requester: ${details.name}`,
+      `Email: ${details.email}`,
+      details.phone ? `Phone: ${details.phone}` : "",
+      `Email verified: ${emailVerified ? "yes" : "not yet"}`,
       `Received: ${new Date().toISOString()}`,
-      recordId ? `Admin record: ${siteConfig.url}/admin` : "Admin record: not stored in Postgres yet",
+      recordId
+        ? `Admin record: ${siteConfig.url}/admin`
+        : "Admin record: not stored in Postgres yet",
       "",
       "Do not export, delete or change private candidate data until identity has been checked and the request has been reviewed.",
     ]
       .filter(Boolean)
       .join("\n"),
   });
+}
 
-  await sendEmail({
+async function sendDataSubjectRequestManualEmails(
+  payload: DataSubjectRequestPayload,
+  recordId?: string,
+) {
+  const { configured } = getDataSubjectRequestEmailConfig();
+
+  if (!configured) {
+    return { sent: false };
+  }
+
+  const adminEmail = await sendDataSubjectRequestAdminEmail({
+    details: emailDetailsFromPayload(payload),
+    recordId,
+    emailVerified: false,
+  });
+
+  const requesterEmail = await sendEmail({
     recipient: payload.email,
     subject: "We've received your data request",
     text: [
@@ -133,7 +207,40 @@ async function sendDataSubjectRequestEmails(
     ].join("\n"),
   });
 
-  return { sent: true };
+  return { sent: Boolean(adminEmail.sent || requesterEmail.sent) };
+}
+
+async function sendDataSubjectRequestVerificationEmail({
+  payload,
+  verificationUrl,
+}: {
+  payload: DataSubjectRequestPayload;
+  verificationUrl: string;
+}) {
+  const { configured } = getDataSubjectRequestEmailConfig();
+
+  if (!configured) {
+    return { sent: false };
+  }
+
+  return sendEmail({
+    recipient: payload.email,
+    subject: "Confirm your Essential Resourcing data request",
+    text: [
+      `Hi ${payload.name},`,
+      "",
+      "Please confirm this data/privacy request came from you.",
+      "",
+      verificationUrl,
+      "",
+      "This confirms your email address only. It does not mean any data will be exported, changed, deleted or anonymised automatically.",
+      "David still reviews the request before any action is taken.",
+      "",
+      `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
+      "",
+      "Essential Resourcing",
+    ].join("\n"),
+  });
 }
 
 export async function submitDataSubjectRequest(
@@ -178,9 +285,32 @@ export async function submitDataSubjectRequest(
   }
 
   try {
+    const operationsStatus = getOperationsBackendStatus();
+    const emailConfig = getDataSubjectRequestEmailConfig();
+    const useEmailVerification =
+      operationsStatus.enabled &&
+      operationsStatus.configured &&
+      emailConfig.configured;
+    const verificationToken = useEmailVerification
+      ? createDataSubjectRequestVerificationToken()
+      : undefined;
+    const verificationRequestedAt = new Date(now);
+    const verificationExpiresAt = new Date(
+      now + getDataSubjectRequestVerificationTokenHours() * 60 * 60 * 1000,
+    );
+    const verificationUrl = verificationToken
+      ? buildDataSubjectRequestVerificationUrl(verificationToken.token)
+      : undefined;
     const operationsResult = await saveDataSubjectRequestToOperations(payload, {
       ip: meta.ip,
       userAgent: meta.userAgent,
+      emailVerification: verificationToken
+        ? {
+            tokenHash: verificationToken.tokenHash,
+            requestedAt: verificationRequestedAt,
+            expiresAt: verificationExpiresAt,
+          }
+        : undefined,
     });
 
     if (!operationsResult.ok && operationsResult.required) {
@@ -192,18 +322,41 @@ export async function submitDataSubjectRequest(
       };
     }
 
-    const emailResult = await sendDataSubjectRequestEmails(
-      payload,
-      operationsResult.id,
-    ).catch((error) => {
-      console.error("Data subject request email failed", {
-        reason: error instanceof Error ? error.message : "unknown",
-        requestType: payload.requestType,
-        stored: Boolean(operationsResult.id),
-      });
+    const emailResult =
+      verificationUrl && operationsResult.id
+        ? await sendDataSubjectRequestVerificationEmail({
+            payload,
+            verificationUrl,
+          }).catch((error) => {
+            console.error("Data subject request verification email failed", {
+              reason: error instanceof Error ? error.message : "unknown",
+              requestType: payload.requestType,
+              stored: Boolean(operationsResult.id),
+            });
 
-      return { sent: false };
-    });
+            return { sent: false };
+          })
+        : await sendDataSubjectRequestManualEmails(
+            payload,
+            operationsResult.id,
+          ).catch((error) => {
+            console.error("Data subject request email failed", {
+              reason: error instanceof Error ? error.message : "unknown",
+              requestType: payload.requestType,
+              stored: Boolean(operationsResult.id),
+            });
+
+            return { sent: false };
+          });
+
+    if (verificationUrl && operationsResult.id && !emailResult.sent) {
+      return {
+        ok: false,
+        statusCode: 502,
+        message:
+          "The confirmation email could not be sent right now. Please email David directly.",
+      };
+    }
 
     if (!operationsResult.id && !emailResult.sent) {
       return {
@@ -234,4 +387,57 @@ export async function submitDataSubjectRequest(
         "The request could not be sent right now. Please email David directly.",
     };
   }
+}
+
+export async function confirmDataSubjectRequestEmail(
+  token: unknown,
+): Promise<DataSubjectRequestActionResult> {
+  const cleanedToken = typeof token === "string" ? token.trim() : "";
+
+  if (!/^[A-Za-z0-9_-]{32,200}$/.test(cleanedToken)) {
+    return {
+      ok: false,
+      statusCode: 400,
+      message:
+        "This confirmation link could not be used. Please submit a new request or email David directly.",
+    };
+  }
+
+  const result = await verifyDataSubjectRequestEmailToken(
+    hashDataSubjectRequestVerificationToken(cleanedToken),
+  );
+
+  if (!result.ok || !result.request) {
+    return {
+      ok: false,
+      statusCode: result.reason === "backend_unavailable" ? 503 : 400,
+      message:
+        "This confirmation link could not be used. Please submit a new request or email David directly.",
+    };
+  }
+
+  await sendDataSubjectRequestAdminEmail({
+    details: {
+      name: result.request.requesterName,
+      email: result.request.requesterEmail,
+      phone: result.request.requesterPhone,
+      requestType: result.request.requestType,
+    },
+    recordId: result.request.id,
+    emailVerified: true,
+  }).catch((error) => {
+    console.error("Data subject request verified admin email failed", {
+      reason: error instanceof Error ? error.message : "unknown",
+      requestType: result.request?.requestType,
+    });
+
+    return { sent: false };
+  });
+
+  return {
+    ok: true,
+    statusCode: 200,
+    message:
+      "Thanks. Your email has been confirmed. David will now review the request before any data is released, changed or deleted.",
+  };
 }

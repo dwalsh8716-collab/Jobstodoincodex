@@ -2,9 +2,11 @@
 
 ## Status
 
-Partially ready.
+Staged and safer, with manual launch checks still required.
 
-Essential Resourcing now has a clear public route for candidate data/privacy requests and a private Postgres workflow for recording them when Railway operations are enabled.
+Essential Resourcing now has a clear public route for candidate data/privacy
+requests, a private Postgres workflow for recording them when Railway operations
+are enabled, and a secure email-confirmation step when Resend is configured.
 
 This is not legal advice. David should have the final privacy wording, retention rules and DSAR process reviewed before launch.
 
@@ -35,7 +37,7 @@ The form supports:
 The confirmation copy is neutral:
 
 ```txt
-If the details match records we hold, David will review the request and respond using the contact details provided.
+Thanks. Your request has been received. If email confirmation is needed, check your inbox. David will review it before any data is released, changed or deleted.
 ```
 
 The public site does not confirm whether a matching candidate record exists.
@@ -63,6 +65,7 @@ Migration:
 
 ```txt
 database/migrations/003_data_subject_requests.sql
+database/migrations/017_dsar_email_verification.sql
 ```
 
 Table:
@@ -84,6 +87,8 @@ Core fields:
 - due date
 - completion notes
 - IP/user-agent hashes where a privacy salt exists
+- email verification token hash
+- email verification requested, expiry and confirmed timestamps
 - metadata
 
 Statuses:
@@ -122,6 +127,48 @@ The request also receives retention lifecycle fields:
 DSAR records appear in the staged retention review queue. They are not deleted
 or anonymised automatically.
 
+## Email Confirmation
+
+When all of these are configured:
+
+- `OPERATIONS_DB_ENABLED=true`
+- `DATABASE_URL`
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL`
+- `NEXT_PUBLIC_SITE_URL`
+
+the first submission creates a private request with:
+
+- `status='verifying_identity'`
+- `verification_status='pending'`
+- a hashed confirmation token
+- a token expiry, defaulting to 24 hours
+
+The requester receives a link to:
+
+```txt
+/candidate-privacy/request/confirm
+```
+
+That page does not verify the request on page load. The person has to press a
+confirmation button, which posts the token to:
+
+```txt
+/api/data-request/confirm
+```
+
+On success, the system:
+
+- clears the stored token hash
+- marks the request email as verified
+- moves the request to `in_review`
+- writes activity and audit records
+- emails David that a verified request is ready for review
+
+Email confirmation proves control of that inbox only. It is not full legal
+identity verification and it does not release, correct, delete or anonymise
+data.
+
 ## Admin Workflow
 
 Route:
@@ -147,7 +194,8 @@ This is an operations workflow, not a legal automation platform.
 
 Current state:
 
-- Manual verification required.
+- Email confirmation is available when Postgres and Resend are configured.
+- Manual identity review is still required.
 - Default verification status is `pending`.
 - No export is generated automatically.
 - No record is deleted automatically.
@@ -215,7 +263,13 @@ Manual actions may include:
 
 ## Emails
 
-If Resend is configured, the DSAR action sends:
+If Resend and Postgres are configured, the DSAR action sends:
+
+- requester confirmation link
+- admin notification after the requester confirms the email address
+
+If email verification is not available but Resend is configured, the fallback
+manual route can still send:
 
 - admin notification: new data/privacy request received
 - requester confirmation: request received and identity verification may be needed
@@ -227,6 +281,7 @@ RESEND_API_KEY
 CONTACT_TO_EMAIL
 CONTACT_FROM_EMAIL
 NEXT_PUBLIC_SITE_URL
+DSAR_EMAIL_VERIFICATION_TOKEN_HOURS
 ```
 
 The admin email avoids sending unnecessary message detail. David should review the request in the protected admin workflow.
@@ -248,6 +303,10 @@ Before launch:
 - confirm delete is not available without admin review
 - confirm no PII is sent to analytics
 - confirm emails send when Resend is configured
+- confirm confirmation links open the confirmation page without verifying on page load
+- confirm `/api/data-request/confirm` verifies a valid token
+- confirm invalid or expired tokens fail safely
+- confirm verified requests move to admin review, not export/delete
 - confirm emails fail safely when provider is unavailable
 - run `npm run lint`
 - run `npm run typecheck`

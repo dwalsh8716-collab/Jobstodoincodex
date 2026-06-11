@@ -20,6 +20,30 @@ type RequestMeta = {
   userAgent?: string;
 };
 
+type DataSubjectRequestStorageMeta = RequestMeta & {
+  emailVerification?: {
+    tokenHash: string;
+    requestedAt: Date;
+    expiresAt: Date;
+  };
+};
+
+export type DataSubjectRequestEmailVerificationResult = {
+  ok: boolean;
+  reason?:
+    | "backend_unavailable"
+    | "token_not_found"
+    | "token_expired"
+    | "database_write_failed";
+  request?: {
+    id: string;
+    requestType: DataSubjectRequestPayload["requestType"];
+    requesterName: string;
+    requesterEmail: string;
+    requesterPhone?: string | null;
+  };
+};
+
 export { getOperationsBackendStatus } from "./database";
 
 function dateOnly(date: Date) {
@@ -197,7 +221,7 @@ export async function saveContactEnquiryToOperations(
 
 export async function saveDataSubjectRequestToOperations(
   payload: DataSubjectRequestPayload,
-  meta: RequestMeta = {},
+  meta: DataSubjectRequestStorageMeta = {},
 ): Promise<OperationWriteResult> {
   const status = getOperationsBackendStatus();
   const required = status.enabled;
@@ -218,7 +242,7 @@ export async function saveDataSubjectRequestToOperations(
     requesterPhone: payload.phone,
     requesterEmailHash: hashPrivateValue(payload.email.toLowerCase()),
     message: payload.message,
-    status: "received",
+    status: meta.emailVerification ? "verifying_identity" : "received",
     verificationStatus: "pending",
     source: "website_privacy_request",
     dueDays: dataSubjectRequestDueDays,
@@ -229,6 +253,10 @@ export async function saveDataSubjectRequestToOperations(
     dataRetentionUntil: dateOnly(retentionDates.retentionUntil),
     retentionReviewAt: dateOnly(retentionDates.reviewAt),
     retentionStatus: "active",
+    emailVerificationTokenHash: meta.emailVerification?.tokenHash,
+    emailVerificationRequestedAt:
+      meta.emailVerification?.requestedAt.toISOString(),
+    emailVerificationExpiresAt: meta.emailVerification?.expiresAt.toISOString(),
   };
 
   try {
@@ -255,6 +283,9 @@ export async function saveDataSubjectRequestToOperations(
             data_retention_until,
             retention_review_at,
             retention_status,
+            email_verification_token_hash,
+            email_verification_requested_at,
+            email_verification_expires_at,
             metadata
           )
           select
@@ -274,10 +305,25 @@ export async function saveDataSubjectRequestToOperations(
             (data->>'dataRetentionUntil')::date,
             (data->>'retentionReviewAt')::date,
             coalesce(nullif(data->>'retentionStatus', ''), 'active'),
+            nullif(data->>'emailVerificationTokenHash', ''),
+            nullif(data->>'emailVerificationRequestedAt', '')::timestamptz,
+            nullif(data->>'emailVerificationExpiresAt', '')::timestamptz,
             jsonb_build_object(
               'privacyNoticeVersion', data->>'privacyNoticeVersion',
               'manualReviewRequired', true,
-              'noPublicLookupPerformed', true
+              'noPublicLookupPerformed', true,
+              'emailVerification', jsonb_build_object(
+                'required', nullif(data->>'emailVerificationTokenHash', '') is not null,
+                'method', case
+                  when nullif(data->>'emailVerificationTokenHash', '') is not null
+                  then 'confirmation_link'
+                  else 'manual'
+                end,
+                'requestedAt', nullif(data->>'emailVerificationRequestedAt', ''),
+                'expiresAt', nullif(data->>'emailVerificationExpiresAt', ''),
+                'confirmedAt', null,
+                'tokenStored', nullif(data->>'emailVerificationTokenHash', '') is not null
+              )
             )
           from payload
           returning id, request_type, status, verification_status, due_at, requester_email_hash
@@ -340,6 +386,145 @@ export async function saveDataSubjectRequestToOperations(
     });
 
     return { ok: false, required, reason: "database_write_failed" };
+  }
+}
+
+export async function verifyDataSubjectRequestEmailToken(
+  tokenHash: string,
+): Promise<DataSubjectRequestEmailVerificationResult> {
+  const status = getOperationsBackendStatus();
+
+  if (!status.enabled || !status.configured) {
+    return { ok: false, reason: "backend_unavailable" };
+  }
+
+  try {
+    return await runPsqlJson<DataSubjectRequestEmailVerificationResult>(
+      `
+        with payload as (
+          select convert_from(decode(:'payload', 'base64'), 'utf8')::jsonb as data
+        ),
+        matched as (
+          select
+            id,
+            request_type,
+            requester_name,
+            requester_email,
+            requester_phone,
+            email_verification_expires_at,
+            email_verification_confirmed_at
+          from data_subject_requests
+          where email_verification_token_hash = (select data->>'tokenHash' from payload)
+          limit 1
+        ),
+        updated as (
+          update data_subject_requests r
+          set
+            status = case
+              when r.status in ('received', 'verifying_identity') then 'in_review'
+              else r.status
+            end,
+            verification_status = 'verified',
+            verified_at = coalesce(r.verified_at, now()),
+            email_verification_confirmed_at = now(),
+            email_verification_token_hash = null,
+            updated_at = now(),
+            metadata = jsonb_set(
+              coalesce(r.metadata, '{}'::jsonb),
+              '{emailVerification}',
+              coalesce(r.metadata->'emailVerification', '{}'::jsonb) ||
+                jsonb_build_object(
+                  'confirmedAt', now(),
+                  'tokenCleared', true,
+                  'manualReviewRequired', true
+                ),
+              true
+            )
+          from matched m
+          where r.id = m.id
+            and m.email_verification_expires_at >= now()
+            and m.email_verification_confirmed_at is null
+            and r.verification_status <> 'verified'
+          returning
+            r.id,
+            r.request_type,
+            r.requester_name,
+            r.requester_email,
+            r.requester_phone
+        ),
+        activity as (
+          insert into activities (
+            entity_type,
+            entity_id,
+            activity_type,
+            title,
+            description,
+            metadata
+          )
+          select
+            'data_subject_request',
+            id,
+            'dsar_email_verified',
+            'Data/privacy request email verified',
+            'The requester used the confirmation link. Admin review is still required before export, correction, deletion or anonymisation.',
+            jsonb_build_object('requestType', request_type)
+          from updated
+          returning id
+        ),
+        audit as (
+          insert into audit_logs (
+            action,
+            entity_type,
+            entity_id,
+            entity_label,
+            after
+          )
+          select
+            'dsar_email_verified',
+            'data_subject_request',
+            id,
+            'Data/privacy request',
+            jsonb_build_object(
+              'requestType', request_type,
+              'verificationStatus', 'verified',
+              'manualReviewRequired', true
+            )
+          from updated
+          returning id
+        )
+        select jsonb_build_object(
+          'ok', exists(select 1 from updated),
+          'reason', case
+            when exists(select 1 from updated) then null
+            when not exists(select 1 from matched) then 'token_not_found'
+            when exists(
+              select 1
+              from matched
+              where email_verification_expires_at < now()
+                or email_verification_confirmed_at is not null
+            ) then 'token_expired'
+            else 'token_not_found'
+          end,
+          'request', (
+            select jsonb_build_object(
+              'id', id::text,
+              'requestType', request_type,
+              'requesterName', requester_name,
+              'requesterEmail', requester_email,
+              'requesterPhone', requester_phone
+            )
+            from updated
+          )
+        )::text;
+      `,
+      { tokenHash },
+    );
+  } catch (error) {
+    console.error("Operations DSAR email verification failed", {
+      reason: error instanceof Error ? error.message : "unknown",
+    });
+
+    return { ok: false, reason: "database_write_failed" };
   }
 }
 

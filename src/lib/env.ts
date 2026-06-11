@@ -165,6 +165,10 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  DSAR_EMAIL_VERIFICATION_TOKEN_HOURS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   RETENTION_AUDIT_LOG_MONTHS: z.preprocess(
     emptyToUndefined,
     z.string().optional(),

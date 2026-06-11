@@ -47,7 +47,9 @@ export function DataSubjectRequestForm() {
     } catch (error) {
       setStatus("error");
       setMessage(
-        error instanceof Error ? error.message : "The request could not be sent.",
+        error instanceof Error
+          ? error.message
+          : "The request could not be sent.",
       );
     }
   }
@@ -82,7 +84,9 @@ export function DataSubjectRequestForm() {
       <div className="form-trust-panel">
         <h3>What this form will not do</h3>
         <ol>
-          <li>It will not confirm whether your email exists in the database.</li>
+          <li>
+            It will not confirm whether your email exists in the database.
+          </li>
           <li>It will not export private data without identity checks.</li>
           <li>It will not delete records without admin review.</li>
         </ol>
@@ -212,8 +216,8 @@ export function DataSubjectRequestForm() {
         <div className="form-confirmation" role="status">
           <h3>Request received.</h3>
           <p>
-            If the details match records Essential Resourcing holds, David will
-            review the request and come back using the contact details provided.
+            If email confirmation is needed, check your inbox. David will review
+            the request before any data is released, changed or deleted.
           </p>
           <div className="button-row">
             <Link className="text-link" href={candidatePrivacyPath}>

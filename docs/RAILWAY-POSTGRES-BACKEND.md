@@ -116,6 +116,7 @@ database/migrations/006_recruiter_labs_foundation.sql
 database/migrations/007_recruiter_labs_launch_gate.sql
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/009_recruiter_labs_ai_launch_gate.sql
+database/migrations/017_dsar_email_verification.sql
 database/migrations/010_loxo_reference_boundary.sql
 ```
 
@@ -216,7 +217,9 @@ Behaviour:
 
 The candidate data/privacy request form posts through a separate action. When
 Railway/Postgres is enabled, it creates a `data_subject_requests` row, an
-activity record and an audit-log record. It does not look up candidate records
+activity record and an audit-log record. When Resend and the operations database
+are both configured, it stores only a hashed email-confirmation token and sends
+the requester a confirmation link. It does not look up candidate records
 publicly, and it does not export or delete data without manual review.
 
 No PII is sent to analytics.
