@@ -47,6 +47,7 @@ FEATURE_BRANDED_CANDIDATE_PROFILES=false
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
+FEATURE_WHATSAPP_CRM_SYNC=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
 ```
@@ -78,6 +79,8 @@ The staged client route now has:
 - candidate share checks before any profile can render
 - no analytics attributes or event calls on the private route
 - feedback action UI staged behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- WhatsApp CRM sync staged behind `FEATURE_WHATSAPP_CRM_SYNC`
+- official WhatsApp webhook activity stores safe metadata only, not raw message text
 - structured decline reasons for client feedback
 
 Before real client use, it still needs:
@@ -90,6 +93,7 @@ Before real client use, it still needs:
 - David/legal privacy review
 - David approval before `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
 - David approval before `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
+- David approval before `FEATURE_WHATSAPP_CRM_SYNC=true`
 
 ## Sanity And Postgres Boundary
 

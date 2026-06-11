@@ -113,7 +113,13 @@ Not safe yet:
   server env vars are present.
 - Passed: operational contact consent is required for current automated message
   attempts.
+- Passed: WhatsApp CRM sync is separately gated behind
+  `FEATURE_WHATSAPP_CRM_SYNC=false`.
+- Passed: inbound webhook parsing stores safe metadata only and does not store
+  raw WhatsApp message text.
 - Blocked: interview scheduling templates need review and approval before use.
+- Blocked: live webhook-to-candidate matching needs Meta app secret, Railway
+  Postgres migrations, privacy/legal review and David approval before use.
 
 ### Google Safety
 
@@ -161,6 +167,7 @@ FEATURE_BRANDED_CANDIDATE_PROFILES=false
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
+FEATURE_WHATSAPP_CRM_SYNC=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
 ```
@@ -190,6 +197,7 @@ WHATSAPP_BUSINESS_ACCESS_TOKEN=
 WHATSAPP_BUSINESS_VERIFY_TOKEN=
 WHATSAPP_BUSINESS_APP_SECRET=
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
+FEATURE_WHATSAPP_CRM_SYNC=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
 ```

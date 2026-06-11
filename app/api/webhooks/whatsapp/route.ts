@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import {
+  parseWhatsAppWebhookPayload,
+  processParsedWhatsAppWebhookPayload,
   verifyMetaSignature,
   verifyWhatsAppWebhookChallenge,
 } from "@/lib/whatsapp-business/webhook";
@@ -32,29 +34,32 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
 
-  let statusCount = 0;
+  let payload: unknown;
   try {
-    const payload = JSON.parse(rawBody) as {
-      entry?: Array<{
-        changes?: Array<{
-          value?: { statuses?: unknown[] };
-        }>;
-      }>;
-    };
-
-    statusCount =
-      payload.entry?.reduce(
-        (total, entry) =>
-          total +
-          (entry.changes?.reduce(
-            (count, change) => count + (change.value?.statuses?.length || 0),
-            0,
-          ) || 0),
-        0,
-      ) || 0;
+    payload = JSON.parse(rawBody);
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  return NextResponse.json({ ok: true, statusCount });
+  const parsed = parseWhatsAppWebhookPayload(payload);
+  const crmSync = await processParsedWhatsAppWebhookPayload(parsed);
+
+  if (!crmSync.ok) {
+    return NextResponse.json(
+      {
+        ok: false,
+        reason: crmSync.reason,
+        messageCount: parsed.incomingMessages.length,
+        statusCount: parsed.statuses.length,
+      },
+      { status: crmSync.reason === "missing_app_secret" ? 503 : 500 },
+    );
+  }
+
+  return NextResponse.json({
+    ok: crmSync.ok,
+    messageCount: parsed.incomingMessages.length,
+    statusCount: parsed.statuses.length,
+    crmSync,
+  });
 }

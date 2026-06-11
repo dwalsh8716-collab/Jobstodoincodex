@@ -84,6 +84,7 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_SHORTLIST_FEEDBACK_TRACKING: optionalBooleanFlag,
   FEATURE_INTERVIEW_REQUEST_WORKFLOW: optionalBooleanFlag,
   FEATURE_WHATSAPP_INTERVIEW_SCHEDULING: optionalBooleanFlag,
+  FEATURE_WHATSAPP_CRM_SYNC: optionalBooleanFlag,
   FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING: optionalBooleanFlag,
   FEATURE_AI_CANDIDATE_SUMMARIES: optionalBooleanFlag,
   FEATURE_CANDIDATE_TRANSPARENCY_LABS: optionalBooleanFlag,

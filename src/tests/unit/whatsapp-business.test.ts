@@ -1,4 +1,5 @@
 import { createHmac } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { contactFormSchema } from "@/validations/contact";
 import {
@@ -7,6 +8,9 @@ import {
   shouldSendWhatsAppBusinessMessage,
 } from "@/lib/whatsapp-business/client";
 import {
+  getWhatsAppCustomerServiceWindow,
+  parseWhatsAppWebhookPayload,
+  processWhatsAppWebhookPayload,
   verifyMetaSignature,
   verifyWhatsAppWebhookChallenge,
 } from "@/lib/whatsapp-business/webhook";
@@ -127,5 +131,128 @@ describe("whatsapp business cloud api", () => {
     expect(
       verifyMetaSignature({ rawBody, signature: "sha256=bad", appSecret }),
     ).toBe(false);
+  });
+
+  it("parses inbound webhook events without keeping WhatsApp message bodies", () => {
+    process.env.OPERATIONS_PRIVACY_SALT = "privacy-salt";
+
+    const parsed = parseWhatsAppWebhookPayload(
+      {
+        entry: [
+          {
+            changes: [
+              {
+                value: {
+                  messages: [
+                    {
+                      from: "+44 7824 514296",
+                      id: "wamid.inbound",
+                      timestamp: "1781161200",
+                      type: "text",
+                      text: {
+                        body: "This private WhatsApp message must not be stored.",
+                      },
+                    },
+                  ],
+                  statuses: [
+                    {
+                      id: "wamid.outbound",
+                      status: "delivered",
+                      timestamp: "1781161260",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+      new Date("2026-06-11T12:00:00.000Z"),
+    );
+
+    expect(parsed.incomingMessages).toHaveLength(1);
+    expect(parsed.statuses).toHaveLength(1);
+    expect(parsed.incomingMessages[0]).toMatchObject({
+      providerMessageId: "wamid.inbound",
+      messageType: "text",
+      hasText: true,
+      responsePolicy: "freeform_allowed",
+    });
+    expect(parsed.incomingMessages[0]?.fromPhoneHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(parsed.statuses[0]).toMatchObject({
+      providerMessageId: "wamid.outbound",
+      status: "delivered",
+    });
+    expect(JSON.stringify(parsed)).not.toContain("private WhatsApp message");
+  });
+
+  it("marks replies outside the WhatsApp 24-hour window as template-only", () => {
+    const receivedAt = new Date("2026-06-11T08:00:00.000Z");
+
+    expect(
+      getWhatsAppCustomerServiceWindow(
+        receivedAt,
+        new Date("2026-06-12T07:59:00.000Z"),
+      ),
+    ).toMatchObject({
+      canReplyWithFreeform: true,
+      responsePolicy: "freeform_allowed",
+    });
+
+    expect(
+      getWhatsAppCustomerServiceWindow(
+        receivedAt,
+        new Date("2026-06-12T08:01:00.000Z"),
+      ),
+    ).toMatchObject({
+      canReplyWithFreeform: false,
+      responsePolicy: "approved_template_required",
+    });
+  });
+
+  it("keeps CRM sync disabled until the explicit server-side flag is enabled", async () => {
+    delete process.env.FEATURE_WHATSAPP_CRM_SYNC;
+
+    await expect(
+      processWhatsAppWebhookPayload({
+        entry: [
+          {
+            changes: [{ value: { messages: [{ id: "wamid.test" }] } }],
+          },
+        ],
+      }),
+    ).resolves.toMatchObject({
+      ok: true,
+      enabled: false,
+      attempted: false,
+      reason: "feature_disabled",
+    });
+  });
+
+  it("requires Meta app secret before live CRM sync can run", async () => {
+    process.env.FEATURE_WHATSAPP_CRM_SYNC = "true";
+    process.env.WHATSAPP_BUSINESS_ENABLED = "true";
+    delete process.env.WHATSAPP_BUSINESS_APP_SECRET;
+
+    await expect(
+      processWhatsAppWebhookPayload({ entry: [] }),
+    ).resolves.toMatchObject({
+      ok: false,
+      enabled: true,
+      attempted: false,
+      reason: "missing_app_secret",
+    });
+  });
+
+  it("keeps the CRM sync migration metadata-only", () => {
+    const migration = readFileSync(
+      "database/migrations/014_whatsapp_crm_sync.sql",
+      "utf8",
+    );
+
+    expect(migration).toContain("customer_service_window_expires_at");
+    expect(migration).toContain("matched_candidate_id");
+    expect(migration).toContain("'received'");
+    expect(migration).not.toMatch(/message_body|raw_message|message_text/i);
   });
 });

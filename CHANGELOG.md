@@ -5,6 +5,62 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-06-11 - WhatsApp CRM Webhook Sync Staged
+
+### Summary
+
+Staged a safer WhatsApp Business webhook layer for future Recruiter Labs CRM
+activity sync. It is disabled by default and does not enable live candidate
+messaging, Loxo write-back or public WhatsApp automation.
+
+### Public Website Changes
+
+- No public page, navigation, CTA or visual design change.
+- Direct WhatsApp links remain unchanged.
+
+### CMS Changes
+
+- No Sanity schema change.
+- Private WhatsApp webhook events remain outside Sanity.
+
+### Form Changes
+
+- No public form behaviour changed.
+- Existing WhatsApp Business confirmation logic remains disabled unless the
+  existing server env vars are configured.
+
+### SEO Changes
+
+- No sitemap, metadata, schema or indexation change.
+- Recruiter Labs remains private and noindexed by policy.
+
+### Security / Privacy Changes
+
+- Added `FEATURE_WHATSAPP_CRM_SYNC=false`.
+- Added inbound WhatsApp webhook parsing without storing raw message text.
+- Added Meta app-secret requirement before live CRM sync can run.
+- Added conservative phone matching: exact hashed phone match only, one
+  candidate only, otherwise no match.
+- Added WhatsApp 24-hour customer service window metadata.
+
+### Recruiter Labs Changes
+
+- Added a private migration for inbound/status WhatsApp metadata.
+- Candidate activity is created only when a single safe private match exists.
+- Loxo write-back remains blocked until a separate approved integration exists.
+
+### Manual Actions For David
+
+- Keep `FEATURE_WHATSAPP_CRM_SYNC=false` until Meta, Railway Postgres and
+  privacy/legal review are complete.
+- Approve any live webhook-to-candidate matching before it is switched on.
+- Use approved WhatsApp templates outside the 24-hour service window.
+
+### Rollback Note
+
+- Revert the webhook sync staging commit and keep
+  `FEATURE_WHATSAPP_CRM_SYNC=false`. No public website behaviour depends on it.
+
 ## 2026-06-11 - CV Anonymization Drafts Staged
 
 ### Summary

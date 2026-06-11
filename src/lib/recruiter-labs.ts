@@ -43,6 +43,12 @@ export const recruiterLabsFlagDefinitions = [
       "Future transactional interview logistics through WhatsApp Business.",
   },
   {
+    name: "FEATURE_WHATSAPP_CRM_SYNC",
+    label: "WhatsApp CRM sync",
+    description:
+      "Future official WhatsApp webhook sync into private candidate activity records.",
+  },
+  {
     name: "FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING",
     label: "Google Meet interview scheduling",
     description:

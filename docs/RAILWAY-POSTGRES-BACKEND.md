@@ -313,6 +313,7 @@ WhatsApp Business follow-up:
 
 ```txt
 database/migrations/002_whatsapp_business_messages.sql
+database/migrations/014_whatsapp_crm_sync.sql
 docs/whatsapp-business-cloud-api.md
 ```
 

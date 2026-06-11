@@ -84,6 +84,7 @@ notes in feature flag values.
 | `FEATURE_SHORTLIST_FEEDBACK_TRACKING`      | `false` | No                   | Future client shortlist feedback tracking.                 |
 | `FEATURE_INTERVIEW_REQUEST_WORKFLOW`       | `false` | No                   | Future interview request workflow.                         |
 | `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`    | `false` | No                   | Future WhatsApp interview logistics.                       |
+| `FEATURE_WHATSAPP_CRM_SYNC`                | `false` | No                   | Future WhatsApp webhook-to-candidate activity sync.        |
 | `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING` | `false` | No                   | Future Google Calendar and Meet orchestration.             |
 | `FEATURE_AI_CANDIDATE_SUMMARIES`           | `false` | No                   | Future AI-assisted candidate summary drafts.               |
 | `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                    |
@@ -112,6 +113,12 @@ This is not a secret and must not contain a token.
 `FEATURE_SHORTLIST_FEEDBACK_TRACKING` must stay `false` until the client portal,
 Postgres, audit proof, candidate-sharing wording and David approval are all in
 place. When enabled, feedback goes to private Postgres records, not GA4.
+
+`FEATURE_WHATSAPP_CRM_SYNC` must stay `false` until the official Meta webhook is
+configured with `WHATSAPP_BUSINESS_APP_SECRET`, Railway Postgres is migrated,
+the 24-hour WhatsApp service-window process is approved, and privacy/legal
+wording has been reviewed. When enabled, the webhook stores status/activity
+metadata only. It does not store raw WhatsApp message text or raw phone numbers.
 
 ## Salary Guide Gate
 
