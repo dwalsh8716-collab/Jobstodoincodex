@@ -29,7 +29,14 @@ type StoredConsentPreferences = ConsentPreferences & {
   source?: "custom-banner" | "legacy";
 };
 
-const analyticsCookiePrefixes = ["_ga", "_gid", "_gat", "_hj", "_clck", "_clsk"];
+const analyticsCookiePrefixes = [
+  "_ga",
+  "_gid",
+  "_gat",
+  "_hj",
+  "_clck",
+  "_clsk",
+];
 const marketingCookiePrefixes = [
   "_gcl",
   "_fbp",
@@ -45,11 +52,11 @@ const marketingCookiePrefixes = [
 function hasTracking(config: AnalyticsConfig) {
   return Boolean(
     config.gaId ||
-      config.gtmId ||
-      config.linkedInPartnerId ||
-      config.metaPixelId ||
-      config.clarityId ||
-      config.hotjarId,
+    config.gtmId ||
+    config.linkedInPartnerId ||
+    config.metaPixelId ||
+    config.clarityId ||
+    config.hotjarId,
   );
 }
 
@@ -359,7 +366,13 @@ export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
   }, [preferences]);
 
   if (!hasTracking(config)) return null;
-  if (pathname.startsWith("/cms") || pathname.startsWith("/studio")) return null;
+  if (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/cms") ||
+    pathname.startsWith("/studio")
+  ) {
+    return null;
+  }
 
   function savePreferences(nextPreferences: ConsentPreferences) {
     storePreferences(nextPreferences);

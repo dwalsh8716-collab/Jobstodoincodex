@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 const emptyToUndefined = (value: unknown) => (value === "" ? undefined : value);
+const optionalBooleanFlag = z.preprocess(
+  emptyToUndefined,
+  z.enum(["true", "false"]).optional(),
+);
 
 const publicEnvSchema = z.object({
   NEXT_PUBLIC_SITE_URL: z.preprocess(
@@ -64,6 +68,16 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  FEATURE_LABS_ENABLED: optionalBooleanFlag,
+  FEATURE_SALARY_GUIDE_GATE: optionalBooleanFlag,
+  FEATURE_SALARY_BENCHMARK_ASSET: optionalBooleanFlag,
+  FEATURE_MARKET_MAPPING: optionalBooleanFlag,
+  FEATURE_BAD_HIRE_CALCULATOR: optionalBooleanFlag,
+  FEATURE_FUNCTIONAL_MATRIX: optionalBooleanFlag,
+  FEATURE_CLIENT_SHORTLIST_PORTAL: optionalBooleanFlag,
+  FEATURE_AI_BRIEF_BUILDER: optionalBooleanFlag,
+  FEATURE_INTERIM_BENCH_PORTAL: optionalBooleanFlag,
+  FEATURE_LIVE_MARKET_DASHBOARDS: optionalBooleanFlag,
   SANITY_PROJECT_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_DATASET: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_API_VERSION: z.preprocess(emptyToUndefined, z.string().optional()),

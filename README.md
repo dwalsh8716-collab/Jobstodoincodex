@@ -72,6 +72,19 @@ Optional tracking:
 - `NEXT_PUBLIC_WHATSAPP_NUMBER`
 - `NEXT_PUBLIC_WHATSAPP_DEFAULT_MESSAGE`
 
+Optional private Labs flags:
+
+- `FEATURE_LABS_ENABLED`
+- `FEATURE_SALARY_GUIDE_GATE`
+- `FEATURE_SALARY_BENCHMARK_ASSET`
+- `FEATURE_MARKET_MAPPING`
+- `FEATURE_BAD_HIRE_CALCULATOR`
+- `FEATURE_FUNCTIONAL_MATRIX`
+- `FEATURE_CLIENT_SHORTLIST_PORTAL`
+- `FEATURE_AI_BRIEF_BUILDER`
+- `FEATURE_INTERIM_BENCH_PORTAL`
+- `FEATURE_LIVE_MARKET_DASHBOARDS`
+
 Optional private operations database:
 
 - `DATABASE_URL`
@@ -147,6 +160,7 @@ docs/sanity-editor-guide.md
 docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/google-calendar-booking-setup.md
+docs/essential-resourcing-labs.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

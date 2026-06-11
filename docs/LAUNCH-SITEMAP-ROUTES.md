@@ -42,7 +42,7 @@ The candidate journey still exists, but it does not dominate the header. Candida
 
 `app/sitemap.ts` includes launch pages, service pages, published insights, published case studies, published salary snapshots and live jobs. Draft jobs, draft proof and draft salary data stay out of the sitemap.
 
-`app/robots.ts` references the sitemap and blocks Studio, CMS login and API routes from crawler discovery.
+`app/robots.ts` references the sitemap and blocks Studio, CMS login, admin, Labs and API routes from crawler discovery.
 
 ## Future Pages To Add Later
 

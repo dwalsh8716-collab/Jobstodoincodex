@@ -159,6 +159,33 @@ If the booking page changes:
 Leave the booking link blank to hide booking CTAs. WhatsApp, email and the
 contact form will still work.
 
+## Essential Resourcing Labs Ideas
+
+Labs Ideas are for private feature planning only. They do not create public
+pages and they are not queried by the public website.
+
+Use Labs Ideas for:
+
+- future feature ideas
+- target user notes
+- commercial purpose
+- privacy and data-risk notes
+- dependencies
+- related GitHub issues
+- related public content
+
+Do not use Labs Ideas for:
+
+- CV text
+- candidate notes
+- client contact records
+- WhatsApp message content
+- DSAR records
+- secrets or access tokens
+
+If a Labs idea needs private operational state later, that belongs in Postgres
+behind the protected admin layer, not in Sanity planning content.
+
 Invite another editor:
 
 1. Go to `https://www.sanity.io/manage`.

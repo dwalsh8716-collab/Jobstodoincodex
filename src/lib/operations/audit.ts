@@ -42,6 +42,7 @@ export const auditActions = [
   "logout",
   "operations_dashboard_viewed",
   "audit_log_viewed",
+  "labs_dashboard_viewed",
 ] as const;
 
 export type AuditAction = (typeof auditActions)[number];
@@ -57,6 +58,7 @@ export const auditEntityTypes = [
   "admin_user",
   "auth_session",
   "admin_dashboard",
+  "labs_dashboard",
   "audit_log",
   "enquiry",
 ] as const;

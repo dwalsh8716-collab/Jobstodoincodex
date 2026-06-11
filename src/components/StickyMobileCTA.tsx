@@ -10,7 +10,11 @@ import { siteConfig } from "@/lib/site";
 export function StickyMobileCTA() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/cms") || pathname.startsWith("/studio")) {
+  if (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/cms") ||
+    pathname.startsWith("/studio")
+  ) {
     return null;
   }
 

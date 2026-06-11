@@ -104,6 +104,19 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
+        .title("Private Labs")
+        .icon(RocketIcon)
+        .child(
+          S.list()
+            .title("Private Labs")
+            .items([
+              S.documentTypeListItem("labsIdea")
+                .title("Labs Ideas")
+                .icon(RocketIcon),
+            ]),
+        ),
+      S.divider(),
+      S.listItem()
         .title("People")
         .icon(UserIcon)
         .child(

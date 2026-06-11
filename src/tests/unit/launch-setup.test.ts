@@ -29,7 +29,7 @@ describe("launch search setup", () => {
     expect(rules.rules).toMatchObject({
       userAgent: "*",
       allow: "/",
-      disallow: ["/studio", "/cms", "/admin", "/api"],
+      disallow: ["/studio", "/cms", "/admin", "/labs", "/api"],
     });
   });
 });

@@ -1612,6 +1612,266 @@ const redirect = defineType({
   },
 });
 
+const labsIdea = defineType({
+  name: "labsIdea",
+  title: "Labs Idea",
+  type: "document",
+  icon: RocketIcon,
+  fields: [
+    defineField({
+      name: "title",
+      title: "Feature idea",
+      type: "string",
+      description:
+        "Short working title. Planning only, not a public page title.",
+      validation: requiredText("Add a feature idea title."),
+    }),
+    defineField({
+      name: "slug",
+      title: "Internal slug",
+      type: "slug",
+      description:
+        "Internal planning slug only. This does not create a public URL.",
+      options: { source: "title", maxLength: 96 },
+    }),
+    defineField({
+      name: "status",
+      title: "Labs status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Idea", value: "idea" },
+          { title: "Researching", value: "researching" },
+          { title: "Scoped", value: "scoped" },
+          { title: "In build", value: "in_build" },
+          { title: "Private preview", value: "private_preview" },
+          { title: "Ready for launch review", value: "ready_to_launch" },
+          { title: "Launched", value: "launched" },
+          { title: "Parked", value: "parked" },
+          { title: "Rejected", value: "rejected" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "idea",
+      validation: requiredText("Choose the Labs status."),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "string",
+      options: {
+        list: [
+          { title: "Salary intelligence", value: "salary_intelligence" },
+          { title: "Client portal", value: "client_portal" },
+          { title: "Candidate portal", value: "candidate_portal" },
+          { title: "Lead generation", value: "lead_generation" },
+          { title: "AI support", value: "ai_support" },
+          { title: "Market intelligence", value: "market_intelligence" },
+          { title: "Strategic Interim", value: "strategic_interim" },
+          { title: "Digital PR data product", value: "digital_pr" },
+        ],
+      },
+    }),
+    defineField({
+      name: "summary",
+      title: "Plain-English summary",
+      type: "text",
+      rows: 3,
+      description:
+        "Explain the idea without hype. Do not include private client, candidate or CV detail.",
+      validation: (rule) => rule.max(320),
+    }),
+    stringListField(
+      "targetAudience",
+      "Target user",
+      "Who this is for, such as hiring leader, candidate, retained client or David.",
+    ),
+    defineField({
+      name: "commercialPurpose",
+      title: "Commercial purpose",
+      type: "text",
+      rows: 3,
+      description: "Why this could matter commercially.",
+    }),
+    defineField({
+      name: "problemSolved",
+      title: "Problem solved",
+      type: "text",
+      rows: 3,
+      description: "The practical problem this feature would reduce.",
+    }),
+    textListField(
+      "proposedUserJourney",
+      "Proposed user journey",
+      "Planning notes only. Keep it generic and privacy-safe.",
+    ),
+    stringListField(
+      "dependencies",
+      "Dependencies",
+      "Flags, routes, data models, integrations, legal review or manual setup needed first.",
+    ),
+    defineField({
+      name: "dataRequired",
+      title: "Data required",
+      type: "text",
+      rows: 3,
+      description:
+        "Use generic data categories only. Do not paste private candidate, client or contact data.",
+    }),
+    defineField({
+      name: "privacyRisk",
+      title: "Data/privacy risk",
+      type: "string",
+      options: {
+        list: [
+          { title: "Low", value: "low" },
+          { title: "Medium", value: "medium" },
+          { title: "High", value: "high" },
+          { title: "Critical", value: "critical" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "medium",
+    }),
+    defineField({
+      name: "implementationComplexity",
+      title: "Implementation complexity",
+      type: "string",
+      options: {
+        list: [
+          { title: "Low", value: "low" },
+          { title: "Medium", value: "medium" },
+          { title: "High", value: "high" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "medium",
+    }),
+    defineField({
+      name: "suggestedPhase",
+      title: "Suggested phase",
+      type: "string",
+      description: "Example: discovery, private beta, post-launch growth.",
+    }),
+    defineField({
+      name: "publicLaunchReady",
+      title: "Ready for public launch review?",
+      type: "boolean",
+      description:
+        "This does not publish anything. It only marks the idea for a separate launch review.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "featureFlagName",
+      title: "Feature flag name",
+      type: "string",
+      description:
+        "Server-side env flag that would gate the feature. Do not use NEXT_PUBLIC for private Labs flags.",
+      options: {
+        list: [
+          { title: "FEATURE_LABS_ENABLED", value: "FEATURE_LABS_ENABLED" },
+          {
+            title: "FEATURE_SALARY_GUIDE_GATE",
+            value: "FEATURE_SALARY_GUIDE_GATE",
+          },
+          {
+            title: "FEATURE_SALARY_BENCHMARK_ASSET",
+            value: "FEATURE_SALARY_BENCHMARK_ASSET",
+          },
+          { title: "FEATURE_MARKET_MAPPING", value: "FEATURE_MARKET_MAPPING" },
+          {
+            title: "FEATURE_BAD_HIRE_CALCULATOR",
+            value: "FEATURE_BAD_HIRE_CALCULATOR",
+          },
+          {
+            title: "FEATURE_FUNCTIONAL_MATRIX",
+            value: "FEATURE_FUNCTIONAL_MATRIX",
+          },
+          {
+            title: "FEATURE_CLIENT_SHORTLIST_PORTAL",
+            value: "FEATURE_CLIENT_SHORTLIST_PORTAL",
+          },
+          {
+            title: "FEATURE_AI_BRIEF_BUILDER",
+            value: "FEATURE_AI_BRIEF_BUILDER",
+          },
+          {
+            title: "FEATURE_INTERIM_BENCH_PORTAL",
+            value: "FEATURE_INTERIM_BENCH_PORTAL",
+          },
+          {
+            title: "FEATURE_LIVE_MARKET_DASHBOARDS",
+            value: "FEATURE_LIVE_MARKET_DASHBOARDS",
+          },
+        ],
+      },
+    }),
+    defineField({
+      name: "relatedRoute",
+      title: "Related route if built",
+      type: "string",
+      description:
+        "Internal path only, and only when the route is already protected or approved.",
+    }),
+    defineField({
+      name: "relatedGitHubIssue",
+      title: "Related GitHub issue",
+      type: "url",
+      description: "Paste the GitHub issue URL for the build task.",
+    }),
+    referenceListField(
+      "relatedSanityContent",
+      "Related Sanity content",
+      ["page", "service", "job", "insight", "salarySnapshot", "caseStudy"],
+      "Optional public content linked to the idea. Do not use this for private candidate or client records.",
+    ),
+    stringListField(
+      "relatedDatabaseModels",
+      "Related database models",
+      "Example: applications, audit_logs, client_shortlists. Planning notes only.",
+    ),
+    defineField({
+      name: "notes",
+      title: "Notes",
+      type: "text",
+      rows: 5,
+      description:
+        "Planning notes only. Never paste CV text, client contacts, private candidate notes or secrets.",
+    }),
+    defineField({
+      name: "owner",
+      title: "Owner",
+      type: "string",
+      initialValue: "David Walsh",
+    }),
+    defineField({
+      name: "createdAt",
+      title: "Created at",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      name: "updatedAt",
+      title: "Updated at",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+    }),
+  ],
+  preview: {
+    select: {
+      title: "title",
+      status: "status",
+      category: "category",
+    },
+    prepare({ title, status, category }) {
+      return {
+        title,
+        subtitle: [status, category].filter(Boolean).join(" · "),
+      };
+    },
+  },
+});
+
 export const schemaTypes = [
   siteSettings,
   homePage,
@@ -1628,4 +1888,5 @@ export const schemaTypes = [
   ctaBlock,
   proofItem,
   redirect,
+  labsIdea,
 ];

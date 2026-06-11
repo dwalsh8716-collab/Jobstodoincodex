@@ -33,7 +33,8 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - Users can accept, reject, manage and reopen cookie preferences.
 - GTM suppresses the direct GA4 script so the site does not double-load GA4 by default.
 - `sitemap.xml` is dynamic and includes launch pages, service pages, published insights, published proof, published salary snapshots and live jobs.
-- `robots.txt` points to the sitemap and blocks `/studio`, `/cms` and `/api`.
+- `robots.txt` points to the sitemap and blocks `/studio`, `/cms`, `/admin`,
+  `/labs` and `/api`.
 - Organisation / ProfessionalService schema, David Walsh Person schema, WebSite schema, breadcrumbs, service schema, article schema, FAQ schema, live JobPosting schema and visible ItemList schema are in place.
 - Privacy and cookie pages explain that analytics is environment-controlled and consent-gated.
 - Contact page and footer include business identity, email and service-area signals without faking an address.
