@@ -12,6 +12,7 @@ export function StickyMobileCTA() {
 
   if (
     pathname.startsWith("/admin") ||
+    pathname.startsWith("/client") ||
     pathname.startsWith("/cms") ||
     pathname.startsWith("/studio")
   ) {

@@ -84,6 +84,14 @@ Optional private Labs flags:
 - `FEATURE_AI_BRIEF_BUILDER`
 - `FEATURE_INTERIM_BENCH_PORTAL`
 - `FEATURE_LIVE_MARKET_DASHBOARDS`
+- `FEATURE_RECRUITER_LABS_ENABLED`
+- `FEATURE_CLIENT_PRESENTATION_PORTAL`
+- `FEATURE_BRANDED_CANDIDATE_PROFILES`
+- `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- `FEATURE_INTERVIEW_REQUEST_WORKFLOW`
+- `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
+- `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING`
+- `FEATURE_AI_CANDIDATE_SUMMARIES`
 
 Optional private operations database:
 
@@ -161,6 +169,7 @@ docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/google-calendar-booking-setup.md
 docs/essential-resourcing-labs.md
+docs/recruiter-labs-client-pipeline.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

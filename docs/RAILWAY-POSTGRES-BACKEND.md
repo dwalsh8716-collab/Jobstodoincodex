@@ -59,6 +59,8 @@ Added:
 - Candidate data/privacy request hook that can save DSAR requests to Postgres once Railway is configured.
 - Central audit logging utility and protected read-only audit view.
 - Review-first retention engine and admin retention queue.
+- Recruiter Labs foundation tables for future private shortlists, hashed magic
+  link access, shortlist feedback and interview requests.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -243,6 +245,8 @@ Implemented:
 - enriched append-only audit logs with actor, action, entity, metadata and hashed request context
 - dry-run retention check and review-first apply script
 - no unauthenticated retention/cron endpoint
+- no public Recruiter Labs client portal until hashed-token validation, expiry,
+  revocation, consent and audit logging are complete
 - server-side form validation remains in place
 - form spam/timing/honeypot controls remain in place
 

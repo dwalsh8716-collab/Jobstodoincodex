@@ -48,6 +48,8 @@ Railway Postgres is the staged private operations store for:
 - audit logs
 - admin workflow records
 - WhatsApp Business message status logs
+- Recruiter Labs shortlists, hashed access tokens, feedback and interview
+  requests
 
 No Sanity schema was found for private candidate records, applications, CV files, DSAR requests, audit logs, private consent records or WhatsApp messaging logs.
 
@@ -112,6 +114,11 @@ No CV upload flow exists on the public website.
 - DSAR requests
 - audit logs
 - admin workflow records
+- Recruiter Labs shortlists
+- hashed client access tokens
+- branded candidate profile review state
+- shortlist feedback
+- interview requests
 
 ## Public Job To Private Application Pattern
 

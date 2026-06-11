@@ -368,6 +368,7 @@ export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
   if (!hasTracking(config)) return null;
   if (
     pathname.startsWith("/admin") ||
+    pathname.startsWith("/client") ||
     pathname.startsWith("/cms") ||
     pathname.startsWith("/studio")
   ) {

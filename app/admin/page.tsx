@@ -130,6 +130,12 @@ export default async function AdminPage() {
             <Link className="button button-secondary" href="/admin/labs">
               Labs
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/recruiter-labs"
+            >
+              Recruiter Labs
+            </Link>
             <Link className="button button-secondary" href="/admin/audit">
               Audit log
             </Link>

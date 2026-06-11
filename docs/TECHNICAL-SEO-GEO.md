@@ -30,7 +30,7 @@ List schema is deliberately guarded. Draft proof, closed roles and unvalidated s
 
 - `app/sitemap.ts` includes launch pages, services, published insights, published case studies, published salary snapshots and live jobs.
 - `app/robots.ts` allows the public site and blocks `/studio`, `/cms`,
-  `/admin`, `/labs` and `/api`.
+  `/admin`, `/labs`, `/client` and `/api`.
 - `/rss.xml` lists published insights.
 - `/llms.txt` and `/llms-full.txt` expose a concise AI-readable site map and expanded content map.
 
