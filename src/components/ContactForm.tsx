@@ -181,12 +181,15 @@ export function ContactForm({
       ) : null}
       {type !== "client" ? (
         <div className="form-row">
-          <label htmlFor={`${type}-linkedin`}>LinkedIn URL</label>
+          <label htmlFor={`${type}-linkedin`}>
+            LinkedIn or profile URL{" "}
+            <span className="optional-label">optional</span>
+          </label>
           <input
             id={`${type}-linkedin`}
             name="linkedin"
             type="url"
-            placeholder="https://www.linkedin.com/in/..."
+            placeholder="https://www.linkedin.com/in/... or portfolio URL"
             maxLength={240}
           />
         </div>
@@ -221,6 +224,13 @@ export function ContactForm({
           rows={6}
           minLength={10}
           maxLength={2000}
+          placeholder={
+            type === "job"
+              ? "A few lines on why this role looks relevant. No essay needed."
+              : type === "candidate"
+                ? "Tell David what you are looking for, location/hybrid needs and any salary context you are comfortable sharing."
+                : "Share the useful context behind the hire."
+          }
           required
         />
       </div>
@@ -255,10 +265,7 @@ export function ContactForm({
           {candidateMode ? (
             <>
               {candidateConsentCopy(type)} I have read the{" "}
-              <Link href={candidatePrivacyPath}>
-                Candidate Privacy Notice
-              </Link>
-              .
+              <Link href={candidatePrivacyPath}>Candidate Privacy Notice</Link>.
             </>
           ) : (
             "I agree to be contacted about this enquiry using the details I've provided, including WhatsApp if I select it as my preferred contact method. Nothing is shared without permission."
@@ -269,7 +276,9 @@ export function ContactForm({
         <p className="form-note">
           CV upload is intentionally not enabled until secure storage is
           configured. Add a LinkedIn URL or note and David can request the CV
-          safely. <Link href={candidatePrivacyPath}>How candidate data is handled</Link>.
+          safely.{" "}
+          <Link href={candidatePrivacyPath}>How candidate data is handled</Link>
+          .
         </p>
       ) : null}
       <button

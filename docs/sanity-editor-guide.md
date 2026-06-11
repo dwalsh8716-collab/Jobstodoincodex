@@ -106,8 +106,20 @@ Add a job:
 
 1. Open Recruitment.
 2. Open Jobs.
-3. Add title, slug, salary, location, hybrid status and role details.
-4. Keep status as draft until the role is genuinely live.
+3. Add title, slug, salary or rate, salary status, location, hybrid status and
+   role details.
+4. Add the real hybrid rhythm, location expectation, must-haves,
+   nice-to-haves, interview process and what happens after applying.
+5. Keep status as draft until the salary/rate, location, hybrid setup and
+   process are clear enough for candidates.
+
+Do not publish a role with:
+
+- hidden or unverified salary
+- vague hybrid wording
+- no interview-process detail
+- no clear data-handling note
+- "Rockstar", "Ninja" or other recruitment nonsense
 
 Publish an insight:
 

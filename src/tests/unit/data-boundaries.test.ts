@@ -56,6 +56,8 @@ describe("data boundary rules", () => {
       expect.arrayContaining([
         "candidateEmail",
         "candidatePhone",
+        "candidateLinkedInUrl",
+        "candidateProfileUrl",
         "cvFile",
         "coverLetter",
         "clientShortlist",

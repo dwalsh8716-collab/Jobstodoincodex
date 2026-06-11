@@ -33,7 +33,9 @@ export function InsightCard({ insight }: { insight: Insight }) {
 export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
     <article className="card lift-card">
-      <span className="tag">{caseStudy.status === "draft" ? "Proof being checked" : "Case study"}</span>
+      <span className="tag">
+        {caseStudy.status === "draft" ? "Proof being checked" : "Case study"}
+      </span>
       <h3>{caseStudy.title}</h3>
       <p>
         <strong>Role:</strong> {caseStudy.roleHired}
@@ -49,11 +51,17 @@ export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
 export function JobCard({ job }: { job: Job }) {
   return (
     <article className="card lift-card">
-      <span className="tag">{job.status === "live" ? "Live role" : `${job.status} role`}</span>
+      <span className="tag">
+        {job.status === "live" ? "Live role" : `${job.status} role`}
+      </span>
       <h3>{job.title}</h3>
       <p>{job.summary}</p>
       <p className="meta">
         {job.location} · {job.hybrid} · {job.salary}
+      </p>
+      <p className="meta">
+        Salary: {job.salaryStatus}. Process:{" "}
+        {job.interviewProcess.length ? "shown" : "not ready"}
       </p>
       <Link className="text-link" href={`/jobs/${job.slug}`}>
         View role

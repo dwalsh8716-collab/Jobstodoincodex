@@ -37,11 +37,13 @@ Railway Postgres is the staged private operations store for:
 - enquiries
 - candidate records
 - application records
+- LinkedIn/profile URLs submitted through candidate forms
 - private client/contact records
 - CV/file metadata
 - consent records
 - retention dates
 - statuses
+- candidate communication preferences
 - tasks
 - notes
 - DSAR requests
@@ -88,6 +90,7 @@ No CV upload flow exists on the public website.
 - CV file URLs
 - cover letters
 - private job application records
+- LinkedIn/profile URLs submitted through forms
 - private client contact records
 - private hiring briefs containing named contacts
 - private internal notes
@@ -107,6 +110,7 @@ No CV upload flow exists on the public website.
 - application records
 - private client/contact records
 - CV metadata
+- LinkedIn/profile URLs submitted through candidate/application forms
 - consent records
 - retention dates
 - statuses
@@ -116,6 +120,7 @@ No CV upload flow exists on the public website.
 - DSAR requests
 - audit logs
 - admin workflow records
+- candidate status updates
 - Recruiter Labs shortlists
 - hashed client access tokens
 - branded candidate profile review state

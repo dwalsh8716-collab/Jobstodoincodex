@@ -1157,11 +1157,51 @@ const job = defineType({
       validation: requiredText("Add a slug."),
     }),
     defineField({ name: "salary", title: "Salary", type: "string" }),
+    defineField({
+      name: "salaryStatus",
+      title: "Salary status",
+      type: "string",
+      description:
+        "Choose how confident the public salary/rate information is. Do not publish a live role while this is unverified.",
+      options: {
+        list: [
+          { title: "Verified", value: "verified" },
+          { title: "Indicative", value: "indicative" },
+          { title: "Unverified", value: "unverified" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "unverified",
+    }),
+    defineField({
+      name: "salaryTransparencyNote",
+      title: "Salary transparency note",
+      type: "text",
+      rows: 2,
+      description:
+        "Plain-English note for candidates. Example: salary range confirmed with the client, or indicative pending final sign-off.",
+    }),
     defineField({ name: "location", title: "Location", type: "string" }),
     defineField({
       name: "hybridRemote",
       title: "Hybrid / remote",
       type: "string",
+    }),
+    defineField({
+      name: "hybridReality",
+      title: "Hybrid reality",
+      type: "text",
+      rows: 2,
+      description:
+        "The actual office rhythm. Avoid vague wording such as flexible unless David has confirmed what it means.",
+    }),
+    defineField({
+      name: "locationExpectation",
+      title: "Location expectation",
+      type: "text",
+      rows: 2,
+      description:
+        "Explain office, client-site or travel expectations clearly before publishing.",
     }),
     defineField({
       name: "employmentType",
@@ -1184,8 +1224,28 @@ const job = defineType({
     }),
     portableBodyField(),
     stringListField("responsibilities", "Responsibilities"),
+    stringListField("mustHaves", "Must-haves"),
+    stringListField("niceToHaves", "Nice-to-haves"),
     stringListField("requirements", "Requirements"),
     stringListField("benefits", "Benefits"),
+    stringListField("interviewProcess", "Interview process"),
+    stringListField("applicationProcess", "What happens after applying"),
+    defineField({
+      name: "candidateDataHandling",
+      title: "Candidate data handling note",
+      type: "text",
+      rows: 3,
+      description:
+        "Public-safe note only. Do not paste CV text, application messages or private candidate details.",
+    }),
+    defineField({
+      name: "quickQuestionRoute",
+      title: "Quick question route",
+      type: "text",
+      rows: 2,
+      description:
+        "How candidates can ask David a quick question, usually WhatsApp or email.",
+    }),
     defineField({
       name: "applicationEmail",
       title: "Application email",

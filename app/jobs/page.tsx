@@ -3,6 +3,7 @@ import { JobCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { candidateJobPageStandards } from "@/lib/candidate-transparency";
 import { isJobLive, jobs } from "@/lib/content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
@@ -96,6 +97,23 @@ export default function JobsPage() {
               especially when the brief is sensitive.
             </p>
           </article>
+        </div>
+      </section>
+      <section className="section surface">
+        <div className="container section-heading">
+          <p className="eyebrow">Candidate standards</p>
+          <h2>What a live role should tell you.</h2>
+          <p className="lede">
+            A job advert should not make you guess the salary, office rhythm or
+            process before you decide whether it is worth a conversation.
+          </p>
+        </div>
+        <div className="container grid grid-3">
+          {candidateJobPageStandards.slice(0, 6).map((standard) => (
+            <article className="card" key={standard}>
+              <p>{standard}</p>
+            </article>
+          ))}
         </div>
       </section>
       <CTASection

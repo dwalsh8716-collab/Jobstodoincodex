@@ -128,8 +128,12 @@ export type Job = {
   slug: string;
   status: "draft" | "live" | "closed";
   salary: string;
+  salaryStatus: "verified" | "indicative" | "unverified";
+  salaryTransparencyNote: string;
   location: string;
   hybrid: string;
+  hybridReality: string;
+  locationExpectation: string;
   employmentType: string;
   sector: string;
   specialism: string;
@@ -138,8 +142,14 @@ export type Job = {
   summary: string;
   description: string[];
   responsibilities: string[];
+  mustHaves: string[];
+  niceToHaves: string[];
   requirements: string[];
   benefits: string[];
+  interviewProcess: string[];
+  applicationProcess: string[];
+  candidateDataHandling: string;
+  quickQuestionRoute: string;
   applicationCta: CTA;
   applicationEmail: string;
   publishedDate: string;

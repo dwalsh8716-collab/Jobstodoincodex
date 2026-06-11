@@ -4,7 +4,11 @@ import { ContactForm } from "@/components/ContactForm";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { candidatePrivacyPath, candidateRetentionStatement } from "@/lib/candidate-trust";
+import { candidateTrustQuestions } from "@/lib/candidate-transparency";
+import {
+  candidatePrivacyPath,
+  candidateRetentionStatement,
+} from "@/lib/candidate-trust";
 import { isJobLive, jobs } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
@@ -55,7 +59,10 @@ export default function CandidatesPage() {
             <Link className="button button-secondary" href="#candidate-contact">
               Send a note
             </Link>
-            <Link className="button button-secondary" href={candidatePrivacyPath}>
+            <Link
+              className="button button-secondary"
+              href={candidatePrivacyPath}
+            >
               Candidate privacy
             </Link>
             <WhatsAppButton
@@ -76,6 +83,23 @@ export default function CandidatesPage() {
           ].map((item) => (
             <article className="card" key={item}>
               <h3>{item}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="section">
+        <div className="container section-heading">
+          <p className="eyebrow">Candidate transparency</p>
+          <h2>You should not have to guess.</h2>
+          <p className="lede">
+            A decent candidate journey answers the practical questions before
+            you waste time on a role that was never right.
+          </p>
+        </div>
+        <div className="container grid grid-3">
+          {candidateTrustQuestions.slice(0, 9).map((question) => (
+            <article className="card" key={question}>
+              <h3>{question}</h3>
             </article>
           ))}
         </div>

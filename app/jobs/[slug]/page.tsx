@@ -4,7 +4,10 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { candidateNextSteps, candidatePrivacyPath } from "@/lib/candidate-trust";
+import {
+  candidateNextSteps,
+  candidatePrivacyPath,
+} from "@/lib/candidate-trust";
 import { getJob, isJobClosed, isJobLive, jobs } from "@/lib/content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
 
@@ -62,6 +65,34 @@ export default async function JobPage({ params }: Props) {
           </p>
         </div>
       </section>
+      <section className="section surface">
+        <div className="container grid grid-3">
+          <article className="card">
+            <span className="tag">Salary / rate</span>
+            <h2>{job.salary}</h2>
+            <p>{job.salaryTransparencyNote}</p>
+            <p className="meta">Status: {job.salaryStatus}</p>
+          </article>
+          <article className="card">
+            <span className="tag">Hybrid reality</span>
+            <h2>{job.hybrid}</h2>
+            <p>{job.hybridReality}</p>
+            <p className="meta">{job.locationExpectation}</p>
+          </article>
+          <article className="card">
+            <span className="tag">Quick question</span>
+            <h2>Ask David before you apply.</h2>
+            <p>{job.quickQuestionRoute}</p>
+            <WhatsAppButton
+              intent="jobs"
+              label="Message David on WhatsApp"
+              location="job_detail_transparency"
+              jobSlug={job.slug}
+              variant="secondary"
+            />
+          </article>
+        </div>
+      </section>
       {closed ? (
         <section className="section surface">
           <div className="container empty-state">
@@ -109,6 +140,18 @@ export default async function JobPage({ params }: Props) {
               ))}
             </section>
             <section>
+              <h2>Must-haves</h2>
+              {job.mustHaves.map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </section>
+            <section>
+              <h2>Useful extras</h2>
+              {job.niceToHaves.map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </section>
+            <section>
               <h2>Requirements</h2>
               {job.requirements.map((item) => (
                 <p key={item}>{item}</p>
@@ -119,6 +162,19 @@ export default async function JobPage({ params }: Props) {
               {job.benefits.map((item) => (
                 <p key={item}>{item}</p>
               ))}
+            </section>
+            <section>
+              <h2>Interview process</h2>
+              {job.interviewProcess.map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </section>
+            <section>
+              <h2>How your data is handled</h2>
+              <p>{job.candidateDataHandling}</p>
+              <Link className="text-link" href={candidatePrivacyPath}>
+                Candidate Privacy Notice
+              </Link>
             </section>
           </article>
           <aside className="grid">
@@ -134,7 +190,10 @@ export default async function JobPage({ params }: Props) {
                   <div className="mini-process">
                     <h3>What happens next?</h3>
                     <ol>
-                      {candidateNextSteps.map((step) => (
+                      {(job.applicationProcess.length
+                        ? job.applicationProcess
+                        : candidateNextSteps
+                      ).map((step) => (
                         <li key={step}>{step}</li>
                       ))}
                     </ol>

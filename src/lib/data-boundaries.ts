@@ -25,6 +25,8 @@ export const forbiddenSanityFieldNames = [
   "candidateName",
   "candidateEmail",
   "candidatePhone",
+  "candidateLinkedInUrl",
+  "candidateProfileUrl",
   "candidateStatus",
   "candidateProfile",
   "cv",

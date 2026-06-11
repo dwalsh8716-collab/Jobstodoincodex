@@ -92,6 +92,13 @@ Optional private Labs flags:
 - `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
 - `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING`
 - `FEATURE_AI_CANDIDATE_SUMMARIES`
+- `FEATURE_CANDIDATE_TRANSPARENCY_LABS`
+- `FEATURE_FLUFF_FREE_JOB_PAGES`
+- `FEATURE_CANDIDATE_APPLICATION_DROP`
+- `FEATURE_LINKEDIN_PROFILE_APPLICATION`
+- `FEATURE_CANDIDATE_STATUS_JOURNEY`
+- `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`
+- `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`
 
 Optional private operations database:
 
@@ -171,6 +178,7 @@ docs/google-calendar-booking-setup.md
 docs/essential-resourcing-labs.md
 docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
+docs/recruiter-labs-candidate-transparency.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

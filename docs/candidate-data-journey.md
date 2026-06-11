@@ -43,6 +43,14 @@ Improved:
 - Added `/candidate-privacy/request` for data export, deletion, correction,
   withdrawal and privacy questions.
 - Added a Postgres-backed DSAR request workflow with manual verification.
+- Added candidate transparency standards for salary, hybrid reality, interview
+  process, data handling and quick-question routes.
+
+Detailed job/candidate transparency standards live in:
+
+```txt
+docs/recruiter-labs-candidate-transparency.md
+```
 
 ## What Candidates See
 
