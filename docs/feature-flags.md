@@ -187,6 +187,12 @@ and David signs off private beta. The route and model notes live in
 enough for launch: feedback, CV access, audit logging and privacy review still
 need their own gates.
 
+`FEATURE_LIVE_MARKET_DASHBOARDS` must stay `false` until verified salary/rate
+source data, methodology notes, last-updated dates, performance testing and
+David approval are in place. The hidden admin preview and launch rules live in
+`docs/labs-live-market-dashboards.md`. Do not publish dashboards from weak
+sample sizes or unsourced market notes.
+
 `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY` remains `false` as a release-control
 flag while the public timeline component uses safe exact/typical process
 wording. Future private candidate status tracking still needs backend, access

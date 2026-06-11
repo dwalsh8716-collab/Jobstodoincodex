@@ -46,6 +46,12 @@ The 12-month dependency-aware roadmap lives in:
 docs/essential-resourcing-labs-roadmap.md
 ```
 
+The staged live market dashboard methodology lives in:
+
+```txt
+docs/labs-live-market-dashboards.md
+```
+
 Each idea should explain:
 
 - commercial purpose

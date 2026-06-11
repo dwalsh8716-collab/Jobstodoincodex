@@ -102,6 +102,12 @@ export default async function AdminLabsPage() {
             <Link className="button button-secondary" href="/admin/audit">
               Audit log
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/labs/market-dashboards"
+            >
+              Market dashboards
+            </Link>
           </div>
         </div>
 

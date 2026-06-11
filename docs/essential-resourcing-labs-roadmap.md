@@ -245,6 +245,12 @@ Suggested issue: `#66`.
 
 Codex effort: high.
 
+Implementation and methodology notes live in:
+
+```txt
+docs/labs-live-market-dashboards.md
+```
+
 ## Top 3 Highest-Value Ideas
 
 1. Gated salary guides: fastest lead-generation value and easiest to explain.
