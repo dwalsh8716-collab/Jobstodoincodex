@@ -95,6 +95,12 @@ export default async function AdminRecruiterLabsPage() {
             <Link className="button button-secondary" href="/admin/labs">
               Labs
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/recruiter-labs/ai-ops"
+            >
+              AI Ops
+            </Link>
           </div>
         </div>
 

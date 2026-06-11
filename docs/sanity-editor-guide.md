@@ -13,6 +13,7 @@ Keep these out of Sanity:
 - candidate email addresses or phone numbers
 - CV files or CV URLs
 - cover letters or private application messages
+- AI prompts, transcripts, draft candidate summaries or client profile drafts
 - private client contacts
 - internal recruitment notes
 - DSAR requests

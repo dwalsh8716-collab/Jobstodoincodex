@@ -63,6 +63,8 @@ Added:
   link access, shortlist feedback and interview requests.
 - Recruiter Labs launch-gate fields for private beta status, candidate sharing
   consent, CV access approval/revocation and rollback notes.
+- Recruiter Labs AI governance draft metadata for future sample/redacted/private
+  drafts with David review state.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -106,6 +108,7 @@ database/migrations/004_audit_logging_enhancements.sql
 database/migrations/005_retention_engine.sql
 database/migrations/006_recruiter_labs_foundation.sql
 database/migrations/007_recruiter_labs_launch_gate.sql
+database/migrations/008_recruiter_labs_ai_governance.sql
 ```
 
 Tables:

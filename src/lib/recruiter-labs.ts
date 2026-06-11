@@ -136,6 +136,12 @@ export const recruiterLabsDependencies = [
     status: "disabled",
     detail: "Both must remain disabled unless configured and approved.",
   },
+  {
+    label: "AI governance",
+    status: "staged",
+    detail:
+      "AI Ops is private, sample-only and blocked from real candidate data until provider/privacy approval.",
+  },
 ] as const;
 
 export const recruiterLabsLaunchGateChecks = [

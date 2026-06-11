@@ -52,6 +52,11 @@ export const auditActions = [
   "recruiter_labs_feedback_created",
   "recruiter_labs_interview_requested",
   "recruiter_labs_rollback_started",
+  "recruiter_labs_ai_draft_created",
+  "recruiter_labs_ai_draft_reviewed",
+  "recruiter_labs_ai_draft_approved",
+  "recruiter_labs_ai_draft_rejected",
+  "recruiter_labs_ai_generation_blocked",
 ] as const;
 
 export type AuditAction = (typeof auditActions)[number];
@@ -75,6 +80,8 @@ export const auditEntityTypes = [
   "recruiter_labs_access_token",
   "recruiter_labs_feedback",
   "recruiter_labs_interview_request",
+  "recruiter_labs_ai_draft",
+  "recruiter_labs_ai_governance",
   "audit_log",
   "enquiry",
 ] as const;

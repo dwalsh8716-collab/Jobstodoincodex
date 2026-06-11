@@ -99,6 +99,12 @@ Optional private Labs flags:
 - `FEATURE_CANDIDATE_STATUS_JOURNEY`
 - `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`
 - `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`
+- `FEATURE_AI_OPS_COMPRESSION`
+- `FEATURE_AI_INTERVIEW_NOTES`
+- `FEATURE_AI_SCORECARD_NOTES`
+- `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`
+- `FEATURE_AI_CLIENT_PROFILE_DRAFTS`
+- `FEATURE_AI_FOLLOW_UP_DRAFTS`
 
 Optional private operations database:
 
@@ -179,6 +185,7 @@ docs/essential-resourcing-labs.md
 docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
+docs/recruiter-labs-ai-governance.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

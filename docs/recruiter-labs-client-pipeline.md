@@ -124,6 +124,12 @@ Launch gate detail lives in:
 docs/recruiter-labs-client-pipeline-launch-gate.md
 ```
 
+AI governance lives in:
+
+```txt
+docs/recruiter-labs-ai-governance.md
+```
+
 ## Required Dependencies
 
 Before any client portal goes live:
