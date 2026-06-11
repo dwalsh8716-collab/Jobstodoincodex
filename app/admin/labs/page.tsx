@@ -114,6 +114,12 @@ export default async function AdminLabsPage() {
             >
               Interim bench
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/labs/ai-brief-builder"
+            >
+              AI brief builder
+            </Link>
           </div>
         </div>
 

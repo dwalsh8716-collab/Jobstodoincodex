@@ -167,6 +167,12 @@ Suggested issue: `#64`.
 
 Codex effort: high.
 
+Implementation and review-gate notes live in:
+
+```txt
+docs/labs-ai-brief-builder.md
+```
+
 ### Passwordless Client Shortlists
 
 Commercial value: premium client experience and faster feedback.

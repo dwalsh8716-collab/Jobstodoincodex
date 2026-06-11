@@ -241,6 +241,7 @@ docs/release-process.md
 CHANGELOG.md
 docs/david-non-technical-owner-checklist.md
 docs/essential-resourcing-labs-roadmap.md
+docs/labs-ai-brief-builder.md
 docs/labs-live-market-dashboards.md
 docs/labs-strategic-interim-bench.md
 docs/recruiter-labs-client-pipeline.md

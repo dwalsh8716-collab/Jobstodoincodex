@@ -15,6 +15,12 @@ provider, no email summary and no client-facing diagnostic route.
 This work extends the existing flag. It does not create a duplicate AI brief
 builder.
 
+The broader Labs brief-builder architecture lives in:
+
+```txt
+docs/labs-ai-brief-builder.md
+```
+
 ## Feature Flag
 
 ```txt

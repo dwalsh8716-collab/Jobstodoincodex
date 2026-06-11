@@ -58,6 +58,12 @@ The staged Strategic Interim bench notes live in:
 docs/labs-strategic-interim-bench.md
 ```
 
+The staged AI brief builder notes live in:
+
+```txt
+docs/labs-ai-brief-builder.md
+```
+
 Each idea should explain:
 
 - commercial purpose

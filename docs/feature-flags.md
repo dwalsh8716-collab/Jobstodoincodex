@@ -199,6 +199,12 @@ approval are ready. The private bench foundation lives in
 `docs/labs-strategic-interim-bench.md`. It must not create a public talent
 database, exposed interim profiles or client-visible matching views.
 
+`FEATURE_AI_BRIEF_BUILDER` must stay `false` until Railway Postgres, privacy
+wording, retention rules, David review/edit/approve workflow and AI
+provider/DPA approval are ready. The private builder foundation lives in
+`docs/labs-ai-brief-builder.md`. Non-AI structured mode can be designed first;
+AI-assisted drafts must not be published or sent without David approval.
+
 `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY` remains `false` as a release-control
 flag while the public timeline component uses safe exact/typical process
 wording. Future private candidate status tracking still needs backend, access
