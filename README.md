@@ -209,6 +209,8 @@ docs/ci-quality-gates.md
 docs/observability-audit.md
 docs/observability-and-alerts.md
 docs/monthly-website-health-report-template.md
+docs/release-process.md
+CHANGELOG.md
 docs/david-non-technical-owner-checklist.md
 docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
