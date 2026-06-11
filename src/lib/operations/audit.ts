@@ -44,6 +44,14 @@ export const auditActions = [
   "audit_log_viewed",
   "labs_dashboard_viewed",
   "recruiter_labs_dashboard_viewed",
+  "recruiter_labs_launch_gate_reviewed",
+  "recruiter_labs_access_granted",
+  "recruiter_labs_access_denied",
+  "recruiter_labs_candidate_shared",
+  "recruiter_labs_candidate_withheld",
+  "recruiter_labs_feedback_created",
+  "recruiter_labs_interview_requested",
+  "recruiter_labs_rollback_started",
 ] as const;
 
 export type AuditAction = (typeof auditActions)[number];
@@ -61,6 +69,12 @@ export const auditEntityTypes = [
   "admin_dashboard",
   "labs_dashboard",
   "recruiter_labs_dashboard",
+  "recruiter_labs_launch_gate",
+  "recruiter_labs_shortlist",
+  "recruiter_labs_shortlist_candidate",
+  "recruiter_labs_access_token",
+  "recruiter_labs_feedback",
+  "recruiter_labs_interview_request",
   "audit_log",
   "enquiry",
 ] as const;

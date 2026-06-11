@@ -29,6 +29,9 @@ Staged now:
 - protected route: `/admin/recruiter-labs`
 - server-side feature flags
 - private Postgres migration: `006_recruiter_labs_foundation.sql`
+- launch-gate hardening migration: `007_recruiter_labs_launch_gate.sql`
+- server-side launch-gate, token and candidate sharing decision helpers
+- admin launch-gate visibility inside `/admin/recruiter-labs`
 - hashed-token table for future magic links
 - no public client portal route
 - no public candidate URLs
@@ -109,8 +112,17 @@ Important:
 
 - access tokens are stored as `token_hash`, not raw tokens
 - candidate profile snapshots stay in Postgres, not Sanity
+- shortlist launch status starts as `blocked`
+- candidate sharing needs consent, retention clearance, CV permission where
+  needed and David approval
 - interview references are metadata only until integrations are approved
 - no automated deletion or public sharing is added by this migration
+
+Launch gate detail lives in:
+
+```txt
+docs/recruiter-labs-client-pipeline-launch-gate.md
+```
 
 ## Required Dependencies
 

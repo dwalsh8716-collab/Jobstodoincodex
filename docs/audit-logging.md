@@ -47,6 +47,7 @@ Implemented event sources:
 - `audit_log_viewed`
 - `dsar_request_created`
 - `task_created` for retention review tasks
+- `recruiter_labs_dashboard_viewed`
 
 Prepared typed actions include:
 
@@ -59,6 +60,12 @@ Prepared typed actions include:
 - consent created/updated
 - DSAR viewed/exported/downloaded/deletion approved/deletion completed
 - admin user created/role changed
+- Recruiter Labs launch gate reviewed
+- Recruiter Labs access granted/denied
+- Recruiter Labs candidate shared/withheld
+- Recruiter Labs feedback created
+- Recruiter Labs interview requested
+- Recruiter Labs rollback started
 
 Future candidate, application, CV and note routes should call the central `logAuditEvent` utility when they are built.
 

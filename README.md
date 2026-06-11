@@ -170,6 +170,7 @@ docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/google-calendar-booking-setup.md
 docs/essential-resourcing-labs.md
 docs/recruiter-labs-client-pipeline.md
+docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

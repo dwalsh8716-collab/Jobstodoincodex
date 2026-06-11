@@ -61,6 +61,8 @@ Added:
 - Review-first retention engine and admin retention queue.
 - Recruiter Labs foundation tables for future private shortlists, hashed magic
   link access, shortlist feedback and interview requests.
+- Recruiter Labs launch-gate fields for private beta status, candidate sharing
+  consent, CV access approval/revocation and rollback notes.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -102,6 +104,8 @@ database/migrations/001_operations_foundation.sql
 database/migrations/003_data_subject_requests.sql
 database/migrations/004_audit_logging_enhancements.sql
 database/migrations/005_retention_engine.sql
+database/migrations/006_recruiter_labs_foundation.sql
+database/migrations/007_recruiter_labs_launch_gate.sql
 ```
 
 Tables:

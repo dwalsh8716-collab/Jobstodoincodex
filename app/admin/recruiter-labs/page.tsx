@@ -8,7 +8,10 @@ import {
   isCmsSessionValid,
 } from "@/lib/cms-auth";
 import { logAuditEvent } from "@/lib/operations/audit";
-import { getRecruiterLabsOverview } from "@/lib/recruiter-labs";
+import {
+  type RecruiterLabsLaunchGateStatus,
+  getRecruiterLabsOverview,
+} from "@/lib/recruiter-labs";
 import { createMetadata } from "@/lib/seo";
 import styles from "../admin.module.css";
 
@@ -33,7 +36,15 @@ const statusLabel = {
   staged: "Staged",
   blocked: "Blocked",
   disabled: "Disabled",
+  passed: "Passed",
+  manual_review: "Manual review",
 } as const;
+
+function launchGateStatusClass(status: RecruiterLabsLaunchGateStatus) {
+  if (status === "passed") return styles.labsFlagOn;
+  if (status === "blocked") return `${styles.labsRisk} ${styles.labsRiskHigh}`;
+  return styles.labsRisk;
+}
 
 export default async function AdminRecruiterLabsPage() {
   const cookieStore = await cookies();
@@ -62,6 +73,8 @@ export default async function AdminRecruiterLabsPage() {
       surface: "admin_recruiter_labs",
       enabledFlags: overview.stats.enabledFlags,
       publicRoutes: overview.stats.publicRoutes,
+      blockedLaunchGateChecks: overview.stats.blockedLaunchGateChecks,
+      safeForRealClients: overview.launchGate.safeForRealClients,
     },
   });
 
@@ -91,13 +104,14 @@ export default async function AdminRecruiterLabsPage() {
           </span>
           <div>
             <h2>
-              {recruiterLabsFlag?.enabled
-                ? "Recruiter Labs planning is enabled for admin only."
-                : "Recruiter Labs is staged and hidden by default."}
+              {overview.launchGate.safeForRealClients
+                ? "Recruiter Labs has no launch-gate blockers showing."
+                : "Recruiter Labs is private testing only. Real clients are blocked."}
             </h2>
             <p>
-              The future client portal needs signed tokens, expiry, revocation,
-              candidate consent and audit logging before any client link exists.
+              The future client portal still needs signed token validation,
+              private CV access, audit proof and legal/privacy sign-off before
+              any client link exists.
             </p>
           </div>
           <div className={styles.adminStatusActions}>
@@ -121,6 +135,10 @@ export default async function AdminRecruiterLabsPage() {
             <strong>{overview.stats.blockedDependencies}</strong>
           </div>
           <div className={styles.adminStat}>
+            <span>Launch blockers</span>
+            <strong>{overview.stats.blockedLaunchGateChecks}</strong>
+          </div>
+          <div className={styles.adminStat}>
             <span>Public routes</span>
             <strong>{overview.stats.publicRoutes}</strong>
           </div>
@@ -141,6 +159,63 @@ export default async function AdminRecruiterLabsPage() {
               </li>
               <li>David must verify every client-facing candidate summary.</li>
             </ul>
+          </section>
+
+          <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">Launch gate</p>
+                <h2>Safe for admin testing. Not safe for real clients yet.</h2>
+              </div>
+              <span
+                className={
+                  overview.launchGate.safeForPrivateAdminTesting
+                    ? styles.labsFlagOn
+                    : `${styles.labsRisk} ${styles.labsRiskHigh}`
+                }
+              >
+                {overview.launchGate.safeForPrivateAdminTesting
+                  ? "Private testing OK"
+                  : "Private testing blocked"}
+              </span>
+            </div>
+            <div className={styles.adminTableWrap}>
+              <table className={styles.adminTable}>
+                <thead>
+                  <tr>
+                    <th>Check</th>
+                    <th>Status</th>
+                    <th>Required before</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {overview.launchGate.checks.map((check) => (
+                    <tr key={check.id}>
+                      <td>
+                        {check.label}
+                        <span className={styles.adminSubtle}>
+                          {check.category}
+                        </span>
+                      </td>
+                      <td>
+                        <span className={launchGateStatusClass(check.status)}>
+                          {statusLabel[check.status]}
+                        </span>
+                      </td>
+                      <td>
+                        {check.requiredBefore
+                          .map((requirement) =>
+                            requirement.replaceAll("_", " "),
+                          )
+                          .join(", ")}
+                      </td>
+                      <td>{check.evidence}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section className={styles.adminPanel}>
