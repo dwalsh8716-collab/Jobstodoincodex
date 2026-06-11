@@ -41,33 +41,41 @@ test("mobile menu opens and closes", async ({ page }) => {
   const toggle = page.getByRole("button", { name: "Open navigation" });
   await expect(toggle).toBeVisible();
   await toggle.click();
-  await expect(page.getByRole("navigation", { name: "Primary navigation" })).toHaveClass(
-    /is-open/,
-  );
+  await expect(
+    page.getByRole("navigation", { name: "Primary navigation" }),
+  ).toHaveClass(/is-open/);
   await page.getByRole("link", { name: "Jobs" }).click();
   await expect(page).toHaveURL(/\/jobs$/);
 });
 
-test("contact form validates and returns a safe success state", async ({ page }) => {
+test("contact form validates and returns a safe success state", async ({
+  page,
+}) => {
   await page.goto("/contact");
 
-  await page.getByRole("button", { name: "Send enquiry" }).click();
-  await expect(page.locator("input:invalid, textarea:invalid")).not.toHaveCount(0);
+  const contactForm = page.locator("#contact-form form");
 
-  await page.locator('input[name="startedAt"]').evaluate((input) => {
+  await contactForm.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(page.locator("input:invalid, textarea:invalid")).not.toHaveCount(
+    0,
+  );
+
+  await contactForm.locator('input[name="startedAt"]').evaluate((input) => {
     (input as HTMLInputElement).value = String(Date.now() - 5_000);
   });
-  await page.getByLabel("Name").fill("Phase Test");
-  await page.getByLabel("Email").fill("phase-test@example.com");
-  await page.getByLabel("Company").fill("Essential Resourcing");
-  await page.getByLabel("Message").fill(
-    "I need help testing the enquiry flow before launch.",
-  );
-  await page.getByLabel(/I agree to be contacted/).check();
-  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await contactForm.getByLabel("Name").fill("Phase Test");
+  await contactForm.getByLabel("Email").fill("phase-test@example.com");
+  await contactForm.getByLabel("Company").fill("Essential Resourcing");
+  await contactForm
+    .locator('textarea[name="message"]')
+    .fill("I need help testing the enquiry flow before launch.");
+  await contactForm.getByLabel(/I agree to be contacted/).check();
+  await contactForm.getByRole("button", { name: "Send enquiry" }).click();
 
-  await expect(page.getByRole("status")).toContainText("validated");
-  await expect(page.getByRole("status")).not.toContainText("phase-test@example.com");
+  await expect(contactForm.getByRole("status")).toContainText("validated");
+  await expect(contactForm.getByRole("status")).not.toContainText(
+    "phase-test@example.com",
+  );
 });
 
 test("key public pages load", async ({ page }) => {

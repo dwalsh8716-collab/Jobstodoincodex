@@ -5,17 +5,17 @@ export default defineConfig({
   fullyParallel: true,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:3000",
-    trace: "on-first-retry"
+    baseURL: "http://127.0.0.1:3000",
+    trace: "on-first-retry",
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile", use: { ...devices["Pixel 7"] } }
+    { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
   webServer: {
-    command: "npm start -- --hostname localhost --port 3000",
-    url: "http://localhost:3000",
+    command: "npm start -- --hostname 127.0.0.1 --port 3000",
+    url: "http://127.0.0.1:3000",
     reuseExistingServer: true,
-    timeout: 120_000
-  }
+    timeout: 120_000,
+  },
 });

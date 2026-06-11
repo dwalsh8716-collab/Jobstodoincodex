@@ -184,6 +184,16 @@ docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/google-calendar-booking-setup.md
 docs/essential-resourcing-labs.md
+docs/codebase-forensic-audit-report.md
+docs/non-technical-architecture-map.md
+docs/sanity-cms-audit.md
+docs/backend-data-boundary-audit.md
+docs/railway-readiness-audit.md
+docs/security-privacy-audit.md
+docs/dependency-update-policy.md
+docs/ci-quality-gates.md
+docs/observability-audit.md
+docs/david-non-technical-owner-checklist.md
 docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
