@@ -22,14 +22,24 @@ describe("Recruiter Labs private portal engagement", () => {
   it("supports the required private engagement events", () => {
     expect(recruiterLabsPortalEngagementEvents).toEqual([
       "shortlist_opened",
+      "shortlist_viewed",
+      "candidate_card_viewed",
       "candidate_profile_expanded",
+      "candidate_profile_opened",
       "candidate_profile_collapsed",
       "modal_opened",
       "modal_closed",
       "dwell_ping",
+      "candidate_profile_dwell_time",
       "cv_viewed",
       "cv_downloaded",
       "feedback_submitted",
+      "candidate_shortlisted",
+      "candidate_declined",
+      "interview_requested",
+      "need_more_info_clicked",
+      "portal_link_expired",
+      "portal_link_revoked",
     ]);
   });
 
@@ -53,7 +63,7 @@ describe("Recruiter Labs private portal engagement", () => {
       parseRecruiterLabsEngagementPayload({
         token: validToken,
         shortlistCandidateId: validCandidateId,
-        eventType: "dwell_ping",
+        eventType: "candidate_profile_dwell_time",
         dwellMilliseconds: 3000,
       }).success,
     ).toBe(false);
@@ -62,7 +72,7 @@ describe("Recruiter Labs private portal engagement", () => {
       parseRecruiterLabsEngagementPayload({
         token: validToken,
         shortlistCandidateId: validCandidateId,
-        eventType: "dwell_ping",
+        eventType: "candidate_profile_dwell_time",
         dwellMilliseconds: 30000,
       }).success,
     ).toBe(true);
@@ -103,6 +113,39 @@ describe("Recruiter Labs private portal engagement", () => {
     expect(migration).toContain("'cv_downloaded'");
     expect(migration).toContain("total_dwell_seconds integer");
     expect(migration).not.toMatch(/raw_token|token text|candidate_quality|candidate_score|rank/i);
+  });
+
+  it("stages the full private activity vocabulary and admin rollup", () => {
+    const migration = readFileSync(
+      "database/migrations/030_recruiter_labs_portal_engagement_rollup.sql",
+      "utf8",
+    );
+    const helper = readFileSync("src/lib/recruiter-labs-engagement.ts", "utf8");
+    const feedback = readFileSync("src/lib/recruiter-labs-feedback.ts", "utf8");
+
+    for (const event of [
+      "shortlist_viewed",
+      "candidate_card_viewed",
+      "candidate_profile_dwell_time",
+      "candidate_shortlisted",
+      "candidate_declined",
+      "interview_requested",
+      "need_more_info_clicked",
+      "portal_link_expired",
+      "portal_link_revoked",
+    ]) {
+      expect(migration).toContain(event);
+    }
+
+    expect(migration).toContain("recruiter_lab_client_shortlist_activity_rollup");
+    expect(migration).toContain("last_client_opened_at");
+    expect(migration).toContain("candidate_card_view_count");
+    expect(migration).toContain("interview_request_count");
+    expect(helper).toContain("qualitySignal");
+    expect(helper).toContain("candidate_profile_dwell_time");
+    expect(feedback).toContain("engagementEventByFeedbackAction");
+    expect(feedback).toContain("interview_requested");
+    expect(migration).not.toMatch(/candidate_quality|candidate_score|ranking/i);
   });
 
   it("returns a safe disabled API response without echoing token or candidate id", async () => {
@@ -146,5 +189,19 @@ describe("Recruiter Labs private portal engagement", () => {
     expect(`${apiRoute}\n${tracker}\n${feedback}`).not.toMatch(
       /analyticsAttributes|gtag|ga4|dataLayer|whatsapp_click/i,
     );
+    expect(tracker).toContain("shortlist_viewed");
+    expect(tracker).toContain("candidate_card_viewed");
+    expect(tracker).toContain("candidate_profile_dwell_time");
+  });
+
+  it("documents private reporting without creepy surveillance", () => {
+    const doc = readFileSync("docs/recruiter-labs-portal-engagement.md", "utf8");
+    const readme = readFileSync("README.md", "utf8");
+
+    expect(doc).toContain("recruiter_lab_client_shortlist_activity_rollup");
+    expect(doc).toContain("interview request events");
+    expect(doc).toContain("not candidate ranking");
+    expect(doc).toContain("No creepy claims. No fake insight. No faff.");
+    expect(readme).toContain("docs/recruiter-labs-portal-engagement.md");
   });
 });

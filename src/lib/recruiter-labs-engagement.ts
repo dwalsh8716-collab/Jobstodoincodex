@@ -16,13 +16,25 @@ import {
 type RecruiterLabsEnv = Record<string, string | undefined>;
 
 const candidateScopedEvents = new Set<RecruiterLabsPortalEngagementEvent>([
+  "candidate_card_viewed",
   "candidate_profile_expanded",
+  "candidate_profile_opened",
   "candidate_profile_collapsed",
   "modal_opened",
   "modal_closed",
+  "candidate_profile_dwell_time",
   "cv_viewed",
   "cv_downloaded",
   "feedback_submitted",
+  "candidate_shortlisted",
+  "candidate_declined",
+  "interview_requested",
+  "need_more_info_clicked",
+]);
+
+const dwellEvents = new Set<RecruiterLabsPortalEngagementEvent>([
+  "dwell_ping",
+  "candidate_profile_dwell_time",
 ]);
 
 const recruiterLabsEngagementPayloadSchema = z
@@ -50,7 +62,7 @@ const recruiterLabsEngagementPayloadSchema = z
       });
     }
 
-    if (payload.eventType === "dwell_ping" && !payload.dwellMilliseconds) {
+    if (dwellEvents.has(payload.eventType) && !payload.dwellMilliseconds) {
       ctx.addIssue({
         code: "custom",
         path: ["dwellMilliseconds"],
@@ -58,7 +70,7 @@ const recruiterLabsEngagementPayloadSchema = z
       });
     }
 
-    if (payload.eventType !== "dwell_ping" && payload.dwellMilliseconds) {
+    if (!dwellEvents.has(payload.eventType) && payload.dwellMilliseconds) {
       ctx.addIssue({
         code: "custom",
         path: ["dwellMilliseconds"],
@@ -165,8 +177,15 @@ function result(
 
 function dedupeSecondsForEvent(eventType: RecruiterLabsPortalEngagementEvent) {
   if (eventType === "shortlist_opened") return 60;
-  if (eventType === "dwell_ping") return 20;
+  if (eventType === "shortlist_viewed") return 60;
+  if (
+    eventType === "dwell_ping" ||
+    eventType === "candidate_profile_dwell_time"
+  ) {
+    return 20;
+  }
   if (eventType === "feedback_submitted") return 30;
+  if (eventType === "interview_requested") return 30;
   return 15;
 }
 
@@ -239,19 +258,43 @@ async function insertRecruiterLabsEngagementEvent(
           latest_engagement_at = now(),
           total_dwell_seconds = total_dwell_seconds +
             case
-              when (select event_type from inserted limit 1) = 'dwell_ping'
+              when (select event_type from inserted limit 1) in ('dwell_ping', 'candidate_profile_dwell_time')
               then ceil(coalesce((select dwell_milliseconds from inserted limit 1), 0) / 1000.0)::integer
               else 0
             end,
           profile_expand_count = profile_expand_count +
-            case when (select event_type from inserted limit 1) = 'candidate_profile_expanded' then 1 else 0 end,
+            case when (select event_type from inserted limit 1) in ('candidate_profile_expanded', 'candidate_profile_opened') then 1 else 0 end,
+          candidate_card_view_count = candidate_card_view_count +
+            case when (select event_type from inserted limit 1) = 'candidate_card_viewed' then 1 else 0 end,
           cv_view_count = cv_view_count +
             case when (select event_type from inserted limit 1) = 'cv_viewed' then 1 else 0 end,
           cv_download_count = cv_download_count +
             case when (select event_type from inserted limit 1) = 'cv_downloaded' then 1 else 0 end,
+          feedback_submit_count = feedback_submit_count +
+            case when (select event_type from inserted limit 1) = 'feedback_submitted' then 1 else 0 end,
+          interview_request_count = interview_request_count +
+            case when (select event_type from inserted limit 1) = 'interview_requested' then 1 else 0 end,
+          need_more_info_count = need_more_info_count +
+            case when (select event_type from inserted limit 1) = 'need_more_info_clicked' then 1 else 0 end,
+          decline_count = decline_count +
+            case when (select event_type from inserted limit 1) = 'candidate_declined' then 1 else 0 end,
           updated_at = now()
         where c.id = (select shortlist_candidate_id from inserted limit 1)
         returning c.id
+      ),
+      shortlist_update as (
+        update recruiter_lab_shortlists s
+        set
+          last_client_opened_at = case
+            when (select event_type from inserted limit 1) in ('shortlist_opened', 'shortlist_viewed')
+            then now()
+            else s.last_client_opened_at
+          end,
+          last_client_engagement_at = now(),
+          updated_at = now()
+        where s.id = (select shortlist_id from token_record limit 1)
+          and exists(select 1 from inserted)
+        returning s.id
       )
       select json_build_object(
         'id', (select id::text from inserted limit 1),

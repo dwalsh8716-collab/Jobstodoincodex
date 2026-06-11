@@ -1,13 +1,23 @@
 export const recruiterLabsPortalEngagementEvents = [
   "shortlist_opened",
+  "shortlist_viewed",
+  "candidate_card_viewed",
   "candidate_profile_expanded",
+  "candidate_profile_opened",
   "candidate_profile_collapsed",
   "modal_opened",
   "modal_closed",
   "dwell_ping",
+  "candidate_profile_dwell_time",
   "cv_viewed",
   "cv_downloaded",
   "feedback_submitted",
+  "candidate_shortlisted",
+  "candidate_declined",
+  "interview_requested",
+  "need_more_info_clicked",
+  "portal_link_expired",
+  "portal_link_revoked",
 ] as const;
 
 export type RecruiterLabsPortalEngagementEvent =
@@ -15,12 +25,22 @@ export type RecruiterLabsPortalEngagementEvent =
 
 export const recruiterLabsPortalEngagementEventLabels = {
   shortlist_opened: "Shortlist opened",
+  shortlist_viewed: "Shortlist viewed",
+  candidate_card_viewed: "Candidate card viewed",
   candidate_profile_expanded: "Candidate profile expanded",
+  candidate_profile_opened: "Candidate profile opened",
   candidate_profile_collapsed: "Candidate profile collapsed",
   modal_opened: "Modal opened",
   modal_closed: "Modal closed",
   dwell_ping: "Dwell time",
+  candidate_profile_dwell_time: "Candidate profile dwell time",
   cv_viewed: "CV viewed",
   cv_downloaded: "CV downloaded",
   feedback_submitted: "Feedback submitted",
+  candidate_shortlisted: "Candidate shortlisted",
+  candidate_declined: "Candidate declined",
+  interview_requested: "Interview requested",
+  need_more_info_clicked: "More information requested",
+  portal_link_expired: "Portal link expired",
+  portal_link_revoked: "Portal link revoked",
 } as const satisfies Record<RecruiterLabsPortalEngagementEvent, string>;

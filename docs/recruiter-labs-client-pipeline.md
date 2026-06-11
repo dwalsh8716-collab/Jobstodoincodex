@@ -104,6 +104,7 @@ The staged client route now has:
 - private portal engagement tracking staged behind
   `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
 - engagement events write to Postgres only, not public website tracking
+- engagement rollups are private follow-up context, not candidate scoring
 - retained search dashboard route staged behind
   `FEATURE_RETAINED_SEARCH_DASHBOARD`
 - retained search dashboards are aggregate-only and must not expose candidate PII

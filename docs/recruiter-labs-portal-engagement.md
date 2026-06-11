@@ -27,13 +27,21 @@ database is not ready, it returns a safe disabled response.
 The staged event model supports:
 
 - shortlist opened
-- candidate profile expanded
+- shortlist viewed
+- candidate card viewed
+- candidate profile opened or expanded
 - modal opened
 - modal closed
-- dwell duration on visible candidate cards
+- candidate profile dwell time on visible candidate cards
 - CV viewed
 - CV downloaded
 - feedback submitted
+- candidate shortlisted
+- candidate declined
+- interview requested
+- need more info clicked
+- portal link expired
+- portal link revoked
 
 The current portal has no live CV access route. CV view/download events are
 there for the future signed CV flow, not for a public CV link.
@@ -69,17 +77,33 @@ Candidate summary fields are also staged on
 - `latest_engagement_at`
 - `total_dwell_seconds`
 - `profile_expand_count`
+- `candidate_card_view_count`
 - `cv_view_count`
 - `cv_download_count`
+- `feedback_submit_count`
+- `interview_request_count`
+- `need_more_info_count`
+- `decline_count`
 
 These are counts and timing signals only. They are not scores.
+
+Admin reporting view:
+
+```txt
+recruiter_lab_client_shortlist_activity_rollup
+```
+
+This view summarises shortlist opens, candidate views, feedback events,
+interview request events and total dwell milliseconds. It is for follow-up
+timing, not candidate ranking.
 
 ## Debounce And Write Control
 
 The browser tracker is deliberately quiet:
 
 - shortlist open is sent once
-- candidate profile review is sent once per visible card
+- shortlist viewed is sent once
+- candidate card viewed is sent once per visible card
 - dwell time flushes after at least five seconds
 - regular dwell flushes are spaced at roughly 30 seconds
 - page hide/visibility changes use a final keepalive send where available
@@ -116,6 +140,8 @@ Before enabling for a real client:
 - confirm unscoped candidate ids are rejected
 - confirm repeated visibility changes do not create noisy duplicate rows
 - confirm feedback still submits if passive engagement writing fails
+- confirm `recruiter_lab_client_shortlist_activity_rollup` shows private
+  follow-up context without candidate scoring
 - confirm mobile, keyboard and screen-reader use is not affected
 
 No creepy claims. No fake insight. No faff.

@@ -15,6 +15,7 @@ import {
   isRecruiterLabsFeatureEnabled,
 } from "./recruiter-labs";
 import { saveRecruiterLabsPortalEngagement } from "./recruiter-labs-engagement";
+import type { RecruiterLabsPortalEngagementEvent } from "./recruiter-labs-engagement-shared";
 
 type RecruiterLabsEnv = Record<string, string | undefined>;
 
@@ -34,6 +35,15 @@ const feedbackStatusByAction = {
   request_interview: "interview_requested",
   need_more_info: "needs_more_info",
 } as const satisfies Record<RecruiterLabsFeedbackAction, string>;
+
+const engagementEventByFeedbackAction: Partial<
+  Record<RecruiterLabsFeedbackAction, RecruiterLabsPortalEngagementEvent>
+> = {
+  shortlist: "candidate_shortlisted",
+  decline: "candidate_declined",
+  request_interview: "interview_requested",
+  need_more_info: "need_more_info_clicked",
+};
 
 const recruiterLabsFeedbackPayloadSchema = z
   .object({
@@ -516,15 +526,26 @@ export async function saveRecruiterLabsClientFeedback(
     );
   }
 
-  await saveRecruiterLabsPortalEngagement(
-    {
-      token: parsed.data.token,
-      shortlistCandidateId: parsed.data.shortlistCandidateId,
-      eventType: "feedback_submitted",
-      location: "client_feedback_form",
-    },
-    env,
-  ).catch(() => undefined);
+  const actionEngagementEvent =
+    engagementEventByFeedbackAction[parsed.data.action];
+  const engagementEvents: RecruiterLabsPortalEngagementEvent[] = [
+    "feedback_submitted",
+    ...(actionEngagementEvent ? [actionEngagementEvent] : []),
+  ];
+
+  await Promise.all(
+    engagementEvents.map((eventType) =>
+      saveRecruiterLabsPortalEngagement(
+        {
+          token: parsed.data.token,
+          shortlistCandidateId: parsed.data.shortlistCandidateId,
+          eventType,
+          location: "client_feedback_form",
+        },
+        env,
+      ).catch(() => undefined),
+    ),
+  );
 
   return result("ok", 200, undefined, writeResult.id, parsed.data.action);
 }

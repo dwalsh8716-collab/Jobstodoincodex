@@ -111,7 +111,7 @@ export function ClientShortlistEngagement({
 
         send(
           {
-            eventType: "dwell_ping",
+            eventType: "candidate_profile_dwell_time",
             shortlistCandidateId: candidateId,
             dwellMilliseconds: Math.round(dwellMilliseconds),
           },
@@ -122,6 +122,7 @@ export function ClientShortlistEngagement({
     }
 
     send({ eventType: "shortlist_opened" }, { dedupeMs: 60000 });
+    send({ eventType: "shortlist_viewed" }, { dedupeMs: 60000 });
 
     const observer =
       "IntersectionObserver" in window
@@ -138,7 +139,7 @@ export function ClientShortlistEngagement({
                   if (!sentProfileEventsRef.current.has(candidateId)) {
                     sentProfileEventsRef.current.add(candidateId);
                     send({
-                      eventType: "candidate_profile_expanded",
+                      eventType: "candidate_card_viewed",
                       shortlistCandidateId: candidateId,
                     });
                   }

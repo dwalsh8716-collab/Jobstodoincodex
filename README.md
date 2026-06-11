@@ -259,6 +259,7 @@ docs/recruiter-labs-davids-audio-notes.md
 docs/recruiter-labs-retained-search-dashboard.md
 docs/recruiter-labs-interview-scheduling.md
 docs/recruiter-labs-interview-requests.md
+docs/recruiter-labs-portal-engagement.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md
