@@ -1196,6 +1196,11 @@ p {
   box-shadow: var(--shadow-card);
 }
 
+.candidate-application-drop {
+  display: grid;
+  gap: 16px;
+}
+
 .contact-options-card {
   display: grid;
   gap: 12px;
@@ -1349,6 +1354,11 @@ p {
 
 .form-row textarea {
   resize: vertical;
+}
+
+.form-row input[type="file"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .consent {

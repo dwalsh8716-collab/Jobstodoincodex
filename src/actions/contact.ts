@@ -99,7 +99,16 @@ async function sendWithResend(payload: ContactFormPayload) {
       payload.phone ? `Phone: ${payload.phone}` : "",
       payload.company ? `Company: ${payload.company}` : "",
       payload.linkedin ? `LinkedIn: ${payload.linkedin}` : "",
+      payload.jobSlug ? `Job slug: ${payload.jobSlug}` : "",
       `Brief type: ${payload.briefType}`,
+      payload.type !== "client"
+        ? `Talent pool consent: ${payload.talentPoolConsent === "yes" ? "yes" : "no"}`
+        : "",
+      payload.type !== "client"
+        ? `Candidate Privacy Notice acknowledged: ${
+            payload.privacyNoticeAcknowledgement === "yes" ? "yes" : "no"
+          }`
+        : "",
       "",
       payload.message,
       "",

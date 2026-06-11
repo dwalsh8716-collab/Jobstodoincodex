@@ -59,10 +59,14 @@ export async function saveContactEnquiryToOperations(
     phone: payload.phone,
     company: payload.company,
     jobTitle: payload.jobTitle,
+    jobSlug: payload.jobSlug,
+    linkedInUrl: payload.linkedin,
     message: payload.message,
     serviceInterest: payload.briefType,
     preferredContactMethod: payload.preferredContactMethod,
     consentToContact: payload.consent === "yes",
+    privacyNoticeAcknowledged: payload.privacyNoticeAcknowledgement === "yes",
+    talentPoolConsent: payload.talentPoolConsent === "yes",
     marketingConsent: false,
     priority: payload.type === "client" ? "high" : "normal",
     ipHash: hashPrivateValue(meta.ip),
@@ -126,7 +130,11 @@ export async function saveContactEnquiryToOperations(
             (data->>'retentionReviewAt')::date,
             coalesce(nullif(data->>'retentionStatus', ''), 'active'),
             jsonb_build_object(
-              'privacyNoticeVersion', data->>'privacyNoticeVersion'
+              'privacyNoticeVersion', data->>'privacyNoticeVersion',
+              'privacyNoticeAcknowledged', coalesce((data->>'privacyNoticeAcknowledged')::boolean, false),
+              'talentPoolConsent', coalesce((data->>'talentPoolConsent')::boolean, false),
+              'linkedInUrl', nullif(data->>'linkedInUrl', ''),
+              'jobSlug', nullif(data->>'jobSlug', '')
             )
           from payload
           returning id

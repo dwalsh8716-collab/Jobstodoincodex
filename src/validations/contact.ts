@@ -34,7 +34,11 @@ export const contactFormSchema = z
   .object({
     type: z.enum(contactTypes).default("client"),
     name: limitedText(80).pipe(z.string().min(2, "Please add your name.")),
-    email: z.string().trim().email("Please add a valid email address.").max(254),
+    email: z
+      .string()
+      .trim()
+      .email("Please add a valid email address.")
+      .max(254),
     phone: z.preprocess(
       (value) => (value === "" ? undefined : value),
       z
@@ -61,12 +65,21 @@ export const contactFormSchema = z
         errorMap: () => ({ message: "Consent is required." }),
       }),
     ),
+    privacyNoticeAcknowledgement: z.preprocess(
+      (value) => (value === true ? "yes" : value),
+      z.literal("yes").optional(),
+    ),
+    talentPoolConsent: z.preprocess(
+      (value) => (value === true ? "yes" : value),
+      z.literal("yes").optional(),
+    ),
     website: z.string().max(0, "Spam check failed.").optional().default(""),
     startedAt: z.coerce
       .number()
       .int()
       .positive("Please reload the form and try again."),
     jobTitle: optionalText(160),
+    jobSlug: optionalText(160),
   })
   .superRefine((payload, ctx) => {
     if (
@@ -78,6 +91,18 @@ export const contactFormSchema = z
         path: ["phone"],
         message:
           "Please add a phone number if you prefer phone or WhatsApp contact.",
+      });
+    }
+
+    if (
+      payload.type !== "client" &&
+      payload.privacyNoticeAcknowledgement !== "yes"
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["privacyNoticeAcknowledgement"],
+        message:
+          "Please confirm that you have read the Candidate Privacy Notice.",
       });
     }
   });

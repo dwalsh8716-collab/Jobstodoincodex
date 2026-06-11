@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { ContactForm } from "@/components/ContactForm";
+import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
@@ -251,7 +251,7 @@ export default async function JobPage({ params }: Props) {
                     />
                   ) : null}
                 </div>
-                <ContactForm
+                <CandidateApplicationDrop
                   type="job"
                   jobTitle={job.title}
                   jobSlug={job.slug}

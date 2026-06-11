@@ -194,6 +194,7 @@ docs/essential-resourcing-labs.md
 docs/feature-flags.md
 docs/final-qa-launch-report.md
 docs/job-copy-standards.md
+docs/candidate-application-drop.md
 docs/codebase-forensic-audit-report.md
 docs/non-technical-architecture-map.md
 docs/sanity-cms-audit.md

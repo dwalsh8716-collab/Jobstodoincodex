@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { ContactForm } from "@/components/ContactForm";
+import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -142,7 +142,7 @@ export default function CandidatesPage() {
               variant="secondary"
             />
           </div>
-          <ContactForm type="candidate" />
+          <CandidateApplicationDrop type="candidate" />
         </div>
       </section>
       <FAQAccordion faqs={candidateFaqs} />

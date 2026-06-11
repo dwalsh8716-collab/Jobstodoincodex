@@ -25,6 +25,8 @@ Missing before this pass:
 
 - Separate Candidate Privacy Notice.
 - Candidate-specific consent wording.
+- Separate Candidate Privacy Notice acknowledgement.
+- Optional talent-pool consent.
 - Clear “what happens next” copy near application forms.
 - Confirmation screen copy for candidates.
 - Candidate confirmation email when Resend is configured.
@@ -45,11 +47,14 @@ Improved:
 - Added a Postgres-backed DSAR request workflow with manual verification.
 - Added candidate transparency standards for salary, hybrid reality, interview
   process, data handling and quick-question routes.
+- Added a staged passwordless application-drop component with CV upload safely
+  disabled until private storage is approved.
 
 Detailed job/candidate transparency standards live in:
 
 ```txt
 docs/recruiter-labs-candidate-transparency.md
+docs/candidate-application-drop.md
 ```
 
 ## What Candidates See
@@ -63,12 +68,16 @@ Before applying or sending a note, candidates now see:
 - a link to the Candidate Privacy Notice
 - how to ask for deletion or export
 - where to submit a formal data/privacy request
+- optional talent-pool consent, kept separate from marketing consent
+- a staged CV upload control that explains why upload is not live yet
 
 ## Consent
 
 Candidate and job forms require active consent. The checkbox is not pre-ticked.
 
 Candidates agree that Essential Resourcing may store and use their details to contact them about the role and relevant opportunities. They are told they can ask for deletion at any time and are linked to the Candidate Privacy Notice.
+
+Candidates separately confirm that they have read the Candidate Privacy Notice.
 
 Marketing consent is not bundled into application consent.
 

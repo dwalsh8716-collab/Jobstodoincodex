@@ -31,8 +31,10 @@ const payload = contactFormSchema.parse({
   briefType: "Job application",
   message: "I would like to apply for this role.",
   consent: "yes",
+  privacyNoticeAcknowledgement: "yes",
   startedAt: Date.now() - 5000,
   jobTitle: "Marketing Director",
+  jobSlug: "marketing-director",
 });
 
 describe("whatsapp business cloud api", () => {
@@ -45,7 +47,9 @@ describe("whatsapp business cloud api", () => {
       state: "disabled",
     });
 
-    await expect(sendWhatsAppBusinessConfirmation(payload)).resolves.toMatchObject({
+    await expect(
+      sendWhatsAppBusinessConfirmation(payload),
+    ).resolves.toMatchObject({
       ok: true,
       skipped: true,
       reason: "disabled",
@@ -75,7 +79,9 @@ describe("whatsapp business cloud api", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(sendWhatsAppBusinessConfirmation(payload)).resolves.toMatchObject({
+    await expect(
+      sendWhatsAppBusinessConfirmation(payload),
+    ).resolves.toMatchObject({
       ok: true,
       skipped: false,
       messageId: "wamid.test",
@@ -118,7 +124,8 @@ describe("whatsapp business cloud api", () => {
       .digest("hex")}`;
 
     expect(verifyMetaSignature({ rawBody, signature, appSecret })).toBe(true);
-    expect(verifyMetaSignature({ rawBody, signature: "sha256=bad", appSecret }))
-      .toBe(false);
+    expect(
+      verifyMetaSignature({ rawBody, signature: "sha256=bad", appSecret }),
+    ).toBe(false);
   });
 });

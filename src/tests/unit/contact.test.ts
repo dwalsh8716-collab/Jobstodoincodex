@@ -57,6 +57,26 @@ describe("contact form validation", () => {
 
     expect(result.success).toBe(false);
   });
+
+  it("requires candidate privacy acknowledgement separately from contact consent", () => {
+    const missingPrivacy = contactFormSchema.safeParse({
+      ...basePayload,
+      type: "candidate",
+      briefType: "Candidate conversation",
+      consent: "yes",
+    });
+    const validCandidate = contactFormSchema.safeParse({
+      ...basePayload,
+      type: "candidate",
+      briefType: "Candidate conversation",
+      consent: "yes",
+      privacyNoticeAcknowledgement: "yes",
+      talentPoolConsent: "yes",
+    });
+
+    expect(missingPrivacy.success).toBe(false);
+    expect(validCandidate.success).toBe(true);
+  });
 });
 
 describe("contact server action response shape", () => {
@@ -145,6 +165,8 @@ describe("contact server action response shape", () => {
         linkedin: "https://www.linkedin.com/in/example",
         briefType: "Candidate conversation",
         message: "I want a confidential conversation about my next move.",
+        privacyNoticeAcknowledgement: "yes",
+        talentPoolConsent: "yes",
         startedAt: now - minimumCompletionTimeMs - 500,
       },
       { ip: "phase-48-confirmation", now },

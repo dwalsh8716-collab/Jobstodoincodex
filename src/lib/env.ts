@@ -139,6 +139,18 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  CANDIDATE_CV_STORAGE_PROVIDER: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_STORAGE_BUCKET: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_STORAGE_SIGNING_SECRET: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   RETENTION_DSAR_RECORD_MONTHS: z.preprocess(
     emptyToUndefined,
     z.string().optional(),

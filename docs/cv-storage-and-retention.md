@@ -6,6 +6,15 @@ CV upload is intentionally not enabled on the public website.
 
 That is the correct decision until private storage, signed access, retention rules, deletion handling and legal review are complete.
 
+The staged passwordless application component is documented in:
+
+```txt
+docs/candidate-application-drop.md
+```
+
+It includes a disabled CV upload control and a locked API route. It does not
+store CVs.
+
 ## Hard Rules
 
 - Do not store CVs in `/public`.

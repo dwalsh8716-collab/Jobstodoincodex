@@ -48,6 +48,7 @@ export function ContactForm({
     const formData = new FormData(form);
     formData.set("type", type);
     if (jobTitle) formData.set("jobTitle", jobTitle);
+    if (jobSlug) formData.set("jobSlug", jobSlug);
 
     try {
       const response = await fetch("/api/contact", {
@@ -253,6 +254,20 @@ export function ContactForm({
           for this enquiry only, not marketing broadcasts.
         </p>
       </div>
+      {candidateMode ? (
+        <label className="consent" htmlFor={`${type}-talent-pool-consent`}>
+          <input
+            id={`${type}-talent-pool-consent`}
+            type="checkbox"
+            name="talentPoolConsent"
+            value="yes"
+          />
+          <span>
+            Keep me in mind for relevant future roles. This is optional and not
+            a marketing list.
+          </span>
+        </label>
+      ) : null}
       <label className="consent" htmlFor={`${type}-consent`}>
         <input
           id={`${type}-consent`}
@@ -262,16 +277,29 @@ export function ContactForm({
           required
         />
         <span>
-          {candidateMode ? (
-            <>
-              {candidateConsentCopy(type)} I have read the{" "}
-              <Link href={candidatePrivacyPath}>Candidate Privacy Notice</Link>.
-            </>
-          ) : (
-            "I agree to be contacted about this enquiry using the details I've provided, including WhatsApp if I select it as my preferred contact method. Nothing is shared without permission."
-          )}
+          {candidateMode
+            ? candidateConsentCopy(type)
+            : "I agree to be contacted about this enquiry using the details I've provided, including WhatsApp if I select it as my preferred contact method. Nothing is shared without permission."}
         </span>
       </label>
+      {candidateMode ? (
+        <label
+          className="consent"
+          htmlFor={`${type}-privacy-notice-acknowledgement`}
+        >
+          <input
+            id={`${type}-privacy-notice-acknowledgement`}
+            type="checkbox"
+            name="privacyNoticeAcknowledgement"
+            value="yes"
+            required
+          />
+          <span>
+            I have read the{" "}
+            <Link href={candidatePrivacyPath}>Candidate Privacy Notice</Link>.
+          </span>
+        </label>
+      ) : null}
       {type !== "client" ? (
         <p className="form-note">
           CV upload is intentionally not enabled until secure storage is
