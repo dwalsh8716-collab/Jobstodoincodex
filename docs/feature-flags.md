@@ -129,6 +129,12 @@ lives at `/admin/labs/bad-hire-calculator`; the methodology note lives in
 `docs/bad-hire-calculator-methodology.md`. Outputs are estimates for a
 conversation, not financial advice.
 
+`FEATURE_MARKET_MAPPING` must stay `false` until Railway Postgres, access
+control, anonymisation rules and David-approved client wording are ready. The
+protected preview lives at `/admin/labs/market-mapping`; the implementation note
+lives in `docs/labs-market-mapping.md`. Public maps must stay aggregate and
+anonymous.
+
 `INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Strategic Interim
 availability magic links. It defaults to 14 days and is capped in code at 45
 days. It is not a secret and must not contain a token.

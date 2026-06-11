@@ -153,7 +153,7 @@ export const labsIdeas: LabsIdea[] = [
   {
     title: "Market mapping visualisations",
     category: "Client search",
-    status: "idea",
+    status: "private_preview",
     priority: "future",
     targetUser: "Retained search clients",
     commercialPurpose:
@@ -163,6 +163,7 @@ export const labsIdeas: LabsIdea[] = [
     dependencies: ["Anonymised data model", "Private client context rules"],
     featureFlagName: "FEATURE_MARKET_MAPPING",
     relatedGitHubIssue: "#60",
+    relatedRoute: "/admin/labs/market-mapping",
     launchRule:
       "Never expose identifiable candidate or client data in public visuals.",
   },

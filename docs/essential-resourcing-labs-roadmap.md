@@ -231,6 +231,12 @@ Suggested issue: `#60`.
 
 Codex effort: high.
 
+Implementation notes live in:
+
+```txt
+docs/labs-market-mapping.md
+```
+
 ### Strategic Interim Bench
 
 Commercial value: helps David respond quickly when interim needs are urgent.

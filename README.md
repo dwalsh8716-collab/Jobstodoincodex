@@ -245,6 +245,7 @@ docs/bad-hire-calculator-methodology.md
 docs/labs-client-shortlists.md
 docs/labs-ai-brief-builder.md
 docs/labs-functional-matrix.md
+docs/labs-market-mapping.md
 docs/labs-live-market-dashboards.md
 docs/labs-strategic-interim-bench.md
 docs/recruiter-labs-client-pipeline.md

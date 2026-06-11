@@ -110,6 +110,12 @@ export default async function AdminLabsPage() {
             </Link>
             <Link
               className="button button-secondary"
+              href="/admin/labs/market-mapping"
+            >
+              Market mapping
+            </Link>
+            <Link
+              className="button button-secondary"
               href="/admin/labs/interim-bench"
             >
               Interim bench

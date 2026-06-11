@@ -82,6 +82,12 @@ The staged bad hire calculator methodology lives in:
 docs/bad-hire-calculator-methodology.md
 ```
 
+The staged market mapping notes live in:
+
+```txt
+docs/labs-market-mapping.md
+```
+
 Each idea should explain:
 
 - commercial purpose
