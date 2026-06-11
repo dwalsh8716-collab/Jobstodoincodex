@@ -14,6 +14,15 @@ type Env = Record<string, string | undefined>;
 
 export const candidateSummaryDraftPromptVersion = "candidate-summary-draft-v1";
 
+export const candidateSummaryPromptSafetyRules = [
+  "Only use evidence supplied in the approved source fields.",
+  "Do not invent facts, achievements, employers, figures or motivations.",
+  "Keep uncertainty visible where the source is thin.",
+  "Do not mention or infer protected characteristics.",
+  "Do not score, rank, reject or recommend a candidate automatically.",
+  "Write in David's plain English tone, without hype or generic recruiter fluff.",
+] as const;
+
 export type CandidateSummaryDraftSource = {
   shortlistCandidateId?: string;
   candidateName?: string;
@@ -38,6 +47,11 @@ export type CandidateSummaryDraft = {
   draftSummary: string;
   draftStrengths: string[];
   draftWatchouts: string[];
+  draftRelevantExperience: string[];
+  draftRoleFitNotes: string[];
+  draftClientInterviewQuestions: string[];
+  draftInterviewPrepNotes: string[];
+  davidRationale: string;
   uncertaintyNotes: string[];
   humanApproved: false;
   approvedBy: null;
@@ -123,6 +137,11 @@ function validateDraft(draft: CandidateSummaryDraft) {
     draft.draftSummary,
     ...draft.draftStrengths,
     ...draft.draftWatchouts,
+    ...draft.draftRelevantExperience,
+    ...draft.draftRoleFitNotes,
+    ...draft.draftClientInterviewQuestions,
+    ...draft.draftInterviewPrepNotes,
+    draft.davidRationale,
     ...draft.uncertaintyNotes,
   ].join(" ");
 
@@ -234,6 +253,33 @@ export function buildCandidateSummaryDraft(
       "Confirm motivation, salary/rate expectations and timing with the candidate.",
       "Keep uncertainty visible where the source data is thin.",
     ],
+    draftRelevantExperience: [
+      `Relevant source evidence: ${clean(source.sectorExperience || source.evidenceNotes, "experience evidence still needs confirming")}.`,
+      `Current or recent context: ${clean(currentRole, "current role context still needs confirming")}.`,
+      `Role evidence to verify: ${clean(source.desiredRole || source.roleContext, "the target role evidence still needs checking")}.`,
+    ],
+    draftRoleFitNotes: [
+      `Brief context to check: ${roleContext}.`,
+      `Practical fit to confirm: ${clean(
+        [source.location, source.workPreference, source.noticePeriod]
+          .filter(Boolean)
+          .join(", "),
+        "location, working pattern and timing need checking",
+      )}.`,
+      "Do not treat this as a recommendation until David has checked the source notes.",
+    ],
+    draftClientInterviewQuestions: [
+      "What would make the first 90 days a success in this role?",
+      "Which part of the brief best matches your recent evidence?",
+      "Where would you want more context before deciding if this is right?",
+    ],
+    draftInterviewPrepNotes: [
+      "Check motivation against the role brief before client use.",
+      "Confirm salary or rate expectations before any client-facing summary.",
+      "Keep any uncertainty visible rather than smoothing it away.",
+    ],
+    davidRationale:
+      "Draft only: David should verify why this person is worth considering before any client view.",
     uncertaintyNotes: [
       "AI-assisted draft only.",
       "This is an admin note only, not a people decision.",
@@ -296,6 +342,11 @@ export async function saveCandidateSummaryDraft(
             draft_summary,
             draft_strengths,
             draft_watchouts,
+            draft_relevant_experience,
+            draft_role_fit_notes,
+            draft_client_interview_questions,
+            draft_interview_prep_notes,
+            david_rationale,
             human_approved,
             approved_by,
             approved_at,
@@ -316,6 +367,11 @@ export async function saveCandidateSummaryDraft(
             data->>'draftSummary',
             coalesce(data->'draftStrengths', '[]'::jsonb),
             coalesce(data->'draftWatchouts', '[]'::jsonb),
+            coalesce(data->'draftRelevantExperience', '[]'::jsonb),
+            coalesce(data->'draftRoleFitNotes', '[]'::jsonb),
+            coalesce(data->'draftClientInterviewQuestions', '[]'::jsonb),
+            coalesce(data->'draftInterviewPrepNotes', '[]'::jsonb),
+            data->>'davidRationale',
             false,
             null,
             null,
@@ -328,7 +384,8 @@ export async function saveCandidateSummaryDraft(
               'candidateSharingConsentConfirmed', true,
               'noRanking', true,
               'noSuitabilityScore', true,
-              'clientVisible', false
+              'clientVisible', false,
+              'promptSafetyRules', coalesce(data->'promptSafetyRules', '[]'::jsonb)
             )
           from payload
           returning id
@@ -343,7 +400,14 @@ export async function saveCandidateSummaryDraft(
         draftSummary: draftResult.draft.draftSummary,
         draftStrengths: draftResult.draft.draftStrengths,
         draftWatchouts: draftResult.draft.draftWatchouts,
+        draftRelevantExperience: draftResult.draft.draftRelevantExperience,
+        draftRoleFitNotes: draftResult.draft.draftRoleFitNotes,
+        draftClientInterviewQuestions:
+          draftResult.draft.draftClientInterviewQuestions,
+        draftInterviewPrepNotes: draftResult.draft.draftInterviewPrepNotes,
+        davidRationale: draftResult.draft.davidRationale,
         uncertaintyNotes: draftResult.draft.uncertaintyNotes,
+        promptSafetyRules: candidateSummaryPromptSafetyRules,
       },
     );
 

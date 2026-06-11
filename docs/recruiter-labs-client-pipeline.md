@@ -97,6 +97,8 @@ The staged client route now has:
 - candidate summary drafts stay hidden until David approval
 - shortlist candidate draft generation has a server-side trigger helper for the
   future add-to-shortlist admin action
+- candidate profile version history is staged so David edited copy can stay
+  separate from raw AI drafts
 - WhatsApp CRM sync staged behind `FEATURE_WHATSAPP_CRM_SYNC`
 - official WhatsApp webhook activity stores safe metadata only, not raw message text
 - WhatsApp interview logistics staged behind `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
@@ -163,6 +165,9 @@ Important:
 - audio-note metadata writes to Postgres/private file metadata only, not Sanity
 - retained search dashboard metrics are calculated from aggregate pipeline event
   counts where available
+- candidate profile versions can store David-edited summaries, strengths,
+  watch-outs, relevant experience, role-fit notes, client questions and
+  interview prep notes
 - decline feedback uses structured reasons plus optional comments
 - feedback creates a private activity, admin task and candidate feedback status
   update when the database is live

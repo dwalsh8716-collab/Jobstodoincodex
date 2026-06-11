@@ -193,6 +193,7 @@ Migration:
 ```txt
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/016_candidate_summary_drafts.sql
+database/migrations/023_candidate_summary_review_versions.sql
 database/migrations/022_ai_brief_diagnostic.sql
 ```
 
@@ -213,11 +214,20 @@ Candidate summary drafts now also stage:
 - `draft_summary`
 - `draft_strengths`
 - `draft_watchouts`
+- `draft_relevant_experience`
+- `draft_role_fit_notes`
+- `draft_client_interview_questions`
+- `draft_interview_prep_notes`
+- `david_rationale`
+- David edited summary, strengths and watch-outs
+- version number and previous version link
 - `human_approved`
 - `approved_by`
 - `approved_at`
 - `ai_generation_event_id`
 - uncertainty notes
+- `recruiter_lab_candidate_profile_versions` for the future approved client
+  profile copy
 
 AI brief diagnostics stage:
 
@@ -270,6 +280,9 @@ Rules:
 - three-bullet summary only
 - strengths are draft notes, not a ranking
 - watch-outs are verification prompts, not rejection reasons
+- relevant experience, role fit, client questions and interview prep are draft
+  prompts for David to verify
+- David edited copy and version state are staged separately from the raw draft
 - no suitability score
 - no protected-characteristic inference
 - no hallucinated facts

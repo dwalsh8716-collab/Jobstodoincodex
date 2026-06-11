@@ -4,6 +4,7 @@ import sitemap from "../../../app/sitemap";
 import {
   buildCandidateSummaryDraft,
   candidateSummaryDraftPromptVersion,
+  candidateSummaryPromptSafetyRules,
   getCandidateSummaryDraftReadiness,
   saveCandidateSummaryDraft,
   saveCandidateSummaryDraftForShortlistCandidate,
@@ -252,8 +253,23 @@ describe("Recruiter Labs AI Ops governance", () => {
     expect(result.draft?.draftSummary.split("\n")).toHaveLength(3);
     expect(result.draft?.draftStrengths).toHaveLength(3);
     expect(result.draft?.draftWatchouts).toHaveLength(3);
+    expect(result.draft?.draftRelevantExperience).toHaveLength(3);
+    expect(result.draft?.draftRoleFitNotes).toHaveLength(3);
+    expect(result.draft?.draftClientInterviewQuestions).toHaveLength(3);
+    expect(result.draft?.draftInterviewPrepNotes).toHaveLength(3);
+    expect(result.draft?.davidRationale).toContain("Draft only");
     expect(JSON.stringify(result.draft)).not.toMatch(
       /rank|ranking|reject|suitability score|culture fit score/i,
+    );
+  });
+
+  it("keeps candidate summary prompt safety rules explicit", () => {
+    expect(candidateSummaryPromptSafetyRules).toEqual(
+      expect.arrayContaining([
+        "Only use evidence supplied in the approved source fields.",
+        "Do not invent facts, achievements, employers, figures or motivations.",
+        "Do not score, rank, reject or recommend a candidate automatically.",
+      ]),
     );
   });
 
@@ -345,6 +361,25 @@ describe("Recruiter Labs AI Ops governance", () => {
     expect(migration).toContain("ai_generation_event_id uuid");
     expect(migration).toContain("metadata->>'suitabilityScore' is null");
     expect(migration).not.toMatch(/ranking_score|rejection_recommendation/i);
+
+    const reviewMigration = readFileSync(
+      "database/migrations/023_candidate_summary_review_versions.sql",
+      "utf8",
+    );
+
+    expect(reviewMigration).toContain("draft_relevant_experience jsonb");
+    expect(reviewMigration).toContain("draft_role_fit_notes jsonb");
+    expect(reviewMigration).toContain("draft_client_interview_questions jsonb");
+    expect(reviewMigration).toContain("draft_interview_prep_notes jsonb");
+    expect(reviewMigration).toContain("david_edited_summary text");
+    expect(reviewMigration).toContain(
+      "create table if not exists recruiter_lab_candidate_profile_versions",
+    );
+    expect(reviewMigration).toContain("approved_for_client");
+    expect(reviewMigration).toContain("client_visible_at is null");
+    expect(reviewMigration).not.toMatch(
+      /ranking_score|suitability_score|rejection_recommendation/i,
+    );
   });
 
   it("loads candidate summary trigger data from approved shortlist sources only", () => {
@@ -355,6 +390,7 @@ describe("Recruiter Labs AI Ops governance", () => {
 
     expect(helper).toContain("saveCandidateSummaryDraftForShortlistCandidate");
     expect(helper).toContain("candidate_sharing_consent_at is not null");
+    expect(helper).not.toContain("c.name,\n            c.name");
     expect(helper).toContain("profile_status in ('david_review', 'approved')");
     expect(helper).toContain("candidate_status = 'shortlisted'");
     expect(helper).toContain(
