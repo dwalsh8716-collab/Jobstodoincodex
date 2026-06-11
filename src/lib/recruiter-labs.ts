@@ -55,6 +55,24 @@ export const recruiterLabsFlagDefinitions = [
       "Future official WhatsApp webhook sync into private candidate activity records.",
   },
   {
+    name: "FEATURE_LOXO_INTEGRATION",
+    label: "Loxo integration",
+    description:
+      "Future Loxo API handoff or activity write-back after David/Loxo approval.",
+  },
+  {
+    name: "FEATURE_WHATSAPP_MESSAGE_LOGGING",
+    label: "WhatsApp message logging",
+    description:
+      "Future metadata-only WhatsApp message timeline for opted-in operational contact.",
+  },
+  {
+    name: "FEATURE_WHATSAPP_LOGISTICS_AUTOMATION",
+    label: "WhatsApp logistics automation",
+    description:
+      "Future approved-template logistics messages. No broadcasts or negative news.",
+  },
+  {
     name: "FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING",
     label: "Google Meet interview scheduling",
     description:
@@ -490,8 +508,7 @@ function operationsStatusFromEnv(
       enabled,
       configured,
       state: "missing_database_url",
-      message:
-        "OPERATIONS_DB_ENABLED is true, but DATABASE_URL is missing.",
+      message: "OPERATIONS_DB_ENABLED is true, but DATABASE_URL is missing.",
     };
   }
 
@@ -510,10 +527,7 @@ function normaliseClientPortalToken(rawToken?: string | null) {
   return token;
 }
 
-function safeString(
-  value: unknown,
-  maxLength = 180,
-): string | undefined {
+function safeString(value: unknown, maxLength = 180): string | undefined {
   if (typeof value !== "string") return undefined;
   const trimmed = value.trim();
   if (!trimmed) return undefined;
@@ -558,12 +572,15 @@ function isLaunchGateSafeForClient(shortlist: {
   launchGateStatus?: string | null;
   clientVisibleAt?: string | null;
 }) {
-  const liveStatus = shortlist.status === "private_preview" || shortlist.status === "sent";
+  const liveStatus =
+    shortlist.status === "private_preview" || shortlist.status === "sent";
   const gateApproved =
     shortlist.launchGateStatus === "private_beta" ||
     shortlist.launchGateStatus === "approved";
 
-  return liveStatus && gateApproved && Boolean(dateFrom(shortlist.clientVisibleAt));
+  return (
+    liveStatus && gateApproved && Boolean(dateFrom(shortlist.clientVisibleAt))
+  );
 }
 
 function toCandidatePresentation(
@@ -594,7 +611,11 @@ function toCandidatePresentation(
     id: candidate.id,
     displayOrder: candidate.displayOrder ?? 0,
     name,
-    headline: snapshotString(snapshot, ["headline", "roleTitle", "currentTitle"]),
+    headline: snapshotString(snapshot, [
+      "headline",
+      "roleTitle",
+      "currentTitle",
+    ]),
     location: snapshotString(snapshot, ["location", "region"]),
     availability: snapshotString(snapshot, ["availability", "noticePeriod"]),
     salaryExpectation: snapshotString(snapshot, [
@@ -606,8 +627,8 @@ function toCandidatePresentation(
     sharingMode: shareDecision.sharingMode,
     cvAccessAllowed: Boolean(
       candidate.cvAccessRequired &&
-        candidate.cvAccessApproved &&
-        !candidate.cvAccessRevokedAt,
+      candidate.cvAccessApproved &&
+      !candidate.cvAccessRevokedAt,
     ),
     audioNotePlanned: false,
   };
@@ -808,7 +829,11 @@ export function getRecruiterLabsClientPortalRateLimitDecision(
       resetAt: now.getTime() + windowMs,
     });
 
-    return { allowed: true, remaining: limit - 1, resetAt: now.getTime() + windowMs };
+    return {
+      allowed: true,
+      remaining: limit - 1,
+      resetAt: now.getTime() + windowMs,
+    };
   }
 
   if (current.count >= limit) {
@@ -959,10 +984,7 @@ export async function getRecruiterLabsClientPortalView(
     });
   }
 
-  const accessDecision = getRecruiterLabsClientAccessDecision(
-    data.access,
-    now,
-  );
+  const accessDecision = getRecruiterLabsClientAccessDecision(data.access, now);
 
   if (!accessDecision.allowed || !data.shortlist) {
     return unavailableView({
@@ -1006,9 +1028,7 @@ export async function getRecruiterLabsClientPortalView(
   const candidates = data.candidates
     .map(toCandidatePresentation)
     .filter(
-      (
-        candidate,
-      ): candidate is RecruiterLabsShortlistCandidatePresentation =>
+      (candidate): candidate is RecruiterLabsShortlistCandidatePresentation =>
         Boolean(candidate),
     );
 
@@ -1038,7 +1058,10 @@ export async function getRecruiterLabsClientPortalView(
       expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
       clientVisibleAt: data.shortlist.clientVisibleAt,
       candidates,
-      withheldCandidateCount: Math.max(0, data.candidates.length - candidates.length),
+      withheldCandidateCount: Math.max(
+        0,
+        data.candidates.length - candidates.length,
+      ),
     },
   };
 }

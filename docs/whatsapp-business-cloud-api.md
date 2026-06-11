@@ -58,12 +58,18 @@ WHATSAPP_BUSINESS_DEFAULT_TEMPLATE=
 WHATSAPP_BUSINESS_TEMPLATE_LANGUAGE=en_GB
 WHATSAPP_BUSINESS_API_VERSION=v23.0
 FEATURE_WHATSAPP_CRM_SYNC=false
+FEATURE_LOXO_INTEGRATION=false
+FEATURE_WHATSAPP_MESSAGE_LOGGING=false
+FEATURE_WHATSAPP_LOGISTICS_AUTOMATION=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 WHATSAPP_BUSINESS_INTERVIEW_CONFIRMATION_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_REMINDER_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_RESCHEDULE_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_LOCATION_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_AVAILABILITY_TEMPLATE=
+LOXO_API_BASE_URL=https://app.loxo.co/api
+LOXO_AGENCY_SLUG=
+LOXO_API_TOKEN=
 ```
 
 Never commit real values.
@@ -231,10 +237,37 @@ Migration:
 ```txt
 database/migrations/002_whatsapp_business_messages.sql
 database/migrations/014_whatsapp_crm_sync.sql
+database/migrations/025_whatsapp_loxo_crm_discovery.sql
 ```
 
 These migrations create and extend a `whatsapp_messages` table for future
 status/activity tracking without storing raw phone numbers or raw message text.
+
+## Loxo CRM Sync Discovery
+
+The future WhatsApp/Loxo sync is discovery only.
+
+Private notes live in:
+
+```txt
+docs/recruiter-labs-whatsapp-crm-sync.md
+```
+
+Private admin route:
+
+```txt
+/admin/recruiter-labs/whatsapp-crm-sync
+```
+
+Current recommendation:
+
+- Ask Loxo about native or marketplace options first.
+- Review Ringover and TalentLynk before custom code.
+- Treat Payemoji as one possible vendor, not a requirement.
+- Keep custom WhatsApp Business Cloud API plus Loxo API write-back as a second
+  or third-stage route.
+- Do not enable CRM sync until consent, opt-out, DPA, retention, webhook
+  signatures, database migrations and David approval are complete.
 
 ## Manual Meta Setup
 

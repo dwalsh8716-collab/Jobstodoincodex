@@ -55,6 +55,9 @@ FEATURE_RETAINED_SEARCH_DASHBOARD=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
+FEATURE_LOXO_INTEGRATION=false
+FEATURE_WHATSAPP_MESSAGE_LOGGING=false
+FEATURE_WHATSAPP_LOGISTICS_AUTOMATION=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
 FEATURE_DAVIDS_AUDIO_NOTES=false
@@ -101,6 +104,9 @@ The staged client route now has:
   separate from raw AI drafts
 - WhatsApp CRM sync staged behind `FEATURE_WHATSAPP_CRM_SYNC`
 - official WhatsApp webhook activity stores safe metadata only, not raw message text
+- WhatsApp/Loxo CRM sync discovery staged at
+  `/admin/recruiter-labs/whatsapp-crm-sync`
+- Loxo marketplace/native route should be checked before custom sync work
 - WhatsApp interview logistics staged behind `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
 - automated WhatsApp is operational-template only and falls back to manual/email
 - structured decline reasons for client feedback
@@ -120,6 +126,9 @@ Before real client use, it still needs:
 - David approval before `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
 - David approval before `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=true`
 - David approval before `FEATURE_WHATSAPP_CRM_SYNC=true`
+- David approval before `FEATURE_LOXO_INTEGRATION=true`
+- David approval before `FEATURE_WHATSAPP_MESSAGE_LOGGING=true`
+- David approval before `FEATURE_WHATSAPP_LOGISTICS_AUTOMATION=true`
 - David approval before `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=true`
 
 ## Sanity And Postgres Boundary
@@ -140,6 +149,7 @@ Postgres/private backend is for:
 - interview requests
 - audit logs
 - WhatsApp message references
+- WhatsApp/Loxo sync metadata and communication preferences
 - Google Calendar event references
 
 Candidate PII, CV text and private client feedback must not go into Sanity.

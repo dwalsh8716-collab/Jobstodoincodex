@@ -53,6 +53,8 @@ Railway Postgres is the staged private operations store for:
 - admin workflow records
 - integration sync event records
 - WhatsApp Business message status logs
+- WhatsApp/Loxo CRM sync metadata, conversation hashes and communication
+  preferences
 - Recruiter Labs shortlists, hashed access tokens, feedback, private portal
   engagement events, David's Take audio-note metadata, retained search
   dashboard aggregates and interview requests
@@ -112,6 +114,7 @@ No CV upload flow exists on the public website.
 - audit logs
 - private consent records
 - private WhatsApp messaging logs
+- WhatsApp message bodies, candidate communication timelines or Loxo sync logs
 - Loxo API payload dumps
 - Loxo access tokens or secrets
 - sensitive admin-only records
@@ -154,6 +157,8 @@ No CV upload flow exists on the public website.
 - AI brief diagnostic submissions, unclear areas, risks, draft summaries and
   David approval state
 - integration sync events for future handoff/sync audit
+- WhatsApp/Loxo sync metadata, hashed conversation references and candidate
+  communication preferences
 - salary guide lead requests, consent records, delivery status and follow-up
   tasks
 
@@ -211,11 +216,15 @@ Allowed:
 - `loxo_application_id`
 - `loxo_handoff_id`
 - sync status rows in `integration_sync_events`
+- metadata-only rows in `whatsapp_conversations`, `whatsapp_messages`,
+  `crm_sync_events` and `candidate_communication_preferences`
 
 Not allowed:
 
 - Loxo API keys in the database
 - raw Loxo payload dumps containing unnecessary PII
+- raw WhatsApp message bodies copied into website tables
+- candidate WhatsApp communication logs in Sanity
 - rebuilding a full CRM workflow in Postgres without David's explicit decision
 - treating local website records as more authoritative than Loxo records
 

@@ -335,7 +335,9 @@ WhatsApp Business follow-up:
 database/migrations/002_whatsapp_business_messages.sql
 database/migrations/014_whatsapp_crm_sync.sql
 database/migrations/015_whatsapp_interview_logistics.sql
+database/migrations/025_whatsapp_loxo_crm_discovery.sql
 docs/whatsapp-business-cloud-api.md
+docs/recruiter-labs-whatsapp-crm-sync.md
 ```
 
 Recruiter Labs AI follow-up:

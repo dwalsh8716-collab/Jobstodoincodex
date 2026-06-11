@@ -87,6 +87,9 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_INTERVIEW_REQUEST_WORKFLOW: optionalBooleanFlag,
   FEATURE_WHATSAPP_INTERVIEW_SCHEDULING: optionalBooleanFlag,
   FEATURE_WHATSAPP_CRM_SYNC: optionalBooleanFlag,
+  FEATURE_LOXO_INTEGRATION: optionalBooleanFlag,
+  FEATURE_WHATSAPP_MESSAGE_LOGGING: optionalBooleanFlag,
+  FEATURE_WHATSAPP_LOGISTICS_AUTOMATION: optionalBooleanFlag,
   FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING: optionalBooleanFlag,
   FEATURE_AI_CANDIDATE_SUMMARIES: optionalBooleanFlag,
   FEATURE_DAVIDS_AUDIO_NOTES: optionalBooleanFlag,
@@ -245,6 +248,12 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  LOXO_API_BASE_URL: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
+  LOXO_AGENCY_SLUG: z.preprocess(emptyToUndefined, z.string().optional()),
+  LOXO_API_TOKEN: z.preprocess(emptyToUndefined, z.string().optional()),
   RESEND_API_KEY: z.preprocess(emptyToUndefined, z.string().optional()),
   CONTACT_TO_EMAIL: z.preprocess(
     emptyToUndefined,

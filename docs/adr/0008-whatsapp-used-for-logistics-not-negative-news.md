@@ -19,6 +19,7 @@ Supporting docs:
 
 - `docs/WHATSAPP-CONTACT-INTEGRATION.md`
 - `docs/whatsapp-business-cloud-api.md`
+- `docs/recruiter-labs-whatsapp-crm-sync.md`
 - `docs/data-boundaries.md`
 
 ## Decision
@@ -51,6 +52,8 @@ requests or disputed decisions need a more careful human route.
 - Interview logistics automation must use approved templates only and fall back
   to manual/email if consent, preference, confirmed timing or configuration is
   missing.
+- Future Loxo CRM sync must stay metadata-first, use opted-in operational
+  messages only and avoid raw WhatsApp message bodies.
 
 ## What Not To Do
 

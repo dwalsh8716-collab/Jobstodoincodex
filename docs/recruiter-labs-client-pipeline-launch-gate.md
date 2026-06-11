@@ -135,6 +135,10 @@ Not safe yet:
   attempts.
 - Passed: WhatsApp CRM sync is separately gated behind
   `FEATURE_WHATSAPP_CRM_SYNC=false`.
+- Passed: Loxo write-back, message logging and logistics automation are also
+  separately gated behind `FEATURE_LOXO_INTEGRATION=false`,
+  `FEATURE_WHATSAPP_MESSAGE_LOGGING=false` and
+  `FEATURE_WHATSAPP_LOGISTICS_AUTOMATION=false`.
 - Passed: inbound webhook parsing stores safe metadata only and does not store
   raw WhatsApp message text.
 - Passed: interview logistics automation is limited to operational templates
@@ -144,6 +148,9 @@ Not safe yet:
   before use.
 - Blocked: live webhook-to-candidate matching needs Meta app secret, Railway
   Postgres migrations, privacy/legal review and David approval before use.
+- Blocked: live WhatsApp/Loxo CRM sync needs Loxo plan/API confirmation, chosen
+  provider, DPA, opt-out process, retention review and David approval before
+  use.
 
 ### Google Safety
 
@@ -196,6 +203,9 @@ FEATURE_RETAINED_SEARCH_DASHBOARD=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
+FEATURE_LOXO_INTEGRATION=false
+FEATURE_WHATSAPP_MESSAGE_LOGGING=false
+FEATURE_WHATSAPP_LOGISTICS_AUTOMATION=false
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
 FEATURE_DAVIDS_AUDIO_NOTES=false
@@ -228,6 +238,9 @@ WHATSAPP_BUSINESS_VERIFY_TOKEN=
 WHATSAPP_BUSINESS_APP_SECRET=
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
+FEATURE_LOXO_INTEGRATION=false
+FEATURE_WHATSAPP_MESSAGE_LOGGING=false
+FEATURE_WHATSAPP_LOGISTICS_AUTOMATION=false
 FEATURE_RETAINED_SEARCH_DASHBOARD=false
 WHATSAPP_BUSINESS_INTERVIEW_CONFIRMATION_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_REMINDER_TEMPLATE=

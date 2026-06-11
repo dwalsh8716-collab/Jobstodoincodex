@@ -66,44 +66,47 @@ notes in feature flag values.
 
 ## Master Flag List
 
-| Flag                                       | Default | Safe for public now? | Controls                                                   |
-| ------------------------------------------ | ------- | -------------------- | ---------------------------------------------------------- |
-| `FEATURE_LABS_ENABLED`                     | `false` | No                   | Protected Labs admin planning surface.                     |
-| `FEATURE_SALARY_GUIDE_GATE`                | `false` | No                   | Future gated salary guide lead-capture flow.               |
-| `FEATURE_SALARY_BENCHMARK_ASSET`           | `false` | No                   | Future bespoke salary benchmarking asset builder.          |
-| `FEATURE_MARKET_MAPPING`                   | `false` | No                   | Future market mapping visuals.                             |
-| `FEATURE_BAD_HIRE_CALCULATOR`              | `false` | No                   | Future bad-hire cost calculator.                           |
-| `FEATURE_FUNCTIONAL_MATRIX`                | `false` | No                   | Future role and search-shape mapping.                      |
-| `FEATURE_CLIENT_SHORTLIST_PORTAL`          | `false` | No                   | Future protected client shortlist portal.                  |
-| `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting and client diagnostic. |
-| `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Strategic Interim bench workflow.                   |
-| `FEATURE_INTERIM_AVAILABILITY_TOGGLE`      | `false` | No                   | Future private interim availability magic-link updates.    |
-| `FEATURE_LIVE_MARKET_DASHBOARDS`           | `false` | No                   | Future live market intelligence dashboards.                |
-| `FEATURE_RECRUITER_LABS_ENABLED`           | `false` | No                   | Protected Recruiter Labs client-pipeline foundation.       |
-| `FEATURE_CLIENT_PRESENTATION_PORTAL`       | `false` | No                   | Future magic-link shortlist presentation portal.           |
-| `FEATURE_BRANDED_CANDIDATE_PROFILES`       | `false` | No                   | Future David-approved candidate profile cards.             |
+| Flag                                       | Default | Safe for public now? | Controls                                                          |
+| ------------------------------------------ | ------- | -------------------- | ----------------------------------------------------------------- |
+| `FEATURE_LABS_ENABLED`                     | `false` | No                   | Protected Labs admin planning surface.                            |
+| `FEATURE_SALARY_GUIDE_GATE`                | `false` | No                   | Future gated salary guide lead-capture flow.                      |
+| `FEATURE_SALARY_BENCHMARK_ASSET`           | `false` | No                   | Future bespoke salary benchmarking asset builder.                 |
+| `FEATURE_MARKET_MAPPING`                   | `false` | No                   | Future market mapping visuals.                                    |
+| `FEATURE_BAD_HIRE_CALCULATOR`              | `false` | No                   | Future bad-hire cost calculator.                                  |
+| `FEATURE_FUNCTIONAL_MATRIX`                | `false` | No                   | Future role and search-shape mapping.                             |
+| `FEATURE_CLIENT_SHORTLIST_PORTAL`          | `false` | No                   | Future protected client shortlist portal.                         |
+| `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting and client diagnostic.          |
+| `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Strategic Interim bench workflow.                          |
+| `FEATURE_INTERIM_AVAILABILITY_TOGGLE`      | `false` | No                   | Future private interim availability magic-link updates.           |
+| `FEATURE_LIVE_MARKET_DASHBOARDS`           | `false` | No                   | Future live market intelligence dashboards.                       |
+| `FEATURE_RECRUITER_LABS_ENABLED`           | `false` | No                   | Protected Recruiter Labs client-pipeline foundation.              |
+| `FEATURE_CLIENT_PRESENTATION_PORTAL`       | `false` | No                   | Future magic-link shortlist presentation portal.                  |
+| `FEATURE_BRANDED_CANDIDATE_PROFILES`       | `false` | No                   | Future David-approved candidate profile cards.                    |
 | `FEATURE_SHORTLIST_FEEDBACK_TRACKING`      | `false` | No                   | Future client shortlist feedback and private engagement tracking. |
-| `FEATURE_RETAINED_SEARCH_DASHBOARD`        | `false` | No                   | Future aggregate-only retained search dashboard.           |
-| `FEATURE_INTERVIEW_REQUEST_WORKFLOW`       | `false` | No                   | Future interview request workflow.                         |
-| `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`    | `false` | No                   | Future WhatsApp interview logistics.                       |
-| `FEATURE_WHATSAPP_CRM_SYNC`                | `false` | No                   | Future WhatsApp webhook-to-candidate activity sync.        |
-| `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING` | `false` | No                   | Future Google Calendar and Meet orchestration.             |
-| `FEATURE_AI_CANDIDATE_SUMMARIES`           | `false` | No                   | Future AI-assisted candidate summary drafts.               |
-| `FEATURE_DAVIDS_AUDIO_NOTES`               | `false` | No                   | Future David-approved private audio notes for client profiles. |
-| `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                    |
-| `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page standards.                        |
-| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future friction-light application route.                   |
-| `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future LinkedIn/profile-first application option.          |
-| `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                   |
-| `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Future candidate WhatsApp question workflow.               |
-| `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Future interview-process transparency on roles.            |
-| `FEATURE_AI_OPS_COMPRESSION`               | `false` | No                   | Future AI support for reducing admin typing.               |
-| `FEATURE_AI_INTERVIEW_NOTES`               | `false` | No                   | Future interview note structuring.                         |
-| `FEATURE_AI_SCORECARD_NOTES`               | `false` | No                   | Future scorecard note organisation, not candidate scoring. |
-| `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`      | `false` | No                   | Future candidate summary drafts for David review.          |
-| `FEATURE_CV_ANONYMIZATION`                 | `false` | No                   | Future private CV redaction drafts for David review.       |
-| `FEATURE_AI_CLIENT_PROFILE_DRAFTS`         | `false` | No                   | Future client profile drafts behind approval.              |
-| `FEATURE_AI_FOLLOW_UP_DRAFTS`              | `false` | No                   | Future follow-up draft support, no automatic sending.      |
+| `FEATURE_RETAINED_SEARCH_DASHBOARD`        | `false` | No                   | Future aggregate-only retained search dashboard.                  |
+| `FEATURE_INTERVIEW_REQUEST_WORKFLOW`       | `false` | No                   | Future interview request workflow.                                |
+| `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`    | `false` | No                   | Future WhatsApp interview logistics.                              |
+| `FEATURE_WHATSAPP_CRM_SYNC`                | `false` | No                   | Future WhatsApp webhook-to-candidate activity sync.               |
+| `FEATURE_LOXO_INTEGRATION`                 | `false` | No                   | Future Loxo API handoff or activity write-back.                   |
+| `FEATURE_WHATSAPP_MESSAGE_LOGGING`         | `false` | No                   | Future metadata-only WhatsApp communication timeline.             |
+| `FEATURE_WHATSAPP_LOGISTICS_AUTOMATION`    | `false` | No                   | Future approved-template logistics automation.                    |
+| `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING` | `false` | No                   | Future Google Calendar and Meet orchestration.                    |
+| `FEATURE_AI_CANDIDATE_SUMMARIES`           | `false` | No                   | Future AI-assisted candidate summary drafts.                      |
+| `FEATURE_DAVIDS_AUDIO_NOTES`               | `false` | No                   | Future David-approved private audio notes for client profiles.    |
+| `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                           |
+| `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page standards.                               |
+| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future friction-light application route.                          |
+| `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future LinkedIn/profile-first application option.                 |
+| `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
+| `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Future candidate WhatsApp question workflow.                      |
+| `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Future interview-process transparency on roles.                   |
+| `FEATURE_AI_OPS_COMPRESSION`               | `false` | No                   | Future AI support for reducing admin typing.                      |
+| `FEATURE_AI_INTERVIEW_NOTES`               | `false` | No                   | Future interview note structuring.                                |
+| `FEATURE_AI_SCORECARD_NOTES`               | `false` | No                   | Future scorecard note organisation, not candidate scoring.        |
+| `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`      | `false` | No                   | Future candidate summary drafts for David review.                 |
+| `FEATURE_CV_ANONYMIZATION`                 | `false` | No                   | Future private CV redaction drafts for David review.              |
+| `FEATURE_AI_CLIENT_PROFILE_DRAFTS`         | `false` | No                   | Future client profile drafts behind approval.                     |
+| `FEATURE_AI_FOLLOW_UP_DRAFTS`              | `false` | No                   | Future follow-up draft support, no automatic sending.             |
 
 ## Recruiter Labs Portal Config
 
@@ -131,6 +134,13 @@ configured with `WHATSAPP_BUSINESS_APP_SECRET`, Railway Postgres is migrated,
 the 24-hour WhatsApp service-window process is approved, and privacy/legal
 wording has been reviewed. When enabled, the webhook stores status/activity
 metadata only. It does not store raw WhatsApp message text or raw phone numbers.
+
+`FEATURE_LOXO_INTEGRATION`, `FEATURE_WHATSAPP_MESSAGE_LOGGING` and
+`FEATURE_WHATSAPP_LOGISTICS_AUTOMATION` must stay `false` until David confirms
+the Loxo route, provider DPA, consent wording, opt-out process and retention
+rules. The discovery report lives in
+`docs/recruiter-labs-whatsapp-crm-sync.md`. Payemoji, Ringover, TalentLynk,
+Twilio, Bird, Infobip and automation tools are options to review, not approvals.
 
 `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING` must stay `false` until David approves
 the exact interview logistics templates, the private interview request fields

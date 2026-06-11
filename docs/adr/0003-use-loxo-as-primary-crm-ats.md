@@ -18,6 +18,7 @@ Supporting docs:
 - `docs/data-boundaries.md`
 - `docs/future-proof-architecture.md`
 - `docs/backend-data-boundary-audit.md`
+- `docs/recruiter-labs-whatsapp-crm-sync.md`
 
 ## Decision
 
@@ -28,6 +29,9 @@ must not become the master recruitment database.
 
 Postgres may store Loxo reference IDs, handoff status and sync/audit records
 where useful.
+
+Future WhatsApp/Loxo sync must write only minimal metadata or approved activity
+notes back to Loxo. It must not turn Postgres into a second candidate CRM.
 
 Loxo remains authoritative for:
 

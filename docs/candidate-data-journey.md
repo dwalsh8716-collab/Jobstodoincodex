@@ -104,12 +104,22 @@ Candidate/application schema fields include:
 - deletion/export request fields
 - archived/deleted fields
 - audit-log support
+- future WhatsApp preference, opt-in and opt-out metadata
+- future Loxo reference IDs and CRM sync audit events
 
 Hard boundary:
 
 ```txt
 Candidate names, emails, phone numbers, application messages, CV files, CV URLs
 and private recruitment notes must not be stored in Sanity.
+```
+
+Future WhatsApp/Loxo communication sync must stay private and metadata-first.
+Do not store raw WhatsApp message bodies in Sanity or public analytics. The
+discovery notes live in:
+
+```txt
+docs/recruiter-labs-whatsapp-crm-sync.md
 ```
 
 Full boundary notes:

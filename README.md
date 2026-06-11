@@ -117,6 +117,9 @@ docs/feature-flags.md
 - `FEATURE_INTERVIEW_REQUEST_WORKFLOW`
 - `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
 - `FEATURE_WHATSAPP_CRM_SYNC`
+- `FEATURE_LOXO_INTEGRATION`
+- `FEATURE_WHATSAPP_MESSAGE_LOGGING`
+- `FEATURE_WHATSAPP_LOGISTICS_AUTOMATION`
 - `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING`
 - `FEATURE_AI_CANDIDATE_SUMMARIES`
 - `FEATURE_DAVIDS_AUDIO_NOTES`
@@ -245,6 +248,7 @@ docs/recruiter-labs-ai-ops-roadmap.md
 docs/recruiter-labs-ai-vendor-discovery.md
 docs/recruiter-labs-ai-interview-notes.md
 docs/recruiter-labs-ai-brief-diagnostic.md
+docs/recruiter-labs-whatsapp-crm-sync.md
 docs/recruiter-labs-davids-audio-notes.md
 docs/recruiter-labs-retained-search-dashboard.md
 docs/launch-handover.md

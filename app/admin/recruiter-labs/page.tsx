@@ -101,6 +101,12 @@ export default async function AdminRecruiterLabsPage() {
             >
               AI Ops
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/recruiter-labs/whatsapp-crm-sync"
+            >
+              WhatsApp CRM sync
+            </Link>
           </div>
         </div>
 

@@ -12,6 +12,13 @@ Fastest way to reach me? Message me on WhatsApp.
 
 The integration uses direct `wa.me` links only. It does not add a WhatsApp widget, chatbot, tracking pixel or intrusive floating bubble.
 
+Future WhatsApp Business and Loxo CRM sync is a separate Recruiter Labs
+discovery item, not part of these public contact buttons:
+
+```txt
+docs/recruiter-labs-whatsapp-crm-sync.md
+```
+
 ## Current Decision
 
 WhatsApp should be primary where speed is commercially useful:
@@ -152,3 +159,5 @@ David should approve before launch:
 - Whether WhatsApp should be visible in Sanity-controlled site settings.
 - Privacy/cookie wording that mentions WhatsApp as an external service.
 - Whether future marketing tracking tools should be connected to WhatsApp clicks. No such tools have been added here.
+- Whether future WhatsApp/Loxo CRM sync should ever go live. It is discovery
+  only and must not store raw WhatsApp message bodies or create bulk broadcasts.
