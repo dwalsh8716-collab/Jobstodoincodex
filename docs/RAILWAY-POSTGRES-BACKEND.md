@@ -318,4 +318,12 @@ database/migrations/015_whatsapp_interview_logistics.sql
 docs/whatsapp-business-cloud-api.md
 ```
 
+Recruiter Labs AI follow-up:
+
+```txt
+database/migrations/016_candidate_summary_drafts.sql
+docs/recruiter-labs-ai-governance.md
+docs/recruiter-labs-ai-launch-gate.md
+```
+
 Final rule: no fake compliance, no public CV links, no secrets in GitHub, and no duplicate public CMS content in Postgres.

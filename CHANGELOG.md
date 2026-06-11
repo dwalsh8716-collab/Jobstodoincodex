@@ -5,6 +5,64 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-06-11 - AI Candidate Summary Drafts Staged
+
+### Summary
+
+Staged a private, disabled-by-default candidate summary draft layer for future
+Recruiter Labs use. It does not call an AI provider, does not rank candidates,
+and does not make anything client-visible without David approval.
+
+### Public Website Changes
+
+- No public page, navigation, CTA or design change.
+- No public candidate profile route was added.
+
+### CMS Changes
+
+- No Sanity schema change.
+- Candidate summary drafts remain private Postgres data, not CMS content.
+
+### Form Changes
+
+- No public form behaviour changed.
+
+### SEO Changes
+
+- No sitemap, metadata, schema or indexation change.
+- Recruiter Labs remains private and noindexed by policy.
+
+### Security / Privacy Changes
+
+- Kept `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=false`.
+- Added private fields for draft summary, strengths, watch-outs, human approval
+  and AI generation audit linkage.
+- Added guardrails against ranking, suitability scores, rejection
+  recommendations, hallucinated facts and protected-characteristic inference.
+- Required approved source data and candidate sharing consent before a draft is
+  created.
+
+### Recruiter Labs Changes
+
+- Added a server-only draft helper for three-bullet candidate summaries.
+- Added a server-side trigger helper for the future add-to-shortlist admin
+  action.
+- Drafts default to `human_approved=false` and `clientVisible=false`.
+- Client visibility remains blocked until David approves.
+
+### Manual Actions For David
+
+- Keep `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=false` until provider terms,
+  consent wording, redaction/minimisation rules, retention handling and the
+  edit/approve UI are approved.
+- Review every draft against source notes before client use.
+
+### Rollback Note
+
+- Revert the candidate summary draft staging commit and keep
+  `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=false`. No public website behaviour
+  depends on it.
+
 ## 2026-06-11 - WhatsApp Interview Logistics Staged
 
 ### Summary

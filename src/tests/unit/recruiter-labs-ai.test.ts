@@ -2,6 +2,13 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import sitemap from "../../../app/sitemap";
 import {
+  buildCandidateSummaryDraft,
+  candidateSummaryDraftPromptVersion,
+  getCandidateSummaryDraftReadiness,
+  saveCandidateSummaryDraft,
+  saveCandidateSummaryDraftForShortlistCandidate,
+} from "@/lib/recruiter-labs-ai-candidate-summary";
+import {
   getRecruiterLabsAiFeatureFlags,
   getRecruiterLabsAiLaunchGate,
   getRecruiterLabsAiOverview,
@@ -145,5 +152,150 @@ describe("Recruiter Labs AI Ops governance", () => {
     expect(doc).toContain(
       "This is technical launch guidance, not legal advice.",
     );
+  });
+
+  it("builds candidate summary drafts as unapproved, client-hidden drafts only", () => {
+    const result = buildCandidateSummaryDraft({
+      sourceDataApproved: true,
+      candidateSharingConsentConfirmed: true,
+      candidateName: "Candidate Name",
+      currentTitle: "Marketing Director",
+      currentCompany: "Example Co",
+      desiredRole: "Senior marketing leadership brief",
+      seniority: "Senior leadership",
+      sectorExperience: "B2B services and agency-side growth",
+      location: "Manchester",
+      workPreference: "Hybrid",
+      noticePeriod: "One month",
+      evidenceNotes:
+        "Has led integrated teams and worked closely with founders.",
+      roleContext: "a retained leadership search",
+    });
+
+    expect(result).toMatchObject({
+      ok: true,
+      skipped: false,
+      draft: {
+        humanApproved: false,
+        approvedBy: null,
+        approvedAt: null,
+        aiGenerationEventId: null,
+        status: "draft",
+        promptVersion: candidateSummaryDraftPromptVersion,
+        clientVisible: false,
+      },
+    });
+    expect(result.draft?.draftSummary.split("\n")).toHaveLength(3);
+    expect(result.draft?.draftStrengths).toHaveLength(3);
+    expect(result.draft?.draftWatchouts).toHaveLength(3);
+    expect(JSON.stringify(result.draft)).not.toMatch(
+      /rank|ranking|reject|suitability score|culture fit score/i,
+    );
+  });
+
+  it("blocks candidate summary drafts without approved source data and consent", () => {
+    expect(
+      buildCandidateSummaryDraft({
+        sourceDataApproved: false,
+        candidateSharingConsentConfirmed: true,
+      }),
+    ).toMatchObject({
+      ok: false,
+      reason: "source_data_not_approved",
+    });
+
+    expect(
+      buildCandidateSummaryDraft({
+        sourceDataApproved: true,
+        candidateSharingConsentConfirmed: false,
+      }),
+    ).toMatchObject({
+      ok: false,
+      reason: "candidate_consent_missing",
+    });
+
+    expect(
+      buildCandidateSummaryDraft({
+        sourceDataApproved: true,
+        candidateSharingConsentConfirmed: true,
+        evidenceNotes: "Includes age and health condition notes.",
+      }),
+    ).toMatchObject({
+      ok: false,
+      reason: "unsafe_source_data",
+    });
+  });
+
+  it("keeps candidate summary saving feature-flagged and database-gated", async () => {
+    expect(getCandidateSummaryDraftReadiness({})).toMatchObject({
+      featureEnabled: false,
+      databaseStatus: { state: "disabled" },
+      safeForSyntheticAdminTesting: false,
+      safeForRealCandidateData: false,
+      safeForClientFacingOutput: false,
+    });
+
+    expect(
+      getCandidateSummaryDraftReadiness({
+        FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS: "true",
+        OPERATIONS_DB_ENABLED: "true",
+        DATABASE_URL: "postgres://example",
+      }),
+    ).toMatchObject({
+      featureEnabled: true,
+      databaseStatus: { state: "ready" },
+      safeForSyntheticAdminTesting: true,
+      safeForRealCandidateData: false,
+      safeForClientFacingOutput: false,
+    });
+
+    await expect(saveCandidateSummaryDraft({})).resolves.toMatchObject({
+      ok: true,
+      skipped: true,
+      reason: "feature_disabled",
+    });
+
+    await expect(
+      saveCandidateSummaryDraftForShortlistCandidate(
+        "11111111-1111-4111-8111-111111111111",
+      ),
+    ).resolves.toMatchObject({
+      ok: true,
+      skipped: true,
+      reason: "feature_disabled",
+    });
+  });
+
+  it("stages exact candidate summary draft fields without scoring", () => {
+    const migration = readFileSync(
+      "database/migrations/016_candidate_summary_drafts.sql",
+      "utf8",
+    );
+
+    expect(migration).toContain("draft_summary text");
+    expect(migration).toContain("draft_strengths jsonb");
+    expect(migration).toContain("draft_watchouts jsonb");
+    expect(migration).toContain("human_approved boolean");
+    expect(migration).toContain("approved_by uuid");
+    expect(migration).toContain("approved_at timestamptz");
+    expect(migration).toContain("ai_generation_event_id uuid");
+    expect(migration).toContain("metadata->>'suitabilityScore' is null");
+    expect(migration).not.toMatch(/ranking_score|rejection_recommendation/i);
+  });
+
+  it("loads candidate summary trigger data from approved shortlist sources only", () => {
+    const helper = readFileSync(
+      "src/lib/recruiter-labs-ai-candidate-summary.ts",
+      "utf8",
+    );
+
+    expect(helper).toContain("saveCandidateSummaryDraftForShortlistCandidate");
+    expect(helper).toContain("candidate_sharing_consent_at is not null");
+    expect(helper).toContain("profile_status in ('david_review', 'approved')");
+    expect(helper).toContain("candidate_status = 'shortlisted'");
+    expect(helper).toContain(
+      "application_status in ('shortlisted', 'submitted')",
+    );
+    expect(helper).toContain("saveCandidateSummaryDraft(result.source, env)");
   });
 });

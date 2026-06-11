@@ -126,6 +126,11 @@ are migrated, WhatsApp consent/preference capture is clear, and the manual
 fallback route is agreed. It is for operational interview messages only, not
 rejection, sensitive feedback, salary negotiation or bulk marketing.
 
+`FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS` must stay `false` until the AI provider,
+candidate consent wording, redaction/minimisation rules, edit/approve workflow
+and retention handling are approved. Drafts are not rankings, scores or
+recommendations. David must approve them before any client visibility.
+
 ## Salary Guide Gate
 
 `FEATURE_SALARY_GUIDE_GATE` controls the staged `/salary-guides` lead-capture

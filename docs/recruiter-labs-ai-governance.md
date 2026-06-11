@@ -180,6 +180,7 @@ Migration:
 
 ```txt
 database/migrations/008_recruiter_labs_ai_governance.sql
+database/migrations/016_candidate_summary_drafts.sql
 ```
 
 It stages:
@@ -194,11 +195,66 @@ It stages:
 - retention status
 - metadata
 
+Candidate summary drafts now also stage:
+
+- `draft_summary`
+- `draft_strengths`
+- `draft_watchouts`
+- `human_approved`
+- `approved_by`
+- `approved_at`
+- `ai_generation_event_id`
+- uncertainty notes
+
+These fields are private Postgres fields. They are not Sanity fields and are
+not client-visible until David approves them.
+
 Default stance:
 
 - `data_classification='sample'`
 - `status='draft'`
 - `retention_status='pending_review'`
+- `human_approved=false`
+- client visibility blocked until David approval
+
+## Candidate Summary Drafts
+
+The candidate summary draft helper is staged in:
+
+```txt
+src/lib/recruiter-labs-ai-candidate-summary.ts
+```
+
+It does not call an AI provider yet. It creates a constrained draft from
+approved source fields only, so the workflow can be tested without sending real
+candidate data to a model.
+
+The trigger helper is:
+
+```txt
+saveCandidateSummaryDraftForShortlistCandidate(shortlistCandidateId)
+```
+
+It loads the private shortlist candidate row from Postgres, checks shortlist
+source status and candidate sharing consent, then calls the same draft saver. It
+is the intended hook for the future admin action that marks a candidate as
+shortlisted or adds them to a client shortlist.
+
+Rules:
+
+- three-bullet summary only
+- strengths are draft notes, not a ranking
+- watch-outs are verification prompts, not rejection reasons
+- no suitability score
+- no protected-characteristic inference
+- no hallucinated facts
+- uncertainty must stay visible
+- `human_approved=false` by default
+- client visibility stays blocked until David approves
+
+Before this can use real candidate data or a real provider, David must approve
+the provider, DPA/terms, processing region, redaction/minimisation rules,
+candidate sharing consent wording, retention handling and the edit/approve UI.
 
 ## Bias And Fairness Risks
 

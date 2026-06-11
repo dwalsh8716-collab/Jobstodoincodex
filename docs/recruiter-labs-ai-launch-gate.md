@@ -75,6 +75,8 @@ They must not turn into automated scoring.
 - Passed: AI output is labelled as draft.
 - Manual review: David review and approval fields are staged.
 - Manual review: edit/delete metadata is staged.
+- Passed: candidate summary drafts are blocked from client visibility by
+  default and store `human_approved=false`.
 - Blocked: real edit, delete and approval UI is not live.
 - Blocked: client-facing publication workflow is not live.
 
@@ -118,6 +120,8 @@ is used with a candidate.
 - Passed: AI generation, review, approval, rejection, deletion and blocked
   generation event names are typed.
 - Passed: source data summary and prompt version metadata are staged.
+- Passed: candidate summary draft generation stores an audit-link field and
+  does not store ranking or suitability scores.
 - Manual review: live routes must call the central audit utility when built.
 - Manual review: client-facing publication logging is staged but not live.
 
@@ -226,6 +230,7 @@ Client-facing AI output is blocked until:
 - uncertainty is visible
 - no protected-characteristic inference is present
 - no suitability decision is implied
+- `human_approved=true`, `approved_by` and `approved_at` are present
 
 ## Engineering Decision
 

@@ -79,6 +79,10 @@ The staged client route now has:
 - candidate share checks before any profile can render
 - no analytics attributes or event calls on the private route
 - feedback action UI staged behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- AI candidate summary drafts staged behind `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`
+- candidate summary drafts stay hidden until David approval
+- shortlist candidate draft generation has a server-side trigger helper for the
+  future add-to-shortlist admin action
 - WhatsApp CRM sync staged behind `FEATURE_WHATSAPP_CRM_SYNC`
 - official WhatsApp webhook activity stores safe metadata only, not raw message text
 - WhatsApp interview logistics staged behind `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
@@ -95,6 +99,7 @@ Before real client use, it still needs:
 - David/legal privacy review
 - David approval before `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
 - David approval before `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
+- David approval before `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=true`
 - David approval before `FEATURE_WHATSAPP_CRM_SYNC=true`
 - David approval before `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=true`
 
