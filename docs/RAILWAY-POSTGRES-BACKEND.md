@@ -73,6 +73,8 @@ Added:
   card review timing, modal activity, CV actions and feedback submission.
 - Recruiter Labs David's Take audio-note metadata, approval state and access-log
   tables for future private signed playback.
+- Recruiter Labs retained search dashboard aggregate metrics, hashed access
+  tokens and access-log tables.
 - Database migration and status scripts.
 
 ## Architecture Summary

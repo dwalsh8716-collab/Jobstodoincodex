@@ -113,6 +113,7 @@ docs/feature-flags.md
 - `FEATURE_CLIENT_PRESENTATION_PORTAL`
 - `FEATURE_BRANDED_CANDIDATE_PROFILES`
 - `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- `FEATURE_RETAINED_SEARCH_DASHBOARD`
 - `FEATURE_INTERVIEW_REQUEST_WORKFLOW`
 - `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
 - `FEATURE_WHATSAPP_CRM_SYNC`
@@ -241,6 +242,7 @@ docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
 docs/recruiter-labs-davids-audio-notes.md
+docs/recruiter-labs-retained-search-dashboard.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

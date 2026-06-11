@@ -91,6 +91,16 @@ Not safe yet:
   handling, retention and legal/privacy wording still need approval.
 - Passed: no audio note is stored in Sanity and no public audio URL is created.
 
+### Retained Search Dashboard
+
+- Staged: aggregate dashboard, hashed token, pipeline event and access-log
+  tables now exist in Postgres.
+- Staged: `/client/retained-search/[token]` is noindexed, feature-flagged and
+  aggregate-only.
+- Passed: the dashboard model has no candidate foreign keys.
+- Blocked: real client use needs metric source review, access-log proof,
+  retention rules and David-approved client wording.
+
 ### Audit Logging
 
 - Passed: central audit logging utility exists.
@@ -182,6 +192,7 @@ FEATURE_RECRUITER_LABS_ENABLED=false
 FEATURE_CLIENT_PRESENTATION_PORTAL=false
 FEATURE_BRANDED_CANDIDATE_PROFILES=false
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=false
+FEATURE_RETAINED_SEARCH_DASHBOARD=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
@@ -217,6 +228,7 @@ WHATSAPP_BUSINESS_VERIFY_TOKEN=
 WHATSAPP_BUSINESS_APP_SECRET=
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
+FEATURE_RETAINED_SEARCH_DASHBOARD=false
 WHATSAPP_BUSINESS_INTERVIEW_CONFIRMATION_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_REMINDER_TEMPLATE=
 WHATSAPP_BUSINESS_INTERVIEW_RESCHEDULE_TEMPLATE=

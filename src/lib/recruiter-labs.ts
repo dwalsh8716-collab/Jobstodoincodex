@@ -31,6 +31,12 @@ export const recruiterLabsFlagDefinitions = [
       "Future client feedback actions and private engagement tracking.",
   },
   {
+    name: "FEATURE_RETAINED_SEARCH_DASHBOARD",
+    label: "Retained search dashboard",
+    description:
+      "Future aggregate-only retained search progress view for clients.",
+  },
+  {
     name: "FEATURE_INTERVIEW_REQUEST_WORKFLOW",
     label: "Interview request workflow",
     description:
@@ -242,6 +248,12 @@ export const recruiterLabsDependencies = [
       "David's Take audio notes need private object storage, compression and signed playback before client use.",
   },
   {
+    label: "Retained search dashboard",
+    status: "staged",
+    detail:
+      "Aggregate-only dashboard schema and route can be staged without exposing candidate PII.",
+  },
+  {
     label: "Candidate consent model",
     status: "staged",
     detail: "Candidate privacy and consent records exist for future workflows.",
@@ -343,6 +355,15 @@ export const recruiterLabsLaunchGateChecks = [
     status: "blocked",
     evidence:
       "Audio-note metadata, approval states and locked APIs are staged. Private object storage, compression and signed playback are not live.",
+    requiredBefore: ["private_beta", "real_client_launch"],
+  },
+  {
+    id: "retained-search-dashboard-aggregate-only",
+    category: "Client dashboard",
+    label: "Retained search dashboard must stay aggregate-only",
+    status: "manual_review",
+    evidence:
+      "Aggregate pipeline event tables and a noindexed route are staged. Real client use still needs metric source review and wording sign-off.",
     requiredBefore: ["private_beta", "real_client_launch"],
   },
   {

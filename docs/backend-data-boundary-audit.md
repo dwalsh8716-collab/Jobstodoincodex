@@ -60,6 +60,7 @@ The migration set stages:
 - integration sync event records
 - Recruiter Labs shortlists, feedback, private portal engagement events and
   David's Take audio-note metadata
+- Recruiter Labs retained search dashboard aggregate metrics and access logs
 - Recruiter Labs AI draft governance tables
 
 ## Important Boundary

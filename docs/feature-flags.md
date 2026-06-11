@@ -83,6 +83,7 @@ notes in feature flag values.
 | `FEATURE_CLIENT_PRESENTATION_PORTAL`       | `false` | No                   | Future magic-link shortlist presentation portal.           |
 | `FEATURE_BRANDED_CANDIDATE_PROFILES`       | `false` | No                   | Future David-approved candidate profile cards.             |
 | `FEATURE_SHORTLIST_FEEDBACK_TRACKING`      | `false` | No                   | Future client shortlist feedback and private engagement tracking. |
+| `FEATURE_RETAINED_SEARCH_DASHBOARD`        | `false` | No                   | Future aggregate-only retained search dashboard.           |
 | `FEATURE_INTERVIEW_REQUEST_WORKFLOW`       | `false` | No                   | Future interview request workflow.                         |
 | `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`    | `false` | No                   | Future WhatsApp interview logistics.                       |
 | `FEATURE_WHATSAPP_CRM_SYNC`                | `false` | No                   | Future WhatsApp webhook-to-candidate activity sync.        |

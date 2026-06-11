@@ -34,6 +34,8 @@ Staged now:
   `019_recruiter_labs_portal_engagement.sql`
 - David's Take audio-note migration:
   `020_recruiter_labs_audio_notes.sql`
+- retained search dashboard migration:
+  `021_retained_search_dashboard.sql`
 - server-side launch-gate, token and candidate sharing decision helpers
 - admin launch-gate visibility inside `/admin/recruiter-labs`
 - hashed-token table for future magic links
@@ -49,6 +51,7 @@ FEATURE_RECRUITER_LABS_ENABLED=false
 FEATURE_CLIENT_PRESENTATION_PORTAL=false
 FEATURE_BRANDED_CANDIDATE_PROFILES=false
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=false
+FEATURE_RETAINED_SEARCH_DASHBOARD=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
@@ -87,6 +90,9 @@ The staged client route now has:
 - private portal engagement tracking staged behind
   `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
 - engagement events write to Postgres only, not public website tracking
+- retained search dashboard route staged behind
+  `FEATURE_RETAINED_SEARCH_DASHBOARD`
+- retained search dashboards are aggregate-only and must not expose candidate PII
 - AI candidate summary drafts staged behind `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`
 - candidate summary drafts stay hidden until David approval
 - shortlist candidate draft generation has a server-side trigger helper for the
@@ -128,6 +134,7 @@ Postgres/private backend is for:
 - shortlist feedback
 - shortlist portal engagement events
 - David's Take audio-note metadata and access logs
+- retained search dashboard aggregate metrics and access logs
 - interview requests
 - audit logs
 - WhatsApp message references
@@ -154,6 +161,8 @@ Important:
 - portal engagement events write to
   `recruiter_lab_portal_engagement_events`, not GA4
 - audio-note metadata writes to Postgres/private file metadata only, not Sanity
+- retained search dashboard metrics are calculated from aggregate pipeline event
+  counts where available
 - decline feedback uses structured reasons plus optional comments
 - feedback creates a private activity, admin task and candidate feedback status
   update when the database is live
@@ -186,6 +195,12 @@ The David's Take audio-note notes live in:
 docs/recruiter-labs-davids-audio-notes.md
 ```
 
+The retained search dashboard notes live in:
+
+```txt
+docs/recruiter-labs-retained-search-dashboard.md
+```
+
 ## Required Dependencies
 
 Before any client portal goes live:
@@ -209,6 +224,8 @@ Before any client portal goes live:
 - private portal engagement wording and retention reviewed
 - private audio-note storage, compression, signed playback, retention and
   privacy wording approved
+- retained search dashboard metric sources, access logging and client wording
+  approved
 
 ## Build Phases
 
@@ -218,9 +235,10 @@ Before any client portal goes live:
 4. Magic-link route with hashed token validation.
 5. Feedback capture, private engagement records and audit logging.
 6. David's Take audio notes only after private storage and signed playback.
-7. Interview request workflow.
-8. WhatsApp and Google scheduling only after approval.
-9. AI-assisted drafts only with human verification and no automated candidate
+7. Retained search dashboards only with aggregate metrics and approved wording.
+8. Interview request workflow.
+9. WhatsApp and Google scheduling only after approval.
+10. AI-assisted drafts only with human verification and no automated candidate
    evaluation.
 
 ## Launch Gate
@@ -239,6 +257,7 @@ Do not launch until:
   quality scores
 - audio notes stay private, approved by David and played only through signed or
   authenticated access
+- retained search dashboards stay aggregate-only with no candidate PII
 - retention rules cover shortlist data
 - legal/privacy review is complete
 
