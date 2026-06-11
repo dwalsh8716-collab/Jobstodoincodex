@@ -140,7 +140,7 @@ export const recruiterLabsDependencies = [
     label: "AI governance",
     status: "staged",
     detail:
-      "AI Ops is private, sample-only and blocked from real candidate data until provider/privacy approval.",
+      "AI Ops is private, synthetic-data only and blocked from real candidate data until the AI launch gate is cleared.",
   },
 ] as const;
 

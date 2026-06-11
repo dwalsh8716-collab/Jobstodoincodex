@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  auditActions,
   getAuditLogOverview,
   logAuditEvent,
   sanitiseAuditValue,
@@ -43,6 +44,19 @@ describe("audit log sanitisation", () => {
 });
 
 describe("audit log utility", () => {
+  it("includes AI launch-gate audit events for future governed routes", () => {
+    expect(auditActions).toEqual(
+      expect.arrayContaining([
+        "recruiter_labs_ai_draft_created",
+        "recruiter_labs_ai_draft_deleted",
+        "recruiter_labs_ai_source_reviewed",
+        "recruiter_labs_ai_output_published",
+        "recruiter_labs_ai_publication_blocked",
+        "recruiter_labs_ai_generation_blocked",
+      ]),
+    );
+  });
+
   it("does not require a database when operations are disabled", async () => {
     delete process.env.OPERATIONS_DB_ENABLED;
     delete process.env.DATABASE_URL;

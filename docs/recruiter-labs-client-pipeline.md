@@ -130,6 +130,12 @@ AI governance lives in:
 docs/recruiter-labs-ai-governance.md
 ```
 
+The AI launch gate lives in:
+
+```txt
+docs/recruiter-labs-ai-launch-gate.md
+```
+
 ## Required Dependencies
 
 Before any client portal goes live:

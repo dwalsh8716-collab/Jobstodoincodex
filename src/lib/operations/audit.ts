@@ -56,6 +56,10 @@ export const auditActions = [
   "recruiter_labs_ai_draft_reviewed",
   "recruiter_labs_ai_draft_approved",
   "recruiter_labs_ai_draft_rejected",
+  "recruiter_labs_ai_draft_deleted",
+  "recruiter_labs_ai_source_reviewed",
+  "recruiter_labs_ai_output_published",
+  "recruiter_labs_ai_publication_blocked",
   "recruiter_labs_ai_generation_blocked",
 ] as const;
 

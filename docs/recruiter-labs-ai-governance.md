@@ -12,6 +12,12 @@ rules.
 Essential Resourcing does not use AI to make automated candidate selection,
 ranking, rejection or hiring decisions.
 
+The hard launch gate lives in:
+
+```txt
+docs/recruiter-labs-ai-launch-gate.md
+```
+
 ## Purpose
 
 AI may be useful for operational compression:

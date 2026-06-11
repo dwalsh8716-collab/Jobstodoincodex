@@ -92,8 +92,11 @@ Not safe yet:
 - Passed: profile status requires David approval before client visibility.
 - Passed: no auto-ranking has been added.
 - Passed: no automated candidate evaluation has been added.
-- Blocked: final AI prompt rules and human review workflow must be reviewed
-  before any AI output reaches a client.
+- Blocked: final AI prompt rules, provider approval, consent wording and human
+  review workflow must be reviewed before any AI output reaches a client.
+- Blocked: the AI launch gate in
+  `docs/recruiter-labs-ai-launch-gate.md` must be cleared before real
+  candidate data or client-facing AI output is used.
 
 ### WhatsApp Safety
 

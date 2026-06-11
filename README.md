@@ -186,6 +186,7 @@ docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-ai-governance.md
+docs/recruiter-labs-ai-launch-gate.md
 docs/launch-handover.md
 docs/123-reg-domain-switch.md
 docs/railway-deployment.md

@@ -66,7 +66,8 @@ Prepared typed actions include:
 - Recruiter Labs feedback created
 - Recruiter Labs interview requested
 - Recruiter Labs rollback started
-- Recruiter Labs AI draft created/reviewed/approved/rejected
+- Recruiter Labs AI draft created/reviewed/approved/rejected/deleted
+- Recruiter Labs AI source reviewed/output published/publication blocked
 - Recruiter Labs AI generation blocked
 
 Future candidate, application, CV and note routes should call the central `logAuditEvent` utility when they are built.
@@ -241,6 +242,8 @@ Before launch:
 - confirm note/message content is not copied into audit metadata
 - confirm AI draft events do not log raw prompts, transcripts, CV text,
   provider secrets, storage keys or signed URLs
+- confirm AI source summaries and prompt versions are logged as references, not
+  raw private content
 - run `npm run lint`
 - run `npm run typecheck`
 - run `npm run build`

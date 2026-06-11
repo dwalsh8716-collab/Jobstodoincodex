@@ -67,6 +67,8 @@ describe("data boundary rules", () => {
         "aiCandidateScore",
         "aiPrompt",
         "aiTranscript",
+        "aiClientProfileDraft",
+        "aiDraftOutput",
         "privateNotes",
         "auditLog",
       ]),

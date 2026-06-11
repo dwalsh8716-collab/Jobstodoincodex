@@ -65,6 +65,8 @@ Added:
   consent, CV access approval/revocation and rollback notes.
 - Recruiter Labs AI governance draft metadata for future sample/redacted/private
   drafts with David review state.
+- Recruiter Labs AI launch-gate fields for source summaries, prompt versions,
+  deletion state and client-visibility blocking.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -109,6 +111,7 @@ database/migrations/005_retention_engine.sql
 database/migrations/006_recruiter_labs_foundation.sql
 database/migrations/007_recruiter_labs_launch_gate.sql
 database/migrations/008_recruiter_labs_ai_governance.sql
+database/migrations/009_recruiter_labs_ai_launch_gate.sql
 ```
 
 Tables:

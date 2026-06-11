@@ -8,7 +8,10 @@ import {
   isCmsSessionValid,
 } from "@/lib/cms-auth";
 import { logAuditEvent } from "@/lib/operations/audit";
-import { getRecruiterLabsAiOverview } from "@/lib/recruiter-labs-ai";
+import {
+  type RecruiterLabsAiLaunchGateStatus,
+  getRecruiterLabsAiOverview,
+} from "@/lib/recruiter-labs-ai";
 import { createMetadata } from "@/lib/seo";
 import styles from "../../admin.module.css";
 
@@ -30,7 +33,14 @@ export const metadata: Metadata = {
 const governanceStatusLabel = {
   passed: "Passed",
   blocked: "Blocked",
+  manual_review: "Manual review",
 } as const;
+
+function launchGateStatusClass(status: RecruiterLabsAiLaunchGateStatus) {
+  if (status === "passed") return styles.labsFlagOn;
+  if (status === "blocked") return `${styles.labsRisk} ${styles.labsRiskHigh}`;
+  return styles.labsRisk;
+}
 
 export default async function RecruiterLabsAiOpsPage() {
   const cookieStore = await cookies();
@@ -56,7 +66,9 @@ export default async function RecruiterLabsAiOpsPage() {
       surface: "admin_recruiter_labs_ai_ops",
       enabledFlags: overview.stats.enabledFlags,
       blockedGovernanceChecks: overview.stats.blockedGovernanceChecks,
+      unresolvedLaunchGateChecks: overview.stats.unresolvedLaunchGateChecks,
       safeForRealCandidateData: overview.safeForRealCandidateData,
+      safeForClientFacingOutput: overview.launchGate.safeForClientFacingOutput,
     },
   });
 
@@ -68,7 +80,8 @@ export default async function RecruiterLabsAiOpsPage() {
           <h1>AI Ops.</h1>
           <p className="lede">
             A private governance foundation for using AI to reduce admin typing.
-            No ranking. No rejection. No hidden scoring.
+            No ranking. No rejection. No hidden scoring. Safe first, private
+            first.
           </p>
           <div className="button-row hero-actions">
             <Link
@@ -86,11 +99,16 @@ export default async function RecruiterLabsAiOpsPage() {
         <div className={styles.adminStatus}>
           <span className="tag">Sample data only</span>
           <div>
-            <h2>AI drafts. David decides.</h2>
+            <h2>
+              {overview.launchGate.safeForRealCandidateData
+                ? "AI launch gate has no real-data blockers showing."
+                : "AI launch gate blocks real candidate data."}
+            </h2>
             <p>
               This route does not call an AI provider and must not use real
               candidate data until provider, privacy, retention and approval
-              rules are signed off.
+              rules are signed off. AI can help David move faster. It must not
+              make hidden decisions about people.
             </p>
           </div>
           <div className={styles.adminStatusActions}>
@@ -117,12 +135,79 @@ export default async function RecruiterLabsAiOpsPage() {
             <strong>{overview.stats.blockedGovernanceChecks}</strong>
           </div>
           <div className={styles.adminStat}>
+            <span>Launch gate unresolved</span>
+            <strong>{overview.stats.unresolvedLaunchGateChecks}</strong>
+          </div>
+          <div className={styles.adminStat}>
             <span>Real candidate data</span>
             <strong>{overview.safeForRealCandidateData ? "OK" : "No"}</strong>
+          </div>
+          <div className={styles.adminStat}>
+            <span>Client-facing output</span>
+            <strong>
+              {overview.launchGate.safeForClientFacingOutput ? "OK" : "No"}
+            </strong>
           </div>
         </div>
 
         <div className={styles.adminPanels}>
+          <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">Launch gate</p>
+                <h2>Fake data only until every blocker is cleared.</h2>
+              </div>
+              <span
+                className={
+                  overview.launchGate.safeForSyntheticAdminTesting
+                    ? styles.labsFlagOn
+                    : `${styles.labsRisk} ${styles.labsRiskHigh}`
+                }
+              >
+                {overview.launchGate.safeForSyntheticAdminTesting
+                  ? "Synthetic testing OK"
+                  : "Testing blocked"}
+              </span>
+            </div>
+            <div className={styles.adminTableWrap}>
+              <table className={styles.adminTable}>
+                <thead>
+                  <tr>
+                    <th>Check</th>
+                    <th>Status</th>
+                    <th>Required before</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {overview.launchGate.checks.map((check) => (
+                    <tr key={check.id}>
+                      <td>
+                        {check.label}
+                        <span className={styles.adminSubtle}>
+                          {check.category}
+                        </span>
+                      </td>
+                      <td>
+                        <span className={launchGateStatusClass(check.status)}>
+                          {governanceStatusLabel[check.status]}
+                        </span>
+                      </td>
+                      <td>
+                        {check.requiredBefore
+                          .map((requirement) =>
+                            requirement.replaceAll("_", " "),
+                          )
+                          .join(", ")}
+                      </td>
+                      <td>{check.evidence}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
           <section className={styles.adminPanel}>
             <p className="eyebrow">Allowed</p>
             <h2>Operational compression only.</h2>
@@ -146,7 +231,7 @@ export default async function RecruiterLabsAiOpsPage() {
           <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
             <div className={styles.adminPanelHeading}>
               <div>
-                <p className="eyebrow">Governance checks</p>
+                <p className="eyebrow">Provider blockers</p>
                 <h2>Real data stays blocked.</h2>
               </div>
             </div>
@@ -168,7 +253,7 @@ export default async function RecruiterLabsAiOpsPage() {
                           className={
                             check.status === "passed"
                               ? styles.labsFlagOn
-                              : `${styles.labsRisk} ${styles.labsRiskHigh}`
+                              : launchGateStatusClass(check.status)
                           }
                         >
                           {governanceStatusLabel[check.status]}
@@ -224,6 +309,16 @@ export default async function RecruiterLabsAiOpsPage() {
                 </tbody>
               </table>
             </div>
+          </section>
+
+          <section className={styles.adminPanel}>
+            <p className="eyebrow">Rollback</p>
+            <h2>One move: switch it off.</h2>
+            <ul className={styles.adminChecklist}>
+              {overview.rollbackSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ul>
           </section>
         </div>
       </div>
