@@ -67,6 +67,12 @@ export const labsFeatureFlagDefinitions = [
       "Future private availability and matching workflow for interim talent.",
   },
   {
+    name: "FEATURE_INTERIM_AVAILABILITY_TOGGLE",
+    label: "Interim availability toggle",
+    description:
+      "Future magic-link route for senior interim candidates to update availability.",
+  },
+  {
     name: "FEATURE_LIVE_MARKET_DASHBOARDS",
     label: "Live market dashboards",
     description:
@@ -231,8 +237,8 @@ export const labsIdeas: LabsIdea[] = [
     privacyRisk: "high",
     complexity: "high",
     dependencies: ["Magic links", "Consent model", "Availability data rules"],
-    featureFlagName: "FEATURE_INTERIM_BENCH_PORTAL",
-    relatedGitHubIssue: "#65",
+    featureFlagName: "FEATURE_INTERIM_AVAILABILITY_TOGGLE",
+    relatedGitHubIssue: "#107",
     launchRule:
       "Launch only when candidate privacy, consent and access boundaries are signed off.",
   },

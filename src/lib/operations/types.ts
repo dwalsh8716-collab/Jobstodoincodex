@@ -39,6 +39,15 @@ export type RetentionReviewSummary = {
   recommendedAction: string;
 };
 
+export type InterimAvailabilitySummary = {
+  candidateId: string;
+  candidateName: string;
+  availabilityStatus: string;
+  availableFrom?: string | null;
+  dayRate?: string | null;
+  lastUpdatedAt: string;
+};
+
 export type OperationsOverview = {
   status: OperationsBackendStatus;
   enquiryCount: number;
@@ -48,6 +57,7 @@ export type OperationsOverview = {
   openTaskCount: number;
   dataRequestCount: number;
   openDataRequestCount: number;
+  interimAvailableNowCount: number;
   retentionReviewCount: number;
   latestEnquiries: Array<{
     id: string;
@@ -59,5 +69,6 @@ export type OperationsOverview = {
     createdAt: string;
   }>;
   latestDataRequests: DataSubjectRequestSummary[];
+  latestInterimAvailability: InterimAvailabilitySummary[];
   latestRetentionReviews: RetentionReviewSummary[];
 };

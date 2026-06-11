@@ -77,6 +77,7 @@ notes in feature flag values.
 | `FEATURE_CLIENT_SHORTLIST_PORTAL`          | `false` | No                   | Future protected client shortlist portal.                  |
 | `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting.                         |
 | `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Strategic Interim bench workflow.                   |
+| `FEATURE_INTERIM_AVAILABILITY_TOGGLE`      | `false` | No                   | Future private interim availability magic-link updates.    |
 | `FEATURE_LIVE_MARKET_DASHBOARDS`           | `false` | No                   | Future live market intelligence dashboards.                |
 | `FEATURE_RECRUITER_LABS_ENABLED`           | `false` | No                   | Protected Recruiter Labs client-pipeline foundation.       |
 | `FEATURE_CLIENT_PRESENTATION_PORTAL`       | `false` | No                   | Future magic-link shortlist presentation portal.           |
@@ -110,9 +111,18 @@ expiry. It defaults to 30 days and is capped in code at 90 days.
 Keep the default unless David approves a shorter or longer private-beta window.
 This is not a secret and must not contain a token.
 
+`INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Strategic Interim
+availability magic links. It defaults to 14 days and is capped in code at 45
+days. It is not a secret and must not contain a token.
+
 `FEATURE_SHORTLIST_FEEDBACK_TRACKING` must stay `false` until the client portal,
 Postgres, audit proof, candidate-sharing wording and David approval are all in
 place. When enabled, feedback goes to private Postgres records, not GA4.
+
+`FEATURE_INTERIM_AVAILABILITY_TOGGLE` must stay `false` until Postgres is
+migrated, candidate consent/preference wording is approved, and David has tested
+the private link flow. WhatsApp distribution must only happen where the
+candidate has the right WhatsApp consent/preference.
 
 `FEATURE_WHATSAPP_CRM_SYNC` must stay `false` until the official Meta webhook is
 configured with `WHATSAPP_BUSINESS_APP_SECRET`, Railway Postgres is migrated,

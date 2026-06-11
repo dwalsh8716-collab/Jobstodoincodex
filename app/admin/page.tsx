@@ -12,6 +12,7 @@ import {
   dataSubjectRequestTypeOptions,
   dataSubjectVerificationLabels,
 } from "@/lib/dsar";
+import { interimAvailabilityStatusLabels } from "@/lib/interim-availability-shared";
 import { logAuditEvent } from "@/lib/operations/audit";
 import { getOperationsOverview } from "@/lib/operations/store";
 import { createMetadata } from "@/lib/seo";
@@ -96,6 +97,7 @@ export default async function AdminPage() {
     { label: "Applications", value: overview.applicationCount },
     { label: "Open tasks", value: overview.openTaskCount },
     { label: "Open data requests", value: overview.openDataRequestCount },
+    { label: "Available interims", value: overview.interimAvailableNowCount },
     { label: "Retention reviews", value: overview.retentionReviewCount },
   ];
 
@@ -240,6 +242,53 @@ export default async function AdminPage() {
                 No data/privacy requests are showing yet. When one arrives,
                 verify identity before releasing, deleting or changing private
                 candidate data.
+              </p>
+            )}
+          </section>
+
+          <section className={styles.adminPanel}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">Strategic Interim bench</p>
+                <h2>Latest availability updates.</h2>
+              </div>
+            </div>
+            {overview.latestInterimAvailability.length ? (
+              <div className={styles.adminTableWrap}>
+                <table className={styles.adminTable}>
+                  <thead>
+                    <tr>
+                      <th>Candidate</th>
+                      <th>Status</th>
+                      <th>Available from</th>
+                      <th>Day rate</th>
+                      <th>Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {overview.latestInterimAvailability.map((candidate) => (
+                      <tr key={candidate.candidateId}>
+                        <td>{candidate.candidateName}</td>
+                        <td>
+                          {formatLookup(
+                            interimAvailabilityStatusLabels,
+                            candidate.availabilityStatus,
+                          )}
+                        </td>
+                        <td>
+                          {formatDueDate(candidate.availableFrom || undefined)}
+                        </td>
+                        <td>{candidate.dayRate || "Not stated"}</td>
+                        <td>{formatDueDate(candidate.lastUpdatedAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className={styles.adminEmpty}>
+                No interim availability updates are showing yet. Keep the toggle
+                disabled until Postgres, consent and link expiry are signed off.
               </p>
             )}
           </section>

@@ -84,6 +84,7 @@ FEATURE_FUNCTIONAL_MATRIX=false
 FEATURE_CLIENT_SHORTLIST_PORTAL=false
 FEATURE_AI_BRIEF_BUILDER=false
 FEATURE_INTERIM_BENCH_PORTAL=false
+FEATURE_INTERIM_AVAILABILITY_TOGGLE=false
 FEATURE_LIVE_MARKET_DASHBOARDS=false
 ```
 
@@ -113,6 +114,7 @@ Use Postgres when the item becomes operational:
 - consent records
 - audit logs
 - magic-link access
+- interim availability status
 - portal engagement tracking
 - salary guide leads and delivery status
 

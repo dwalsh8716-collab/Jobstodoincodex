@@ -77,6 +77,7 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_CLIENT_SHORTLIST_PORTAL: optionalBooleanFlag,
   FEATURE_AI_BRIEF_BUILDER: optionalBooleanFlag,
   FEATURE_INTERIM_BENCH_PORTAL: optionalBooleanFlag,
+  FEATURE_INTERIM_AVAILABILITY_TOGGLE: optionalBooleanFlag,
   FEATURE_LIVE_MARKET_DASHBOARDS: optionalBooleanFlag,
   FEATURE_RECRUITER_LABS_ENABLED: optionalBooleanFlag,
   FEATURE_CLIENT_PRESENTATION_PORTAL: optionalBooleanFlag,
@@ -102,6 +103,10 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_AI_CLIENT_PROFILE_DRAFTS: optionalBooleanFlag,
   FEATURE_AI_FOLLOW_UP_DRAFTS: optionalBooleanFlag,
   RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS: z.preprocess(
     emptyToUndefined,
     z.string().optional(),
   ),

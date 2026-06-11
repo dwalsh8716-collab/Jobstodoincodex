@@ -541,9 +541,11 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
       openTaskCount: 0,
       dataRequestCount: 0,
       openDataRequestCount: 0,
+      interimAvailableNowCount: 0,
       retentionReviewCount: 0,
       latestEnquiries: [],
       latestDataRequests: [],
+      latestInterimAvailability: [],
       latestRetentionReviews: [],
     };
   }
@@ -567,6 +569,12 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
           select count(*)::int
           from data_subject_requests
           where status not in ('completed', 'closed', 'rejected')
+        ),
+        'interimAvailableNowCount', (
+          select count(*)::int
+          from interim_candidate_availability
+          where availability_status = 'available_now'
+            and opted_out_at is null
         ),
         'retentionReviewCount', (
           select count(*)::int
@@ -604,6 +612,22 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
             order by created_at desc
             limit 8
           ) latest_requests
+        ), '[]'::json),
+        'latestInterimAvailability', coalesce((
+          select json_agg(row_to_json(latest_interim))
+          from (
+            select
+              c.id::text as "candidateId",
+              c.name as "candidateName",
+              a.availability_status as "availabilityStatus",
+              a.available_from as "availableFrom",
+              a.day_rate as "dayRate",
+              a.last_updated_at as "lastUpdatedAt"
+            from interim_candidate_availability a
+            join candidates c on c.id = a.candidate_id
+            order by a.last_updated_at desc
+            limit 8
+          ) latest_interim
         ), '[]'::json),
         'latestRetentionReviews', coalesce((
           select json_agg(row_to_json(latest_retention))
@@ -652,9 +676,11 @@ export async function getOperationsOverview(): Promise<OperationsOverview> {
       openTaskCount: 0,
       dataRequestCount: 0,
       openDataRequestCount: 0,
+      interimAvailableNowCount: 0,
       retentionReviewCount: 0,
       latestEnquiries: [],
       latestDataRequests: [],
+      latestInterimAvailability: [],
       latestRetentionReviews: [],
     };
   }

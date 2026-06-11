@@ -5,6 +5,51 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-06-11 - Interim Availability Toggle Staged
+
+### Summary
+
+Staged a private Strategic Interim availability update route behind
+`FEATURE_INTERIM_AVAILABILITY_TOGGLE=false`. It uses hashed magic-link tokens,
+updates Postgres only and does not create a public candidate bench.
+
+### Public Website Changes
+
+- Added noindexed `/candidate/interim-availability/[token]`.
+- Added `/api/interim-availability` for POST-only updates.
+- Added `/candidate` to robots disallow while keeping `/candidates` public.
+
+### Form Changes
+
+- Candidates with a valid future link can update availability status, available
+  from date, day rate, notes and opt-out preference.
+- Invalid, expired, revoked, disabled and backend-missing states fail safely.
+
+### Admin Changes
+
+- Protected `/admin` now shows available-now interim count and latest interim
+  availability updates when Postgres is connected.
+
+### Security / Privacy Changes
+
+- Added Postgres tables for interim availability and hashed magic-link tokens.
+- No raw token is stored.
+- No PII is sent to analytics.
+- No public listing or Sanity storage was added.
+- WhatsApp link preparation is blocked unless consent is explicitly confirmed.
+
+### Manual Actions For David
+
+- Run the Railway migration, approve consent/privacy wording, set
+  `FEATURE_INTERIM_AVAILABILITY_TOGGLE=true` only when ready and test the full
+  private flow.
+
+### Rollback Note
+
+- Revert the interim availability staging commit and keep
+  `FEATURE_INTERIM_AVAILABILITY_TOGGLE=false`. Remove pending tokens if the
+  migration has already been used with real candidates.
+
 ## 2026-06-11 - DSAR Email Verification Staged
 
 ### Summary

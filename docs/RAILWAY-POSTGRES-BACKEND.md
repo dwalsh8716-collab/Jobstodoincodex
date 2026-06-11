@@ -117,6 +117,7 @@ database/migrations/007_recruiter_labs_launch_gate.sql
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/009_recruiter_labs_ai_launch_gate.sql
 database/migrations/017_dsar_email_verification.sql
+database/migrations/018_interim_availability_toggle.sql
 database/migrations/010_loxo_reference_boundary.sql
 ```
 
@@ -136,6 +137,8 @@ Tables:
 - `consent_records`
 - `audit_logs`
 - `data_subject_requests`
+- `interim_candidate_availability`
+- `interim_availability_tokens`
 - `integration_sync_events`
 - `retention_review_queue` view
 
@@ -327,6 +330,14 @@ Recruiter Labs AI follow-up:
 database/migrations/016_candidate_summary_drafts.sql
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
+```
+
+Strategic Interim availability follow-up:
+
+```txt
+database/migrations/018_interim_availability_toggle.sql
+FEATURE_INTERIM_AVAILABILITY_TOGGLE=false
+INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS=14
 ```
 
 Final rule: no fake compliance, no public CV links, no secrets in GitHub, and no duplicate public CMS content in Postgres.

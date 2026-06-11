@@ -51,7 +51,15 @@ describe("launch search setup", () => {
     expect(rules.rules).toMatchObject({
       userAgent: "*",
       allow: "/",
-      disallow: ["/studio", "/cms", "/admin", "/labs", "/client", "/api"],
+      disallow: [
+        "/studio",
+        "/cms",
+        "/admin",
+        "/labs",
+        "/client",
+        "/candidate",
+        "/api",
+      ],
     });
   });
 });
