@@ -5,14 +5,19 @@ import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { RichMediaBlock } from "@/components/RichMedia";
 import { SchemaScript } from "@/components/SchemaScript";
-import { getInsight, insights, services } from "@/lib/content";
+import {
+  getPublicInsight,
+  getPublicInsights,
+  getPublicServices,
+} from "@/lib/public-content";
 import { articleSchema, createMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const insights = await getPublicInsights();
   return insights
     .filter((insight) => insight.status === "published")
     .map((insight) => ({ slug: insight.slug }));
@@ -20,8 +25,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const insight = getInsight(slug);
-  if (!insight) return {};
+  const insight = await getPublicInsight(slug);
+  if (!insight || insight.status !== "published") return {};
   return createMetadata({
     title: insight.seoTitle,
     description: insight.metaDescription,
@@ -31,9 +36,13 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function InsightPage({ params }: Props) {
   const { slug } = await params;
-  const insight = getInsight(slug);
-  if (!insight) notFound();
+  const insight = await getPublicInsight(slug);
+  if (!insight || insight.status !== "published") notFound();
 
+  const [services, insights] = await Promise.all([
+    getPublicServices(),
+    getPublicInsights(),
+  ]);
   const relatedServices = services.filter((service) =>
     insight.relatedServiceSlugs.includes(service.slug),
   );

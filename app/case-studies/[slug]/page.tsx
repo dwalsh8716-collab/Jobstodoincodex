@@ -2,14 +2,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
-import { getCaseStudy, getService, caseStudies } from "@/lib/content";
+import {
+  getPublicCaseStudies,
+  getPublicCaseStudy,
+  getPublicService,
+} from "@/lib/public-content";
 import { createMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const caseStudies = await getPublicCaseStudies();
   return caseStudies
     .filter((caseStudy) => caseStudy.status === "published")
     .map((caseStudy) => ({ slug: caseStudy.slug }));
@@ -17,7 +22,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const caseStudy = getCaseStudy(slug);
+  const caseStudy = await getPublicCaseStudy(slug);
   if (!caseStudy || caseStudy.status !== "published") return {};
   return createMetadata({
     title: caseStudy.seoTitle,
@@ -28,9 +33,9 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function CaseStudyPage({ params }: Props) {
   const { slug } = await params;
-  const caseStudy = getCaseStudy(slug);
+  const caseStudy = await getPublicCaseStudy(slug);
   if (!caseStudy || caseStudy.status !== "published") notFound();
-  const service = getService(caseStudy.serviceSlug);
+  const service = await getPublicService(caseStudy.serviceSlug);
 
   return (
     <>

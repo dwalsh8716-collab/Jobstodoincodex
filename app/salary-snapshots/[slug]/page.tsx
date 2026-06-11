@@ -3,31 +3,37 @@ import { AnalyticsPageEvent } from "@/components/AnalyticsPageEvent";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { SalaryTable } from "@/components/SalaryTable";
-import { getSalarySnapshot, salarySnapshots } from "@/lib/content";
+import {
+  getPublicSalarySnapshot,
+  getPublicSalarySnapshots,
+} from "@/lib/public-content";
 import { createMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return salarySnapshots.filter((snapshot) => snapshot.status === "published").map((snapshot) => ({ slug: snapshot.slug }));
+export async function generateStaticParams() {
+  const salarySnapshots = await getPublicSalarySnapshots();
+  return salarySnapshots
+    .filter((snapshot) => snapshot.status === "published")
+    .map((snapshot) => ({ slug: snapshot.slug }));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const snapshot = getSalarySnapshot(slug);
+  const snapshot = await getPublicSalarySnapshot(slug);
   if (!snapshot || snapshot.status !== "published") return {};
   return createMetadata({
     title: snapshot.seoTitle,
     description: snapshot.metaDescription,
-    path: `/salary-snapshots/${snapshot.slug}`
+    path: `/salary-snapshots/${snapshot.slug}`,
   });
 }
 
 export default async function SalarySnapshotPage({ params }: Props) {
   const { slug } = await params;
-  const snapshot = getSalarySnapshot(slug);
+  const snapshot = await getPublicSalarySnapshot(slug);
   if (!snapshot || snapshot.status !== "published") notFound();
 
   return (
@@ -35,7 +41,7 @@ export default async function SalarySnapshotPage({ params }: Props) {
       <Breadcrumbs
         items={[
           { name: "Salary Snapshots", href: "/salary-snapshots" },
-          { name: snapshot.title, href: `/salary-snapshots/${snapshot.slug}` }
+          { name: snapshot.title, href: `/salary-snapshots/${snapshot.slug}` },
         ]}
       />
       <section className="section dark">

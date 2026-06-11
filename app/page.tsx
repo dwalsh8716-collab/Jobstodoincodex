@@ -7,15 +7,17 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
 import {
-  caseStudies,
   homepageFeatureVideo,
-  insights,
   proofPoints,
   richMediaExamples,
-  services,
   specialisms,
   whyEssential,
 } from "@/lib/content";
+import {
+  getPublicCaseStudies,
+  getPublicInsights,
+  getPublicServices,
+} from "@/lib/public-content";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -24,7 +26,12 @@ export const metadata = createMetadata({
   description: siteConfig.defaultDescription,
 });
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [services, insights, caseStudies] = await Promise.all([
+    getPublicServices(),
+    getPublicInsights(),
+    getPublicCaseStudies(),
+  ]);
   const coreServices = services.filter((service) =>
     ["leadership-search", "strategic-interim", "senior-recruitment"].includes(
       service.slug,

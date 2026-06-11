@@ -74,6 +74,18 @@ export type SanityProofItem = {
   featured?: boolean;
 };
 
+export type SanityPortableTextBlock = {
+  _key?: string;
+  _type?: string;
+  style?: string;
+  children?: Array<{
+    _key?: string;
+    _type?: string;
+    text?: string;
+    marks?: string[];
+  }>;
+};
+
 export type SanitySiteSettings = SanitySeo & {
   _id?: string;
   siteName?: string;
@@ -180,6 +192,7 @@ export type SanityJob = SanitySeo & {
   specialism?: string;
   whyThisRoleMatters?: string;
   summary?: string;
+  body?: SanityPortableTextBlock[];
   responsibilities?: string[];
   mustHaves?: string[];
   niceToHaves?: string[];
@@ -209,6 +222,7 @@ export type SanityInsight = SanitySeo & {
   updatedDate?: string;
   readingTime?: string;
   heroImage?: SanityImage;
+  body?: SanityPortableTextBlock[];
   faqs?: FAQ[];
   relatedServices?: SanityCardReference[];
   relatedInsights?: SanityCardReference[];

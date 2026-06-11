@@ -8,14 +8,16 @@ import {
   candidateNextSteps,
   candidatePrivacyPath,
 } from "@/lib/candidate-trust";
-import { getJob, isJobClosed, isJobLive, jobs } from "@/lib/content";
+import { isJobClosed, isJobLive } from "@/lib/content";
+import { getPublicJob, getPublicJobs } from "@/lib/public-content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const jobs = await getPublicJobs();
   return jobs
     .filter((job) => job.status !== "draft")
     .map((job) => ({ slug: job.slug }));
@@ -23,7 +25,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const job = getJob(slug);
+  const job = await getPublicJob(slug);
   if (!job || job.status === "draft") return {};
   const closed = isJobClosed(job);
   return createMetadata({
@@ -38,10 +40,11 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function JobPage({ params }: Props) {
   const { slug } = await params;
-  const job = getJob(slug);
+  const job = await getPublicJob(slug);
   if (!job || job.status === "draft") notFound();
   const live = isJobLive(job);
   const closed = isJobClosed(job);
+  const jobs = await getPublicJobs();
   const relatedLiveJobs = jobs
     .filter((item) => item.slug !== job.slug && isJobLive(item))
     .slice(0, 3);

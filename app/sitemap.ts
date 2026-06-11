@@ -1,17 +1,25 @@
 import type { MetadataRoute } from "next";
+import { isJobLive } from "@/lib/content";
 import {
-  caseStudies,
-  insights,
-  isJobLive,
-  jobs,
-  salarySnapshots,
-  services,
-} from "@/lib/content";
+  getPublicCaseStudies,
+  getPublicInsights,
+  getPublicJobs,
+  getPublicSalarySnapshots,
+  getPublicServices,
+} from "@/lib/public-content";
 import { launchPages, siteConfig } from "@/lib/site";
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, insights, caseStudies, salarySnapshots, jobs] =
+    await Promise.all([
+      getPublicServices(),
+      getPublicInsights(),
+      getPublicCaseStudies(),
+      getPublicSalarySnapshots(),
+      getPublicJobs(),
+    ]);
   const now = new Date();
   const entries = new Map<string, SitemapEntry>();
 

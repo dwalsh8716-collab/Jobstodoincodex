@@ -36,8 +36,8 @@ describe("Recruiter Labs foundation", () => {
     ).toBe(false);
   });
 
-  it("keeps private Recruiter Labs and client routes out of the sitemap", () => {
-    const urls = sitemap().map((entry) => entry.url);
+  it("keeps private Recruiter Labs and client routes out of the sitemap", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
 
     expect(urls).not.toContain(`${siteConfig.url}/admin/recruiter-labs`);
     expect(urls.some((url) => url.includes("/client/shortlist"))).toBe(false);

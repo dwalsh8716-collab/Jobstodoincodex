@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
-import { services } from "@/lib/content";
+import { getPublicServices } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
@@ -12,7 +12,9 @@ export const metadata = createMetadata({
   path: "/services",
 });
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getPublicServices();
+
   return (
     <>
       <Breadcrumbs items={[{ name: "Services", href: "/services" }]} />

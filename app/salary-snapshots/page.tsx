@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
-import { salarySnapshots } from "@/lib/content";
+import { getPublicSalarySnapshots } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
@@ -12,7 +12,8 @@ export const metadata = createMetadata({
   path: "/salary-snapshots",
 });
 
-export default function SalarySnapshotsPage() {
+export default async function SalarySnapshotsPage() {
+  const salarySnapshots = await getPublicSalarySnapshots();
   const publishedSnapshots = salarySnapshots.filter(
     (snapshot) => snapshot.status === "published",
   );

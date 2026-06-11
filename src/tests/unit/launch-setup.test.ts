@@ -1,20 +1,22 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import robots from "../../../app/robots";
 import sitemap from "../../../app/sitemap";
 import { isJobLive, jobs } from "@/lib/content";
 import { launchPages, siteConfig } from "@/lib/site";
 
+vi.mock("server-only", () => ({}));
+
 describe("launch search setup", () => {
-  it("keeps public launch pages in the sitemap", () => {
-    const urls = sitemap().map((entry) => entry.url);
+  it("keeps public launch pages in the sitemap", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
 
     for (const path of launchPages) {
       expect(urls).toContain(`${siteConfig.url}${path}`);
     }
   });
 
-  it("keeps draft jobs out of the sitemap", () => {
-    const urls = sitemap().map((entry) => entry.url);
+  it("keeps draft jobs out of the sitemap", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
     const draftJobs = jobs.filter((job) => !isJobLive(job));
 
     for (const job of draftJobs) {

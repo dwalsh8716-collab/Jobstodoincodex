@@ -32,8 +32,8 @@ describe("Essential Resourcing Labs", () => {
     ).toBe(false);
   });
 
-  it("keeps Labs ideas out of public sitemap output", () => {
-    const urls = sitemap().map((entry) => entry.url);
+  it("keeps Labs ideas out of public sitemap output", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
 
     expect(urls).not.toContain(`${siteConfig.url}/labs`);
     expect(urls).not.toContain(`${siteConfig.url}/admin/labs`);

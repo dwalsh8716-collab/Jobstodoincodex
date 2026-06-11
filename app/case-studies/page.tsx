@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CaseStudyCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
-import { caseStudies } from "@/lib/content";
+import { getPublicCaseStudies } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
@@ -12,7 +12,8 @@ export const metadata = createMetadata({
   path: "/case-studies",
 });
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const caseStudies = await getPublicCaseStudies();
   const publishedCaseStudies = caseStudies.filter(
     (caseStudy) => caseStudy.status === "published",
   );

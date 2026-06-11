@@ -4,7 +4,8 @@ import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { candidateJobPageStandards } from "@/lib/candidate-transparency";
-import { isJobLive, jobs } from "@/lib/content";
+import { isJobLive } from "@/lib/content";
+import { getPublicJobs } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
@@ -14,7 +15,8 @@ export const metadata = createMetadata({
   path: "/jobs",
 });
 
-export default function JobsPage() {
+export default async function JobsPage() {
+  const jobs = await getPublicJobs();
   const liveJobs = jobs.filter((job) => isJobLive(job));
 
   return (

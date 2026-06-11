@@ -88,8 +88,8 @@ describe("Recruiter Labs AI Ops governance", () => {
     );
   });
 
-  it("keeps the AI Ops route private and out of the sitemap", () => {
-    const urls = sitemap().map((entry) => entry.url);
+  it("keeps the AI Ops route private and out of the sitemap", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
     const page = readFileSync(
       "app/admin/recruiter-labs/ai-ops/page.tsx",
       "utf8",

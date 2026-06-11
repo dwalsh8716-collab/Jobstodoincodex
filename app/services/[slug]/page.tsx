@@ -7,7 +7,12 @@ import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { caseStudies, getService, insights, services } from "@/lib/content";
+import {
+  getPublicCaseStudies,
+  getPublicInsights,
+  getPublicService,
+  getPublicServices,
+} from "@/lib/public-content";
 import { createMetadata, serviceSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import type { WhatsAppIntent } from "@/lib/whatsapp";
@@ -41,13 +46,14 @@ const serviceProcessSteps = [
   },
 ];
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const services = await getPublicServices();
   return services.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getPublicService(slug);
   if (!service) return {};
   return createMetadata({
     title: service.seoTitle,
@@ -58,16 +64,21 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getPublicService(slug);
   if (!service) notFound();
 
-  const relatedInsights = insights.filter((insight) =>
+  const [allInsights, allServices, allCaseStudies] = await Promise.all([
+    getPublicInsights(),
+    getPublicServices(),
+    getPublicCaseStudies(),
+  ]);
+  const relatedInsights = allInsights.filter((insight) =>
     service.relatedInsightSlugs.includes(insight.slug),
   );
-  const relatedServices = services.filter((item) =>
+  const relatedServices = allServices.filter((item) =>
     service.relatedServiceSlugs.includes(item.slug),
   );
-  const relatedCases = caseStudies.filter((caseStudy) =>
+  const relatedCases = allCaseStudies.filter((caseStudy) =>
     service.relatedCaseStudySlugs.includes(caseStudy.slug),
   );
   const publishedCases = relatedCases.filter(

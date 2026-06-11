@@ -6,8 +6,8 @@ import {
   aiSearchQuestions,
   insightCategories,
   insightSeeds,
-  insights,
 } from "@/lib/content";
+import { getPublicInsights } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
@@ -17,7 +17,8 @@ export const metadata = createMetadata({
   path: "/insights",
 });
 
-export default function InsightsPage() {
+export default async function InsightsPage() {
+  const insights = await getPublicInsights();
   const published = insights.filter(
     (insight) => insight.status === "published",
   );

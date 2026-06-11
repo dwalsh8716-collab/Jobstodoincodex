@@ -1,3 +1,5 @@
+import "server-only";
+
 import { createClient } from "next-sanity";
 
 // Sanity is the public content engine for the website.
@@ -24,8 +26,11 @@ export const sanityClient = createClient({
   token: process.env.SANITY_READ_TOKEN || process.env.SANITY_API_READ_TOKEN,
 });
 
-export const sanityReady = Boolean(
-  (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
-    process.env.SANITY_PROJECT_ID) &&
-  (process.env.NEXT_PUBLIC_SANITY_DATASET || process.env.SANITY_DATASET),
-);
+export function isSanityReady(env: NodeJS.ProcessEnv = process.env) {
+  return Boolean(
+    (env.NEXT_PUBLIC_SANITY_PROJECT_ID || env.SANITY_PROJECT_ID) &&
+    (env.NEXT_PUBLIC_SANITY_DATASET || env.SANITY_DATASET),
+  );
+}
+
+export const sanityReady = isSanityReady();
