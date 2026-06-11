@@ -95,6 +95,25 @@ test("key public pages load", async ({ page }) => {
   }
 });
 
+test("search control routes respond and exclude private areas", async ({
+  request,
+}) => {
+  const sitemap = await request.get("/sitemap.xml");
+  expect(sitemap.ok()).toBe(true);
+  const sitemapXml = await sitemap.text();
+  expect(sitemapXml).toContain("/services");
+  expect(sitemapXml).not.toContain("/admin");
+  expect(sitemapXml).not.toContain("/client/shortlist");
+  expect(sitemapXml).not.toContain("/labs");
+
+  const robots = await request.get("/robots.txt");
+  expect(robots.ok()).toBe(true);
+  const robotsTxt = await robots.text();
+  expect(robotsTxt).toContain("Sitemap:");
+  expect(robotsTxt).toContain("Disallow: /admin");
+  expect(robotsTxt).toContain("Disallow: /api");
+});
+
 test("404 page displays correctly", async ({ page }) => {
   await page.goto("/definitely-not-a-real-page");
 

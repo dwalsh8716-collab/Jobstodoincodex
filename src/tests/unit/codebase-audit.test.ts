@@ -45,6 +45,7 @@ describe("codebase forensic audit pack", () => {
     const dependabot = readFileSync(".github/dependabot.yml", "utf8");
 
     expect(workflow).toContain("npm run verify");
+    expect(workflow).toContain("npm audit --audit-level=moderate");
     expect(workflow).toContain("npm run sanity -- schema validate");
     expect(workflow).toContain("npm run db:status");
     expect(workflow).toContain("npm run retention:check");
