@@ -81,6 +81,8 @@ The staged client route now has:
 - feedback action UI staged behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
 - WhatsApp CRM sync staged behind `FEATURE_WHATSAPP_CRM_SYNC`
 - official WhatsApp webhook activity stores safe metadata only, not raw message text
+- WhatsApp interview logistics staged behind `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
+- automated WhatsApp is operational-template only and falls back to manual/email
 - structured decline reasons for client feedback
 
 Before real client use, it still needs:
@@ -94,6 +96,7 @@ Before real client use, it still needs:
 - David approval before `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
 - David approval before `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
 - David approval before `FEATURE_WHATSAPP_CRM_SYNC=true`
+- David approval before `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=true`
 
 ## Sanity And Postgres Boundary
 

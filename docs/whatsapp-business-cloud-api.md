@@ -42,6 +42,7 @@ No chatbot, widget, broadcast list or WhatsApp inbox has been added.
 - Postgres migration for future WhatsApp message status records.
 - Feature-flagged webhook parsing and CRM activity sync staging.
 - 24-hour customer service window handling for inbound WhatsApp messages.
+- Feature-flagged interview logistics templates for future scheduled interviews.
 - Environment variable placeholders.
 - Documentation and tests.
 
@@ -57,6 +58,12 @@ WHATSAPP_BUSINESS_DEFAULT_TEMPLATE=
 WHATSAPP_BUSINESS_TEMPLATE_LANGUAGE=en_GB
 WHATSAPP_BUSINESS_API_VERSION=v23.0
 FEATURE_WHATSAPP_CRM_SYNC=false
+FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
+WHATSAPP_BUSINESS_INTERVIEW_CONFIRMATION_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_REMINDER_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_RESCHEDULE_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_LOCATION_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_AVAILABILITY_TEMPLATE=
 ```
 
 Never commit real values.
@@ -81,6 +88,11 @@ Prepared triggers:
 - `candidate_enquiry_received`
 - `client_hiring_enquiry_received`
 - `strategic_interim_enquiry_received`
+- `interview_confirmation`
+- `interview_reminder`
+- `interview_reschedule`
+- `interview_location_drop`
+- `interview_availability_check`
 
 Templates may require approval in Meta Business Manager before production use.
 
@@ -161,6 +173,56 @@ interview logistics or CRM workflows do not accidentally send the wrong type of
 message.
 
 This is technical implementation guidance, not legal advice.
+
+## Interview Logistics
+
+Interview WhatsApp automation is staged, not live.
+
+It is controlled by:
+
+```txt
+FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
+```
+
+The helper only sends operational, approved-template messages for:
+
+- interview confirmation
+- interview reminders
+- reschedule logistics
+- location drops
+- availability checks
+
+It must not be used for:
+
+- rejection
+- offer withdrawal
+- sensitive feedback
+- salary negotiation
+- bad news
+- bulk marketing
+
+Before an interview WhatsApp message can send, all of this must be true:
+
+- the feature flag is `true`
+- WhatsApp Business is enabled and configured
+- the interview request is `scheduled`
+- `interview_start_at` is set in Postgres
+- the candidate has WhatsApp as the preferred contact method
+- WhatsApp consent is explicitly recorded for that workflow
+- a valid mobile number is available
+- an approved Meta template name is configured or the default template name has
+  been approved in Meta
+
+If any of that is missing, the result is a manual/email fallback. That is
+deliberate.
+
+Physical address or map-link details are only included when
+`location_approved_for_whatsapp=true`. Otherwise the template says David will
+confirm the location separately.
+
+Message attempts are logged to `whatsapp_messages` and linked back to
+`recruiter_lab_interview_requests.whatsapp_message_id`. Status updates can then
+arrive through the webhook route documented above.
 
 ## Database Preparation
 

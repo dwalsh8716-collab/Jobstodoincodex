@@ -3,7 +3,10 @@ import "server-only";
 import { z } from "zod";
 import type { ContactFormPayload } from "@/validations/contact";
 import { normaliseWhatsAppNumber } from "@/lib/whatsapp";
-import { templateForContactPayload } from "./templates";
+import {
+  templateForContactPayload,
+  type WhatsAppBusinessTrigger,
+} from "./templates";
 
 const graphResponseSchema = z.object({
   messages: z.array(z.object({ id: z.string().optional() })).optional(),
@@ -16,11 +19,19 @@ export type WhatsAppBusinessSendResult = {
   messageId?: string;
 };
 
-export function getWhatsAppBusinessStatus() {
-  const enabled = process.env.WHATSAPP_BUSINESS_ENABLED === "true";
+export type WhatsAppTemplateSendInput = {
+  to: string;
+  trigger: WhatsAppBusinessTrigger;
+  templateName: string;
+  parameters: string[];
+};
+
+export function getWhatsAppBusinessStatus(
+  env: Record<string, string | undefined> = process.env,
+) {
+  const enabled = env.WHATSAPP_BUSINESS_ENABLED === "true";
   const configured = Boolean(
-    process.env.WHATSAPP_BUSINESS_PHONE_NUMBER_ID &&
-      process.env.WHATSAPP_BUSINESS_ACCESS_TOKEN,
+    env.WHATSAPP_BUSINESS_PHONE_NUMBER_ID && env.WHATSAPP_BUSINESS_ACCESS_TOKEN,
   );
 
   return {
@@ -33,15 +44,16 @@ export function getWhatsAppBusinessStatus() {
 export function shouldSendWhatsAppBusinessMessage(payload: ContactFormPayload) {
   return Boolean(
     payload.preferredContactMethod === "whatsapp" &&
-      payload.consent === "yes" &&
-      normaliseWhatsAppNumber(payload.phone),
+    payload.consent === "yes" &&
+    normaliseWhatsAppNumber(payload.phone),
   );
 }
 
-export async function sendWhatsAppBusinessConfirmation(
-  payload: ContactFormPayload,
+export async function sendWhatsAppTemplateMessage(
+  input: WhatsAppTemplateSendInput,
+  env: Record<string, string | undefined> = process.env,
 ): Promise<WhatsAppBusinessSendResult> {
-  const status = getWhatsAppBusinessStatus();
+  const status = getWhatsAppBusinessStatus(env);
 
   if (!status.enabled) {
     return { ok: true, skipped: true, reason: "disabled" };
@@ -51,21 +63,13 @@ export async function sendWhatsAppBusinessConfirmation(
     return { ok: false, skipped: true, reason: "missing_config" };
   }
 
-  if (!shouldSendWhatsAppBusinessMessage(payload)) {
-    return { ok: true, skipped: true, reason: "no_whatsapp_opt_in" };
-  }
-
-  const to = normaliseWhatsAppNumber(payload.phone);
+  const to = normaliseWhatsAppNumber(input.to);
   if (!to) return { ok: true, skipped: true, reason: "invalid_phone" };
 
-  const template = templateForContactPayload(payload);
-  const templateName =
-    process.env.WHATSAPP_BUSINESS_DEFAULT_TEMPLATE || template.templateName;
-  const languageCode =
-    process.env.WHATSAPP_BUSINESS_TEMPLATE_LANGUAGE || "en_GB";
-  const apiVersion = process.env.WHATSAPP_BUSINESS_API_VERSION || "v23.0";
-  const phoneNumberId = process.env.WHATSAPP_BUSINESS_PHONE_NUMBER_ID;
-  const token = process.env.WHATSAPP_BUSINESS_ACCESS_TOKEN;
+  const languageCode = env.WHATSAPP_BUSINESS_TEMPLATE_LANGUAGE || "en_GB";
+  const apiVersion = env.WHATSAPP_BUSINESS_API_VERSION || "v23.0";
+  const phoneNumberId = env.WHATSAPP_BUSINESS_PHONE_NUMBER_ID;
+  const token = env.WHATSAPP_BUSINESS_ACCESS_TOKEN;
 
   try {
     const response = await fetch(
@@ -81,12 +85,12 @@ export async function sendWhatsAppBusinessConfirmation(
           to,
           type: "template",
           template: {
-            name: templateName,
+            name: input.templateName,
             language: { code: languageCode },
             components: [
               {
                 type: "body",
-                parameters: template.parameters.map((text) => ({
+                parameters: input.parameters.map((text) => ({
                   type: "text",
                   text,
                 })),
@@ -110,4 +114,23 @@ export async function sendWhatsAppBusinessConfirmation(
   } catch {
     return { ok: false, skipped: false, reason: "send_failed" };
   }
+}
+
+export async function sendWhatsAppBusinessConfirmation(
+  payload: ContactFormPayload,
+): Promise<WhatsAppBusinessSendResult> {
+  if (!shouldSendWhatsAppBusinessMessage(payload)) {
+    return { ok: true, skipped: true, reason: "no_whatsapp_opt_in" };
+  }
+
+  const template = templateForContactPayload(payload);
+  const templateName =
+    process.env.WHATSAPP_BUSINESS_DEFAULT_TEMPLATE || template.templateName;
+
+  return sendWhatsAppTemplateMessage({
+    to: payload.phone || "",
+    trigger: template.trigger,
+    templateName,
+    parameters: template.parameters,
+  });
 }

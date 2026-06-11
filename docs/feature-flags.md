@@ -120,6 +120,12 @@ the 24-hour WhatsApp service-window process is approved, and privacy/legal
 wording has been reviewed. When enabled, the webhook stores status/activity
 metadata only. It does not store raw WhatsApp message text or raw phone numbers.
 
+`FEATURE_WHATSAPP_INTERVIEW_SCHEDULING` must stay `false` until David approves
+the exact interview logistics templates, the private interview request fields
+are migrated, WhatsApp consent/preference capture is clear, and the manual
+fallback route is agreed. It is for operational interview messages only, not
+rejection, sensitive feedback, salary negotiation or bulk marketing.
+
 ## Salary Guide Gate
 
 `FEATURE_SALARY_GUIDE_GATE` controls the staged `/salary-guides` lead-capture

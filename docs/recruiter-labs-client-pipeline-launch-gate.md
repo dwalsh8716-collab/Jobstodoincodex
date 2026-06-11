@@ -117,7 +117,11 @@ Not safe yet:
   `FEATURE_WHATSAPP_CRM_SYNC=false`.
 - Passed: inbound webhook parsing stores safe metadata only and does not store
   raw WhatsApp message text.
-- Blocked: interview scheduling templates need review and approval before use.
+- Passed: interview logistics automation is limited to operational templates
+  and falls back to manual/email when consent, preference, time or configuration
+  is missing.
+- Blocked: interview scheduling templates need Meta review and David approval
+  before use.
 - Blocked: live webhook-to-candidate matching needs Meta app secret, Railway
   Postgres migrations, privacy/legal review and David approval before use.
 
@@ -198,6 +202,11 @@ WHATSAPP_BUSINESS_VERIFY_TOKEN=
 WHATSAPP_BUSINESS_APP_SECRET=
 FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false
 FEATURE_WHATSAPP_CRM_SYNC=false
+WHATSAPP_BUSINESS_INTERVIEW_CONFIRMATION_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_REMINDER_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_RESCHEDULE_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_LOCATION_TEMPLATE=
+WHATSAPP_BUSINESS_INTERVIEW_AVAILABILITY_TEMPLATE=
 FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING=false
 FEATURE_AI_CANDIDATE_SUMMARIES=false
 ```

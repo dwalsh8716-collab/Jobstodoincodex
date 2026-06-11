@@ -5,6 +5,64 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-06-11 - WhatsApp Interview Logistics Staged
+
+### Summary
+
+Staged a disabled-by-default WhatsApp Business interview logistics layer for
+future Recruiter Labs scheduling. It sends approved templates only, logs safe
+message metadata and falls back to manual/email when anything is missing.
+
+### Public Website Changes
+
+- No public page, navigation, CTA or design change.
+- Direct WhatsApp links remain unchanged.
+
+### CMS Changes
+
+- No Sanity schema change.
+- Interview scheduling data remains in private Postgres, not Sanity.
+
+### Form Changes
+
+- No public form behaviour changed.
+
+### SEO Changes
+
+- No sitemap, metadata, schema or indexation change.
+- Recruiter Labs remains private and noindexed by policy.
+
+### Security / Privacy Changes
+
+- Kept `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false`.
+- Added operational-only WhatsApp interview triggers.
+- Blocked automated WhatsApp use for rejection, bad news, salary negotiation,
+  sensitive feedback and bulk marketing.
+- Required explicit WhatsApp preference and consent before sending.
+- Required approved physical location/map details before including them.
+
+### Recruiter Labs Changes
+
+- Added private interview request fields for scheduled time, location type,
+  WhatsApp logistics status and manual fallback tracking.
+- Added a server-only helper to send approved WhatsApp templates from scheduled
+  interview records.
+- Linked outbound interview WhatsApp attempts to `whatsapp_messages`.
+
+### Manual Actions For David
+
+- Keep `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false` until Meta templates,
+  consent wording, Railway Postgres migrations and fallback handling are
+  approved.
+- Approve every interview WhatsApp template in Meta Business Manager before use.
+- Keep bad news as a human phone call first.
+
+### Rollback Note
+
+- Revert the interview logistics staging commit and keep
+  `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING=false`. No public website behaviour
+  depends on it.
+
 ## 2026-06-11 - WhatsApp CRM Webhook Sync Staged
 
 ### Summary

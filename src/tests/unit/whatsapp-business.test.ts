@@ -8,6 +8,16 @@ import {
   shouldSendWhatsAppBusinessMessage,
 } from "@/lib/whatsapp-business/client";
 import {
+  getWhatsAppInterviewSchedulingReadiness,
+  sendWhatsAppInterviewLogistics,
+} from "@/lib/whatsapp-business/interview-logistics";
+import {
+  blockedWhatsAppInterviewAutomationTriggers,
+  isAllowedWhatsAppInterviewLogisticsTrigger,
+  templateForInterviewLogistics,
+  whatsAppInterviewLogisticsTriggers,
+} from "@/lib/whatsapp-business/templates";
+import {
   getWhatsAppCustomerServiceWindow,
   parseWhatsAppWebhookPayload,
   processWhatsAppWebhookPayload,
@@ -254,5 +264,126 @@ describe("whatsapp business cloud api", () => {
     expect(migration).toContain("matched_candidate_id");
     expect(migration).toContain("'received'");
     expect(migration).not.toMatch(/message_body|raw_message|message_text/i);
+  });
+
+  it("allows only operational WhatsApp interview logistics triggers", () => {
+    expect(whatsAppInterviewLogisticsTriggers).toEqual([
+      "interview_confirmation",
+      "interview_reminder",
+      "interview_reschedule",
+      "interview_location_drop",
+      "interview_availability_check",
+    ]);
+    expect(blockedWhatsAppInterviewAutomationTriggers).toContain("rejection");
+    expect(blockedWhatsAppInterviewAutomationTriggers).toContain(
+      "salary_negotiation",
+    );
+    expect(
+      isAllowedWhatsAppInterviewLogisticsTrigger("interview_confirmation"),
+    ).toBe(true);
+    expect(isAllowedWhatsAppInterviewLogisticsTrigger("rejection")).toBe(false);
+  });
+
+  it("does not include physical interview location details unless approved", () => {
+    const blocked = templateForInterviewLogistics({
+      trigger: "interview_confirmation",
+      candidateName: "Candidate Name",
+      interviewStartAt: "2026-06-11T13:30:00.000Z",
+      roleTitle: "Marketing Director",
+      locationType: "physical",
+      locationLabel: "Sensitive client address",
+      mapUrl: "https://maps.example/private-client",
+      locationApprovedForWhatsApp: false,
+    });
+
+    expect(blocked.parameters.join(" ")).not.toContain(
+      "Sensitive client address",
+    );
+    expect(blocked.parameters.join(" ")).not.toContain("maps.example");
+    expect(blocked.parameters.join(" ")).toContain(
+      "David will confirm the location separately.",
+    );
+
+    const approved = templateForInterviewLogistics({
+      trigger: "interview_confirmation",
+      candidateName: "Candidate Name",
+      interviewStartAt: "2026-06-11T13:30:00.000Z",
+      roleTitle: "Marketing Director",
+      locationType: "physical",
+      locationLabel: "Approved office address",
+      mapUrl: "https://maps.example/approved",
+      locationApprovedForWhatsApp: true,
+    });
+
+    expect(approved.parameters.join(" ")).toContain("Approved office address");
+    expect(approved.parameters.join(" ")).toContain("maps.example/approved");
+  });
+
+  it("keeps interview logistics disabled until flags, WhatsApp and database are ready", () => {
+    expect(getWhatsAppInterviewSchedulingReadiness({})).toMatchObject({
+      featureEnabled: false,
+      whatsappStatus: { enabled: false, configured: false },
+      databaseStatus: { state: "disabled" },
+      ready: false,
+    });
+
+    expect(
+      getWhatsAppInterviewSchedulingReadiness({
+        FEATURE_WHATSAPP_INTERVIEW_SCHEDULING: "true",
+        WHATSAPP_BUSINESS_ENABLED: "true",
+        WHATSAPP_BUSINESS_PHONE_NUMBER_ID: "123",
+        WHATSAPP_BUSINESS_ACCESS_TOKEN: "token",
+        OPERATIONS_DB_ENABLED: "true",
+        DATABASE_URL: "postgres://example",
+      }),
+    ).toMatchObject({
+      featureEnabled: true,
+      whatsappStatus: { enabled: true, configured: true },
+      databaseStatus: { state: "ready" },
+      ready: true,
+    });
+  });
+
+  it("falls back safely when interview WhatsApp consent is missing", async () => {
+    await expect(
+      sendWhatsAppInterviewLogistics(
+        {
+          trigger: "interview_confirmation",
+          candidateName: "Candidate Name",
+          candidatePhone: "+44 7824 514296",
+          preferredContactMethod: "email",
+          candidateWhatsAppConsent: false,
+          interviewStartAt: "2026-06-11T13:30:00.000Z",
+          locationType: "google_meet",
+          googleMeetUrl: "https://meet.google.com/example",
+        },
+        {
+          FEATURE_WHATSAPP_INTERVIEW_SCHEDULING: "true",
+          WHATSAPP_BUSINESS_ENABLED: "true",
+          WHATSAPP_BUSINESS_PHONE_NUMBER_ID: "123",
+          WHATSAPP_BUSINESS_ACCESS_TOKEN: "token",
+        },
+      ),
+    ).resolves.toMatchObject({
+      ok: true,
+      skipped: true,
+      code: "no_whatsapp_opt_in",
+      manualFallbackRequired: true,
+    });
+  });
+
+  it("stages database fields for confirmed interview WhatsApp logistics", () => {
+    const migration = readFileSync(
+      "database/migrations/015_whatsapp_interview_logistics.sql",
+      "utf8",
+    );
+
+    expect(migration).toContain("interview_start_at");
+    expect(migration).toContain("location_approved_for_whatsapp");
+    expect(migration).toContain("whatsapp_logistics_status");
+    expect(migration).toContain("'manual_fallback'");
+    expect(migration).not.toMatch(
+      /rejection|offer_withdrawal|salary_negotiation|bulk_marketing/i,
+    );
   });
 });

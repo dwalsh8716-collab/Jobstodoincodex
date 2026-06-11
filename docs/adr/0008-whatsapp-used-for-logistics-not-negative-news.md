@@ -48,6 +48,9 @@ requests or disputed decisions need a more careful human route.
 - WhatsApp Business API remains server-side, disabled by default and
   consent-aware.
 - Future automation must respect templates, consent, privacy and tone.
+- Interview logistics automation must use approved templates only and fall back
+  to manual/email if consent, preference, confirmed timing or configuration is
+  missing.
 
 ## What Not To Do
 

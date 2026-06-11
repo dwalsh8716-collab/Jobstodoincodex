@@ -202,6 +202,26 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  WHATSAPP_BUSINESS_INTERVIEW_CONFIRMATION_TEMPLATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_INTERVIEW_REMINDER_TEMPLATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_INTERVIEW_RESCHEDULE_TEMPLATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_INTERVIEW_LOCATION_TEMPLATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  WHATSAPP_BUSINESS_INTERVIEW_AVAILABILITY_TEMPLATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   RESEND_API_KEY: z.preprocess(emptyToUndefined, z.string().optional()),
   CONTACT_TO_EMAIL: z.preprocess(
     emptyToUndefined,
