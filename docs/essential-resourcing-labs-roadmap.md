@@ -109,6 +109,12 @@ Suggested issue: `#59`.
 
 Codex effort: high if PDFs, data model or lead routing are involved.
 
+Implementation notes live in:
+
+```txt
+docs/labs-salary-benchmark-asset.md
+```
+
 ### Bad Hire Calculator
 
 Commercial value: makes weak hiring decisions feel commercially real.

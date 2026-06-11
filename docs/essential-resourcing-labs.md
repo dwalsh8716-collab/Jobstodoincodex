@@ -88,6 +88,12 @@ The staged market mapping notes live in:
 docs/labs-market-mapping.md
 ```
 
+The staged salary benchmark asset notes live in:
+
+```txt
+docs/labs-salary-benchmark-asset.md
+```
+
 Each idea should explain:
 
 - commercial purpose

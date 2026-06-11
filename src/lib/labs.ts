@@ -137,7 +137,7 @@ export const labsIdeas: LabsIdea[] = [
   {
     title: "Bespoke salary benchmarking asset builder",
     category: "Salary intelligence",
-    status: "idea",
+    status: "private_preview",
     priority: "future",
     targetUser: "Clients considering a senior hire",
     commercialPurpose:
@@ -147,6 +147,7 @@ export const labsIdeas: LabsIdea[] = [
     dependencies: ["Salary data model", "Download asset generation"],
     featureFlagName: "FEATURE_SALARY_BENCHMARK_ASSET",
     relatedGitHubIssue: "#59",
+    relatedRoute: "/admin/labs/salary-benchmark",
     launchRule:
       "Launch only with sourced, reviewed salary data and clear caveats.",
   },

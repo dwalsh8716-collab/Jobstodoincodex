@@ -135,6 +135,12 @@ protected preview lives at `/admin/labs/market-mapping`; the implementation note
 lives in `docs/labs-market-mapping.md`. Public maps must stay aggregate and
 anonymous.
 
+`FEATURE_SALARY_BENCHMARK_ASSET` must stay `false` until request wording,
+source caveats, David review workflow, privacy wording and Postgres storage are
+approved. The protected preview lives at `/admin/labs/salary-benchmark`; the
+implementation note lives in `docs/labs-salary-benchmark-asset.md`. No final
+benchmark should be sent without David review.
+
 `INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Strategic Interim
 availability magic links. It defaults to 14 days and is capped in code at 45
 days. It is not a secret and must not contain a token.

@@ -138,6 +138,12 @@ export default async function AdminLabsPage() {
             >
               Bad hire calculator
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/labs/salary-benchmark"
+            >
+              Salary benchmark
+            </Link>
           </div>
         </div>
 
