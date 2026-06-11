@@ -8,6 +8,12 @@ when the database, consent, audit and privacy gates are ready.
 
 Current status: staged foundation. Not live for real clients.
 
+Shortlist-specific launch notes for issue `#63` live in:
+
+```txt
+docs/labs-client-shortlists.md
+```
+
 ## Route Structure
 
 Client route:
@@ -27,7 +33,8 @@ The client route is:
 - dynamic
 - noindexed
 - excluded from sitemap, RSS and AI index routes
-- feature-gated by `FEATURE_CLIENT_PRESENTATION_PORTAL`
+- feature-gated by `FEATURE_CLIENT_SHORTLIST_PORTAL` or
+  `FEATURE_CLIENT_PRESENTATION_PORTAL`
 - blocked when the private operations database is disabled
 - blocked for invalid, expired, revoked or not-ready links
 
@@ -37,6 +44,7 @@ Keep these off until David approves private beta:
 
 ```bash
 FEATURE_CLIENT_PRESENTATION_PORTAL=false
+FEATURE_CLIENT_SHORTLIST_PORTAL=false
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=false
 FEATURE_INTERVIEW_REQUEST_WORKFLOW=false
 FEATURE_BRANDED_CANDIDATE_PROFILES=false
@@ -45,6 +53,7 @@ FEATURE_BRANDED_CANDIDATE_PROFILES=false
 The portal can only read private data when:
 
 - `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
+  or `FEATURE_CLIENT_SHORTLIST_PORTAL=true`
 - `OPERATIONS_DB_ENABLED=true`
 - `DATABASE_URL` is configured
 - the shortlist launch gate is approved

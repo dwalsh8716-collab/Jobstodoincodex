@@ -192,6 +192,12 @@ Suggested issues: `#63`, `#69`, `#70`, `#71`, `#72`, `#73`.
 
 Codex effort: high.
 
+Shortlist-specific route, flag and security notes live in:
+
+```txt
+docs/labs-client-shortlists.md
+```
+
 ### Market Mapping Visuals
 
 Commercial value: shows search reach and market shape for serious client

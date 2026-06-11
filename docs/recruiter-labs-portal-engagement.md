@@ -14,12 +14,13 @@ Required flags:
 
 ```txt
 FEATURE_CLIENT_PRESENTATION_PORTAL=true
+FEATURE_CLIENT_SHORTLIST_PORTAL=true
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=true
 OPERATIONS_DB_ENABLED=true
 DATABASE_URL=...
 ```
 
-If either portal flag is off, the tracker does not write. If the private
+If the portal flag family is off, the tracker does not write. If the private
 database is not ready, it returns a safe disabled response.
 
 ## What Is Tracked

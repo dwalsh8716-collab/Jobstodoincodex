@@ -12,6 +12,7 @@ import type { OperationWriteResult, OperationsBackendStatus } from "./operations
 import {
   getRecruiterLabsClientPortalView,
   hashRecruiterLabsClientToken,
+  isRecruiterLabsClientPortalFeatureEnabled,
   isRecruiterLabsFeatureEnabled,
 } from "./recruiter-labs";
 import { saveRecruiterLabsPortalEngagement } from "./recruiter-labs-engagement";
@@ -140,10 +141,7 @@ export function parseRecruiterLabsFeedbackPayload(input: unknown) {
 function readinessFromEnv(
   env: RecruiterLabsEnv = process.env,
 ): RecruiterLabsFeedbackReadiness {
-  const portalEnabled = isRecruiterLabsFeatureEnabled(
-    "FEATURE_CLIENT_PRESENTATION_PORTAL",
-    env,
-  );
+  const portalEnabled = isRecruiterLabsClientPortalFeatureEnabled(env);
   const feedbackEnabled = isRecruiterLabsFeatureEnabled(
     "FEATURE_SHORTLIST_FEEDBACK_TRACKING",
     env,

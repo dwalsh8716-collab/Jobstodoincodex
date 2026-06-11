@@ -3,7 +3,10 @@ import "server-only";
 import { z } from "zod";
 import { getOperationsBackendStatus } from "./operations/database";
 import type { OperationsBackendStatus } from "./operations/types";
-import { isRecruiterLabsFeatureEnabled } from "./recruiter-labs";
+import {
+  isRecruiterLabsClientPortalFeatureEnabled,
+  isRecruiterLabsFeatureEnabled,
+} from "./recruiter-labs";
 
 type RecruiterLabsAudioEnv = Record<string, string | undefined>;
 
@@ -130,10 +133,7 @@ export function getDavidsAudioNotesStatus(
     davidsAudioNotesFeatureFlag,
     env,
   );
-  const portalEnabled = isRecruiterLabsFeatureEnabled(
-    "FEATURE_CLIENT_PRESENTATION_PORTAL",
-    env,
-  );
+  const portalEnabled = isRecruiterLabsClientPortalFeatureEnabled(env);
   const databaseStatus: OperationsBackendStatus =
     env === process.env
       ? getOperationsBackendStatus()

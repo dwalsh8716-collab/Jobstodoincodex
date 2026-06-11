@@ -61,6 +61,7 @@ Staged now:
 
 ```bash
 FEATURE_RECRUITER_LABS_ENABLED=false
+FEATURE_CLIENT_SHORTLIST_PORTAL=false
 FEATURE_CLIENT_PRESENTATION_PORTAL=false
 FEATURE_BRANDED_CANDIDATE_PROFILES=false
 FEATURE_SHORTLIST_FEEDBACK_TRACKING=false
@@ -140,7 +141,8 @@ Before real client use, it still needs:
 - audit logging proof
 - private CV access approval and signed access routes
 - David/legal privacy review
-- David approval before `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
+- David approval before `FEATURE_CLIENT_SHORTLIST_PORTAL=true` or
+  `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
 - David approval before `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
 - David approval before `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=true`
 - David approval before `FEATURE_WHATSAPP_CRM_SYNC=true`
@@ -280,7 +282,8 @@ Before any client portal goes live:
 - DSAR workflow live
 - data retention policy reviewed
 - `RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS` reviewed, defaulting to 30 days
-- `FEATURE_CLIENT_PRESENTATION_PORTAL=true` approved by David for the exact
+- `FEATURE_CLIENT_SHORTLIST_PORTAL=true` or
+  `FEATURE_CLIENT_PRESENTATION_PORTAL=true` approved by David for the exact
   release stage
 - `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true` approved by David for private
   beta feedback capture

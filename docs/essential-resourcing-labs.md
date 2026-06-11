@@ -64,6 +64,12 @@ The staged AI brief builder notes live in:
 docs/labs-ai-brief-builder.md
 ```
 
+The staged client shortlist notes live in:
+
+```txt
+docs/labs-client-shortlists.md
+```
+
 Each idea should explain:
 
 - commercial purpose

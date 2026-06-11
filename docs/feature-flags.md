@@ -180,12 +180,16 @@ ready. The private builder foundation lives in
 `docs/recruiter-labs-candidate-profiles.md`. It does not create public
 candidate profile URLs and does not approve AI drafts automatically.
 
-`FEATURE_CLIENT_PRESENTATION_PORTAL` must stay `false` until Railway Postgres is
-live, token expiry/revocation is tested, candidate sharing consent is approved,
-and David signs off private beta. The route and model notes live in
-`docs/recruiter-labs-client-presentation-portal.md`. Turning the flag on is not
-enough for launch: feedback, CV access, audit logging and privacy review still
-need their own gates.
+`FEATURE_CLIENT_SHORTLIST_PORTAL` and `FEATURE_CLIENT_PRESENTATION_PORTAL` must
+stay `false` until Railway Postgres is live, token expiry/revocation is tested,
+candidate sharing consent is approved, and David signs off private beta. They
+point at the same gated portal; `FEATURE_CLIENT_SHORTLIST_PORTAL` is the
+issue-aligned name and `FEATURE_CLIENT_PRESENTATION_PORTAL` is the existing
+implementation name. The route and model notes live in
+`docs/labs-client-shortlists.md` and
+`docs/recruiter-labs-client-presentation-portal.md`. Turning either flag on is
+not enough for launch: feedback, CV access, audit logging and privacy review
+still need their own gates.
 
 `FEATURE_LIVE_MARKET_DASHBOARDS` must stay `false` until verified salary/rate
 source data, methodology notes, last-updated dates, performance testing and
@@ -253,6 +257,7 @@ that value.
 Issue #117 specifically called out these flags. They all exist and default off:
 
 - `FEATURE_RECRUITER_LABS_ENABLED`
+- `FEATURE_CLIENT_SHORTLIST_PORTAL`
 - `FEATURE_CLIENT_PRESENTATION_PORTAL`
 - `FEATURE_BRANDED_CANDIDATE_PROFILES`
 - `FEATURE_SHORTLIST_FEEDBACK_TRACKING`

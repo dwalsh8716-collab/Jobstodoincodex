@@ -19,6 +19,12 @@ export const recruiterLabsFlagDefinitions = [
     description: "Future magic-link shortlist portal for client review.",
   },
   {
+    name: "FEATURE_CLIENT_SHORTLIST_PORTAL",
+    label: "Client shortlist portal",
+    description:
+      "Issue-aligned alias for the future passwordless shortlist portal. It uses the same route, tables and launch gate as the client presentation portal.",
+  },
+  {
     name: "FEATURE_BRANDED_CANDIDATE_PROFILES",
     label: "Branded candidate profiles",
     description:
@@ -94,6 +100,11 @@ export const recruiterLabsFlagDefinitions = [
 
 export type RecruiterLabsFlagName =
   (typeof recruiterLabsFlagDefinitions)[number]["name"];
+
+export const recruiterLabsClientPortalFeatureFlags = [
+  "FEATURE_CLIENT_SHORTLIST_PORTAL",
+  "FEATURE_CLIENT_PRESENTATION_PORTAL",
+] as const satisfies readonly RecruiterLabsFlagName[];
 
 type RecruiterLabsEnv = Record<string, string | undefined>;
 type RecruiterLabsRequirement =
@@ -200,6 +211,7 @@ export type RecruiterLabsCandidateShareInput = {
 
 type RecruiterLabsClientPortalStatus = {
   route: typeof recruiterLabsClientPortalRoute;
+  featureFlagNames: typeof recruiterLabsClientPortalFeatureFlags;
   featureEnabled: boolean;
   expiryDays: number;
   databaseStatus: OperationsBackendStatus;
@@ -915,6 +927,14 @@ export function isRecruiterLabsFeatureEnabled(
   return env[flagName] === "true";
 }
 
+export function isRecruiterLabsClientPortalFeatureEnabled(
+  env: RecruiterLabsEnv = process.env,
+) {
+  return recruiterLabsClientPortalFeatureFlags.some((flagName) =>
+    isRecruiterLabsFeatureEnabled(flagName, env),
+  );
+}
+
 export function getRecruiterLabsClientPortalExpiryDays(
   env: RecruiterLabsEnv = process.env,
 ) {
@@ -963,14 +983,12 @@ export function createRecruiterLabsClientToken({
 export function getRecruiterLabsClientPortalStatus(
   env: RecruiterLabsEnv = process.env,
 ): RecruiterLabsClientPortalStatus {
-  const featureEnabled = isRecruiterLabsFeatureEnabled(
-    "FEATURE_CLIENT_PRESENTATION_PORTAL",
-    env,
-  );
+  const featureEnabled = isRecruiterLabsClientPortalFeatureEnabled(env);
   const databaseStatus = operationsStatusFromEnv(env);
 
   return {
     route: recruiterLabsClientPortalRoute,
+    featureFlagNames: recruiterLabsClientPortalFeatureFlags,
     featureEnabled,
     expiryDays: getRecruiterLabsClientPortalExpiryDays(env),
     databaseStatus,

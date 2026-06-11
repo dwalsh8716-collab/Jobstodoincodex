@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { ClientShortlistEngagement } from "@/components/ClientShortlistEngagement";
 import { ClientShortlistFeedback } from "@/components/ClientShortlistFeedback";
 import {
@@ -10,6 +11,7 @@ import {
   type RecruiterLabsClientPortalView,
   type RecruiterLabsShortlistCandidatePresentation,
 } from "@/lib/client-shortlist-portal";
+import { logAuditEvent } from "@/lib/operations/audit";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -104,6 +106,40 @@ function buildRateLimitedView(): RecruiterLabsClientPortalView {
     status: getRecruiterLabsClientPortalStatus(),
     shortlist: null,
   };
+}
+
+async function logClientShortlistAccess(view: RecruiterLabsClientPortalView) {
+  const headerStore = await headers();
+  const allowed = view.decision.allowed && Boolean(view.shortlist);
+
+  await logAuditEvent(
+    {
+      action: allowed
+        ? "recruiter_labs_access_granted"
+        : "recruiter_labs_access_denied",
+      entityType: allowed
+        ? "recruiter_labs_shortlist"
+        : "recruiter_labs_access_token",
+      entityId: view.shortlist?.id,
+      entityLabel: view.shortlist?.title || view.decision.state,
+      metadata: {
+        surface: "client_shortlist_portal",
+        decisionState: view.decision.state,
+        decisionReason: view.decision.reason,
+        featureEnabled: view.status.featureEnabled,
+        databaseState: view.status.databaseStatus.state,
+        shortlistStatus: view.shortlist?.status,
+        candidateCount: view.shortlist?.candidates.length ?? 0,
+        withheldCandidateCount: view.shortlist?.withheldCandidateCount ?? 0,
+      },
+    },
+    {
+      meta: {
+        ip: headerStore.get("x-forwarded-for")?.split(",")[0]?.trim(),
+        userAgent: headerStore.get("user-agent") ?? undefined,
+      },
+    },
+  );
 }
 
 function MessageDavidOption() {
@@ -273,6 +309,7 @@ export default async function ClientShortlistPage({
   const view = rateLimit.allowed
     ? await getRecruiterLabsClientPortalView(token)
     : buildRateLimitedView();
+  await logClientShortlistAccess(view);
   const copy = stateCopy[view.decision.state];
   const expiry = formatDate(view.decision.expiresAt);
   const shortlist = view.shortlist;
