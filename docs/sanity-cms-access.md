@@ -121,8 +121,8 @@ Commercial:
 
 Content:
 
-- insights
-- salary snapshots
+- insights / posts
+- salary guides / snapshots
 
 Recruitment:
 
@@ -130,7 +130,7 @@ Recruitment:
 
 People:
 
-- David Walsh / team profiles
+- authors / David Walsh / team profiles
 
 ## Common Editing Steps
 

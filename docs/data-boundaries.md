@@ -23,6 +23,7 @@ Sanity currently stores public website content:
 - insights
 - case studies
 - salary snapshots
+- public salary guide landing-page content
 - testimonials
 - FAQs
 - people/profile content
@@ -76,6 +77,7 @@ No CV upload flow exists on the public website.
 - public insight articles
 - public case studies
 - public salary snapshots
+- public salary guide landing pages and market-level commentary
 - public testimonials with permission
 - public SEO metadata
 - public CTAs
@@ -256,6 +258,9 @@ No matching private operational fields are currently defined.
 Public fields that need editorial care:
 
 - `job.applicationEmail`: public routing inbox only, not a candidate email.
+- `salarySnapshot.contentFormat`: public snapshot or public salary guide landing
+  page only. Gated guide leads, download tokens and private lead records belong
+  in the private backend.
 - `salarySnapshot.candidateAvailabilityNotes`: anonymous market-level notes only.
 - `testimonial.name`: named people only with permission.
 - `person.email`: public profile email only.

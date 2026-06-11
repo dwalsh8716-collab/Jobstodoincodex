@@ -39,6 +39,33 @@ The CMS can manage:
 - Salary snapshots with table rows, market commentary, hiring notes and CTA.
 - Site settings, contact details, WhatsApp Business details, social links, footer content, navigation, redirects and proof/logos where permission is clear.
 
+## Research Matrix 01 Audit
+
+Issue #90 asked for Sanity core schemas for public content only.
+
+Existing work was found in closed issues #3 and #35, so the CMS was not
+rebuilt. The current embedded Sanity setup was preserved and tightened.
+
+Schema coverage:
+
+- Post requirement: covered by `insight`, shown to editors as Insights / Posts.
+- Author requirement: covered by `person`, shown to editors as Authors / David
+  Walsh / Team.
+- CaseStudy requirement: covered by `caseStudy`.
+- Service requirement: covered by `service`.
+- SiteSettings requirement: covered by `siteSettings`.
+- Navigation requirement: covered by `navigation`.
+- Footer requirement: covered inside `siteSettings` and footer navigation
+  references, avoiding a duplicate footer singleton.
+- Testimonial requirement: covered by `testimonial`.
+- SalaryGuide requirement: covered by `salarySnapshot`, now labelled Salary
+  Guides / Snapshots with a public content format field.
+- Job requirement: covered by `job` for public adverts only.
+
+No private candidate/client PII schema was added. No CVs, applications,
+candidate records, private client contacts, DSAR records or audit logs belong in
+Sanity.
+
 ## Post-Launch Growth Support
 
 The first growth phase does not need a big new CMS build. Insights, salary snapshots, case studies, FAQs, CTAs, proof items and SEO fields already support the first 12 weeks of content and authority work.

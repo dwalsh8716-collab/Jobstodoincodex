@@ -84,10 +84,10 @@ export const structure: StructureResolver = (S) =>
             .title("Content")
             .items([
               S.documentTypeListItem("insight")
-                .title("Insights")
+                .title("Insights / Posts")
                 .icon(ComposeIcon),
               S.documentTypeListItem("salarySnapshot")
-                .title("Salary Snapshots")
+                .title("Salary Guides / Snapshots")
                 .icon(TiersIcon),
             ]),
         ),
@@ -124,7 +124,7 @@ export const structure: StructureResolver = (S) =>
             .title("People")
             .items([
               S.documentTypeListItem("person")
-                .title("David Walsh / Team")
+                .title("Authors / David Walsh / Team")
                 .icon(UserIcon),
             ]),
         ),

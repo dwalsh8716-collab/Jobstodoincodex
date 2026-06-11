@@ -170,10 +170,10 @@ const ctaButtonField = () =>
     ],
   });
 
-const inlineFaqField = () =>
+const inlineFaqField = (name = "faqs", title = "FAQs") =>
   defineField({
-    name: "faqs",
-    title: "FAQs",
+    name,
+    title,
     type: "array",
     of: [
       defineArrayMember({
@@ -449,7 +449,7 @@ const flexibleContentField = () =>
       }),
       videoBlockMember,
       defineArrayMember({
-        name: "ctaBlock",
+        name: "inlineCtaBlock",
         title: "Call to action block",
         type: "object",
         icon: RocketIcon,
@@ -539,7 +539,7 @@ const flexibleContentField = () =>
         fields: [
           defineField({ name: "heading", title: "Heading", type: "string" }),
           referenceListField("faqs", "FAQs", ["faq"]),
-          inlineFaqField(),
+          inlineFaqField("inlineFaqs", "Inline FAQs"),
         ],
       }),
       defineArrayMember({
@@ -914,6 +914,15 @@ const siteSettings = defineType({
       ["proofItem"],
     ),
   ],
+  preview: {
+    select: { title: "siteName", subtitle: "siteUrl" },
+    prepare({ title, subtitle }) {
+      return {
+        title: title || "Site Settings",
+        subtitle: subtitle || "Global website settings",
+      };
+    },
+  },
 });
 
 const homePage = defineType({
@@ -970,6 +979,15 @@ const homePage = defineType({
     ...seoFields,
     publishedStatusField(),
   ],
+  preview: {
+    select: { title: "title", subtitle: "heroHeadline" },
+    prepare({ title, subtitle }) {
+      return {
+        title: title || "Homepage",
+        subtitle: subtitle || "Main website homepage",
+      };
+    },
+  },
 });
 
 const navigation = defineType({
@@ -1072,6 +1090,21 @@ const page = defineType({
     ...seoFields,
     publishedStatusField(),
   ],
+  preview: {
+    select: {
+      title: "title",
+      slug: "slug.current",
+      pageType: "pageType",
+    },
+    prepare({ title, slug, pageType }) {
+      return {
+        title,
+        subtitle: [pageType, slug ? `/${slug}` : undefined]
+          .filter(Boolean)
+          .join(" · "),
+      };
+    },
+  },
 });
 
 const service = defineType({
@@ -1135,6 +1168,21 @@ const service = defineType({
     ...seoFields,
     publishedStatusField(),
   ],
+  preview: {
+    select: {
+      title: "title",
+      slug: "slug.current",
+      status: "status",
+    },
+    prepare({ title, slug, status }) {
+      return {
+        title,
+        subtitle: [status, slug ? `/services/${slug}` : undefined]
+          .filter(Boolean)
+          .join(" · "),
+      };
+    },
+  },
 });
 
 const job = defineType({
@@ -1282,6 +1330,20 @@ const job = defineType({
     }),
     ...seoFields,
   ],
+  preview: {
+    select: {
+      title: "title",
+      status: "status",
+      location: "location",
+      salary: "salary",
+    },
+    prepare({ title, status, location, salary }) {
+      return {
+        title,
+        subtitle: [status, location, salary].filter(Boolean).join(" · "),
+      };
+    },
+  },
 });
 
 const insight = defineType({
@@ -1340,6 +1402,20 @@ const insight = defineType({
     ...seoFields,
     publishedStatusField(),
   ],
+  preview: {
+    select: {
+      title: "title",
+      author: "author.name",
+      status: "status",
+      publishedDate: "publishedDate",
+    },
+    prepare({ title, author, status, publishedDate }) {
+      return {
+        title,
+        subtitle: [status, author, publishedDate].filter(Boolean).join(" · "),
+      };
+    },
+  },
 });
 
 const caseStudy = defineType({
@@ -1429,11 +1505,25 @@ const caseStudy = defineType({
     ...seoFields,
     publishedStatusField(),
   ],
+  preview: {
+    select: {
+      title: "title",
+      clientType: "clientType",
+      roleHired: "roleHired",
+      status: "status",
+    },
+    prepare({ title, clientType, roleHired, status }) {
+      return {
+        title,
+        subtitle: [status, clientType, roleHired].filter(Boolean).join(" · "),
+      };
+    },
+  },
 });
 
 const salarySnapshot = defineType({
   name: "salarySnapshot",
-  title: "Salary Snapshot",
+  title: "Salary Guide / Snapshot",
   type: "document",
   icon: TiersIcon,
   fields: [
@@ -1449,6 +1539,22 @@ const salarySnapshot = defineType({
       type: "slug",
       options: { source: "title" },
       validation: requiredText("Add a slug."),
+    }),
+    defineField({
+      name: "contentFormat",
+      title: "Content format",
+      type: "string",
+      description:
+        "Choose whether this is a short salary snapshot or a public salary guide landing page. Do not use this for private gated lead data.",
+      options: {
+        list: [
+          { title: "Salary snapshot", value: "snapshot" },
+          { title: "Salary guide landing page", value: "guide_landing_page" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "snapshot",
+      validation: requiredText("Choose the public salary content format."),
     }),
     defineField({
       name: "quarterDate",
@@ -1477,6 +1583,20 @@ const salarySnapshot = defineType({
     ...seoFields,
     publishedStatusField(),
   ],
+  preview: {
+    select: {
+      title: "title",
+      contentFormat: "contentFormat",
+      market: "market",
+      status: "status",
+    },
+    prepare({ title, contentFormat, market, status }) {
+      return {
+        title,
+        subtitle: [status, contentFormat, market].filter(Boolean).join(" · "),
+      };
+    },
+  },
 });
 
 const testimonial = defineType({
@@ -1521,6 +1641,19 @@ const testimonial = defineType({
       initialValue: false,
     }),
   ],
+  preview: {
+    select: {
+      title: "quote",
+      name: "name",
+      company: "company",
+    },
+    prepare({ title, name, company }) {
+      return {
+        title: title || "Testimonial",
+        subtitle: [name, company].filter(Boolean).join(" · "),
+      };
+    },
+  },
 });
 
 const faq = defineType({
@@ -1549,6 +1682,9 @@ const faq = defineType({
     }),
     referenceListField("relatedServices", "Related services", ["service"]),
   ],
+  preview: {
+    select: { title: "question", subtitle: "relatedPage" },
+  },
 });
 
 const person = defineType({
@@ -1576,6 +1712,13 @@ const person = defineType({
     }),
     stringListField("schemaKnowsAbout", "Topics this person knows about"),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "role",
+      media: "headshot",
+    },
+  },
 });
 
 const ctaBlock = defineType({
@@ -1589,6 +1732,9 @@ const ctaBlock = defineType({
     defineField({ name: "text", title: "Text", type: "text", rows: 3 }),
     ctaButtonField(),
   ],
+  preview: {
+    select: { title: "title", subtitle: "heading" },
+  },
 });
 
 const proofItem = defineType({
@@ -1623,6 +1769,13 @@ const proofItem = defineType({
       initialValue: false,
     }),
   ],
+  preview: {
+    select: {
+      title: "label",
+      subtitle: "description",
+      media: "logo",
+    },
+  },
 });
 
 const redirect = defineType({

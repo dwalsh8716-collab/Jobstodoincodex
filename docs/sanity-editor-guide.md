@@ -77,8 +77,8 @@ Commercial:
 
 Content:
 
-- Insights.
-- Salary Snapshots.
+- Insights / Posts.
+- Salary Guides / Snapshots.
 
 Recruitment:
 
@@ -86,7 +86,17 @@ Recruitment:
 
 People:
 
-- David Walsh / Team.
+- Authors / David Walsh / Team.
+
+## What The Core CMS Types Mean
+
+- Posts are managed as Insights / Posts.
+- Authors are managed as People records.
+- Footer copy and footer navigation are managed in Site Settings and Navigation.
+- Salary guide public landing content is managed in Salary Guides / Snapshots.
+
+Do not create duplicate content just because the label is different. Use the
+existing area unless David asks for a separate content type.
 
 ## Common Jobs
 
@@ -126,9 +136,18 @@ Do not publish a role with:
 Publish an insight:
 
 1. Open Content.
-2. Open Insights.
+2. Open Insights / Posts.
 3. Add title, slug, excerpt, author, dates, body and FAQs.
 4. Publish only when the advice is sharp and checked.
+
+Create salary guide public content:
+
+1. Open Content.
+2. Open Salary Guides / Snapshots.
+3. Choose Salary guide landing page as the content format.
+4. Keep the content public and market-level.
+5. Do not add gated lead data, named candidates, client contacts or private
+   salary notes.
 
 Update navigation or footer:
 
