@@ -108,6 +108,10 @@ expiry. It defaults to 30 days and is capped in code at 90 days.
 Keep the default unless David approves a shorter or longer private-beta window.
 This is not a secret and must not contain a token.
 
+`FEATURE_SHORTLIST_FEEDBACK_TRACKING` must stay `false` until the client portal,
+Postgres, audit proof, candidate-sharing wording and David approval are all in
+place. When enabled, feedback goes to private Postgres records, not GA4.
+
 ## Suggested Flags From Issue #117
 
 Issue #117 specifically called out these flags. They all exist and default off:

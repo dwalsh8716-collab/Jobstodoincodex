@@ -54,6 +54,8 @@ Not safe yet:
   sitemap.
 - Passed: the staged route shows safe invalid, expired, revoked, disabled,
   rate-limited and not-ready states without exposing the raw token.
+- Passed: feedback action UI and `/api/client-shortlist-feedback` are staged
+  behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING=false`.
 - Passed: no Recruiter Labs route appears in `sitemap.xml`.
 - Blocked: real client use still needs Railway Postgres, audit proof, private
   CV access, legal/privacy review and David approval before the feature flag is
@@ -85,6 +87,8 @@ Not safe yet:
 - Passed: audit sanitisation redacts tokens, signed URLs, storage keys and CV
   content.
 - Passed: Recruiter Labs audit action names are typed.
+- Passed: staged feedback writes call `recruiter_labs_feedback_created` without
+  raw token, GA4 data or free-text comment in audit metadata.
 - Manual review: Railway Postgres must be enabled and migrated before audit
   proof is production-ready.
 - Blocked: future client access, feedback, interview request and CV access
@@ -227,6 +231,9 @@ Before private beta:
 - confirm `/client` remains blocked in `robots.txt`
 - confirm `/client/shortlist/[token]` is noindexed
 - confirm no Recruiter Labs/client route appears in `sitemap.xml`
+- confirm feedback buttons remain disabled until
+  `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
+- confirm decline requires one structured reason
 - confirm database migrations have run on Railway
 - confirm audit log writes are visible in `/admin/audit`
 - confirm no raw token, signed URL, CV content or storage key appears in logs
@@ -250,6 +257,9 @@ Before real client use:
 - test client shortlist page has noindex metadata
 - test client feedback writes to Postgres
 - test feedback writes an audit event
+- test feedback creates an admin task and private activity record
+- test decline feedback stores a structured reason
+- test feedback never sends token, candidate names or comments to GA4
 - test CV view and download write audit events
 - test rollback revokes access and hides client visibility
 - test mobile and keyboard-only access for any client view
@@ -273,6 +283,8 @@ If anything looks wrong:
 - The current CMS gate is not a full role-based admin system.
 - Private object storage is not live.
 - The client portal route is staged, but real client access is not approved.
+- Feedback capture is staged, but must remain disabled until David approves the
+  private beta.
 - Candidate shortlist-sharing consent wording is not legally signed off.
 - Audit proof depends on Railway Postgres being configured and migrated.
 - AI workflow rules need final review before client use.

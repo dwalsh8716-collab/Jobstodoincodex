@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { ClientShortlistFeedback } from "@/components/ClientShortlistFeedback";
 import {
   getRecruiterLabsClientPortalRateLimitDecision,
   getRecruiterLabsClientPortalStatus,
   getRecruiterLabsClientPortalView,
+  getRecruiterLabsFeedbackReadiness,
   type RecruiterLabsClientPortalState,
   type RecruiterLabsClientPortalView,
   type RecruiterLabsShortlistCandidatePresentation,
@@ -103,8 +105,10 @@ function buildRateLimitedView(): RecruiterLabsClientPortalView {
 
 function CandidateCard({
   candidate,
+  feedbackEnabled,
 }: {
   candidate: RecruiterLabsShortlistCandidatePresentation;
+  feedbackEnabled: boolean;
 }) {
   return (
     <article className="card">
@@ -145,23 +149,13 @@ function CandidateCard({
           <p>{candidate.evidenceNotes}</p>
         </>
       ) : null}
-      <div className="button-row">
-        <button className="button button-secondary" type="button" disabled>
-          Shortlist
-        </button>
-        <button className="button button-secondary" type="button" disabled>
-          Maybe
-        </button>
-        <button className="button button-secondary" type="button" disabled>
-          Decline
-        </button>
-        <button className="button button-primary" type="button" disabled>
-          Request interview
-        </button>
-      </div>
+      <ClientShortlistFeedback
+        candidateId={candidate.id}
+        enabled={feedbackEnabled}
+      />
       <p className="meta">
-        Feedback and interview requests are staged for the next protected
-        workflow. CV access stays blocked unless David has approved it.
+        Feedback writes to private Postgres only when the launch gate is ready.
+        CV access stays blocked unless David has approved it.
       </p>
     </article>
   );
@@ -179,6 +173,11 @@ export default async function ClientShortlistPage({
   const copy = stateCopy[view.decision.state];
   const expiry = formatDate(view.decision.expiresAt);
   const shortlist = view.shortlist;
+  const feedbackReadiness = getRecruiterLabsFeedbackReadiness();
+  const feedbackEnabled =
+    view.decision.allowed &&
+    feedbackReadiness.ready &&
+    view.status.featureEnabled;
 
   return (
     <>
@@ -247,7 +246,11 @@ export default async function ClientShortlistPage({
             <div className="container grid grid-2">
               {shortlist.candidates.length > 0 ? (
                 shortlist.candidates.map((candidate) => (
-                  <CandidateCard candidate={candidate} key={candidate.id} />
+                  <CandidateCard
+                    candidate={candidate}
+                    feedbackEnabled={feedbackEnabled}
+                    key={candidate.id}
+                  />
                 ))
               ) : (
                 <article className="card">

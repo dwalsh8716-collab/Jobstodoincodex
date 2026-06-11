@@ -77,6 +77,8 @@ The staged client route now has:
 - invalid, expired, revoked, disabled, rate-limited and not-ready states
 - candidate share checks before any profile can render
 - no analytics attributes or event calls on the private route
+- feedback action UI staged behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- structured decline reasons for client feedback
 
 Before real client use, it still needs:
 
@@ -87,6 +89,7 @@ Before real client use, it still needs:
 - private CV access approval and signed access routes
 - David/legal privacy review
 - David approval before `FEATURE_CLIENT_PRESENTATION_PORTAL=true`
+- David approval before `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true`
 
 ## Sanity And Postgres Boundary
 
@@ -122,6 +125,10 @@ Important:
 - access tokens are stored as `token_hash`, not raw tokens
 - candidate profile snapshots stay in Postgres, not Sanity
 - shortlist launch status starts as `blocked`
+- feedback actions write to `recruiter_lab_shortlist_feedback`, not GA4
+- decline feedback uses structured reasons plus optional comments
+- feedback creates a private activity, admin task and candidate feedback status
+  update when the database is live
 - candidate sharing needs consent, retention clearance, CV permission where
   needed and David approval
 - interview references are metadata only until integrations are approved
@@ -154,6 +161,8 @@ Before any client portal goes live:
 - `RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS` reviewed, defaulting to 30 days
 - `FEATURE_CLIENT_PRESENTATION_PORTAL=true` approved by David for the exact
   release stage
+- `FEATURE_SHORTLIST_FEEDBACK_TRACKING=true` approved by David for private
+  beta feedback capture
 - WhatsApp Business API configured and approved if used
 - Google Calendar/Meet booking configured and approved if used
 - no PII in analytics
