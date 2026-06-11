@@ -5,6 +5,10 @@ const execFileAsync = promisify(execFile);
 const databaseUrl = process.env.DATABASE_URL;
 const engineEnabled = process.env.RETENTION_ENGINE_ENABLED === "true";
 const dryRunDefault = process.env.RETENTION_DRY_RUN !== "false";
+const outputMode =
+  process.env.RETENTION_OUTPUT_MODE ||
+  (process.env.GITHUB_ACTIONS === "true" ? "summary" : "detailed");
+const includeDetailedRecords = outputMode === "detailed";
 const args = new Set(process.argv.slice(2));
 const applyMode = args.has("--apply");
 const dryRun = args.has("--dry-run") || (!applyMode && dryRunDefault);
@@ -58,6 +62,7 @@ const dryRunSql = `
   select json_build_object(
     'mode', 'dry-run',
     'engineEnabled', ${engineEnabled ? "true" : "false"},
+    'outputMode', '${includeDetailedRecords ? "detailed" : "summary"}',
     'dueCount', (
       select count(*)::int
       from retention_review_queue
@@ -68,7 +73,23 @@ const dryRunSql = `
         'expiring_soon'
       )
     ),
-    'records', coalesce((
+    'summaryByAction', coalesce((
+      select json_object_agg(recommended_action, record_count)
+      from (
+        select recommended_action, count(*)::int as record_count
+        from retention_review_queue
+        where recommended_action in (
+          'review_deletion_request',
+          'review_expired_retention',
+          'review_due',
+          'expiring_soon'
+        )
+        group by recommended_action
+      ) action_counts
+    ), '{}'::json),
+    'records', ${
+      includeDetailedRecords
+        ? `coalesce((
       select json_agg(row_to_json(queue))
       from (
         select
@@ -98,7 +119,9 @@ const dryRunSql = `
           retention_review_at asc nulls last
         limit 50
       ) queue
-    ), '[]'::json)
+    ), '[]'::json)`
+        : "'[]'::json"
+    }
   )::text;
 `;
 

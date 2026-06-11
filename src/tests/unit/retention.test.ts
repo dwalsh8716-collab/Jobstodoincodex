@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
@@ -86,5 +86,20 @@ describe("retention model", () => {
     expect(
       existsSync(join(process.cwd(), "app/api/cron/retention/route.ts")),
     ).toBe(false);
+  });
+
+  it("stages a weekly summary-only retention review workflow", () => {
+    const workflow = readFileSync(
+      ".github/workflows/retention-review.yml",
+      "utf8",
+    );
+    const script = readFileSync("scripts/retention-check.mjs", "utf8");
+
+    expect(workflow).toContain('cron: "17 6 * * 1"');
+    expect(workflow).toContain("npm run retention:check");
+    expect(workflow).toContain("npm run retention:apply");
+    expect(workflow).toContain("RETENTION_OUTPUT_MODE: summary");
+    expect(script).toContain("RETENTION_OUTPUT_MODE");
+    expect(script).toContain("GITHUB_ACTIONS");
   });
 });

@@ -23,7 +23,6 @@ Already existed:
 - protected `/admin` dashboard
 - no public CV upload
 - no CV files in `/public`
-- no scheduled retention job
 - no public retention/cron endpoint
 
 Missing before this pass:
@@ -35,6 +34,7 @@ Missing before this pass:
 - review tasks for records that are due
 - lifecycle fields on DSAR records
 - clear Railway scheduling notes
+- weekly scheduled retention review runner
 
 Risk before this pass:
 
@@ -132,6 +132,7 @@ Dry-run behaviour:
 - dry-run is the default
 - no database writes
 - lists due records from `retention_review_queue`
+- uses summary output in GitHub Actions so names and record labels are not printed into shared logs
 - exits safely when `DATABASE_URL` is missing
 
 Apply behaviour:
@@ -149,10 +150,55 @@ Safety flags:
 ```txt
 RETENTION_ENGINE_ENABLED=false
 RETENTION_DRY_RUN=true
+RETENTION_OUTPUT_MODE=summary
 ```
 
 There is no public retention endpoint. If one is ever added, it must be POST-only
 and protected with `CRON_SECRET`, rate limiting and server-side audit logging.
+
+## Weekly Review Workflow
+
+GitHub Actions workflow:
+
+```txt
+.github/workflows/retention-review.yml
+```
+
+What it does:
+
+- runs every Monday at 06:17 UTC
+- can also be run manually from GitHub Actions
+- installs the PostgreSQL client
+- runs `npm run retention:check` in dry-run mode by default
+- writes summary output to the GitHub Actions job summary
+- skips safely if `DATABASE_URL` is not configured as a GitHub secret
+
+What it does not do automatically:
+
+- delete records
+- anonymise records
+- delete files
+- expose a public cron endpoint
+- print candidate names or record labels into scheduled GitHub logs
+
+Manual apply mode:
+
+```txt
+workflow_dispatch -> mode: apply-review-queue
+```
+
+This mode runs `npm run retention:apply` with:
+
+```txt
+RETENTION_ENGINE_ENABLED=true
+RETENTION_DRY_RUN=false
+RETENTION_OUTPUT_MODE=summary
+```
+
+It may create internal review tasks and mark due active records as `pending_review`.
+It still does not delete or anonymise anything.
+
+David should only use manual apply mode after legal/privacy review and after checking a dry-run.
 
 ## Admin Workflow
 
@@ -273,9 +319,9 @@ RETENTION_ENGINE_ENABLED=true npm run retention:apply
 
 Scheduling options:
 
+- GitHub Actions weekly dry-run workflow, now staged in `.github/workflows/retention-review.yml`
 - Railway scheduled job/service, if available on the project
 - manual monthly run from the Railway shell
-- GitHub Actions scheduled workflow that runs the script against Railway secrets
 - external scheduler only if it calls a protected server-side endpoint
 
 No unauthenticated cron route should be added.
@@ -288,6 +334,7 @@ Before treating this as live:
 - run `npm run retention:check`
 - confirm expired records appear in dry-run output
 - confirm dry-run makes no writes
+- confirm scheduled dry-run uses summary output only
 - confirm apply fails unless `RETENTION_ENGINE_ENABLED=true`
 - confirm apply creates review tasks only
 - confirm no rows/files are deleted by apply

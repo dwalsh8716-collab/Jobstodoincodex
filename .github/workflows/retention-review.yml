@@ -1,0 +1,82 @@
+name: Retention review
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run a safe dry-run or create review-queue tasks"
+        required: true
+        default: dry-run
+        type: choice
+        options:
+          - dry-run
+          - apply-review-queue
+
+permissions:
+  contents: read
+
+concurrency:
+  group: retention-review
+  cancel-in-progress: false
+
+jobs:
+  retention-review:
+    name: Retention review
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      RETENTION_DRY_RUN: "true"
+      RETENTION_OUTPUT_MODE: summary
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+
+      - name: Run retention dry-run
+        if: github.event_name == 'schedule' || inputs.mode == 'dry-run'
+        run: |
+          set -o pipefail
+          npm run retention:check | tee retention-output.txt
+          {
+            echo "## Retention dry-run"
+            echo
+            echo '```txt'
+            cat retention-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create retention review tasks
+        if: github.event_name == 'workflow_dispatch' && inputs.mode == 'apply-review-queue'
+        env:
+          RETENTION_ENGINE_ENABLED: "true"
+          RETENTION_DRY_RUN: "false"
+          RETENTION_OUTPUT_MODE: summary
+        run: |
+          set -o pipefail
+          npm run retention:apply | tee retention-output.txt
+          {
+            echo "## Retention apply-review-queue"
+            echo
+            echo "Review tasks may have been created. No records or files are deleted by this command."
+            echo
+            echo '```txt'
+            cat retention-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
