@@ -179,6 +179,7 @@ docs/launch-google-seo-local-setup.md
 docs/consent-mode-v2-setup.md
 docs/frontend-architecture.md
 docs/sanity-nextjs-fetching.md
+docs/future-proof-architecture.md
 docs/sanity-editor-guide.md
 docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
