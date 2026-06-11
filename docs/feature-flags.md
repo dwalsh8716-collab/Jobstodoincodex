@@ -97,6 +97,7 @@ notes in feature flag values.
 | `FEATURE_AI_INTERVIEW_NOTES`               | `false` | No                   | Future interview note structuring.                         |
 | `FEATURE_AI_SCORECARD_NOTES`               | `false` | No                   | Future scorecard note organisation, not candidate scoring. |
 | `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`      | `false` | No                   | Future candidate summary drafts for David review.          |
+| `FEATURE_CV_ANONYMIZATION`                 | `false` | No                   | Future private CV redaction drafts for David review.       |
 | `FEATURE_AI_CLIENT_PROFILE_DRAFTS`         | `false` | No                   | Future client profile drafts behind approval.              |
 | `FEATURE_AI_FOLLOW_UP_DRAFTS`              | `false` | No                   | Future follow-up draft support, no automatic sending.      |
 

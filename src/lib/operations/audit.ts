@@ -61,6 +61,7 @@ export const auditActions = [
   "recruiter_labs_ai_output_published",
   "recruiter_labs_ai_publication_blocked",
   "recruiter_labs_ai_generation_blocked",
+  "recruiter_labs_cv_anonymization_draft_created",
 ] as const;
 
 export type AuditAction = (typeof auditActions)[number];
@@ -86,6 +87,7 @@ export const auditEntityTypes = [
   "recruiter_labs_interview_request",
   "recruiter_labs_ai_draft",
   "recruiter_labs_ai_governance",
+  "recruiter_labs_cv_anonymization_draft",
   "audit_log",
   "enquiry",
 ] as const;

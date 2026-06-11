@@ -97,6 +97,7 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_AI_INTERVIEW_NOTES: optionalBooleanFlag,
   FEATURE_AI_SCORECARD_NOTES: optionalBooleanFlag,
   FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS: optionalBooleanFlag,
+  FEATURE_CV_ANONYMIZATION: optionalBooleanFlag,
   FEATURE_AI_CLIENT_PROFILE_DRAFTS: optionalBooleanFlag,
   FEATURE_AI_FOLLOW_UP_DRAFTS: optionalBooleanFlag,
   RECRUITER_LABS_CLIENT_TOKEN_EXPIRY_DAYS: z.preprocess(

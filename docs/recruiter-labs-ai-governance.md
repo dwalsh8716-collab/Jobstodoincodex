@@ -26,6 +26,8 @@ AI may be useful for operational compression:
 - structure interview notes
 - organise notes against a human-defined scorecard
 - draft candidate summaries for David to review
+- draft anonymised CV text for David to review, using private server-side
+  extracted text only after storage and consent gates pass
 - draft shortlist profile notes
 - draft interview questions
 - draft follow-up emails
@@ -67,6 +69,7 @@ FEATURE_AI_OPS_COMPRESSION=false
 FEATURE_AI_INTERVIEW_NOTES=false
 FEATURE_AI_SCORECARD_NOTES=false
 FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS=false
+FEATURE_CV_ANONYMIZATION=false
 FEATURE_AI_CLIENT_PROFILE_DRAFTS=false
 FEATURE_AI_FOLLOW_UP_DRAFTS=false
 ```

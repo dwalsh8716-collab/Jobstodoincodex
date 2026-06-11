@@ -46,6 +46,12 @@ export const recruiterLabsAiFlagDefinitions = [
       "Future draft summaries for David to edit and approve before any client use.",
   },
   {
+    name: "FEATURE_CV_ANONYMIZATION",
+    label: "CV anonymization drafts",
+    description:
+      "Future private CV redaction drafts for David review. Not a live CV upload, ranking or decision tool.",
+  },
+  {
     name: "FEATURE_AI_CLIENT_PROFILE_DRAFTS",
     label: "AI client profile drafts",
     description:

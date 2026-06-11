@@ -111,6 +111,7 @@ docs/feature-flags.md
 - `FEATURE_AI_INTERVIEW_NOTES`
 - `FEATURE_AI_SCORECARD_NOTES`
 - `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`
+- `FEATURE_CV_ANONYMIZATION`
 - `FEATURE_AI_CLIENT_PROFILE_DRAFTS`
 - `FEATURE_AI_FOLLOW_UP_DRAFTS`
 
@@ -198,6 +199,7 @@ docs/feature-flags.md
 docs/final-qa-launch-report.md
 docs/job-copy-standards.md
 docs/candidate-application-drop.md
+docs/cv-anonymization.md
 docs/codebase-forensic-audit-report.md
 docs/non-technical-architecture-map.md
 docs/sanity-cms-audit.md
