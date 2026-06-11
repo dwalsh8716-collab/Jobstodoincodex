@@ -235,21 +235,40 @@ async function insertRecruiterLabsFeedback(
       ),
       created_feedback as (
         insert into recruiter_lab_shortlist_feedback (
+          shortlist_id,
           shortlist_candidate_id,
+          candidate_id,
+          client_contact_id,
           access_token_id,
           feedback_action,
+          feedback_type,
           decline_reason,
           feedback_note,
+          comment,
+          interview_requested,
+          next_action,
           status_update,
           notification_required,
           metadata
         )
         select
+          c.shortlist_id,
           c.id,
+          c.candidate_id,
+          c.client_contact_id,
           t.id,
+          data->>'action',
           data->>'action',
           nullif(data->>'declineReason', ''),
           coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')),
+          coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')),
+          data->>'action' = 'request_interview',
+          case
+            when data->>'action' = 'request_interview' then 'david_to_coordinate_interview'
+            when data->>'action' = 'need_more_info' then 'david_to_send_more_context'
+            when data->>'action' = 'decline' then 'david_to_review_decline_reason'
+            else 'david_to_review_feedback'
+          end,
           data->>'statusUpdate',
           coalesce((data->>'notificationRequired')::boolean, true),
           jsonb_build_object(
@@ -261,9 +280,33 @@ async function insertRecruiterLabsFeedback(
             'locationPreference', nullif(data->>'locationPreference', ''),
             'preferredTimesSupplied', nullif(data->>'preferredTimes', '') is not null,
             'clientNotesSupplied', coalesce(nullif(data->>'clientNotes', ''), nullif(data->>'comment', '')) is not null
-          )
+        )
         from payload, token_record t, scoped_candidate c
-        returning id, shortlist_candidate_id, feedback_action, decline_reason, status_update
+        returning id, shortlist_id, shortlist_candidate_id, candidate_id, client_contact_id, feedback_action, decline_reason, status_update
+      ),
+      shortlist_activity as (
+        insert into recruiter_lab_shortlist_activity (
+          shortlist_id,
+          shortlist_candidate_id,
+          candidate_id,
+          client_contact_id,
+          activity_type,
+          metadata
+        )
+        select
+          shortlist_id,
+          shortlist_candidate_id,
+          candidate_id,
+          client_contact_id,
+          'feedback_submitted',
+          jsonb_build_object(
+            'source', 'client_shortlist_portal',
+            'feedbackAction', feedback_action,
+            'declineReason', decline_reason,
+            'piiBoundary', 'private_postgres_only'
+          )
+        from created_feedback
+        returning id
       ),
       activity as (
         insert into activities (
@@ -395,6 +438,7 @@ async function insertRecruiterLabsFeedback(
           metadata = f.metadata ||
             jsonb_build_object(
               'activityEventId', (select id from activity),
+              'shortlistActivityId', (select id from shortlist_activity),
               'adminTaskId', (select id from task),
               'interviewRequestId', (select id from interview_request),
               'interviewRequestActivityId', (select id from interview_activity)

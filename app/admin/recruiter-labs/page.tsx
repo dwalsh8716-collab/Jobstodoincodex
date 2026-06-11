@@ -294,6 +294,37 @@ export default async function AdminRecruiterLabsPage() {
           <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
             <div className={styles.adminPanelHeading}>
               <div>
+                <p className="eyebrow">Client presentation portal</p>
+                <h2>One secure shortlist link. No public candidate data.</h2>
+              </div>
+              <span className={styles.labsRisk}>
+                {overview.clientPresentationPortal.route}
+              </span>
+            </div>
+            <div className={styles.labsRoadmap}>
+              {overview.clientPresentationPortal.adminWorkflow.map((step) => (
+                <article className={styles.labsCard} key={step.step}>
+                  <div className={styles.labsCardHeader}>
+                    <h3>{step.step}</h3>
+                    <span
+                      className={
+                        step.status === "manual_review"
+                          ? styles.labsRisk
+                          : styles.labsFlagOn
+                      }
+                    >
+                      {statusLabel[step.status]}
+                    </span>
+                  </div>
+                  <p>{step.detail}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
+            <div className={styles.adminPanelHeading}>
+              <div>
                 <p className="eyebrow">Server flags</p>
                 <h2>Off until deliberately approved.</h2>
               </div>

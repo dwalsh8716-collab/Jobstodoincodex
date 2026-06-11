@@ -148,11 +148,19 @@ export type RecruiterLabsShortlistCandidatePresentation = {
   displayOrder: number;
   name: string;
   headline?: string;
+  seniority?: string;
+  sectorBackground?: string;
   location?: string;
+  workPreference?: string;
   availability?: string;
+  noticePeriod?: string;
   salaryExpectation?: string;
+  rateExpectation?: string;
   davidSummary?: string;
   evidenceNotes?: string;
+  topStrengths: string[];
+  watchOuts: string[];
+  presentationStatus?: string;
   sharingMode: "named" | "anonymised";
   cvAccessAllowed: boolean;
   audioNotePlanned: boolean;
@@ -161,6 +169,7 @@ export type RecruiterLabsShortlistCandidatePresentation = {
 export type RecruiterLabsShortlistPresentation = {
   id: string;
   title: string;
+  roleTitle?: string;
   status: string;
   launchGateStatus: string;
   roleContext?: string;
@@ -208,6 +217,9 @@ type RecruiterLabsClientPortalQueryResult = {
     id: string;
     title: string;
     status: string;
+    roleTitle?: string | null;
+    roleSummary?: string | null;
+    davidIntroNote?: string | null;
     launchGateStatus?: string | null;
     expiresAt?: string | null;
     revokedAt?: string | null;
@@ -219,8 +231,17 @@ type RecruiterLabsClientPortalQueryResult = {
     id: string;
     displayOrder?: number | null;
     profileStatus: RecruiterLabsCandidateShareInput["profileStatus"];
+    presentationStatus?: string | null;
     davidSummary?: string | null;
     evidenceNotes?: string | null;
+    strengths?: unknown;
+    watchOuts?: unknown;
+    salaryExpectation?: string | null;
+    rateExpectation?: string | null;
+    noticePeriod?: string | null;
+    availability?: string | null;
+    location?: string | null;
+    workPreference?: string | null;
     consentConfirmed?: boolean | null;
     approvedAt?: string | null;
     candidateSharingConsentAt?: string | null;
@@ -229,6 +250,7 @@ type RecruiterLabsClientPortalQueryResult = {
     cvAccessRevokedAt?: string | null;
     retentionStatus?: RetentionStatus | null;
     sharingMode?: "named" | "anonymised" | null;
+    anonymisedMode?: boolean | null;
     candidateProfileSnapshot?: Record<string, unknown> | null;
   }>;
 };
@@ -473,6 +495,51 @@ export const recruiterLabsBuildPhases = [
   },
 ] as const;
 
+export const recruiterLabsClientPresentationPortalAdminWorkflow = [
+  {
+    step: "Create shortlist",
+    status: "staged",
+    detail:
+      "Shortlist records stay in private Postgres and can be linked to client, contact and role context.",
+  },
+  {
+    step: "Select candidate profiles",
+    status: "staged",
+    detail:
+      "Candidate rows can reference David-approved branded profile records without creating public profile URLs.",
+  },
+  {
+    step: "Review summaries and watch-outs",
+    status: "staged",
+    detail:
+      "Candidate cards hold David summary, strengths, watch-outs, package, notice and working preference fields.",
+  },
+  {
+    step: "Generate magic link",
+    status: "staged",
+    detail:
+      "High-entropy token helpers create raw links once, then store only a SHA-256 hash and an expiry.",
+  },
+  {
+    step: "Copy or send link",
+    status: "manual_review",
+    detail:
+      "Sending stays manual until email/CRM/WhatsApp consent, templates and audit trails are approved.",
+  },
+  {
+    step: "Revoke access",
+    status: "staged",
+    detail:
+      "Token and shortlist revocation timestamps are supported. Revoked or expired links fail closed.",
+  },
+  {
+    step: "Review feedback and tasks",
+    status: "staged",
+    detail:
+      "Client actions write private feedback, activity and admin task rows when the database gate is live.",
+  },
+] as const;
+
 const retentionBlockingStatuses = new Set<RetentionStatus>([
   "pending_review",
   "delete_requested",
@@ -547,6 +614,32 @@ function snapshotString(
   return undefined;
 }
 
+function listFromUnknown(value: unknown, maxItems = 4) {
+  const values = Array.isArray(value)
+    ? value
+    : typeof value === "string"
+      ? value.split(/\n|;/)
+      : [];
+
+  return values
+    .map((item) => safeString(item, 140))
+    .filter((item): item is string => Boolean(item))
+    .slice(0, maxItems);
+}
+
+function snapshotList(
+  snapshot: Record<string, unknown> | null | undefined,
+  keys: string[],
+  maxItems?: number,
+) {
+  for (const key of keys) {
+    const value = listFromUnknown(snapshot?.[key], maxItems);
+    if (value.length > 0) return value;
+  }
+
+  return [];
+}
+
 function jsonStringFromMetadata(
   metadata: Record<string, unknown> | null | undefined,
   keys: string[],
@@ -595,17 +688,34 @@ function toCandidatePresentation(
     cvAccessApproved: candidate.cvAccessApproved,
     cvAccessRevokedAt: candidate.cvAccessRevokedAt,
     retentionStatus: candidate.retentionStatus,
-    sharingMode: candidate.sharingMode,
+    sharingMode: candidate.anonymisedMode ? "anonymised" : candidate.sharingMode,
   });
 
   if (!shareDecision.canShare) return null;
 
   const snapshot = candidate.candidateProfileSnapshot;
-  const anonymised = shareDecision.sharingMode === "anonymised";
+  const anonymised =
+    candidate.anonymisedMode || shareDecision.sharingMode === "anonymised";
   const name = anonymised
     ? "Anonymised candidate"
     : snapshotString(snapshot, ["name", "displayName", "fullName"], 80) ||
       "Candidate profile";
+  const structuredStrengths = listFromUnknown(candidate.strengths);
+  const snapshotStrengths = snapshotList(snapshot, [
+    "topStrengths",
+    "strengths",
+    "functionalStrengths",
+  ]);
+  const structuredWatchOuts = listFromUnknown(candidate.watchOuts);
+  const snapshotWatchOuts = snapshotList(snapshot, [
+    "watchOuts",
+    "watchouts",
+    "watch_outs",
+  ]);
+  const topStrengths =
+    structuredStrengths.length > 0 ? structuredStrengths : snapshotStrengths;
+  const watchOuts =
+    structuredWatchOuts.length > 0 ? structuredWatchOuts : snapshotWatchOuts;
 
   return {
     id: candidate.id,
@@ -616,15 +726,39 @@ function toCandidatePresentation(
       "roleTitle",
       "currentTitle",
     ]),
-    location: snapshotString(snapshot, ["location", "region"]),
-    availability: snapshotString(snapshot, ["availability", "noticePeriod"]),
-    salaryExpectation: snapshotString(snapshot, [
-      "salaryExpectation",
-      "packageExpectation",
+    seniority: snapshotString(snapshot, ["seniority", "level"]),
+    sectorBackground: snapshotString(snapshot, [
+      "sectorBackground",
+      "sectorExperience",
+      "agencyClientSide",
+      "background",
     ]),
+    location: safeString(candidate.location) || snapshotString(snapshot, [
+      "location",
+      "region",
+    ]),
+    workPreference:
+      safeString(candidate.workPreference) ||
+      snapshotString(snapshot, ["workPreference", "hybridPreference"]),
+    availability:
+      safeString(candidate.availability) ||
+      snapshotString(snapshot, ["availability"]),
+    noticePeriod:
+      safeString(candidate.noticePeriod) || snapshotString(snapshot, [
+        "noticePeriod",
+      ]),
+    salaryExpectation:
+      safeString(candidate.salaryExpectation) ||
+      snapshotString(snapshot, ["salaryExpectation", "packageExpectation"]),
+    rateExpectation:
+      safeString(candidate.rateExpectation) ||
+      snapshotString(snapshot, ["rateExpectation", "dayRateExpectation"]),
     davidSummary: safeString(candidate.davidSummary, 900),
     evidenceNotes: safeString(candidate.evidenceNotes, 900),
-    sharingMode: shareDecision.sharingMode,
+    topStrengths,
+    watchOuts,
+    presentationStatus: safeString(candidate.presentationStatus, 80),
+    sharingMode: anonymised ? "anonymised" : shareDecision.sharingMode,
     cvAccessAllowed: Boolean(
       candidate.cvAccessRequired &&
       candidate.cvAccessApproved &&
@@ -644,13 +778,18 @@ async function getRecruiterLabsClientPortalData(
       ),
       matched_token as (
         select
+          t.id,
           t.token_hash,
           t.shortlist_id::text,
+          t.client_contact_id,
           t.expires_at,
           t.revoked_at,
           s.id::text as shortlist_id_text,
           s.title,
           s.status,
+          s.role_title,
+          s.role_summary,
+          s.david_intro_note,
           s.expires_at as shortlist_expires_at,
           s.revoked_at as shortlist_revoked_at,
           s.notes,
@@ -662,13 +801,31 @@ async function getRecruiterLabsClientPortalData(
         where t.token_hash = (select data->>'tokenHash' from payload)
         limit 1
       ),
+      token_touch as (
+        update recruiter_lab_client_access_tokens t
+        set last_used_at = now()
+        from matched_token mt
+        where t.id = mt.id
+          and mt.revoked_at is null
+          and mt.expires_at > now()
+        returning t.id
+      ),
       candidate_rows as (
         select
           c.id::text,
           c.display_order,
           c.profile_status,
+          c.presentation_status,
           c.david_summary,
           c.evidence_notes,
+          c.strengths,
+          c.watch_outs,
+          c.salary_expectation,
+          c.rate_expectation,
+          c.notice_period,
+          c.availability,
+          c.location,
+          c.work_preference,
           c.consent_confirmed,
           c.approved_at,
           c.candidate_sharing_consent_at,
@@ -677,6 +834,7 @@ async function getRecruiterLabsClientPortalData(
           c.cv_access_revoked_at,
           c.retention_status,
           c.sharing_mode,
+          c.anonymised_mode,
           c.candidate_profile_snapshot
         from recruiter_lab_shortlist_candidates c
         join matched_token mt on mt.shortlist_id = c.shortlist_id
@@ -688,6 +846,7 @@ async function getRecruiterLabsClientPortalData(
             'access', jsonb_build_object(
               'tokenHash', mt.token_hash,
               'shortlistId', mt.shortlist_id,
+              'clientContactId', mt.client_contact_id,
               'expiresAt', mt.expires_at,
               'revokedAt', mt.revoked_at
             ),
@@ -695,6 +854,9 @@ async function getRecruiterLabsClientPortalData(
               'id', mt.shortlist_id_text,
               'title', mt.title,
               'status', mt.status,
+              'roleTitle', mt.role_title,
+              'roleSummary', mt.role_summary,
+              'davidIntroNote', mt.david_intro_note,
               'launchGateStatus', mt.launch_gate_status,
               'expiresAt', mt.shortlist_expires_at,
               'revokedAt', mt.shortlist_revoked_at,
@@ -709,8 +871,17 @@ async function getRecruiterLabsClientPortalData(
                     'id', cr.id,
                     'displayOrder', cr.display_order,
                     'profileStatus', cr.profile_status,
+                    'presentationStatus', cr.presentation_status,
                     'davidSummary', cr.david_summary,
                     'evidenceNotes', cr.evidence_notes,
+                    'strengths', cr.strengths,
+                    'watchOuts', cr.watch_outs,
+                    'salaryExpectation', cr.salary_expectation,
+                    'rateExpectation', cr.rate_expectation,
+                    'noticePeriod', cr.notice_period,
+                    'availability', cr.availability,
+                    'location', cr.location,
+                    'workPreference', cr.work_preference,
                     'consentConfirmed', cr.consent_confirmed,
                     'approvedAt', cr.approved_at,
                     'candidateSharingConsentAt', cr.candidate_sharing_consent_at,
@@ -719,6 +890,7 @@ async function getRecruiterLabsClientPortalData(
                     'cvAccessRevokedAt', cr.cv_access_revoked_at,
                     'retentionStatus', cr.retention_status,
                     'sharingMode', cr.sharing_mode,
+                    'anonymisedMode', cr.anonymised_mode,
                     'candidateProfileSnapshot', cr.candidate_profile_snapshot
                   )
                 )
@@ -1041,20 +1213,25 @@ export async function getRecruiterLabsClientPortalView(
       expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
     },
     status,
-    shortlist: {
-      id: data.shortlist.id,
-      title: data.shortlist.title,
-      status: data.shortlist.status,
-      launchGateStatus: data.shortlist.launchGateStatus || "blocked",
-      roleContext: jsonStringFromMetadata(data.shortlist.metadata, [
-        "roleContext",
-        "role_context",
-      ]),
-      davidIntroNote:
-        jsonStringFromMetadata(data.shortlist.metadata, [
-          "davidIntroNote",
-          "david_intro_note",
-        ]) || safeString(data.shortlist.notes, 900),
+      shortlist: {
+        id: data.shortlist.id,
+        title: data.shortlist.title,
+        roleTitle: safeString(data.shortlist.roleTitle) || data.shortlist.title,
+        status: data.shortlist.status,
+        launchGateStatus: data.shortlist.launchGateStatus || "blocked",
+        roleContext:
+          safeString(data.shortlist.roleSummary, 900) ||
+          jsonStringFromMetadata(data.shortlist.metadata, [
+            "roleContext",
+            "role_context",
+          ]),
+        davidIntroNote:
+          safeString(data.shortlist.davidIntroNote, 900) ||
+          jsonStringFromMetadata(data.shortlist.metadata, [
+            "davidIntroNote",
+            "david_intro_note",
+          ]) ||
+          safeString(data.shortlist.notes, 900),
       expiresAt: data.shortlist.expiresAt || data.access?.expiresAt,
       clientVisibleAt: data.shortlist.clientVisibleAt,
       candidates,
@@ -1118,6 +1295,17 @@ export function getRecruiterLabsOverview(env: RecruiterLabsEnv = process.env) {
     flags,
     dependencies: recruiterLabsDependencies,
     phases: recruiterLabsBuildPhases,
+    clientPresentationPortal: {
+      route: recruiterLabsClientPortalRoute,
+      adminWorkflow: recruiterLabsClientPresentationPortalAdminWorkflow,
+      dataModelViews: [
+        "client_shortlists",
+        "client_shortlist_candidates",
+        "client_shortlist_access_tokens",
+        "client_shortlist_feedback",
+        "client_shortlist_activity",
+      ],
+    },
     launchGate,
     stats: {
       totalFlags: flags.length,

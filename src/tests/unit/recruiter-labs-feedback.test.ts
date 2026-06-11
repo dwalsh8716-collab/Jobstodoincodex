@@ -128,6 +128,28 @@ describe("Recruiter Labs client feedback", () => {
     expect(migration).not.toMatch(/raw_token|token text|ga4|analytics/i);
   });
 
+  it("maps feedback into the client presentation portal activity model", () => {
+    const migration = readFileSync(
+      "database/migrations/032_recruiter_labs_client_presentation_portal_alignment.sql",
+      "utf8",
+    );
+    const feedbackHelper = readFileSync(
+      "src/lib/recruiter-labs-feedback.ts",
+      "utf8",
+    );
+
+    expect(migration).toContain("recruiter_lab_shortlist_activity");
+    expect(migration).toContain("feedback_type text");
+    expect(migration).toContain("interview_requested boolean");
+    expect(migration).toContain("next_action text");
+    expect(feedbackHelper).toContain("shortlist_activity");
+    expect(feedbackHelper).toContain("david_to_coordinate_interview");
+    expect(feedbackHelper).toContain("private_postgres_only");
+    expect(`${migration}\n${feedbackHelper}`).not.toMatch(
+      /raw_token|token text|ga4|dataLayer|candidate_score|ranking/i,
+    );
+  });
+
   it("stages the interview request workflow model and activity trail", () => {
     const migration = readFileSync(
       "database/migrations/029_recruiter_labs_interview_request_workflow.sql",

@@ -11,6 +11,8 @@ import {
   type RecruiterLabsShortlistCandidatePresentation,
 } from "@/lib/client-shortlist-portal";
 import { createMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -104,6 +106,34 @@ function buildRateLimitedView(): RecruiterLabsClientPortalView {
   };
 }
 
+function MessageDavidOption() {
+  const href = buildWhatsAppUrl({
+    number: siteConfig.whatsApp.number,
+    message:
+      "Hi David, I've opened the private shortlist and wanted to speak to you about it.",
+  });
+
+  if (!siteConfig.whatsApp.enabled || !href) {
+    return (
+      <Link className="button button-secondary" href="/contact">
+        Message David
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      className="button button-secondary"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Message David Walsh on WhatsApp. Opens WhatsApp."
+    >
+      Message David
+    </a>
+  );
+}
+
 function CandidateCard({
   candidate,
   feedbackEnabled,
@@ -122,6 +152,18 @@ function CandidateCard({
       <h3>{candidate.name}</h3>
       {candidate.headline ? <p>{candidate.headline}</p> : null}
       <dl className="client-shortlist-meta">
+        {candidate.seniority ? (
+          <div>
+            <dt>Seniority</dt>
+            <dd>{candidate.seniority}</dd>
+          </div>
+        ) : null}
+        {candidate.sectorBackground ? (
+          <div>
+            <dt>Background</dt>
+            <dd>{candidate.sectorBackground}</dd>
+          </div>
+        ) : null}
         {candidate.location ? (
           <div>
             <dt>Location</dt>
@@ -134,10 +176,28 @@ function CandidateCard({
             <dd>{candidate.availability}</dd>
           </div>
         ) : null}
+        {candidate.noticePeriod ? (
+          <div>
+            <dt>Notice</dt>
+            <dd>{candidate.noticePeriod}</dd>
+          </div>
+        ) : null}
+        {candidate.workPreference ? (
+          <div>
+            <dt>Working style</dt>
+            <dd>{candidate.workPreference}</dd>
+          </div>
+        ) : null}
         {candidate.salaryExpectation ? (
           <div>
             <dt>Package</dt>
             <dd>{candidate.salaryExpectation}</dd>
+          </div>
+        ) : null}
+        {candidate.rateExpectation ? (
+          <div>
+            <dt>Rate</dt>
+            <dd>{candidate.rateExpectation}</dd>
           </div>
         ) : null}
       </dl>
@@ -153,6 +213,45 @@ function CandidateCard({
           <p>{candidate.evidenceNotes}</p>
         </>
       ) : null}
+      <details className="client-profile-details">
+        <summary
+          data-client-shortlist-candidate-id={candidate.id}
+          data-client-shortlist-engagement="candidate_profile_expanded"
+        >
+          View profile
+        </summary>
+        <div className="client-profile-detail-grid">
+          <div>
+            <h4>Top strengths</h4>
+            {candidate.topStrengths.length > 0 ? (
+              <ul className="client-profile-list">
+                {candidate.topStrengths.map((strength) => (
+                  <li key={strength}>{strength}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="meta">David has not added strengths yet.</p>
+            )}
+          </div>
+          <div>
+            <h4>Watch-outs</h4>
+            {candidate.watchOuts.length > 0 ? (
+              <ul className="client-profile-list">
+                {candidate.watchOuts.map((watchOut) => (
+                  <li key={watchOut}>{watchOut}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="meta">No watch-outs have been shared yet.</p>
+            )}
+          </div>
+        </div>
+        <p className="meta">
+          {candidate.cvAccessAllowed
+            ? "CV access can be made available only through approved private storage."
+            : "CV access is separate and stays blocked unless David has approved it."}
+        </p>
+      </details>
       <ClientShortlistFeedback
         candidateId={candidate.id}
         enabled={feedbackEnabled}
@@ -195,6 +294,7 @@ export default async function ClientShortlistPage({
             <Link className="button button-secondary" href="/contact">
               Contact David
             </Link>
+            <MessageDavidOption />
           </div>
         </div>
       </section>
@@ -237,11 +337,18 @@ export default async function ClientShortlistPage({
           <section className="section muted">
             <div className="container section-heading">
               <p className="eyebrow">Shortlist overview</p>
-              <h2>{shortlist.title}</h2>
+              <h2>{shortlist.roleTitle || shortlist.title}</h2>
+              {shortlist.roleTitle && shortlist.roleTitle !== shortlist.title ? (
+                <p className="meta">{shortlist.title}</p>
+              ) : null}
               {shortlist.roleContext ? <p>{shortlist.roleContext}</p> : null}
               {shortlist.davidIntroNote ? (
                 <p className="lede">{shortlist.davidIntroNote}</p>
               ) : null}
+              <p className="meta">
+                {shortlist.candidates.length} visible candidate
+                {shortlist.candidates.length === 1 ? "" : "s"}.
+              </p>
               {expiry ? <p className="meta">Link expires {expiry}.</p> : null}
               <ClientShortlistEngagement enabled={feedbackEnabled} />
             </div>

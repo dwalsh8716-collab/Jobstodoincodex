@@ -43,6 +43,8 @@ Staged now:
 - launch-gate hardening migration: `007_recruiter_labs_launch_gate.sql`
 - private portal engagement migration:
   `019_recruiter_labs_portal_engagement.sql`
+- client presentation portal alignment migration:
+  `032_recruiter_labs_client_presentation_portal_alignment.sql`
 - David's Take audio-note migration:
   `020_recruiter_labs_audio_notes.sql`
 - retained search dashboard migration:
@@ -98,7 +100,11 @@ The staged client route now has:
 - default 30-day token expiry configuration
 - SHA-256 token hashing helper
 - invalid, expired, revoked, disabled, rate-limited and not-ready states
+- last-used timestamp update for valid token reads
 - candidate share checks before any profile can render
+- richer candidate cards with role, seniority, background, availability,
+  notice, package/rate, strengths and watch-outs
+- private message-David option without marketing analytics on the portal route
 - no public analytics attributes or public event calls on the private route
 - feedback action UI staged behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
 - private portal engagement tracking staged behind
@@ -174,6 +180,7 @@ Migration `006_recruiter_labs_foundation.sql` stages:
 - `recruiter_lab_shortlist_candidates`
 - `recruiter_lab_client_access_tokens`
 - `recruiter_lab_shortlist_feedback`
+- `recruiter_lab_shortlist_activity`
 - `recruiter_lab_interview_requests`
 
 Important:
@@ -182,6 +189,8 @@ Important:
 - candidate profile snapshots stay in Postgres, not Sanity
 - shortlist launch status starts as `blocked`
 - feedback actions write to `recruiter_lab_shortlist_feedback`, not GA4
+- feedback actions also create portal-specific
+  `recruiter_lab_shortlist_activity` records
 - portal engagement events write to
   `recruiter_lab_portal_engagement_events`, not GA4
 - audio-note metadata writes to Postgres/private file metadata only, not Sanity
@@ -220,6 +229,12 @@ The private portal engagement notes live in:
 
 ```txt
 docs/recruiter-labs-portal-engagement.md
+```
+
+The magic-link client presentation portal notes live in:
+
+```txt
+docs/recruiter-labs-client-presentation-portal.md
 ```
 
 The David's Take audio-note notes live in:

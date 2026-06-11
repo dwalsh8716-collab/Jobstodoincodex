@@ -13,6 +13,7 @@ import {
   getRecruiterLabsOverview,
   hashRecruiterLabsClientToken,
   isRecruiterLabsFeatureEnabled,
+  recruiterLabsClientPresentationPortalAdminWorkflow,
   recruiterLabsClientPortalDefaultExpiryDays,
   recruiterLabsClientPortalRoute,
   recruiterLabsFlagDefinitions,
@@ -62,6 +63,11 @@ describe("Recruiter Labs foundation", () => {
     expect(route).toContain("noIndex: true");
     expect(route).toContain("getRecruiterLabsClientPortalView");
     expect(route).not.toContain("analyticsAttributes");
+    expect(route).toContain("MessageDavidOption");
+    expect(route).toContain("View profile");
+    expect(route).toContain("Top strengths");
+    expect(route).toContain("Watch-outs");
+    expect(route).toContain("candidate_profile_expanded");
   });
 
   it("stages hashed magic-link storage instead of raw token storage", () => {
@@ -328,5 +334,83 @@ describe("Recruiter Labs foundation", () => {
     expect(migration).toContain("cv_access_revoked_at timestamptz");
     expect(migration).toContain("sharing_mode in ('named', 'anonymised')");
     expect(migration).not.toMatch(/public_url|raw_token|token text/i);
+  });
+
+  it("aligns the magic-link presentation portal model without duplicating raw token storage", () => {
+    const migration = readFileSync(
+      "database/migrations/032_recruiter_labs_client_presentation_portal_alignment.sql",
+      "utf8",
+    );
+    const portalDoc = readFileSync(
+      "docs/recruiter-labs-client-presentation-portal.md",
+      "utf8",
+    );
+    const pipelineDoc = readFileSync(
+      "docs/recruiter-labs-client-pipeline.md",
+      "utf8",
+    );
+    const featureFlagsDoc = readFileSync("docs/feature-flags.md", "utf8");
+
+    for (const field of [
+      "client_contact_id",
+      "related_job_id",
+      "role_title",
+      "role_summary",
+      "david_intro_note",
+      "candidate_profile_id",
+      "presentation_status",
+      "strengths jsonb",
+      "watch_outs jsonb",
+      "rate_expectation",
+      "notice_period",
+      "work_preference",
+      "anonymised_mode",
+    ]) {
+      expect(migration).toContain(field);
+    }
+
+    for (const viewName of [
+      "client_shortlists",
+      "client_shortlist_candidates",
+      "client_shortlist_access_tokens",
+      "client_shortlist_feedback",
+      "client_shortlist_activity",
+    ]) {
+      expect(migration).toContain(`view ${viewName}`);
+      expect(portalDoc).toContain(viewName);
+    }
+
+    expect(migration).toContain("recruiter_lab_shortlist_activity");
+    expect(migration).toContain("token_hash");
+    expect(migration).not.toMatch(/raw_token|token text|public_url|candidate_score|ranking/i);
+    expect(portalDoc).toContain("One secure link");
+    expect(portalDoc).toContain("No GA4, GTM or public analytics event");
+    expect(portalDoc).toContain("This is not legal advice");
+    expect(pipelineDoc).toContain(
+      "docs/recruiter-labs-client-presentation-portal.md",
+    );
+    expect(featureFlagsDoc).toContain("FEATURE_CLIENT_PRESENTATION_PORTAL");
+  });
+
+  it("maps the private admin workflow for the client presentation portal", () => {
+    const overview = getRecruiterLabsOverview({});
+    const adminPage = readFileSync("app/admin/recruiter-labs/page.tsx", "utf8");
+
+    expect(recruiterLabsClientPresentationPortalAdminWorkflow).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ step: "Create shortlist" }),
+        expect.objectContaining({ step: "Generate magic link" }),
+        expect.objectContaining({ step: "Revoke access" }),
+        expect.objectContaining({ step: "Review feedback and tasks" }),
+      ]),
+    );
+    expect(overview.clientPresentationPortal.route).toBe(
+      recruiterLabsClientPortalRoute,
+    );
+    expect(overview.clientPresentationPortal.dataModelViews).toContain(
+      "client_shortlist_activity",
+    );
+    expect(adminPage).toContain("Client presentation portal");
+    expect(adminPage).toContain("One secure shortlist link");
   });
 });

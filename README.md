@@ -243,6 +243,7 @@ docs/david-non-technical-owner-checklist.md
 docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-roadmap.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
+docs/recruiter-labs-client-presentation-portal.md
 docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-candidate-transparency-roadmap.md
 docs/recruiter-labs-candidate-transparency-scorecard.md

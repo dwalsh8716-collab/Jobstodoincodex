@@ -180,6 +180,13 @@ ready. The private builder foundation lives in
 `docs/recruiter-labs-candidate-profiles.md`. It does not create public
 candidate profile URLs and does not approve AI drafts automatically.
 
+`FEATURE_CLIENT_PRESENTATION_PORTAL` must stay `false` until Railway Postgres is
+live, token expiry/revocation is tested, candidate sharing consent is approved,
+and David signs off private beta. The route and model notes live in
+`docs/recruiter-labs-client-presentation-portal.md`. Turning the flag on is not
+enough for launch: feedback, CV access, audit logging and privacy review still
+need their own gates.
+
 `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY` remains `false` as a release-control
 flag while the public timeline component uses safe exact/typical process
 wording. Future private candidate status tracking still needs backend, access
