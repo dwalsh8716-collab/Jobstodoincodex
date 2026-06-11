@@ -22,6 +22,17 @@ The future workflow:
 9. Interview scheduling can later connect to WhatsApp Business and Google
    Calendar/Meet.
 
+## Roadmap
+
+The full product build plan now lives in:
+
+```txt
+docs/recruiter-labs-client-pipeline-roadmap.md
+```
+
+Use that roadmap as the issue order and launch-safety guide before adding more
+client-pipeline features.
+
 ## Current Implementation
 
 Staged now:

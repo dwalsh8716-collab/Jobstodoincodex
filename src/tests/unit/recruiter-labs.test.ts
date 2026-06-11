@@ -179,6 +179,57 @@ describe("Recruiter Labs foundation", () => {
     expect(launchGate.safeForRealClients).toBe(false);
   });
 
+  it("documents the Recruiter Labs client pipeline roadmap without approving launch", () => {
+    const roadmap = readFileSync(
+      "docs/recruiter-labs-client-pipeline-roadmap.md",
+      "utf8",
+    );
+    const pipelineDoc = readFileSync(
+      "docs/recruiter-labs-client-pipeline.md",
+      "utf8",
+    );
+    const readme = readFileSync("README.md", "utf8");
+
+    for (const heading of [
+      "## Build Order",
+      "## Dependencies",
+      "## Safe To Build Now",
+      "## Blocked Items",
+      "## Private Beta Checklist",
+      "## Real-Client Launch Checklist",
+      "## Suggested GitHub Issue Order",
+      "## Suggested Codex Reasoning Level",
+      "## Risk Register",
+    ]) {
+      expect(roadmap).toContain(heading);
+    }
+
+    expect(roadmap).toContain("Build it like a product");
+    expect(roadmap).toContain("Hide it like a secret");
+    expect(roadmap).toContain("Launch only when safe");
+    expect(roadmap).toContain("real CV access");
+    expect(roadmap).toContain("real WhatsApp sends");
+    expect(roadmap).toContain("Google Calendar and Meet");
+    expect(roadmap).toContain("AI-assisted, David-verified summaries");
+    expect(roadmap).toContain("not legal advice");
+    expect(roadmap).toContain("#69");
+    expect(roadmap).toContain("#70");
+    expect(roadmap).toContain("#71");
+    expect(roadmap).toContain("#72");
+    expect(roadmap).toContain("#73");
+    expect(roadmap).not.toMatch(/safe to show real clients today:\s+yes/i);
+    expect(roadmap).not.toMatch(/automatic candidate ranking is approved/i);
+    expect(roadmap).toContain(
+      "automatic candidate ranking, scoring, rejection or recommendation",
+    );
+    expect(pipelineDoc).toContain(
+      "docs/recruiter-labs-client-pipeline-roadmap.md",
+    );
+    expect(readme).toContain(
+      "docs/recruiter-labs-client-pipeline-roadmap.md",
+    );
+  });
+
   it("blocks invalid, expired and revoked future client tokens", () => {
     const now = new Date("2026-06-10T12:00:00.000Z");
 

@@ -241,6 +241,7 @@ docs/release-process.md
 CHANGELOG.md
 docs/david-non-technical-owner-checklist.md
 docs/recruiter-labs-client-pipeline.md
+docs/recruiter-labs-client-pipeline-roadmap.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-candidate-transparency-roadmap.md
