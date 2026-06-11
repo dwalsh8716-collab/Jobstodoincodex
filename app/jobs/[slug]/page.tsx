@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props) {
       : job.seoTitle,
     description: job.metaDescription,
     path: `/jobs/${job.slug}`,
-    noIndex: closed,
+    noIndex: closed || job.noIndex,
   });
 }
 

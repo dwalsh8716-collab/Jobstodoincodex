@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props) {
     title: snapshot.seoTitle,
     description: snapshot.metaDescription,
     path: `/salary-snapshots/${snapshot.slug}`,
+    noIndex: snapshot.noIndex,
   });
 }
 

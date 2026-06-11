@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props) {
     title: caseStudy.seoTitle,
     description: caseStudy.metaDescription,
     path: `/case-studies/${caseStudy.slug}`,
+    noIndex: caseStudy.noIndex,
   });
 }
 

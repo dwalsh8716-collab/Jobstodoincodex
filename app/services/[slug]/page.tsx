@@ -59,6 +59,7 @@ export async function generateMetadata({ params }: Props) {
     title: service.seoTitle,
     description: service.metaDescription,
     path: `/services/${service.slug}`,
+    noIndex: service.noIndex || service.status === "draft",
   });
 }
 

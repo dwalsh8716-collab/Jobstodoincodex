@@ -40,7 +40,11 @@ The candidate journey still exists, but it does not dominate the header. Candida
 
 ## Sitemap Rules
 
-`app/sitemap.ts` includes launch pages, service pages, published insights, published case studies, published salary snapshots and live jobs. Draft jobs, draft proof and draft salary data stay out of the sitemap.
+`app/sitemap.ts` uses `src/lib/sitemap-engine.ts` to include launch pages,
+service pages, published insights, published case studies, published salary
+snapshots, approved salary guide pages and live jobs only. Draft jobs, closed
+jobs, expired jobs, noindexed content, draft proof and draft salary data stay
+out of the sitemap.
 
 `app/robots.ts` references the sitemap and blocks Studio, CMS login, admin, Labs, client magic-link and API routes from crawler discovery.
 

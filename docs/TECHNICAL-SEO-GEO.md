@@ -28,7 +28,13 @@ List schema is deliberately guarded. Draft proof, closed roles and unvalidated s
 
 ## Crawl Files
 
-- `app/sitemap.ts` includes launch pages, services, published insights, published case studies, published salary snapshots and live jobs.
+- `app/sitemap.ts` uses the tested engine in `src/lib/sitemap-engine.ts` to
+  include launch pages, services, published insights, published case studies,
+  published salary snapshots, public salary guide pages when approved and live
+  jobs only.
+- Content marked `noIndex` in Sanity is excluded from the sitemap.
+- Closed, expired, draft and candidate-unready jobs are excluded from the
+  sitemap.
 - `app/robots.ts` allows the public site and blocks `/studio`, `/cms`,
   `/admin`, `/labs`, `/client` and `/api`.
 - `/rss.xml` lists published insights.

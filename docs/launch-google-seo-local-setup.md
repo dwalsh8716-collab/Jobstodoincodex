@@ -32,7 +32,12 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - Google Consent Mode V2 default and update flow is implemented for Google tags.
 - Users can accept, reject, manage and reopen cookie preferences.
 - GTM suppresses the direct GA4 script so the site does not double-load GA4 by default.
-- `sitemap.xml` is dynamic and includes launch pages, service pages, published insights, published proof, published salary snapshots and live jobs.
+- `sitemap.xml` is dynamic and includes launch pages, service pages, published
+  insights, published proof, published salary snapshots, public salary guide
+  pages when approved and live jobs only.
+- The sitemap engine excludes Sanity content marked `noIndex`, private route
+  prefixes, closed jobs, expired jobs and jobs that fail live candidate-facing
+  checks.
 - `robots.txt` points to the sitemap and blocks `/studio`, `/cms`, `/admin`,
   `/labs`, `/client` and `/api`.
 - Organisation / ProfessionalService schema, David Walsh Person schema, WebSite schema, breadcrumbs, service schema, article schema, FAQ schema, live JobPosting schema and visible ItemList schema are in place.

@@ -37,6 +37,8 @@ export type RichMedia =
 export type Service = {
   title: string;
   slug: string;
+  status?: "published" | "draft";
+  noIndex?: boolean;
   shortDescription: string;
   heroHeadline: string;
   heroSubheadline: string;
@@ -58,6 +60,7 @@ export type Insight = {
   title: string;
   slug: string;
   status: "published" | "draft";
+  noIndex?: boolean;
   category: string;
   excerpt: string;
   publishedDate: string;
@@ -78,6 +81,7 @@ export type CaseStudy = {
   title: string;
   slug: string;
   status: "published" | "draft";
+  noIndex?: boolean;
   clientType: string;
   sector: string;
   roleHired: string;
@@ -105,6 +109,8 @@ export type SalarySnapshot = {
   title: string;
   slug: string;
   status: "published" | "draft";
+  noIndex?: boolean;
+  contentFormat?: "snapshot" | "guide_landing_page";
   quarter: string;
   market: string;
   intro: string;
@@ -127,6 +133,7 @@ export type Job = {
   title: string;
   slug: string;
   status: "draft" | "live" | "closed";
+  noIndex?: boolean;
   salaryRange: string;
   salaryMin?: number;
   salaryMax?: number;

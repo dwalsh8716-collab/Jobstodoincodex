@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Props) {
     title: insight.seoTitle,
     description: insight.metaDescription,
     path: `/insights/${insight.slug}`,
+    noIndex: insight.noIndex,
   });
 }
 
@@ -49,6 +50,7 @@ export default async function InsightPage({ params }: Props) {
   const relatedInsights = insights.filter(
     (item) =>
       item.status === "published" &&
+      !item.noIndex &&
       insight.relatedInsightSlugs.includes(item.slug),
   );
 

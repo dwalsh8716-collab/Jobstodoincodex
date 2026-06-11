@@ -20,6 +20,20 @@ const normaliseExternalUrl = (value: string | undefined) => {
     return "";
   }
 };
+export const defaultSiteUrl = "https://essentialresourcing.co.uk";
+
+export const normaliseSiteUrl = (value: string | undefined) => {
+  if (!value) return defaultSiteUrl;
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:"
+      ? url.origin
+      : defaultSiteUrl;
+  } catch {
+    return defaultSiteUrl;
+  }
+};
 
 const googleBookingUrl = normaliseExternalUrl(
   process.env.NEXT_PUBLIC_GOOGLE_BOOKING_URL ||
@@ -29,7 +43,7 @@ const googleBookingUrl = normaliseExternalUrl(
 export const siteConfig = {
   name: "Essential Resourcing",
   founder: "David Walsh",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://essentialresourcing.co.uk",
+  url: normaliseSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   email: "david@essentialresourcing.co.uk",
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   linkedIn: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
