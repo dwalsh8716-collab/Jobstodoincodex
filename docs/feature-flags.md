@@ -174,6 +174,12 @@ Business updates still need templates, opt-out handling and privacy review. The
 implementation note lives in
 `docs/recruiter-labs-candidate-whatsapp-preferences.md`.
 
+`FEATURE_BRANDED_CANDIDATE_PROFILES` must stay `false` until Railway Postgres,
+candidate consent wording, retention checks and David approval workflow are
+ready. The private builder foundation lives in
+`docs/recruiter-labs-candidate-profiles.md`. It does not create public
+candidate profile URLs and does not approve AI drafts automatically.
+
 `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY` remains `false` as a release-control
 flag while the public timeline component uses safe exact/typical process
 wording. Future private candidate status tracking still needs backend, access
