@@ -51,5 +51,11 @@ describe("codebase forensic audit pack", () => {
     expect(workflow).toContain("npm run retention:check");
     expect(dependabot).toContain("package-ecosystem: npm");
     expect(dependabot).toContain("package-ecosystem: github-actions");
+    expect(dependabot).toContain("applies-to: security-updates");
+    expect(dependabot).toContain("dependency-type: production");
+    expect(dependabot).toContain("dependency-type: development");
+    expect(dependabot).toContain("version-update:semver-major");
+    expect(dependabot).toContain("npm-production-minor-and-patch");
+    expect(dependabot).toContain("npm-development-minor-and-patch");
   });
 });
