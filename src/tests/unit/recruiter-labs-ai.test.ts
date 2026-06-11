@@ -10,6 +10,13 @@ import {
   saveCandidateSummaryDraftForShortlistCandidate,
 } from "@/lib/recruiter-labs-ai-candidate-summary";
 import {
+  buildInterviewNotePrototypeDraft,
+  fakeInterviewTranscriptExample,
+  getAiInterviewNotesStatus,
+  interviewNotesManualBlockers,
+  interviewScorecardSections,
+} from "@/lib/recruiter-labs-ai-interview-notes";
+import {
   getRecruiterLabsAiFeatureFlags,
   getRecruiterLabsAiLaunchGate,
   getRecruiterLabsAiOverview,
@@ -217,6 +224,101 @@ describe("Recruiter Labs AI Ops governance", () => {
     );
     expect(readme).toContain("docs/recruiter-labs-ai-vendor-discovery.md");
     expect(roadmap).toContain("docs/recruiter-labs-ai-vendor-discovery.md");
+  });
+
+  it("stages interview notes as fake/manual evidence without scoring", () => {
+    const status = getAiInterviewNotesStatus({
+      FEATURE_AI_INTERVIEW_NOTES: "true",
+      FEATURE_AI_SCORECARD_NOTES: "true",
+      OPERATIONS_DB_ENABLED: "true",
+      DATABASE_URL: "postgres://example",
+    });
+    const draft = buildInterviewNotePrototypeDraft({
+      sourceType: "fake_transcript",
+      transcriptText: fakeInterviewTranscriptExample,
+      usesRealCandidateData: false,
+      candidateConsentCaptured: false,
+    });
+    const blocked = buildInterviewNotePrototypeDraft({
+      sourceType: "fake_transcript",
+      transcriptText: fakeInterviewTranscriptExample,
+      usesRealCandidateData: true,
+      candidateConsentCaptured: true,
+    });
+
+    expect(status).toMatchObject({
+      interviewNotesEnabled: true,
+      scorecardNotesEnabled: true,
+      dataModelStaged: true,
+      privateMockUiStaged: true,
+      providerConfigured: false,
+      canUseFakeDataPrototype: true,
+      canProcessRealInterviews: false,
+      canApproveForProfileUse: false,
+    });
+    expect(interviewScorecardSections).toHaveLength(12);
+    expect(interviewNotesManualBlockers.join(" ")).toMatch(/consent/i);
+    expect(draft).toMatchObject({
+      ok: true,
+      skipped: false,
+      draft: {
+        status: "david_review_required",
+        approvedForProfileUse: false,
+        humanReviewed: false,
+        numericScore: null,
+      },
+    });
+    if (!draft.ok) throw new Error("Expected interview note draft");
+    expect(draft.draft.structuredNotes).toHaveLength(
+      interviewScorecardSections.length,
+    );
+    expect(JSON.stringify(draft.draft)).not.toMatch(
+      /pass\/fail|ranking|suitability score|culture-fit score|rejection recommendation/i,
+    );
+    expect(blocked).toMatchObject({
+      ok: false,
+      reason: "real_data_blocked",
+    });
+  });
+
+  it("documents and gates the private interview note prototype", () => {
+    const doc = readFileSync(
+      "docs/recruiter-labs-ai-interview-notes.md",
+      "utf8",
+    );
+    const page = readFileSync(
+      "app/admin/recruiter-labs/ai-ops/page.tsx",
+      "utf8",
+    );
+    const migration = readFileSync(
+      "database/migrations/024_ai_interview_notes.sql",
+      "utf8",
+    );
+    const readme = readFileSync("README.md", "utf8");
+    const dataBoundaries = readFileSync("docs/data-boundaries.md", "utf8");
+
+    expect(doc).toContain("# Recruiter Labs AI Interview Notes");
+    expect(doc).toContain("No hidden recording. No secret transcription.");
+    expect(doc).toContain("Scorecards here mean structured notes.");
+    expect(doc).toContain("docs/recruiter-labs-ai-vendor-discovery.md");
+    expect(page).toContain("isCmsSessionValid");
+    expect(page).toContain("Fake interview only. No recording. No scoring.");
+    expect(page).toContain("Evidence note only. No numeric score.");
+    expect(migration).toContain(
+      "create table if not exists recruiter_lab_interview_notes",
+    );
+    expect(migration).toContain(
+      "create table if not exists recruiter_lab_interview_scorecard_sections",
+    );
+    expect(migration).toContain(
+      "source_type in ('manual_notes', 'fake_transcript')",
+    );
+    expect(migration).toContain("approval_event_id uuid references audit_logs");
+    expect(migration).not.toMatch(
+      /numeric_score|ranking_score|suitability_score|rejection_recommendation/i,
+    );
+    expect(readme).toContain("docs/recruiter-labs-ai-interview-notes.md");
+    expect(dataBoundaries).toContain("AI interview notes");
   });
 
   it("builds candidate summary drafts as unapproved, client-hidden drafts only", () => {

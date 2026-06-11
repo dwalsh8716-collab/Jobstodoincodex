@@ -243,6 +243,7 @@ docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
 docs/recruiter-labs-ai-ops-roadmap.md
 docs/recruiter-labs-ai-vendor-discovery.md
+docs/recruiter-labs-ai-interview-notes.md
 docs/recruiter-labs-ai-brief-diagnostic.md
 docs/recruiter-labs-davids-audio-notes.md
 docs/recruiter-labs-retained-search-dashboard.md

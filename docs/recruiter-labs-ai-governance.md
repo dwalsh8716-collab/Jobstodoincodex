@@ -30,6 +30,12 @@ Vendor discovery for AI notetakers and Loxo fit lives in:
 docs/recruiter-labs-ai-vendor-discovery.md
 ```
 
+The staged interview notes and scorecard framework lives in:
+
+```txt
+docs/recruiter-labs-ai-interview-notes.md
+```
+
 ## Purpose
 
 AI may be useful for operational compression:
@@ -194,11 +200,14 @@ Migration:
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/016_candidate_summary_drafts.sql
 database/migrations/023_candidate_summary_review_versions.sql
+database/migrations/024_ai_interview_notes.sql
 database/migrations/022_ai_brief_diagnostic.sql
 ```
 
 It stages:
 
+- interview notes, transcript references, scorecard sections and AI generation
+  event metadata
 - draft type
 - draft status
 - data classification: sample, redacted or private

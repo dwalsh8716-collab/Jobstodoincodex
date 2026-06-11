@@ -77,6 +77,8 @@ Added:
   tokens and access-log tables.
 - Recruiter Labs AI brief diagnostic submissions and draft packs for future
   David-reviewed client qualification.
+- Recruiter Labs AI interview note, transcript reference, scorecard section and
+  generation-event tables for future fake/manual testing first.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -126,6 +128,7 @@ database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/009_recruiter_labs_ai_launch_gate.sql
 database/migrations/016_candidate_summary_drafts.sql
 database/migrations/023_candidate_summary_review_versions.sql
+database/migrations/024_ai_interview_notes.sql
 database/migrations/022_ai_brief_diagnostic.sql
 database/migrations/017_dsar_email_verification.sql
 database/migrations/018_interim_availability_toggle.sql
@@ -340,10 +343,12 @@ Recruiter Labs AI follow-up:
 ```txt
 database/migrations/016_candidate_summary_drafts.sql
 database/migrations/023_candidate_summary_review_versions.sql
+database/migrations/024_ai_interview_notes.sql
 database/migrations/022_ai_brief_diagnostic.sql
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
 docs/recruiter-labs-ai-brief-diagnostic.md
+docs/recruiter-labs-ai-interview-notes.md
 ```
 
 Strategic Interim availability follow-up:

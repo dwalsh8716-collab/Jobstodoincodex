@@ -66,7 +66,7 @@ Dependencies:
 
 ### Phase 2: Manual Structured Notes
 
-Status: next sensible build step.
+Status: staged in `docs/recruiter-labs-ai-interview-notes.md`.
 
 Build now:
 

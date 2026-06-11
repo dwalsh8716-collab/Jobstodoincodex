@@ -12,6 +12,12 @@ import {
   type RecruiterLabsAiLaunchGateStatus,
   getRecruiterLabsAiOverview,
 } from "@/lib/recruiter-labs-ai";
+import {
+  buildInterviewNotePrototypeDraft,
+  fakeInterviewTranscriptExample,
+  getAiInterviewNotesStatus,
+  interviewScorecardSections,
+} from "@/lib/recruiter-labs-ai-interview-notes";
 import { createMetadata } from "@/lib/seo";
 import styles from "../../admin.module.css";
 
@@ -51,6 +57,13 @@ export default async function RecruiterLabsAiOpsPage() {
 
   const username = await getCmsSessionUsername(sessionCookie);
   const overview = getRecruiterLabsAiOverview();
+  const interviewNotesStatus = getAiInterviewNotesStatus();
+  const interviewNotePrototype = buildInterviewNotePrototypeDraft({
+    sourceType: "fake_transcript",
+    transcriptText: fakeInterviewTranscriptExample,
+    usesRealCandidateData: false,
+    candidateConsentCaptured: false,
+  });
 
   await logAuditEvent({
     actor: username
@@ -69,6 +82,9 @@ export default async function RecruiterLabsAiOpsPage() {
       unresolvedLaunchGateChecks: overview.stats.unresolvedLaunchGateChecks,
       safeForRealCandidateData: overview.safeForRealCandidateData,
       safeForClientFacingOutput: overview.launchGate.safeForClientFacingOutput,
+      interviewNotesStatus: interviewNotesStatus.status,
+      interviewNotesRealDataBlocked:
+        interviewNotesStatus.canProcessRealInterviews === false,
     },
   });
 
@@ -151,6 +167,64 @@ export default async function RecruiterLabsAiOpsPage() {
         </div>
 
         <div className={styles.adminPanels}>
+          <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
+            <div className={styles.adminPanelHeading}>
+              <div>
+                <p className="eyebrow">Interview notes prototype</p>
+                <h2>Fake interview only. No recording. No scoring.</h2>
+              </div>
+              <span
+                className={
+                  interviewNotesStatus.canProcessRealInterviews
+                    ? styles.labsFlagOn
+                    : `${styles.labsRisk} ${styles.labsRiskHigh}`
+                }
+              >
+                {interviewNotesStatus.canProcessRealInterviews
+                  ? "Real interviews allowed"
+                  : "Real interviews blocked"}
+              </span>
+            </div>
+            <p className={styles.adminEmpty}>{interviewNotesStatus.message}</p>
+            <div className={styles.adminTableWrap}>
+              <table className={styles.adminTable}>
+                <thead>
+                  <tr>
+                    <th>Scorecard section</th>
+                    <th>Prompt</th>
+                    <th>Mock output state</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {interviewScorecardSections.map((section) => (
+                    <tr key={section.id}>
+                      <td>{section.label}</td>
+                      <td>{section.prompt}</td>
+                      <td>Evidence note only. No numeric score.</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {interviewNotePrototype.ok ? (
+              <ul className={styles.adminChecklist}>
+                <li>{interviewNotePrototype.draft.summaryDraft}</li>
+                <li>
+                  Profile use approved:{" "}
+                  {interviewNotePrototype.draft.approvedForProfileUse
+                    ? "yes"
+                    : "no"}
+                </li>
+                <li>
+                  Numeric score:{" "}
+                  {interviewNotePrototype.draft.numericScore === null
+                    ? "none"
+                    : interviewNotePrototype.draft.numericScore}
+                </li>
+              </ul>
+            ) : null}
+          </section>
+
           <section className={`${styles.adminPanel} ${styles.adminPanelWide}`}>
             <div className={styles.adminPanelHeading}>
               <div>
