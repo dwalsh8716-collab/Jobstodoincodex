@@ -60,6 +60,7 @@ Railway Postgres is the staged private operations store for:
   state
 - Recruiter Labs AI draft metadata, source summaries, prompt versions, review
   state and governance audit records
+- AI brief diagnostic submissions and draft packs for David review only
 - salary guide lead requests, separate marketing consent and delivery status
 
 No Sanity schema was found for private candidate records, applications, CV files, DSAR requests, audit logs, private consent records or WhatsApp messaging logs.
@@ -115,6 +116,7 @@ No CV upload flow exists on the public website.
 - AI prompts, transcripts, candidate summaries or client profile drafts that
   contain private candidate/client data
 - AI draft outputs, interview transcripts, suitability scores or ranking fields
+- AI brief diagnostic submissions, contact details or client draft packs
 
 ### Postgres / Private Backend Should Store
 
@@ -144,6 +146,8 @@ No CV upload flow exists on the public website.
 - retained search dashboard aggregate metrics and access logs
 - interview requests
 - AI draft metadata, source summaries, prompt versions and David approval state
+- AI brief diagnostic submissions, unclear areas, risks, draft summaries and
+  David approval state
 - integration sync events for future handoff/sync audit
 - salary guide lead requests, consent records, delivery status and follow-up
   tasks

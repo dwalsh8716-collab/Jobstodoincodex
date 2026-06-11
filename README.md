@@ -241,6 +241,7 @@ docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
+docs/recruiter-labs-ai-brief-diagnostic.md
 docs/recruiter-labs-davids-audio-notes.md
 docs/recruiter-labs-retained-search-dashboard.md
 docs/launch-handover.md

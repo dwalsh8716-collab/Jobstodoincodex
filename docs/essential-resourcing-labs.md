@@ -34,7 +34,7 @@ Labs can hold planning for:
 - bad hire calculators
 - functional matrix tools
 - passwordless client shortlists
-- AI-assisted brief builders
+- AI-assisted brief builders and client diagnostics
 - Strategic Interim bench workflows
 - live market dashboards
 - future client and candidate portal ideas
@@ -117,6 +117,7 @@ Use Postgres when the item becomes operational:
 - interim availability status
 - portal engagement tracking
 - salary guide leads and delivery status
+- AI brief diagnostic submissions and David-reviewed draft packs
 
 Current recommendation: Sanity for Labs planning, Postgres only when a specific
 Labs feature needs private workflow state.

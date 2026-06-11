@@ -61,7 +61,8 @@ The migration set stages:
 - Recruiter Labs shortlists, feedback, private portal engagement events and
   David's Take audio-note metadata
 - Recruiter Labs retained search dashboard aggregate metrics and access logs
-- Recruiter Labs AI draft governance tables
+- Recruiter Labs AI draft governance tables and future AI brief diagnostic
+  submissions/draft packs
 
 ## Important Boundary
 

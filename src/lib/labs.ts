@@ -222,9 +222,9 @@ export const labsIdeas: LabsIdea[] = [
       "No PII prompts",
     ],
     featureFlagName: "FEATURE_AI_BRIEF_BUILDER",
-    relatedGitHubIssue: "#64",
+    relatedGitHubIssue: "#64/#109",
     launchRule:
-      "Launch only with human review, privacy controls and no automated candidate evaluation.",
+      "Launch only with human review, privacy controls, no PII analytics and no automated candidate evaluation.",
   },
   {
     title: "Strategic Interim bench portal",

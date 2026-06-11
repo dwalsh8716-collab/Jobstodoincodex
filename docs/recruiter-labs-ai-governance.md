@@ -181,6 +181,7 @@ Migration:
 ```txt
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/016_candidate_summary_drafts.sql
+database/migrations/022_ai_brief_diagnostic.sql
 ```
 
 It stages:
@@ -205,6 +206,18 @@ Candidate summary drafts now also stage:
 - `approved_at`
 - `ai_generation_event_id`
 - uncertainty notes
+
+AI brief diagnostics stage:
+
+- client qualification answers
+- formal commercial brief draft
+- unclear areas
+- risks
+- salary and hybrid concerns
+- suggested follow-up questions
+- email summary to David
+- optional client confirmation draft
+- David approval state
 
 These fields are private Postgres fields. They are not Sanity fields and are
 not client-visible until David approves them.
@@ -255,6 +268,28 @@ Rules:
 Before this can use real candidate data or a real provider, David must approve
 the provider, DPA/terms, processing region, redaction/minimisation rules,
 candidate sharing consent wording, retention handling and the edit/approve UI.
+
+## AI Brief Diagnostic
+
+The client brief diagnostic is staged in:
+
+```txt
+src/lib/ai-brief-diagnostic.ts
+docs/recruiter-labs-ai-brief-diagnostic.md
+```
+
+It validates the qualification journey and can build a deterministic draft
+review pack for admin testing. It does not call an AI provider, email David,
+send a client confirmation or publish anything.
+
+Rules:
+
+- no fake market claims
+- no salary advice without sourced data and caveats
+- no PII in analytics
+- no automatic client output
+- David review before any use
+- private Postgres only, not Sanity
 
 ## Bias And Fairness Risks
 

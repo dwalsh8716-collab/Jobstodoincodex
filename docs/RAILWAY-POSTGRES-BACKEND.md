@@ -75,6 +75,8 @@ Added:
   tables for future private signed playback.
 - Recruiter Labs retained search dashboard aggregate metrics, hashed access
   tokens and access-log tables.
+- Recruiter Labs AI brief diagnostic submissions and draft packs for future
+  David-reviewed client qualification.
 - Database migration and status scripts.
 
 ## Architecture Summary
@@ -122,6 +124,8 @@ database/migrations/006_recruiter_labs_foundation.sql
 database/migrations/007_recruiter_labs_launch_gate.sql
 database/migrations/008_recruiter_labs_ai_governance.sql
 database/migrations/009_recruiter_labs_ai_launch_gate.sql
+database/migrations/016_candidate_summary_drafts.sql
+database/migrations/022_ai_brief_diagnostic.sql
 database/migrations/017_dsar_email_verification.sql
 database/migrations/018_interim_availability_toggle.sql
 database/migrations/010_loxo_reference_boundary.sql
@@ -334,8 +338,10 @@ Recruiter Labs AI follow-up:
 
 ```txt
 database/migrations/016_candidate_summary_drafts.sql
+database/migrations/022_ai_brief_diagnostic.sql
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
+docs/recruiter-labs-ai-brief-diagnostic.md
 ```
 
 Strategic Interim availability follow-up:

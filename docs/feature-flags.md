@@ -75,7 +75,7 @@ notes in feature flag values.
 | `FEATURE_BAD_HIRE_CALCULATOR`              | `false` | No                   | Future bad-hire cost calculator.                           |
 | `FEATURE_FUNCTIONAL_MATRIX`                | `false` | No                   | Future role and search-shape mapping.                      |
 | `FEATURE_CLIENT_SHORTLIST_PORTAL`          | `false` | No                   | Future protected client shortlist portal.                  |
-| `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting.                         |
+| `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting and client diagnostic. |
 | `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Strategic Interim bench workflow.                   |
 | `FEATURE_INTERIM_AVAILABILITY_TOGGLE`      | `false` | No                   | Future private interim availability magic-link updates.    |
 | `FEATURE_LIVE_MARKET_DASHBOARDS`           | `false` | No                   | Future live market intelligence dashboards.                |

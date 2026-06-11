@@ -20,6 +20,7 @@ export const privateOperationalStores = [
   "Railway Postgres",
   "private object storage for future CV files",
   "private object storage for future David's Take audio notes",
+  "Railway Postgres for future AI brief diagnostic submissions and draft packs",
 ] as const;
 
 export const forbiddenSanityFieldNames = [
@@ -52,6 +53,12 @@ export const forbiddenSanityFieldNames = [
   "retainedSearchDashboard",
   "retainedSearchDashboardToken",
   "searchPipelineMetrics",
+  "briefDiagnosticSubmission",
+  "briefDiagnosticDraft",
+  "clientBriefDiagnostic",
+  "aiBriefBuilderSubmission",
+  "privateHiringBrief",
+  "hiringBriefContact",
   "clientDashboardToken",
   "clientPortalToken",
   "magicLinkToken",
