@@ -58,9 +58,10 @@ locally.
   - `/agency-recruitment` -> `/services/agency-recruitment`
   - `/client-side-recruitment` -> `/services/client-side-marketing-recruitment`
   - `/marketing-recruitment` -> `/services/client-side-marketing-recruitment`
-  - `/salary-guides` -> `/salary-snapshots`
   - `/privacy` -> `/privacy-policy`
   - `/cookies` -> `/cookie-policy`
+- Replaced the old `/salary-guides` redirect with a staged, noindexed salary
+  guide lead-capture page controlled by `FEATURE_SALARY_GUIDE_GATE`.
 - Tightened public form API parsing so empty or malformed POST requests return
   safe validation responses rather than a server error.
 - Added tests for the redirects and public form API responses.

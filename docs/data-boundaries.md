@@ -59,6 +59,7 @@ Railway Postgres is the staged private operations store for:
   state
 - Recruiter Labs AI draft metadata, source summaries, prompt versions, review
   state and governance audit records
+- salary guide lead requests, separate marketing consent and delivery status
 
 No Sanity schema was found for private candidate records, applications, CV files, DSAR requests, audit logs, private consent records or WhatsApp messaging logs.
 
@@ -141,6 +142,8 @@ No CV upload flow exists on the public website.
 - interview requests
 - AI draft metadata, source summaries, prompt versions and David approval state
 - integration sync events for future handoff/sync audit
+- salary guide lead requests, consent records, delivery status and follow-up
+  tasks
 
 ## Public Job To Private Application Pattern
 
@@ -290,6 +293,8 @@ Public fields that need editorial care:
 - `salarySnapshot.contentFormat`: public snapshot or public salary guide landing
   page only. Gated guide leads, download tokens and private lead records belong
   in the private backend.
+- `salary_guide_leads`: private Postgres table for salary guide requests. Do
+  not mirror these records in Sanity, analytics or public content.
 - `salarySnapshot.candidateAvailabilityNotes`: anonymous market-level notes only.
 - `testimonial.name`: named people only with permission.
 - `person.email`: public profile email only.

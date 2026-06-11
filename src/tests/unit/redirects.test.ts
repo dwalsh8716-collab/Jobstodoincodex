@@ -43,11 +43,6 @@ describe("launch redirects", () => {
           permanent: true,
         }),
         expect.objectContaining({
-          source: "/salary-guides",
-          destination: "/salary-snapshots",
-          permanent: true,
-        }),
-        expect.objectContaining({
           source: "/privacy",
           destination: "/privacy-policy",
           permanent: true,
@@ -56,6 +51,14 @@ describe("launch redirects", () => {
           source: "/cookies",
           destination: "/cookie-policy",
           permanent: true,
+        }),
+      ]),
+    );
+
+    expect(redirects).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          source: "/salary-guides",
         }),
       ]),
     );

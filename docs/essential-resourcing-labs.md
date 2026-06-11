@@ -28,6 +28,7 @@ session gate. Unauthenticated visitors are redirected to `/cms?next=/admin/labs`
 Labs can hold planning for:
 
 - gated salary guides
+- staged salary guide lead capture at `/salary-guides`
 - bespoke salary benchmarking assets
 - market mapping visualisations
 - bad hire calculators
@@ -113,6 +114,7 @@ Use Postgres when the item becomes operational:
 - audit logs
 - magic-link access
 - portal engagement tracking
+- salary guide leads and delivery status
 
 Current recommendation: Sanity for Labs planning, Postgres only when a specific
 Labs feature needs private workflow state.

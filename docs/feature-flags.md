@@ -112,6 +112,25 @@ This is not a secret and must not contain a token.
 Postgres, audit proof, candidate-sharing wording and David approval are all in
 place. When enabled, feedback goes to private Postgres records, not GA4.
 
+## Salary Guide Gate
+
+`FEATURE_SALARY_GUIDE_GATE` controls the staged `/salary-guides` lead-capture
+page. It must stay `false` until:
+
+- the guide asset is approved
+- `OPERATIONS_DB_ENABLED=true` and `DATABASE_URL` are set
+- `database/migrations/012_salary_guide_leads.sql` has been run
+- Resend notification settings are approved
+- `SALARY_GUIDE_DOWNLOAD_URL` points to the approved guide link
+- privacy wording and retention rules are reviewed
+
+When the flag is `false`, the form is disabled, the page is noindexed and the
+route is not included in `sitemap.xml`.
+
+`SALARY_GUIDE_DOWNLOAD_URL` is not a feature flag. It is the approved link sent
+to requesters after the lead is saved. Do not put private tokens or secrets in
+that value.
+
 ## Suggested Flags From Issue #117
 
 Issue #117 specifically called out these flags. They all exist and default off:

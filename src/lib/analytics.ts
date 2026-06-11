@@ -13,6 +13,7 @@ export type AnalyticsEventName =
   | "job_application_submission"
   | "cv_upload_submission"
   | "insight_download"
+  | "salary_guide_lead"
   | "salary_snapshot_view"
   | "salary_snapshot_download";
 
@@ -30,6 +31,7 @@ export type AnalyticsEventParams = {
   brief_type?: string;
   job_title?: string;
   snapshot_slug?: string;
+  guide_slug?: string;
   insight_slug?: string;
 };
 
@@ -106,6 +108,7 @@ const dataAttributeMap: Record<keyof AnalyticsEventParams, string> = {
   brief_type: "data-analytics-brief-type",
   job_title: "data-analytics-job-title",
   snapshot_slug: "data-analytics-snapshot-slug",
+  guide_slug: "data-analytics-guide-slug",
   insight_slug: "data-analytics-insight-slug",
 };
 

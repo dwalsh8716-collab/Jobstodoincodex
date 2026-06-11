@@ -103,6 +103,10 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  SALARY_GUIDE_DOWNLOAD_URL: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
   SANITY_PROJECT_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_DATASET: z.preprocess(emptyToUndefined, z.string().optional()),
   SANITY_API_VERSION: z.preprocess(emptyToUndefined, z.string().optional()),

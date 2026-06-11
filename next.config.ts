@@ -91,11 +91,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/salary-guides",
-        destination: "/salary-snapshots",
-        permanent: true,
-      },
-      {
         source: "/privacy",
         destination: "/privacy-policy",
         permanent: true,

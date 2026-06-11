@@ -24,6 +24,26 @@ describe("launch search setup", () => {
     }
   });
 
+  it("keeps the salary guide gate out of the sitemap until approved", async () => {
+    const originalFlag = process.env.FEATURE_SALARY_GUIDE_GATE;
+
+    process.env.FEATURE_SALARY_GUIDE_GATE = "false";
+    expect((await sitemap()).map((entry) => entry.url)).not.toContain(
+      `${siteConfig.url}/salary-guides`,
+    );
+
+    process.env.FEATURE_SALARY_GUIDE_GATE = "true";
+    expect((await sitemap()).map((entry) => entry.url)).toContain(
+      `${siteConfig.url}/salary-guides`,
+    );
+
+    if (originalFlag === undefined) {
+      delete process.env.FEATURE_SALARY_GUIDE_GATE;
+    } else {
+      process.env.FEATURE_SALARY_GUIDE_GATE = originalFlag;
+    }
+  });
+
   it("points robots at the sitemap and blocks private routes", () => {
     const rules = robots();
 

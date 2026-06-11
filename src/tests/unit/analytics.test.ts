@@ -92,6 +92,19 @@ describe("analytics utility", () => {
     });
   });
 
+  it("creates safe data attributes for salary guide conversions", () => {
+    const attrs = analyticsAttributes("salary_guide_lead", {
+      form_type: "salary_guide",
+      guide_slug: "senior-marketing-salary-guide",
+    });
+
+    expect(attrs).toMatchObject({
+      "data-analytics-event": "salary_guide_lead",
+      "data-analytics-form-type": "salary_guide",
+      "data-analytics-guide-slug": "senior-marketing-salary-guide",
+    });
+  });
+
   it("reads analytics params from an element", () => {
     const element = {
       getAttribute: (name: string) =>

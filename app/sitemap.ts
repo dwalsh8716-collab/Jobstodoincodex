@@ -58,6 +58,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
+  if (process.env.FEATURE_SALARY_GUIDE_GATE === "true") {
+    addEntry({
+      path: "/salary-guides",
+      changeFrequency: "monthly",
+      priority: 0.72,
+    });
+  }
+
   services.forEach((service) => {
     addEntry({
       path: `/services/${service.slug}`,
