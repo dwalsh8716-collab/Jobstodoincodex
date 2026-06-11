@@ -154,6 +154,33 @@ describe("Recruiter Labs AI Ops governance", () => {
     );
   });
 
+  it("documents the AI Ops roadmap without allowing candidate evaluation", () => {
+    const doc = readFileSync("docs/recruiter-labs-ai-ops-roadmap.md", "utf8");
+    const readme = readFileSync("README.md", "utf8");
+    const governance = readFileSync(
+      "docs/recruiter-labs-ai-governance.md",
+      "utf8",
+    );
+
+    expect(doc).toContain("# Recruiter Labs AI Ops Roadmap");
+    expect(doc).toContain("## Phased Plan");
+    expect(doc).toContain("## Dependencies");
+    expect(doc).toContain("## Risks");
+    expect(doc).toContain("## Build Now Vs Later");
+    expect(doc).toContain("## Codex Issue Order");
+    expect(doc).toContain("## What Not To Build");
+    expect(doc).toContain("## Private Beta Checklist");
+    expect(doc).toContain(
+      "AI should compress operations, not evaluate candidates.",
+    );
+    expect(doc).toContain("No ranking. No filtering. No faff.");
+    expect(doc).toContain("#87");
+    expect(doc).toContain("#85");
+    expect(doc).not.toMatch(/automatic candidate ranking|AI rejection route/i);
+    expect(readme).toContain("docs/recruiter-labs-ai-ops-roadmap.md");
+    expect(governance).toContain("docs/recruiter-labs-ai-ops-roadmap.md");
+  });
+
   it("builds candidate summary drafts as unapproved, client-hidden drafts only", () => {
     const result = buildCandidateSummaryDraft({
       sourceDataApproved: true,

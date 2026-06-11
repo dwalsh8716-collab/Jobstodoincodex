@@ -18,6 +18,12 @@ The hard launch gate lives in:
 docs/recruiter-labs-ai-launch-gate.md
 ```
 
+The build order and future roadmap live in:
+
+```txt
+docs/recruiter-labs-ai-ops-roadmap.md
+```
+
 ## Purpose
 
 AI may be useful for operational compression:

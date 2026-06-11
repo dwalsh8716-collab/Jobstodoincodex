@@ -183,6 +183,12 @@ The AI launch gate lives in:
 docs/recruiter-labs-ai-launch-gate.md
 ```
 
+The AI operations roadmap lives in:
+
+```txt
+docs/recruiter-labs-ai-ops-roadmap.md
+```
+
 The private portal engagement notes live in:
 
 ```txt
@@ -239,7 +245,7 @@ Before any client portal goes live:
 8. Interview request workflow.
 9. WhatsApp and Google scheduling only after approval.
 10. AI-assisted drafts only with human verification and no automated candidate
-   evaluation.
+    evaluation.
 
 ## Launch Gate
 
