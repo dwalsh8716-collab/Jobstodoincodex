@@ -50,6 +50,12 @@ export const candidateTransparencyFlagDefinitions = [
     description:
       "Future structured interview-process fields and status updates for live roles.",
   },
+  {
+    name: "FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD",
+    label: "Candidate transparency scorecard",
+    description:
+      "Private readiness checker for salary, hybrid, process, privacy and no-fluff job advert quality before publishing.",
+  },
 ] as const;
 
 export type CandidateTransparencyFlagName =

@@ -100,6 +100,7 @@ const serverEnvSchema = publicEnvSchema.extend({
   FEATURE_CANDIDATE_STATUS_JOURNEY: optionalBooleanFlag,
   FEATURE_CANDIDATE_WHATSAPP_QUESTIONS: optionalBooleanFlag,
   FEATURE_INTERVIEW_PROCESS_TRANSPARENCY: optionalBooleanFlag,
+  FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD: optionalBooleanFlag,
   FEATURE_AI_OPS_COMPRESSION: optionalBooleanFlag,
   FEATURE_AI_INTERVIEW_NOTES: optionalBooleanFlag,
   FEATURE_AI_SCORECARD_NOTES: optionalBooleanFlag,

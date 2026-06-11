@@ -179,6 +179,7 @@ Build and verify:
 - jargon warning
 - privacy note warning
 - readiness state before publishing
+- private admin scorecard route at `/admin/recruiter-labs/candidate-transparency`
 
 Public soon: no. This is an internal quality gate.
 

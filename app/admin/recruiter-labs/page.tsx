@@ -107,6 +107,12 @@ export default async function AdminRecruiterLabsPage() {
             >
               WhatsApp CRM sync
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/recruiter-labs/candidate-transparency"
+            >
+              Candidate scorecard
+            </Link>
           </div>
         </div>
 

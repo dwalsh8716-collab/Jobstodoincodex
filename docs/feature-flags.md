@@ -100,6 +100,7 @@ notes in feature flag values.
 | `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
 | `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Future candidate WhatsApp question workflow.                      |
 | `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Future interview-process transparency on roles.                   |
+| `FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD` | `false` | No                   | Private job-advert readiness checker before publishing.           |
 | `FEATURE_AI_OPS_COMPRESSION`               | `false` | No                   | Future AI support for reducing admin typing.                      |
 | `FEATURE_AI_INTERVIEW_NOTES`               | `false` | No                   | Future interview note structuring.                                |
 | `FEATURE_AI_SCORECARD_NOTES`               | `false` | No                   | Future scorecard note organisation, not candidate scoring.        |
@@ -152,6 +153,13 @@ rejection, sensitive feedback, salary negotiation or bulk marketing.
 candidate consent wording, redaction/minimisation rules, edit/approve workflow
 and retention handling are approved. Drafts are not rankings, scores or
 recommendations. David must approve them before any client visibility.
+
+`FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD` must stay `false` until David wants
+the private scorecard to act as a formal publishing gate. The admin-only route
+can still show the draft readiness report at
+`/admin/recruiter-labs/candidate-transparency`, but the score must not be shown
+publicly or used as fake compliance. The implementation note lives in
+`docs/recruiter-labs-candidate-transparency-scorecard.md`.
 
 ## Salary Guide Gate
 

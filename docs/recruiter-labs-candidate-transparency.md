@@ -71,10 +71,17 @@ FEATURE_LINKEDIN_PROFILE_APPLICATION=false
 FEATURE_CANDIDATE_STATUS_JOURNEY=false
 FEATURE_CANDIDATE_WHATSAPP_QUESTIONS=false
 FEATURE_INTERVIEW_PROCESS_TRANSPARENCY=false
+FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD=false
 ```
 
 These are planning and release-control flags. They do not override privacy,
 consent, storage or legal checks.
+
+The private scorecard implementation note lives in:
+
+```txt
+docs/recruiter-labs-candidate-transparency-scorecard.md
+```
 
 ## Job Page Standards
 

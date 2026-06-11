@@ -130,6 +130,7 @@ docs/feature-flags.md
 - `FEATURE_CANDIDATE_STATUS_JOURNEY`
 - `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`
 - `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`
+- `FEATURE_CANDIDATE_TRANSPARENCY_SCORECARD`
 - `FEATURE_AI_OPS_COMPRESSION`
 - `FEATURE_AI_INTERVIEW_NOTES`
 - `FEATURE_AI_SCORECARD_NOTES`
@@ -243,6 +244,7 @@ docs/recruiter-labs-client-pipeline.md
 docs/recruiter-labs-client-pipeline-launch-gate.md
 docs/recruiter-labs-candidate-transparency.md
 docs/recruiter-labs-candidate-transparency-roadmap.md
+docs/recruiter-labs-candidate-transparency-scorecard.md
 docs/recruiter-labs-ai-governance.md
 docs/recruiter-labs-ai-launch-gate.md
 docs/recruiter-labs-ai-ops-roadmap.md
