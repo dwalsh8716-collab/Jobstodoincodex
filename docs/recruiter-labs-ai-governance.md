@@ -24,6 +24,12 @@ The build order and future roadmap live in:
 docs/recruiter-labs-ai-ops-roadmap.md
 ```
 
+Vendor discovery for AI notetakers and Loxo fit lives in:
+
+```txt
+docs/recruiter-labs-ai-vendor-discovery.md
+```
+
 ## Purpose
 
 AI may be useful for operational compression:

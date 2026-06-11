@@ -181,6 +181,43 @@ describe("Recruiter Labs AI Ops governance", () => {
     expect(governance).toContain("docs/recruiter-labs-ai-ops-roadmap.md");
   });
 
+  it("documents AI notetaker vendor discovery without approving a provider", () => {
+    const doc = readFileSync(
+      "docs/recruiter-labs-ai-vendor-discovery.md",
+      "utf8",
+    );
+    const readme = readFileSync("README.md", "utf8");
+    const roadmap = readFileSync(
+      "docs/recruiter-labs-ai-ops-roadmap.md",
+      "utf8",
+    );
+
+    expect(doc).toContain("# Recruiter Labs AI Vendor Discovery");
+    expect(doc).toContain("## Comparison Matrix");
+    expect(doc).toContain("## Loxo / CRM Questions");
+    expect(doc).toContain("## Questions For Any Provider");
+    expect(doc).toContain("## Risk Register");
+    expect(doc).toContain("## Staged Next Steps");
+    expect(doc).toContain("Explore Loxo AI Notetaker first.");
+    expect(doc).toContain("Explore Metaview second");
+    expect(doc).toContain("No provider has been connected.");
+    expect(doc).toContain(
+      "Do not build a custom AI notetaker inside the website.",
+    );
+    expect(doc).toContain(
+      "Can automated scoring, ranking or recommendation be disabled?",
+    );
+    expect(doc).toContain("https://www.loxo.co/ai-agents/ai-notetaker");
+    expect(doc).toContain(
+      "https://support.metaview.ai/integrations/ats-integrations/loxo",
+    );
+    expect(doc).not.toMatch(
+      /approved vendor|provider is approved|connect accounts/i,
+    );
+    expect(readme).toContain("docs/recruiter-labs-ai-vendor-discovery.md");
+    expect(roadmap).toContain("docs/recruiter-labs-ai-vendor-discovery.md");
+  });
+
   it("builds candidate summary drafts as unapproved, client-hidden drafts only", () => {
     const result = buildCandidateSummaryDraft({
       sourceDataApproved: true,

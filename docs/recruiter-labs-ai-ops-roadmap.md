@@ -118,7 +118,7 @@ Rules:
 
 ### Phase 4: Vendor Discovery
 
-Status: research before build.
+Status: documented in `docs/recruiter-labs-ai-vendor-discovery.md`.
 
 Review:
 
@@ -243,7 +243,8 @@ Build only after explicit approval:
 Recommended order from here:
 
 1. #89: AI Ops roadmap.
-2. #87: AI vendor discovery and Loxo fit.
+2. #87: AI vendor discovery and Loxo fit. Current recommendation: explore
+   Loxo AI Notetaker first, Metaview second.
 3. #85: manual structured interview notes and scorecard-aligned records.
 4. #86: human-verified candidate summary drafts for the client portal.
 5. #64: broader AI brief builder, extending the staged diagnostic rather than
