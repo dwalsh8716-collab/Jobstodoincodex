@@ -65,6 +65,8 @@ describe("analytics utility", () => {
       label: "David on LinkedIn",
       href: "https://www.linkedin.com/in/example",
       location: "footer",
+      destination: "linkedin_profile",
+      profile_type: "founder",
     });
 
     expect(attrs).toMatchObject({
@@ -72,6 +74,8 @@ describe("analytics utility", () => {
       "data-analytics-label": "David on LinkedIn",
       "data-analytics-href": "https://www.linkedin.com/in/example",
       "data-analytics-location": "footer",
+      "data-analytics-destination": "linkedin_profile",
+      "data-analytics-profile-type": "founder",
     });
   });
 

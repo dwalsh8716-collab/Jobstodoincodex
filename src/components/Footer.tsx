@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookingButton } from "@/components/BookingButton";
 import { CookiePreferencesButton } from "@/components/CookiePreferencesButton";
+import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { serviceNavigation, siteConfig } from "@/lib/site";
@@ -51,18 +52,10 @@ export function Footer() {
               variant="text"
             />
             <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
-            {siteConfig.linkedIn ? (
-              <Link
-                href={siteConfig.linkedIn}
-                {...analyticsAttributes("linkedin_click", {
-                  label: "David on LinkedIn",
-                  href: siteConfig.linkedIn,
-                  location: "footer",
-                })}
-              >
-                David on LinkedIn
-              </Link>
-            ) : null}
+            <LinkedInProfileLink
+              label="David on LinkedIn"
+              location="footer"
+            />
           </div>
           <Link
             className="button button-primary"

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
+import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
 import { RichMediaBlock } from "@/components/RichMedia";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
@@ -303,6 +304,10 @@ export default async function HomePage() {
               <Link className="button button-dark" href="/about-david-walsh">
                 About David
               </Link>
+              <LinkedInProfileLink
+                label="Connect with David on LinkedIn"
+                location="homepage_founder_block"
+              />
               <Link className="text-link" href="/contact">
                 Talk to David
               </Link>

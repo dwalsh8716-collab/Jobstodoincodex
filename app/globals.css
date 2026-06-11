@@ -360,6 +360,25 @@ p {
   content: "->";
 }
 
+.linkedin-profile-link {
+  white-space: normal;
+}
+
+.linkedin-mark {
+  display: inline-flex;
+  width: 1.32em;
+  height: 1.32em;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 0.72em;
+  font-weight: 900;
+  line-height: 1;
+  text-decoration: none;
+}
+
 .nav-whatsapp {
   display: none;
 }

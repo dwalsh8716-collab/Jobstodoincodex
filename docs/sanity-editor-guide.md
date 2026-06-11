@@ -293,3 +293,32 @@ Where WhatsApp appears:
 - Footer contact links.
 
 If the WhatsApp number is removed or invalid, WhatsApp buttons should not render and the website falls back to the contact form, email and booking routes.
+
+## LinkedIn Profile Settings
+
+David's LinkedIn profile is managed from Site Settings when Sanity is connected.
+
+Open:
+
+```txt
+Studio > Main Site > Site Settings
+```
+
+Fields:
+
+- David LinkedIn profile URL.
+- LinkedIn button label.
+- Show LinkedIn link in the footer?
+- Show LinkedIn link on the contact page?
+- Show LinkedIn link in founder sections?
+
+Use David's public profile URL:
+
+```txt
+https://www.linkedin.com/in/davidwalshrecruiter/
+```
+
+Do not paste private, admin-only or campaign URLs. LinkedIn is shown only where
+it supports founder credibility: the About David page, homepage founder section,
+contact page, footer and David-authored insight bylines. It should not replace
+WhatsApp, booking or contact forms.

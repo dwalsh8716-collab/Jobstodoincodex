@@ -21,6 +21,8 @@ const normaliseExternalUrl = (value: string | undefined) => {
   }
 };
 export const defaultSiteUrl = "https://essentialresourcing.co.uk";
+export const defaultLinkedInProfileUrl =
+  "https://www.linkedin.com/in/davidwalshrecruiter/";
 
 export const normaliseSiteUrl = (value: string | undefined) => {
   if (!value) return defaultSiteUrl;
@@ -39,6 +41,9 @@ const googleBookingUrl = normaliseExternalUrl(
   process.env.NEXT_PUBLIC_GOOGLE_BOOKING_URL ||
     process.env.NEXT_PUBLIC_BOOKING_URL,
 );
+const linkedInProfileUrl =
+  normaliseExternalUrl(process.env.NEXT_PUBLIC_LINKEDIN_URL) ||
+  defaultLinkedInProfileUrl;
 
 export const siteConfig = {
   name: "Essential Resourcing",
@@ -46,7 +51,8 @@ export const siteConfig = {
   url: normaliseSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   email: "david@essentialresourcing.co.uk",
   phone: process.env.NEXT_PUBLIC_PHONE || "",
-  linkedIn: process.env.NEXT_PUBLIC_LINKEDIN_URL || "",
+  linkedIn: linkedInProfileUrl,
+  linkedInLabel: "Connect with David on LinkedIn",
   bookingUrl: googleBookingUrl || "/contact",
   booking: {
     enabled: Boolean(googleBookingUrl),

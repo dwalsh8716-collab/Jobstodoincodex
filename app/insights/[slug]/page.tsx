@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
 import { RichMediaBlock } from "@/components/RichMedia";
 import { SchemaScript } from "@/components/SchemaScript";
 import {
@@ -11,6 +12,7 @@ import {
   getPublicServices,
 } from "@/lib/public-content";
 import { articleSchema, createMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -53,6 +55,9 @@ export default async function InsightPage({ params }: Props) {
       !item.noIndex &&
       insight.relatedInsightSlugs.includes(item.slug),
   );
+  const isDavidAuthored = insight.author
+    .toLowerCase()
+    .includes(siteConfig.founder.toLowerCase());
 
   return (
     <>
@@ -72,6 +77,13 @@ export default async function InsightPage({ params }: Props) {
               {insight.author} · Published {insight.publishedDate} · Updated{" "}
               {insight.updatedDate} · {insight.readingTime}
             </p>
+            {isDavidAuthored ? (
+              <LinkedInProfileLink
+                label="Connect with David on LinkedIn"
+                location="author_bio"
+                profileType="author"
+              />
+            ) : null}
           </div>
         </section>
         <section className="section surface">

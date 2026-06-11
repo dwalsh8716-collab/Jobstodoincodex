@@ -116,6 +116,11 @@ export type SanitySiteSettings = SanitySeo & {
   showWhatsAppInHeader?: boolean;
   showWhatsAppInFooter?: boolean;
   showWhatsAppOnContactPage?: boolean;
+  linkedInProfileUrl?: string;
+  linkedInButtonLabel?: string;
+  showLinkedInInFooter?: boolean;
+  showLinkedInOnContactPage?: boolean;
+  showLinkedInInFounderBlock?: boolean;
   addressRegion?: string;
   socialLinks?: Array<{ _key?: string; label?: string; url?: string }>;
   footerCopy?: string;

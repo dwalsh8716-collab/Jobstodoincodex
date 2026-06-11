@@ -869,6 +869,41 @@ const siteSettings = defineType({
       initialValue: true,
     }),
     defineField({
+      name: "linkedInProfileUrl",
+      title: "David LinkedIn profile URL",
+      type: "url",
+      description:
+        "Use David's public LinkedIn profile URL. This is shown in selected founder/contact areas and may be used for SEO/entity trust.",
+      initialValue: "https://www.linkedin.com/in/davidwalshrecruiter/",
+    }),
+    defineField({
+      name: "linkedInButtonLabel",
+      title: "LinkedIn button label",
+      type: "string",
+      description:
+        "Short public-facing copy, for example: Connect with David on LinkedIn.",
+      initialValue: "Connect with David on LinkedIn",
+      validation: (rule) => rule.max(56),
+    }),
+    defineField({
+      name: "showLinkedInInFooter",
+      title: "Show LinkedIn link in the footer?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showLinkedInOnContactPage",
+      title: "Show LinkedIn link on the contact page?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
+      name: "showLinkedInInFounderBlock",
+      title: "Show LinkedIn link in founder sections?",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "addressRegion",
       title: "Address / region",
       type: "string",

@@ -23,6 +23,8 @@ export type AnalyticsEventParams = {
   location?: string;
   page_path?: string;
   cta_text?: string;
+  destination?: string;
+  profile_type?: string;
   intent?: string;
   service?: string;
   booking_type?: string;
@@ -100,6 +102,8 @@ const dataAttributeMap: Record<keyof AnalyticsEventParams, string> = {
   location: "data-analytics-location",
   page_path: "data-analytics-page-path",
   cta_text: "data-analytics-cta-text",
+  destination: "data-analytics-destination",
+  profile_type: "data-analytics-profile-type",
   intent: "data-analytics-intent",
   service: "data-analytics-service",
   booking_type: "data-analytics-booking-type",

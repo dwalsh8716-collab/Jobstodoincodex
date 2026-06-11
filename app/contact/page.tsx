@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
+import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { createMetadata } from "@/lib/seo";
@@ -97,19 +98,11 @@ export default function ContactPage() {
                   Call David
                 </Link>
               ) : null}
-              {siteConfig.linkedIn ? (
-                <Link
-                  className="button button-secondary"
-                  href={siteConfig.linkedIn}
-                  {...analyticsAttributes("linkedin_click", {
-                    label: "LinkedIn",
-                    href: siteConfig.linkedIn,
-                    location: "contact hero",
-                  })}
-                >
-                  LinkedIn
-                </Link>
-              ) : null}
+              <LinkedInProfileLink
+                label="Connect with David on LinkedIn"
+                location="contact_page"
+                variant="secondary"
+              />
             </div>
             <div className="trust-callout hero-actions">
               <h2>What happens next?</h2>
