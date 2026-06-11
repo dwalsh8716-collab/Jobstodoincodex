@@ -117,6 +117,12 @@ expiry. It defaults to 30 days and is capped in code at 90 days.
 Keep the default unless David approves a shorter or longer private-beta window.
 This is not a secret and must not contain a token.
 
+`FEATURE_FUNCTIONAL_MATRIX` must stay `false` until David approves private
+preview with real role or client data. The protected preview lives at
+`/admin/labs/functional-matrix`; the implementation note lives in
+`docs/labs-functional-matrix.md`. It is an advisory scoping tool, not candidate
+scoring or automated matching.
+
 `INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Strategic Interim
 availability magic links. It defaults to 14 days and is capped in code at 45
 days. It is not a secret and must not contain a token.

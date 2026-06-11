@@ -185,7 +185,7 @@ export const labsIdeas: LabsIdea[] = [
   {
     title: "Functional matrix mapping",
     category: "Client search",
-    status: "idea",
+    status: "private_preview",
     priority: "future",
     targetUser: "Clients shaping a senior brief",
     commercialPurpose:
@@ -195,6 +195,7 @@ export const labsIdeas: LabsIdea[] = [
     dependencies: ["Role taxonomy", "Service page alignment"],
     featureFlagName: "FEATURE_FUNCTIONAL_MATRIX",
     relatedGitHubIssue: "#62",
+    relatedRoute: "/admin/labs/functional-matrix",
     launchRule:
       "Launch as a guidance tool, not as an automated hiring decision tool.",
   },

@@ -70,6 +70,12 @@ The staged client shortlist notes live in:
 docs/labs-client-shortlists.md
 ```
 
+The staged functional matrix notes live in:
+
+```txt
+docs/labs-functional-matrix.md
+```
+
 Each idea should explain:
 
 - commercial purpose

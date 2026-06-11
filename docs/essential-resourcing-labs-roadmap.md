@@ -147,6 +147,12 @@ Suggested issue: `#62`.
 
 Codex effort: medium.
 
+Implementation notes live in:
+
+```txt
+docs/labs-functional-matrix.md
+```
+
 ### AI Brief Builder
 
 Commercial value: compresses messy first-call thinking into a draft brief David

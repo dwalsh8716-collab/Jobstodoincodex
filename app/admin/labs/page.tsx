@@ -120,6 +120,12 @@ export default async function AdminLabsPage() {
             >
               AI brief builder
             </Link>
+            <Link
+              className="button button-secondary"
+              href="/admin/labs/functional-matrix"
+            >
+              Functional matrix
+            </Link>
           </div>
         </div>
 
