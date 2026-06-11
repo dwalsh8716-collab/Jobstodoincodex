@@ -74,6 +74,12 @@ Optional tracking:
 
 Optional private Labs flags:
 
+Full reference:
+
+```txt
+docs/feature-flags.md
+```
+
 - `FEATURE_LABS_ENABLED`
 - `FEATURE_SALARY_GUIDE_GATE`
 - `FEATURE_SALARY_BENCHMARK_ASSET`
@@ -185,6 +191,7 @@ docs/sanity-cms-access.md
 docs/WHATSAPP-CONTACT-INTEGRATION.md
 docs/google-calendar-booking-setup.md
 docs/essential-resourcing-labs.md
+docs/feature-flags.md
 docs/codebase-forensic-audit-report.md
 docs/non-technical-architecture-map.md
 docs/sanity-cms-audit.md

@@ -3,7 +3,7 @@ import { JobCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { candidateJobPageStandards } from "@/lib/candidate-transparency";
+import { candidateJobPageStandards } from "@/lib/candidate-transparency-content";
 import { isJobLive } from "@/lib/content";
 import { getPublicJobs } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";

@@ -1,0 +1,205 @@
+# Feature Flags
+
+Audit date: 11 June 2026
+
+## Status
+
+Green for safe future build work.
+
+The site already had a good server-side feature flag pattern. This pass did not
+replace it.
+
+What now exists:
+
+- typed flag names in code
+- one central server-only registry at `src/lib/feature-flags.ts`
+- defaults in `.env.example`
+- validation in `src/lib/env.ts`
+- tests that keep flags private, default-off and out of public pages
+
+## Plain-English Rule
+
+Feature flags are safety switches.
+
+They are not passwords. They are not legal approval. They are not a way to make
+private candidate or client data public.
+
+Every flag below defaults to `false`. To turn one on, the value must be exactly
+`true`.
+
+## Current Recommendation
+
+Keep all Recruiter Labs, AI Ops and candidate transparency flags off in
+production until the relevant launch gate has passed.
+
+For now, use them only for protected admin planning and synthetic testing.
+
+## Public Safety
+
+None of the current flags is a public browser flag.
+
+- They are server-side only.
+- They are not named `NEXT_PUBLIC_*`.
+- They must not contain secrets.
+- They must not control access to private data on their own.
+- Public pages should not import private Labs helper code.
+
+If a future feature needs a public flag, create a separate issue and review the
+privacy, bundle size and search-index impact first.
+
+## Railway Instructions
+
+In Railway:
+
+1. Open the project.
+2. Open the website service.
+3. Go to Variables.
+4. Add or edit the flag name exactly as shown below.
+5. Use `false` to keep it off.
+6. Use `true` only after David approves that specific feature.
+7. Redeploy the service after changing the value.
+
+To disable quickly, set the flag back to `false` and redeploy.
+
+Do not put API keys, passwords, tokens, candidate names, client names or private
+notes in feature flag values.
+
+## Master Flag List
+
+| Flag                                       | Default | Safe for public now? | Controls                                                   |
+| ------------------------------------------ | ------- | -------------------- | ---------------------------------------------------------- |
+| `FEATURE_LABS_ENABLED`                     | `false` | No                   | Protected Labs admin planning surface.                     |
+| `FEATURE_SALARY_GUIDE_GATE`                | `false` | No                   | Future gated salary guide lead-capture flow.               |
+| `FEATURE_SALARY_BENCHMARK_ASSET`           | `false` | No                   | Future bespoke salary benchmarking asset builder.          |
+| `FEATURE_MARKET_MAPPING`                   | `false` | No                   | Future market mapping visuals.                             |
+| `FEATURE_BAD_HIRE_CALCULATOR`              | `false` | No                   | Future bad-hire cost calculator.                           |
+| `FEATURE_FUNCTIONAL_MATRIX`                | `false` | No                   | Future role and search-shape mapping.                      |
+| `FEATURE_CLIENT_SHORTLIST_PORTAL`          | `false` | No                   | Future protected client shortlist portal.                  |
+| `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting.                         |
+| `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Strategic Interim bench workflow.                   |
+| `FEATURE_LIVE_MARKET_DASHBOARDS`           | `false` | No                   | Future live market intelligence dashboards.                |
+| `FEATURE_RECRUITER_LABS_ENABLED`           | `false` | No                   | Protected Recruiter Labs client-pipeline foundation.       |
+| `FEATURE_CLIENT_PRESENTATION_PORTAL`       | `false` | No                   | Future magic-link shortlist presentation portal.           |
+| `FEATURE_BRANDED_CANDIDATE_PROFILES`       | `false` | No                   | Future David-approved candidate profile cards.             |
+| `FEATURE_SHORTLIST_FEEDBACK_TRACKING`      | `false` | No                   | Future client shortlist feedback tracking.                 |
+| `FEATURE_INTERVIEW_REQUEST_WORKFLOW`       | `false` | No                   | Future interview request workflow.                         |
+| `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`    | `false` | No                   | Future WhatsApp interview logistics.                       |
+| `FEATURE_GOOGLE_MEET_INTERVIEW_SCHEDULING` | `false` | No                   | Future Google Calendar and Meet orchestration.             |
+| `FEATURE_AI_CANDIDATE_SUMMARIES`           | `false` | No                   | Future AI-assisted candidate summary drafts.               |
+| `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                    |
+| `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page standards.                        |
+| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future friction-light application route.                   |
+| `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future LinkedIn/profile-first application option.          |
+| `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                   |
+| `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Future candidate WhatsApp question workflow.               |
+| `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Future interview-process transparency on roles.            |
+| `FEATURE_AI_OPS_COMPRESSION`               | `false` | No                   | Future AI support for reducing admin typing.               |
+| `FEATURE_AI_INTERVIEW_NOTES`               | `false` | No                   | Future interview note structuring.                         |
+| `FEATURE_AI_SCORECARD_NOTES`               | `false` | No                   | Future scorecard note organisation, not candidate scoring. |
+| `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`      | `false` | No                   | Future candidate summary drafts for David review.          |
+| `FEATURE_AI_CLIENT_PROFILE_DRAFTS`         | `false` | No                   | Future client profile drafts behind approval.              |
+| `FEATURE_AI_FOLLOW_UP_DRAFTS`              | `false` | No                   | Future follow-up draft support, no automatic sending.      |
+
+## Suggested Flags From Issue #117
+
+Issue #117 specifically called out these flags. They all exist and default off:
+
+- `FEATURE_RECRUITER_LABS_ENABLED`
+- `FEATURE_CLIENT_PRESENTATION_PORTAL`
+- `FEATURE_BRANDED_CANDIDATE_PROFILES`
+- `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- `FEATURE_WHATSAPP_INTERVIEW_SCHEDULING`
+- `FEATURE_AI_OPS_COMPRESSION`
+- `FEATURE_CANDIDATE_TRANSPARENCY_LABS`
+- `FEATURE_SALARY_GUIDE_GATE`
+- `FEATURE_INTERIM_BENCH_PORTAL`
+
+## Where The Code Lives
+
+- Master registry: `src/lib/feature-flags.ts`
+- General Labs: `src/lib/labs.ts`
+- Recruiter Labs client pipeline: `src/lib/recruiter-labs.ts`
+- Candidate transparency flags: `src/lib/candidate-transparency.ts`
+- Candidate transparency public content: `src/lib/candidate-transparency-content.ts`
+- AI Ops: `src/lib/recruiter-labs-ai.ts`
+- Env validation: `src/lib/env.ts`
+- Example values: `.env.example`
+
+## How To Enable A Flag Locally
+
+Add the flag to `.env.local`:
+
+```bash
+FEATURE_RECRUITER_LABS_ENABLED=true
+```
+
+Restart the local server after changing env values.
+
+Use only `true` or `false`. Anything else should be treated as wrong.
+
+## How To Disable Quickly
+
+Local:
+
+```bash
+FEATURE_RECRUITER_LABS_ENABLED=false
+```
+
+Railway:
+
+1. Open Variables.
+2. Set the flag to `false`.
+3. Redeploy.
+4. Check the relevant admin page.
+
+For a live-risk incident, also remove public links, check `sitemap.xml` and
+confirm the feature is noindexed or inaccessible.
+
+## Launch Rules
+
+Do not turn on Recruiter Labs for real clients until:
+
+- Railway Postgres is live and migrated
+- admin access is confirmed
+- consent wording is reviewed
+- audit logging is live
+- retention rules are reviewed
+- candidate/CV access is private
+- David has approved the workflow
+- legal/privacy review is complete
+
+Do not turn on AI Ops for real candidate data until:
+
+- the AI provider is approved
+- DPA, processing region and training-use terms are reviewed
+- redaction rules are agreed
+- human review and deletion are live
+- David approval is required before any client-facing output
+
+## Public Bundle Impact
+
+The current pattern is deliberately light:
+
+- public pages do not import private Labs helpers
+- protected admin routes import the Labs helpers
+- feature definitions use `server-only`
+- no third-party feature-flag service is installed
+- no public tracking script is added
+
+That keeps public pages fast and avoids shipping private planning logic to the
+browser.
+
+## Manual Approval For David
+
+David must approve before any flag is set to `true` in production.
+
+Approval should say:
+
+- which flag
+- where it will appear
+- whether it uses real candidate or client data
+- whether it is public, private admin or private beta
+- how it will be switched off
+- what privacy/legal review has happened
+
+No faff. If the answer is not clear, keep the flag off.

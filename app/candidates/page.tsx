@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { candidateTrustQuestions } from "@/lib/candidate-transparency";
+import { candidateTrustQuestions } from "@/lib/candidate-transparency-content";
 import {
   candidatePrivacyPath,
   candidateRetentionStatement,

@@ -1,11 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import {
-  candidateJobPageStandards,
   candidateTransparencyFlagDefinitions,
-  candidateTrustQuestions,
   getCandidateTransparencyFeatureFlags,
   isCandidateTransparencyFeatureEnabled,
 } from "@/lib/candidate-transparency";
+import {
+  candidateJobPageStandards,
+  candidateTrustQuestions,
+} from "@/lib/candidate-transparency-content";
 import {
   getJobTransparencyIssues,
   isJobCandidateTransparent,
