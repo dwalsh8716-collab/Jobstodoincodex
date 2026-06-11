@@ -98,6 +98,28 @@ describe("contact form validation", () => {
     expect(missingPrivacy.success).toBe(false);
     expect(validCandidate.success).toBe(true);
   });
+
+  it("lets candidates apply with a profile URL instead of a cover letter", () => {
+    const validProfileOnlyApplication = contactFormSchema.safeParse({
+      ...basePayload,
+      type: "job",
+      briefType: "Job application",
+      message: "",
+      linkedin: "https://www.linkedin.com/in/example",
+      privacyNoticeAcknowledgement: "yes",
+    });
+    const missingProfileAndNote = contactFormSchema.safeParse({
+      ...basePayload,
+      type: "job",
+      briefType: "Job application",
+      message: "",
+      linkedin: "",
+      privacyNoticeAcknowledgement: "yes",
+    });
+
+    expect(validProfileOnlyApplication.success).toBe(true);
+    expect(missingProfileAndNote.success).toBe(false);
+  });
 });
 
 describe("contact server action response shape", () => {

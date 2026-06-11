@@ -4,7 +4,9 @@ Audit date: 11 June 2026
 
 ## Status
 
-Staged, not live for CV upload.
+Profile-or-note applications are live through the existing contact route.
+
+CV upload is staged, not live.
 
 The website now has a passwordless application component for candidate and job
 routes. It keeps the current simple journey:
@@ -13,8 +15,7 @@ routes. It keeps the current simple journey:
 - name
 - email
 - optional phone
-- LinkedIn/profile URL
-- short note
+- LinkedIn/profile URL or a short note
 - preferred contact method
 - application/data-processing consent
 - explicit WhatsApp reply consent when WhatsApp is selected
@@ -22,6 +23,9 @@ routes. It keeps the current simple journey:
 - Candidate Privacy Notice acknowledgement
 
 The CV upload control is deliberately disabled.
+
+This means applying can stay under two minutes without pretending the site has a
+safe CV storage service before it does.
 
 ## Audit Findings
 
@@ -46,11 +50,14 @@ Missing before this pass:
 - explicit staged CV upload route/status
 - validation rules for future CV file type and size
 - clear API response that CV upload is not yet enabled
+- private application-record write path for job applications
+- profile-or-note validation instead of forcing a long message
 
 ## What Was Added
 
 - `CandidateApplicationDrop` component.
-- Disabled CV upload field with clear plain-English copy.
+- Disabled staged CV drop area with file type, file size and progress-state
+  copy.
 - Locked `/api/candidate-application-drop` route that returns a safe 503 while
   storage is not approved.
 - Server-side CV validation rules for a future storage adapter:
@@ -58,10 +65,14 @@ Missing before this pass:
   - DOC
   - DOCX
   - 10MB maximum
+- Candidate/job form validation now requires either a LinkedIn/profile URL or a
+  short note. It does not force a cover letter when a profile link is enough.
 - Separate privacy acknowledgement on candidate/job forms.
 - Optional talent-pool consent that is not treated as marketing consent.
 - Private operations metadata for LinkedIn/profile URL, job slug, privacy
   acknowledgement, WhatsApp reply consent and talent-pool consent.
+- Private Postgres application records for job submissions when
+  `OPERATIONS_DB_ENABLED=true` and migrations have been run.
 
 ## Storage Decision
 
@@ -79,6 +90,31 @@ Required before CV upload can be live:
 8. Legal/privacy wording reviewed.
 
 Until then, candidates should use LinkedIn/profile URL and a short note.
+
+## Application Storage
+
+When the operations database is enabled, job submissions create:
+
+- the existing enquiry trail
+- a private candidate record if one does not already exist for the email
+- a private application record with:
+  - candidate/application link
+  - job slug
+  - applicant name, email and optional phone
+  - profile URL
+  - note
+  - preferred contact method
+  - consent and privacy notice version
+  - source page
+
+The migration is:
+
+```txt
+database/migrations/027_candidate_application_drop.sql
+```
+
+It also stages a `candidate_files` metadata table for future private CV storage.
+That table stores metadata only. It has no public file URL field.
 
 ## Environment Variables
 

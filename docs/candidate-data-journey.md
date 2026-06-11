@@ -49,6 +49,10 @@ Improved:
   process, data handling and quick-question routes.
 - Added a staged passwordless application-drop component with CV upload safely
   disabled until private storage is approved.
+- Added a profile-or-note application rule so candidates do not have to write a
+  cover letter when a useful profile link is enough.
+- Added private application metadata writes for job applications when the
+  operations database is enabled.
 
 Detailed job/candidate transparency standards live in:
 
@@ -72,6 +76,8 @@ Before applying or sending a note, candidates now see:
 - explicit WhatsApp reply consent when WhatsApp is selected as the preferred
   candidate route
 - a staged CV upload control that explains why upload is not live yet
+- a profile-or-note application route that is designed to take under two
+  minutes
 
 ## Consent
 
@@ -109,6 +115,28 @@ Candidate/application schema fields include:
 - future WhatsApp preference, opt-in and opt-out metadata
 - email, phone and WhatsApp contact preference consent flags
 - future Loxo reference IDs and CRM sync audit events
+- application source page and application method
+
+## Job Application Metadata
+
+When the operations database is enabled and migrations have been run, job
+submissions create a private application record as well as the existing enquiry
+trail.
+
+Stored fields include:
+
+- applicant name, email and optional phone
+- job slug and source page
+- profile URL
+- short note, if supplied
+- preferred contact method
+- WhatsApp reply consent, if WhatsApp is selected
+- optional talent-pool consent
+- Candidate Privacy Notice version and acknowledgement
+
+It does not store CV files. The future `candidate_files` table is metadata-only
+until private storage, signed access, scanning, retention/deletion and legal
+review are complete.
 
 Hard boundary:
 

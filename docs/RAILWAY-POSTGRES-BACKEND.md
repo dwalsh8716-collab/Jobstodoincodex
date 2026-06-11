@@ -133,6 +133,7 @@ database/migrations/022_ai_brief_diagnostic.sql
 database/migrations/017_dsar_email_verification.sql
 database/migrations/018_interim_availability_toggle.sql
 database/migrations/010_loxo_reference_boundary.sql
+database/migrations/027_candidate_application_drop.sql
 ```
 
 Tables:
@@ -171,8 +172,16 @@ Important privacy fields are included for candidate/application records:
 - `anonymised_at`
 - `deleted_at`
 - `deletion_reason`
+- `source_page`
+- `application_method`
+- `profile_url`
+- `note`
+- `talent_pool_consent`
+- `privacy_notice_acknowledged`
 
-CV files are not stored in Postgres. Only metadata is modelled. Actual CV storage must use private object storage with signed access URLs before upload is enabled.
+CV files are not stored in Postgres. Only metadata is modelled. The future
+`candidate_files` table has no public URL field. Actual CV storage must use
+private object storage with signed access URLs before upload is enabled.
 
 Loxo reference fields are optional. They exist to connect a private website workflow record to the matching Loxo record later. They do not mean the website database is now the CRM.
 

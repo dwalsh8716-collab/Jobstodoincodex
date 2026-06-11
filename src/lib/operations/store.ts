@@ -87,6 +87,20 @@ function contactPreferenceRecord(payload: ContactFormPayload) {
   };
 }
 
+function contactMessageForStorage(payload: ContactFormPayload) {
+  if (payload.message) return payload.message;
+
+  if (payload.type === "job") {
+    return "Application supplied through the profile-link route without a separate note.";
+  }
+
+  if (payload.type === "candidate") {
+    return "Candidate supplied a profile link without a separate note.";
+  }
+
+  return "No message supplied.";
+}
+
 export async function saveContactEnquiryToOperations(
   payload: ContactFormPayload,
   meta: RequestMeta = {},
@@ -105,6 +119,7 @@ export async function saveContactEnquiryToOperations(
   const retentionCategory = contactRetentionCategory(payload.type);
   const retentionDates = retentionDatesForCategory(retentionCategory);
   const contactPreferences = contactPreferenceRecord(payload);
+  const message = contactMessageForStorage(payload);
   const record = {
     source: "website_contact_form",
     enquiryType: payload.type,
@@ -115,8 +130,11 @@ export async function saveContactEnquiryToOperations(
     jobTitle: payload.jobTitle,
     jobSlug: payload.jobSlug,
     linkedInUrl: payload.linkedin,
-    message: payload.message,
+    candidateNote: payload.message,
+    message,
     serviceInterest: payload.briefType,
+    sourcePage: payload.sourcePage,
+    applicationMethod: "profile_or_note",
     preferredContactMethod: contactPreferences.preferredContactMethod,
     whatsappConsent: contactPreferences.whatsappConsent,
     phoneConsent: contactPreferences.phoneConsent,
@@ -206,7 +224,10 @@ export async function saveContactEnquiryToOperations(
                 'emailConsent', coalesce((data->>'emailConsent')::boolean, false)
               ),
               'linkedInUrl', nullif(data->>'linkedInUrl', ''),
-              'jobSlug', nullif(data->>'jobSlug', '')
+              'jobSlug', nullif(data->>'jobSlug', ''),
+              'sourcePage', nullif(data->>'sourcePage', ''),
+              'applicationMethod', nullif(data->>'applicationMethod', ''),
+              'candidateNoteSupplied', nullif(data->>'candidateNote', '') is not null
             )
           from payload
           returning id
@@ -249,6 +270,167 @@ export async function saveContactEnquiryToOperations(
             nullif(payload.data->>'ipHash', ''),
             nullif(payload.data->>'userAgentHash', '')
           from created, payload
+          returning id
+        ),
+        candidate_match as (
+          select id
+          from candidates, payload
+          where payload.data->>'enquiryType' = 'job'
+            and email is not null
+            and lower(email) = lower(payload.data->>'email')
+            and deleted_at is null
+          order by created_at desc
+          limit 1
+        ),
+        candidate_created as (
+          insert into candidates (
+            name,
+            email,
+            phone,
+            linkedin_url,
+            status,
+            source,
+            consent_to_store_data,
+            consent_timestamp,
+            privacy_notice_version,
+            data_retention_until,
+            consent_source,
+            retention_category,
+            retention_review_at,
+            retention_status,
+            opted_into_talent_pool,
+            notes
+          )
+          select
+            data->>'name',
+            data->>'email',
+            nullif(data->>'phone', ''),
+            nullif(data->>'linkedInUrl', ''),
+            'new',
+            'website_application_drop',
+            coalesce((data->>'consentToContact')::boolean, false),
+            now(),
+            data->>'privacyNoticeVersion',
+            (data->>'dataRetentionUntil')::date,
+            data->>'consentSource',
+            data->>'retentionCategory',
+            (data->>'retentionReviewAt')::date,
+            coalesce(nullif(data->>'retentionStatus', ''), 'active'),
+            coalesce((data->>'talentPoolConsent')::boolean, false),
+            'Created from website application/profile route. Full note lives on the application record.'
+          from payload
+          where data->>'enquiryType' = 'job'
+            and not exists (select 1 from candidate_match)
+          returning id
+        ),
+        candidate_for_application as (
+          select id from candidate_created
+          union all
+          select id from candidate_match
+          limit 1
+        ),
+        application_created as (
+          insert into applications (
+            candidate_id,
+            sanity_job_slug,
+            source,
+            cover_message,
+            cv_file_id,
+            status,
+            consent_to_store_data,
+            consent_timestamp,
+            privacy_notice_version,
+            consent_source,
+            data_retention_until,
+            retention_category,
+            retention_review_at,
+            retention_status,
+            preferred_contact_method,
+            whatsapp_contact_consent,
+            phone_contact_consent,
+            email_contact_consent,
+            communication_notes,
+            applicant_name,
+            applicant_email,
+            applicant_phone,
+            profile_url,
+            note,
+            application_method,
+            source_page,
+            talent_pool_consent,
+            privacy_notice_acknowledged
+          )
+          select
+            candidate_for_application.id,
+            nullif(data->>'jobSlug', ''),
+            'website_application_drop',
+            nullif(data->>'candidateNote', ''),
+            null,
+            'received',
+            coalesce((data->>'consentToContact')::boolean, false),
+            now(),
+            data->>'privacyNoticeVersion',
+            data->>'consentSource',
+            (data->>'dataRetentionUntil')::date,
+            data->>'retentionCategory',
+            (data->>'retentionReviewAt')::date,
+            coalesce(nullif(data->>'retentionStatus', ''), 'active'),
+            nullif(data->>'preferredContactMethod', ''),
+            coalesce((data->>'whatsappConsent')::boolean, false),
+            coalesce((data->>'phoneConsent')::boolean, false),
+            coalesce((data->>'emailConsent')::boolean, false),
+            nullif(data->>'communicationNotes', ''),
+            data->>'name',
+            data->>'email',
+            nullif(data->>'phone', ''),
+            nullif(data->>'linkedInUrl', ''),
+            nullif(data->>'candidateNote', ''),
+            coalesce(nullif(data->>'applicationMethod', ''), 'profile_or_note'),
+            nullif(data->>'sourcePage', ''),
+            coalesce((data->>'talentPoolConsent')::boolean, false),
+            coalesce((data->>'privacyNoticeAcknowledged')::boolean, false)
+          from payload, candidate_for_application
+          where data->>'enquiryType' = 'job'
+          returning id
+        ),
+        application_activity as (
+          insert into activities (
+            entity_type,
+            entity_id,
+            activity_type,
+            title,
+            description
+          )
+          select
+            'application',
+            id,
+            'application_received',
+            'Website application received',
+            'Created from the Essential Resourcing profile-or-note application route.'
+          from application_created
+          returning id
+        ),
+        application_consent as (
+          insert into consent_records (
+            entity_type,
+            entity_id,
+            consent_type,
+            status,
+            source,
+            privacy_notice_version,
+            ip_hash,
+            user_agent_hash
+          )
+          select
+            'application',
+            application_created.id,
+            'candidate_application_processing',
+            'granted',
+            'website_application_drop',
+            payload.data->>'privacyNoticeVersion',
+            nullif(payload.data->>'ipHash', ''),
+            nullif(payload.data->>'userAgentHash', '')
+          from application_created, payload
           returning id
         )
         select json_build_object('id', created.id)::text from created;

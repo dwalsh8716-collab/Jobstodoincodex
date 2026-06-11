@@ -59,6 +59,25 @@ export const candidateApplicationDropSchema = z
     jobSlug: z.preprocess(emptyToUndefined, safeText(160).optional()),
   })
   .superRefine((payload, ctx) => {
+    const noteLength = payload.note?.length || 0;
+
+    if (!payload.linkedin && noteLength < 10) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["linkedin"],
+        message:
+          "Please add either a LinkedIn/profile URL or a short note.",
+      });
+    }
+
+    if (payload.note && noteLength > 0 && noteLength < 10) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["note"],
+        message: "Please add a little more detail, or leave the note blank.",
+      });
+    }
+
     if (
       payload.preferredContactMethod === "whatsapp" &&
       payload.whatsappContactConsent !== "yes"

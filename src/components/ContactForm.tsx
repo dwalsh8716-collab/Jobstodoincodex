@@ -30,6 +30,12 @@ export function ContactForm({
   const [hasTrackedStart, setHasTrackedStart] = useState(false);
   const formId = useId();
   const statusId = `${formId}-${type}-form-status`;
+  const sourcePage =
+    type === "job" && jobSlug
+      ? `/jobs/${jobSlug}`
+      : type === "candidate"
+        ? "/candidates"
+        : "/contact";
 
   function onFocusCapture() {
     if (type !== "job" || hasTrackedStart) return;
@@ -50,6 +56,7 @@ export function ContactForm({
     formData.set("type", type);
     if (jobTitle) formData.set("jobTitle", jobTitle);
     if (jobSlug) formData.set("jobSlug", jobSlug);
+    formData.set("sourcePage", sourcePage);
 
     try {
       const response = await fetch("/api/contact", {
@@ -112,13 +119,16 @@ export function ContactForm({
         />
       </div>
       <input type="hidden" name="startedAt" value={startedAt} />
+      <input type="hidden" name="sourcePage" value={sourcePage} />
       <div className="form-assurance">
         <strong>
-          {candidateMode ? "Private candidate route." : "Direct with David."}
+          {candidateMode
+            ? "Private two-minute route."
+            : "Direct with David."}
         </strong>
         <span>
           {candidateMode
-            ? "Your details are handled carefully. No CVs are sent anywhere without permission."
+            ? "Use a profile link or a short note. CV upload stays off until private storage is ready."
             : "Share the useful context. You will get a straight reply, not a sales sequence."}
         </span>
       </div>
@@ -185,7 +195,7 @@ export function ContactForm({
         <div className="form-row">
           <label htmlFor={`${type}-linkedin`}>
             LinkedIn or profile URL{" "}
-            <span className="optional-label">optional</span>
+            <span className="optional-label">or add a short note below</span>
           </label>
           <input
             id={`${type}-linkedin`}
@@ -194,6 +204,10 @@ export function ContactForm({
             placeholder="https://www.linkedin.com/in/... or portfolio URL"
             maxLength={240}
           />
+          <p className="form-note">
+            This can be LinkedIn, a portfolio, a personal site or another
+            relevant profile. No scraping, no automatic parsing.
+          </p>
         </div>
       ) : null}
       <div className="form-row">
@@ -219,22 +233,35 @@ export function ContactForm({
         </select>
       </div>
       <div className="form-row">
-        <label htmlFor={`${type}-message`}>Message</label>
+        <label htmlFor={`${type}-message`}>
+          {candidateMode ? "Short note" : "Message"}{" "}
+          {candidateMode ? (
+            <span className="optional-label">
+              optional if a profile link is added
+            </span>
+          ) : null}
+        </label>
         <textarea
           id={`${type}-message`}
           name="message"
           rows={6}
-          minLength={10}
+          minLength={type === "client" ? 10 : undefined}
           maxLength={2000}
           placeholder={
             type === "job"
-              ? "A few lines on why this role looks relevant. No essay needed."
+              ? "Optional if you have added a profile link. A few useful lines is plenty."
               : type === "candidate"
-                ? "Tell David what you are looking for, location/hybrid needs and any salary context you are comfortable sharing."
+                ? "Optional if you have added a profile link. Tell David what you are looking for if it helps."
                 : "Share the useful context behind the hire."
           }
-          required
+          required={type === "client"}
         />
+        {candidateMode ? (
+          <p className="form-note">
+            Applying should not mean a cover-letter chore. Add a profile link,
+            a short note, or both.
+          </p>
+        ) : null}
       </div>
       <div className="form-row">
         <label htmlFor={`${type}-preferred-contact`}>

@@ -50,6 +50,40 @@ describe("candidate application drop", () => {
     expect(result.success).toBe(true);
   });
 
+  it("allows a profile URL without forcing a cover letter", () => {
+    const result = candidateApplicationDropSchema.safeParse({
+      name: "Candidate Name",
+      email: "candidate@example.com",
+      linkedin: "https://www.linkedin.com/in/example",
+      preferredContactMethod: "email",
+      consent: "yes",
+      privacyNoticeAcknowledgement: "yes",
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("requires either a profile URL or a useful short note", () => {
+    const missingBoth = candidateApplicationDropSchema.safeParse({
+      name: "Candidate Name",
+      email: "candidate@example.com",
+      preferredContactMethod: "email",
+      consent: "yes",
+      privacyNoticeAcknowledgement: "yes",
+    });
+    const usefulNote = candidateApplicationDropSchema.safeParse({
+      name: "Candidate Name",
+      email: "candidate@example.com",
+      note: "I am interested in relevant senior marketing roles.",
+      preferredContactMethod: "email",
+      consent: "yes",
+      privacyNoticeAcknowledgement: "yes",
+    });
+
+    expect(missingBoth.success).toBe(false);
+    expect(usefulNote.success).toBe(true);
+  });
+
   it("requires WhatsApp consent when WhatsApp is the preferred candidate route", () => {
     const missingConsent = candidateApplicationDropSchema.safeParse({
       name: "Candidate Name",
@@ -119,11 +153,21 @@ describe("candidate application drop", () => {
     const docs = readFileSync("docs/candidate-application-drop.md", "utf8");
     const readme = readFileSync("README.md", "utf8");
     const cvDocs = readFileSync("docs/cv-storage-and-retention.md", "utf8");
+    const migration = readFileSync(
+      "database/migrations/027_candidate_application_drop.sql",
+      "utf8",
+    );
+    const store = readFileSync("src/lib/operations/store.ts", "utf8");
 
-    expect(docs).toContain("Staged, not live for CV upload.");
+    expect(docs).toContain("CV upload is staged, not live.");
+    expect(docs).toContain("LinkedIn/profile URL or a short note");
     expect(docs).toContain("/api/candidate-application-drop");
     expect(docs).toContain("No CVs in Sanity");
     expect(readme).toContain("docs/candidate-application-drop.md");
     expect(cvDocs).toContain("docs/candidate-application-drop.md");
+    expect(migration).toContain("create table if not exists candidate_files");
+    expect(migration).not.toMatch(/public_url|download_url/i);
+    expect(store).toContain("website_application_drop");
+    expect(store).toContain("application_created");
   });
 });

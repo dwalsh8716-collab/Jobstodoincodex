@@ -15,6 +15,10 @@ docs/candidate-application-drop.md
 It includes a disabled CV upload control and a locked API route. It does not
 store CVs.
 
+Job applications can still be received without a CV by using a profile URL or
+short note. When the private operations database is enabled, those submissions
+write application metadata only. CV binary storage remains off.
+
 ## Hard Rules
 
 - Do not store CVs in `/public`.
@@ -31,6 +35,8 @@ Postgres:
 
 - CV metadata only.
 - Owner type and owner ID.
+- Candidate/application linkage through the future `candidate_files` metadata
+  table.
 - Original filename where needed.
 - File type and size.
 - Storage provider and private storage key.

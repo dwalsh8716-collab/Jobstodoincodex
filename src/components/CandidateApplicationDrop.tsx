@@ -22,14 +22,21 @@ export function CandidateApplicationDrop({
       <div className="form-trust-panel">
         <h3>Passwordless application</h3>
         <p>
-          No account needed. Add your details, a LinkedIn/profile URL and a
-          short note. CV upload stays off until private storage is properly
+          No account needed. Add your details and either a LinkedIn/profile URL
+          or a short note. CV upload stays off until private storage is properly
           ready.
         </p>
-        <div className="form-row">
-          <label htmlFor={inputId}>
-            CV upload <span className="optional-label">staged</span>
-          </label>
+        <div
+          className="candidate-dropzone"
+          aria-describedby={`${inputId}-note ${inputId}-progress`}
+          aria-disabled="true"
+          role="group"
+        >
+          <label htmlFor={inputId}>CV drop</label>
+          <p>
+            Drag-and-drop and click upload are staged for PDF, DOC and DOCX
+            files up to 10MB.
+          </p>
           <input
             id={inputId}
             name="cvFile"
@@ -38,6 +45,9 @@ export function CandidateApplicationDrop({
             disabled
             aria-describedby={`${inputId}-note`}
           />
+          <span id={`${inputId}-progress`} className="candidate-upload-status">
+            Upload progress unavailable until private storage is approved.
+          </span>
           <p className="form-note" id={`${inputId}-note`}>
             {status.message} Use the form below for now; David can ask for a CV
             through an approved private route when needed.

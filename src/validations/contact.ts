@@ -56,9 +56,7 @@ export const contactFormSchema = z
     briefType: limitedText(80).pipe(
       z.string().min(2, "Please choose an enquiry type."),
     ),
-    message: limitedText(2000).pipe(
-      z.string().min(10, "Please add a little more detail."),
-    ),
+    message: optionalText(2000),
     consent: z.preprocess(
       (value) => (value === true ? "yes" : value),
       z.literal("yes", {
@@ -84,8 +82,38 @@ export const contactFormSchema = z
       .positive("Please reload the form and try again."),
     jobTitle: optionalText(160),
     jobSlug: optionalText(160),
+    sourcePage: optionalText(240),
   })
   .superRefine((payload, ctx) => {
+    const messageLength = payload.message?.length || 0;
+
+    if (payload.type === "client" && messageLength < 10) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["message"],
+        message: "Please add a little more detail.",
+      });
+    }
+
+    if (payload.type !== "client") {
+      if (!payload.linkedin && messageLength < 10) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["linkedin"],
+          message:
+            "Please add either a LinkedIn/profile URL or a short note.",
+        });
+      }
+
+      if (payload.message && messageLength > 0 && messageLength < 10) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["message"],
+          message: "Please add a little more detail, or leave the note blank.",
+        });
+      }
+    }
+
     if (
       ["phone", "whatsapp"].includes(payload.preferredContactMethod) &&
       !payload.phone

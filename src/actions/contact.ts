@@ -50,6 +50,17 @@ function checkRateLimit(key: string, now: number) {
   return true;
 }
 
+function notificationMessage(payload: ContactFormPayload) {
+  if (payload.message) return payload.message;
+  if (payload.type === "job") {
+    return "Application supplied through the profile-link route without a separate note.";
+  }
+  if (payload.type === "candidate") {
+    return "Candidate supplied a profile link without a separate note.";
+  }
+  return "No message supplied.";
+}
+
 async function sendWithResend(payload: ContactFormPayload) {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
@@ -114,7 +125,7 @@ async function sendWithResend(payload: ContactFormPayload) {
           }`
         : "",
       "",
-      payload.message,
+      notificationMessage(payload),
       "",
       payload.type !== "client"
         ? "Candidate note: do not attach or forward CVs unless secure private storage and permission are in place."

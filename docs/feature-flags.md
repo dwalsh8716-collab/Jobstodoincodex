@@ -95,8 +95,8 @@ notes in feature flag values.
 | `FEATURE_DAVIDS_AUDIO_NOTES`               | `false` | No                   | Future David-approved private audio notes for client profiles.    |
 | `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                           |
 | `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page standards.                               |
-| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future friction-light application route.                          |
-| `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future LinkedIn/profile-first application option.                 |
+| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future live CV upload route. Profile-or-note applications are safe without it. |
+| `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future richer LinkedIn/profile parsing. Candidate-supplied profile links are allowed. |
 | `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
 | `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Candidate WhatsApp quick questions and preference workflow.       |
 | `FEATURE_INTERVIEW_PROCESS_TRANSPARENCY`   | `false` | No                   | Interview process timeline and next-step clarity on roles.        |
@@ -173,6 +173,18 @@ flag while the public timeline component uses safe exact/typical process
 wording. Future private candidate status tracking still needs backend, access
 and privacy review. The implementation note lives in
 `docs/recruiter-labs-candidate-process-transparency.md`.
+
+`FEATURE_CANDIDATE_APPLICATION_DROP` remains `false` because real CV upload is
+not live. The public application journey can still accept a candidate-supplied
+profile URL or short note through the existing contact route. When operations
+Postgres is enabled, job submissions create private application metadata. No CV
+files are stored, no public file URLs are created and no LinkedIn scraping or
+automatic parsing is implied. The implementation note lives in
+`docs/candidate-application-drop.md`.
+
+`FEATURE_LINKEDIN_PROFILE_APPLICATION` remains `false` for any richer
+LinkedIn/profile parsing or API-based workflow. The current site only accepts a
+URL typed by the candidate.
 
 ## Salary Guide Gate
 
