@@ -1017,11 +1017,18 @@ export const jobs: Job[] = [
     title: "Senior Account Director",
     slug: "senior-account-director-draft",
     status: "draft",
+    salaryRange: "Add confirmed salary",
+    salaryPeriod: "to_be_confirmed",
     salary: "Add confirmed salary",
     salaryStatus: "unverified",
     salaryTransparencyNote:
       "Draft only. Do not publish until the salary or rate range is confirmed.",
     location: "Manchester / hybrid",
+    officeLocation: "Add the confirmed office base before publication.",
+    workingPattern: "to_be_confirmed",
+    hybridPattern:
+      "Add the actual office rhythm before this role is published.",
+    remotePossible: "to_be_confirmed",
     hybrid: "Hybrid",
     hybridReality:
       "Add the actual office rhythm before this role is published.",
@@ -1031,6 +1038,10 @@ export const jobs: Job[] = [
     sector: "Agency",
     specialism: "PR & Communications",
     roleType: "Permanent",
+    seniority: "Senior",
+    agencyOrClientSide: "agency",
+    whyRoleExists:
+      "This draft exists so David can prepare the role properly before it is shown as a live opportunity.",
     whyThisRoleMatters:
       "This draft exists so David can prepare the role properly before it is shown as a live opportunity.",
     summary:
@@ -1038,6 +1049,9 @@ export const jobs: Job[] = [
     description: [
       "This draft is here so the role can be written properly before it goes live.",
       "When a role is live, this page should include a clear brief, salary, location, responsibilities and requirements.",
+    ],
+    davidsTake: [
+      "Add David's plain-English take before publication: what matters, what the CV will not show and what candidates should know.",
     ],
     responsibilities: [
       "Lead senior client relationships",
@@ -1053,12 +1067,20 @@ export const jobs: Job[] = [
       "Sector depth that matches the client portfolio",
       "Experience helping founders or directors create more headspace",
     ],
+    whatGoodLooksLike: [
+      "Add the real outcomes the person needs to create before publication.",
+    ],
     requirements: [
       "Strong agency experience",
       "Credible client leadership",
       "Clear communication and judgement under pressure",
     ],
     benefits: ["Add real benefits before publication"],
+    interviewSteps: [
+      "Add the expected interview steps before publication.",
+      "Confirm who the candidate will meet and likely timings.",
+    ],
+    interviewProcessConfirmed: "to_be_confirmed",
     interviewProcess: [
       "Add the expected interview steps before publication.",
       "Confirm who the candidate will meet and likely timings.",
@@ -1068,8 +1090,14 @@ export const jobs: Job[] = [
       "If it looks like a possible fit, David contacts the candidate to discuss the role properly.",
       "Nothing is sent to a client without the candidate's permission.",
     ],
+    applicationNotes:
+      "Add any role-specific application notes before publication.",
+    candidatePrivacyNote:
+      "Candidate details stay private and are only used for recruitment purposes. CV upload is not enabled until secure storage is configured.",
     candidateDataHandling:
       "Candidate details stay private and are only used for recruitment purposes. CV upload is not enabled until secure storage is configured.",
+    quickQuestionEnabled: true,
+    whatsappQuestionEnabled: true,
     quickQuestionRoute:
       "Candidates can ask David a quick question by WhatsApp before applying.",
     applicationCta: {
@@ -1078,7 +1106,9 @@ export const jobs: Job[] = [
       variant: "primary",
     },
     applicationEmail: "david@essentialresourcing.co.uk",
+    postedDate: "2026-06-09",
     publishedDate: "2026-06-09",
+    updatedDate: "2026-06-09",
     seoTitle: "Senior Account Director Draft Role | Essential Resourcing",
     metaDescription:
       "Draft job page structure for a Senior Account Director role. Not a live vacancy.",
@@ -1119,28 +1149,47 @@ export function getJob(slug: string) {
 }
 
 const vagueSalaryPattern =
-  /\b(add confirmed salary|tbc|competitive|depending on experience|doe|market rate)\b/i;
+  /\b(add confirmed salary|tbc|competitive salary|competitive|depending on experience|doe|market rate)\b/i;
 const emptyJobListPattern =
   /\b(add |to be confirmed|tbc|confirm |before publication|draft only|draft role|this draft)\b/i;
 const candidateBuzzwordPattern =
-  /\b(ninja|rockstar|superstar|wizard|guru|unicorn)\b/i;
+  /\b(ninja|rockstar|superstar|wizard|guru|unicorn|exciting opportunity|fast-paced environment)\b/i;
 
 export function getJobTransparencyIssues(job: Job) {
   const issues: string[] = [];
   const searchableCopy = [
     job.title,
     job.summary,
+    job.whyRoleExists,
     job.whyThisRoleMatters,
+    job.applicationNotes,
+    job.candidatePrivacyNote,
     ...job.description,
+    ...job.davidsTake,
     ...job.responsibilities,
     ...job.requirements,
   ].join(" ");
 
   if (
     job.salaryStatus === "unverified" ||
-    vagueSalaryPattern.test(job.salary)
+    vagueSalaryPattern.test(job.salary) ||
+    vagueSalaryPattern.test(job.salaryRange)
   ) {
     issues.push("salary_or_rate_not_confirmed");
+  }
+
+  if (
+    job.salaryStatus !== "unverified" &&
+    (typeof job.salaryMin !== "number" || typeof job.salaryMax !== "number")
+  ) {
+    issues.push("salary_min_max_missing");
+  }
+
+  if (
+    job.salaryStatus !== "unverified" &&
+    job.salaryPeriod === "to_be_confirmed"
+  ) {
+    issues.push("salary_period_missing");
   }
 
   if (!job.salaryTransparencyNote.trim()) {
@@ -1148,6 +1197,28 @@ export function getJobTransparencyIssues(job: Job) {
   }
 
   if (!job.location.trim()) issues.push("location_missing");
+  if (
+    !job.officeLocation.trim() ||
+    emptyJobListPattern.test(job.officeLocation)
+  ) {
+    issues.push("office_location_missing");
+  }
+
+  if (!job.workingPattern.trim() || job.workingPattern === "to_be_confirmed") {
+    issues.push("working_pattern_missing");
+  }
+
+  if (
+    !job.hybridPattern.trim() ||
+    emptyJobListPattern.test(job.hybridPattern)
+  ) {
+    issues.push("hybrid_pattern_missing");
+  }
+
+  if (job.remotePossible === "to_be_confirmed") {
+    issues.push("remote_possible_missing");
+  }
+
   if (
     !job.hybridReality.trim() ||
     emptyJobListPattern.test(job.hybridReality)
@@ -1162,12 +1233,33 @@ export function getJobTransparencyIssues(job: Job) {
     issues.push("location_expectation_missing");
   }
 
+  if (!job.roleType.trim()) issues.push("role_type_missing");
+  if (!job.seniority.trim()) issues.push("seniority_missing");
+  if (!job.sector.trim()) issues.push("sector_missing");
+  if (job.agencyOrClientSide === "to_be_confirmed") {
+    issues.push("agency_or_client_side_missing");
+  }
+
+  if (!job.whyRoleExists.trim()) {
+    issues.push("why_role_exists_missing");
+  }
+
   if (!job.whyThisRoleMatters.trim()) {
     issues.push("why_role_exists_missing");
   }
 
+  if (job.davidsTake.length === 0) issues.push("davids_take_missing");
   if (job.mustHaves.length === 0) issues.push("must_haves_missing");
   if (job.niceToHaves.length === 0) issues.push("nice_to_haves_missing");
+  if (job.whatGoodLooksLike.length === 0) {
+    issues.push("what_good_looks_like_missing");
+  }
+  if (job.interviewSteps.length === 0) {
+    issues.push("interview_steps_missing");
+  }
+  if (job.interviewProcessConfirmed === "to_be_confirmed") {
+    issues.push("interview_process_not_confirmed");
+  }
   if (job.interviewProcess.length === 0) {
     issues.push("interview_process_missing");
   }
@@ -1180,15 +1272,21 @@ export function getJobTransparencyIssues(job: Job) {
     job.whyThisRoleMatters,
     job.salaryTransparencyNote,
     job.hybridReality,
+    job.hybridPattern,
     job.locationExpectation,
+    job.applicationNotes,
+    job.candidatePrivacyNote,
     job.candidateDataHandling,
     job.quickQuestionRoute,
+    ...job.davidsTake,
     ...job.description,
     ...job.responsibilities,
     ...job.mustHaves,
     ...job.niceToHaves,
+    ...job.whatGoodLooksLike,
     ...job.requirements,
     ...job.benefits,
+    ...job.interviewSteps,
     ...job.interviewProcess,
     ...job.applicationProcess,
   ];
@@ -1199,6 +1297,14 @@ export function getJobTransparencyIssues(job: Job) {
 
   if (!job.candidateDataHandling.trim()) {
     issues.push("candidate_data_handling_missing");
+  }
+
+  if (!job.candidatePrivacyNote.trim()) {
+    issues.push("candidate_privacy_note_missing");
+  }
+
+  if (!job.applicationNotes.trim()) {
+    issues.push("application_notes_missing");
   }
 
   if (!job.quickQuestionRoute.trim()) {

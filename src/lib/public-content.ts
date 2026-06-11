@@ -247,22 +247,75 @@ function mapSalarySnapshot(
 
 function mapJob(item: SanityJob, fallback?: Job): Job {
   const description = textFromPortableBlocks(item.body);
+  const davidsTake = textFromPortableBlocks(item.davidsTake);
+  const interviewSteps = stringsOrFallback(
+    item.interviewSteps,
+    stringsOrFallback(item.interviewProcess, fallback?.interviewSteps),
+  );
+  const postedDate =
+    item.postedDate || item.publishedDate || fallback?.postedDate || "";
+  const salaryRange =
+    item.salaryRange ||
+    item.salary ||
+    fallback?.salaryRange ||
+    fallback?.salary ||
+    "Salary to be confirmed";
+  const workingPattern =
+    item.workingPattern ||
+    item.hybridRemote ||
+    fallback?.workingPattern ||
+    fallback?.hybrid ||
+    "to_be_confirmed";
+  const hybridPattern =
+    item.hybridPattern ||
+    item.hybridReality ||
+    fallback?.hybridPattern ||
+    fallback?.hybridReality ||
+    "Hybrid pattern to confirm.";
+  const whyRoleExists =
+    item.whyRoleExists ||
+    item.whyThisRoleMatters ||
+    fallback?.whyRoleExists ||
+    fallback?.whyThisRoleMatters ||
+    "";
+  const candidatePrivacyNote =
+    item.candidatePrivacyNote ||
+    item.candidateDataHandling ||
+    fallback?.candidatePrivacyNote ||
+    fallback?.candidateDataHandling ||
+    "Candidate data is handled under the Candidate Privacy Notice.";
 
   return {
     title: item.title || fallback?.title || "Untitled role",
     slug: item.slug || fallback?.slug || "",
     status: item.status || fallback?.status || "draft",
-    salary: item.salary || fallback?.salary || "Salary to be confirmed",
+    salaryRange,
+    salaryMin: item.salaryMin ?? fallback?.salaryMin,
+    salaryMax: item.salaryMax ?? fallback?.salaryMax,
+    salaryPeriod:
+      item.salaryPeriod || fallback?.salaryPeriod || "to_be_confirmed",
+    salary: salaryRange,
     salaryStatus: item.salaryStatus || fallback?.salaryStatus || "unverified",
     salaryTransparencyNote:
       item.salaryTransparencyNote ||
       fallback?.salaryTransparencyNote ||
       "Salary/rate details need confirming before this role goes live.",
     location: item.location || fallback?.location || "Location to confirm",
-    hybrid: item.hybridRemote || fallback?.hybrid || "Hybrid to confirm",
+    officeLocation:
+      item.officeLocation ||
+      fallback?.officeLocation ||
+      item.location ||
+      "Office location to confirm",
+    workingPattern,
+    hybridPattern,
+    remotePossible:
+      item.remotePossible || fallback?.remotePossible || "to_be_confirmed",
+    hybrid: workingPattern,
     hybridReality:
       item.hybridReality ||
+      item.hybridPattern ||
       fallback?.hybridReality ||
+      fallback?.hybridPattern ||
       "Hybrid pattern to confirm.",
     locationExpectation:
       item.locationExpectation ||
@@ -273,23 +326,48 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     sector: item.sector || fallback?.sector || "",
     specialism: item.specialism || fallback?.specialism || "",
     roleType:
-      fallback?.roleType || item.specialism || item.employmentType || "",
-    whyThisRoleMatters:
-      item.whyThisRoleMatters || fallback?.whyThisRoleMatters || "",
+      item.roleType ||
+      fallback?.roleType ||
+      item.specialism ||
+      item.employmentType ||
+      "",
+    seniority: item.seniority || fallback?.seniority || "",
+    agencyOrClientSide:
+      item.agencyOrClientSide ||
+      fallback?.agencyOrClientSide ||
+      "to_be_confirmed",
+    whyRoleExists,
+    whyThisRoleMatters: whyRoleExists || fallback?.whyThisRoleMatters || "",
     summary: item.summary || fallback?.summary || "",
     description: description.length ? description : fallback?.description || [],
+    davidsTake: davidsTake.length ? davidsTake : fallback?.davidsTake || [],
     responsibilities: item.responsibilities || fallback?.responsibilities || [],
     mustHaves: item.mustHaves || fallback?.mustHaves || [],
     niceToHaves: item.niceToHaves || fallback?.niceToHaves || [],
+    whatGoodLooksLike:
+      item.whatGoodLooksLike || fallback?.whatGoodLooksLike || [],
     requirements: item.requirements || fallback?.requirements || [],
     benefits: item.benefits || fallback?.benefits || [],
-    interviewProcess: item.interviewProcess || fallback?.interviewProcess || [],
+    interviewSteps,
+    interviewProcessConfirmed:
+      item.interviewProcessConfirmed ||
+      fallback?.interviewProcessConfirmed ||
+      "to_be_confirmed",
+    interviewProcess: interviewSteps.length
+      ? interviewSteps
+      : fallback?.interviewProcess || [],
     applicationProcess:
       item.applicationProcess || fallback?.applicationProcess || [],
+    applicationNotes: item.applicationNotes || fallback?.applicationNotes || "",
+    candidatePrivacyNote,
     candidateDataHandling:
-      item.candidateDataHandling ||
+      candidatePrivacyNote ||
       fallback?.candidateDataHandling ||
       "Candidate data is handled under the Candidate Privacy Notice.",
+    quickQuestionEnabled:
+      item.quickQuestionEnabled ?? fallback?.quickQuestionEnabled ?? true,
+    whatsappQuestionEnabled:
+      item.whatsappQuestionEnabled ?? fallback?.whatsappQuestionEnabled ?? true,
     quickQuestionRoute:
       item.quickQuestionRoute ||
       fallback?.quickQuestionRoute ||
@@ -303,7 +381,14 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       item.applicationEmail ||
       fallback?.applicationEmail ||
       "hello@essentialresourcing.co.uk",
-    publishedDate: item.publishedDate || fallback?.publishedDate || "",
+    postedDate,
+    publishedDate: postedDate,
+    updatedDate:
+      item.updatedDate ||
+      item.postedDate ||
+      item.publishedDate ||
+      fallback?.updatedDate ||
+      postedDate,
     closingDate: item.closingDate || fallback?.closingDate,
     seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
     metaDescription:

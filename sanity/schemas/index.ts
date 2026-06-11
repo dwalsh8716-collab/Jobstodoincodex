@@ -1204,7 +1204,50 @@ const job = defineType({
       options: { source: "title" },
       validation: requiredText("Add a slug."),
     }),
-    defineField({ name: "salary", title: "Salary", type: "string" }),
+    defineField({
+      name: "salaryRange",
+      title: "Salary / rate range",
+      type: "string",
+      description:
+        "Plain public range, for example GBP 55,000 to GBP 65,000 or GBP 500 to GBP 650 per day. Do not use competitive, DOE or TBC on a live role.",
+    }),
+    defineField({
+      name: "salaryMin",
+      title: "Salary / rate minimum",
+      type: "number",
+      description:
+        "Number only. Used for JobPosting schema when the range is confirmed enough to publish.",
+    }),
+    defineField({
+      name: "salaryMax",
+      title: "Salary / rate maximum",
+      type: "number",
+      description:
+        "Number only. Keep this honest and leave draft if the range is not confirmed.",
+    }),
+    defineField({
+      name: "salaryPeriod",
+      title: "Salary / rate period",
+      type: "string",
+      options: {
+        list: [
+          { title: "Annual salary", value: "annual" },
+          { title: "Daily rate", value: "daily" },
+          { title: "Hourly rate", value: "hourly" },
+          { title: "Fixed project fee", value: "fixed" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
+    defineField({
+      name: "salary",
+      title: "Fallback salary / rate label",
+      type: "string",
+      description:
+        "Kept for existing content. Prefer Salary / rate range for new roles.",
+    }),
     defineField({
       name: "salaryStatus",
       title: "Salary status",
@@ -1231,9 +1274,58 @@ const job = defineType({
     }),
     defineField({ name: "location", title: "Location", type: "string" }),
     defineField({
-      name: "hybridRemote",
-      title: "Hybrid / remote",
+      name: "officeLocation",
+      title: "Office location",
       type: "string",
+      description:
+        "Specific office base or location expectation. Do not publish vague location copy.",
+    }),
+    defineField({
+      name: "hybridRemote",
+      title: "Fallback hybrid / remote label",
+      type: "string",
+      description:
+        "Kept for existing content. Prefer Working pattern and Hybrid pattern for new roles.",
+    }),
+    defineField({
+      name: "workingPattern",
+      title: "Working pattern",
+      type: "string",
+      options: {
+        list: [
+          { title: "Full-time", value: "full-time" },
+          { title: "Part-time", value: "part-time" },
+          { title: "Fractional", value: "fractional" },
+          { title: "Contract", value: "contract" },
+          { title: "Interim", value: "interim" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
+    defineField({
+      name: "hybridPattern",
+      title: "Hybrid pattern",
+      type: "text",
+      rows: 2,
+      description:
+        "Spell out the actual rhythm, for example two days in Manchester, three from home.",
+    }),
+    defineField({
+      name: "remotePossible",
+      title: "Remote possible?",
+      type: "string",
+      options: {
+        list: [
+          { title: "Yes", value: "yes" },
+          { title: "Limited", value: "limited" },
+          { title: "No", value: "no" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
     }),
     defineField({
       name: "hybridReality",
@@ -1256,13 +1348,52 @@ const job = defineType({
       title: "Employment type",
       type: "string",
     }),
+    defineField({
+      name: "roleType",
+      title: "Role type",
+      type: "string",
+      description:
+        "Permanent, fixed-term, contract, interim, retained search or another plain-English role type.",
+    }),
+    defineField({
+      name: "seniority",
+      title: "Seniority",
+      type: "string",
+      description:
+        "Examples: Manager, Senior Manager, Head of, Director, C-suite.",
+    }),
     defineField({ name: "sector", title: "Sector", type: "string" }),
+    defineField({
+      name: "agencyOrClientSide",
+      title: "Agency or client-side",
+      type: "string",
+      options: {
+        list: [
+          { title: "Agency-side", value: "agency" },
+          { title: "Client-side", value: "client-side" },
+          { title: "Either / mixed", value: "either" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
     defineField({ name: "specialism", title: "Specialism", type: "string" }),
     defineField({
-      name: "whyThisRoleMatters",
-      title: "Why this role matters",
+      name: "whyRoleExists",
+      title: "Why the role exists",
       type: "text",
       rows: 3,
+      description:
+        "Explain the business reason for the hire. No filler. No fake urgency.",
+    }),
+    defineField({
+      name: "whyThisRoleMatters",
+      title: "Fallback: why this role matters",
+      type: "text",
+      rows: 3,
+      description:
+        "Kept for existing content. Prefer Why the role exists for new roles.",
     }),
     defineField({
       name: "summary",
@@ -1271,13 +1402,54 @@ const job = defineType({
       rows: 3,
     }),
     portableBodyField(),
+    portableBodyField("davidsTake", "David's Take"),
     stringListField("responsibilities", "Responsibilities"),
     stringListField("mustHaves", "Must-haves"),
     stringListField("niceToHaves", "Nice-to-haves"),
+    stringListField(
+      "whatGoodLooksLike",
+      "What good looks like",
+      "Plain signs that the right person is doing well in the role.",
+    ),
     stringListField("requirements", "Requirements"),
     stringListField("benefits", "Benefits"),
+    stringListField(
+      "interviewSteps",
+      "Interview steps",
+      "Specific steps, people and timings where known.",
+    ),
+    defineField({
+      name: "interviewProcessConfirmed",
+      title: "Interview process confirmed?",
+      type: "string",
+      options: {
+        list: [
+          { title: "Confirmed", value: "confirmed" },
+          { title: "Indicative but useful", value: "indicative" },
+          { title: "To be confirmed", value: "to_be_confirmed" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "to_be_confirmed",
+    }),
     stringListField("interviewProcess", "Interview process"),
     stringListField("applicationProcess", "What happens after applying"),
+    defineField({
+      name: "applicationNotes",
+      title: "Application notes",
+      type: "text",
+      rows: 3,
+      description:
+        "Plain public instructions for candidates. Do not paste private candidate messages here.",
+    }),
+    defineField({
+      name: "candidatePrivacyNote",
+      title: "Candidate privacy note",
+      type: "text",
+      rows: 3,
+      description:
+        "Public data-handling note only. Candidate PII, CVs and applications must stay out of Sanity.",
+    }),
     defineField({
       name: "candidateDataHandling",
       title: "Candidate data handling note",
@@ -1285,6 +1457,22 @@ const job = defineType({
       rows: 3,
       description:
         "Public-safe note only. Do not paste CV text, application messages or private candidate details.",
+    }),
+    defineField({
+      name: "quickQuestionEnabled",
+      title: "Allow quick questions?",
+      type: "boolean",
+      initialValue: true,
+      description:
+        "Shows candidates that they can ask David a quick question before applying.",
+    }),
+    defineField({
+      name: "whatsappQuestionEnabled",
+      title: "Allow WhatsApp questions?",
+      type: "boolean",
+      initialValue: true,
+      description:
+        "Shows the WhatsApp route when the website WhatsApp number is configured.",
     }),
     defineField({
       name: "quickQuestionRoute",
@@ -1311,6 +1499,19 @@ const job = defineType({
       name: "publishedDate",
       title: "Published date",
       type: "date",
+    }),
+    defineField({
+      name: "postedDate",
+      title: "Posted date",
+      type: "date",
+      description:
+        "Public date shown in job schema. Usually the same as published date.",
+    }),
+    defineField({
+      name: "updatedDate",
+      title: "Updated date",
+      type: "date",
+      description: "Use when material job details have changed.",
     }),
     defineField({ name: "closingDate", title: "Closing date", type: "date" }),
     defineField({

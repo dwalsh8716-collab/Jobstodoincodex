@@ -202,6 +202,14 @@ export function articleSchema(insight: Insight) {
 }
 
 export function jobPostingSchema(job: Job) {
+  const unitTextBySalaryPeriod: Record<Job["salaryPeriod"], string> = {
+    annual: "YEAR",
+    daily: "DAY",
+    hourly: "HOUR",
+    fixed: "PROJECT",
+    to_be_confirmed: "YEAR",
+  };
+
   return {
     "@context": "https://schema.org",
     "@type": "JobPosting",
@@ -213,11 +221,26 @@ export function jobPostingSchema(job: Job) {
     },
     description: `${job.summary}\n\n${job.description.join("\n")}`,
     datePosted: job.publishedDate,
+    dateModified: job.updatedDate,
     ...(job.closingDate ? { validThrough: job.closingDate } : {}),
     employmentType: job.employmentType.toUpperCase().replaceAll("-", "_"),
     industry: job.sector,
     occupationalCategory: job.specialism,
     directApply: true,
+    ...(typeof job.salaryMin === "number" && typeof job.salaryMax === "number"
+      ? {
+          baseSalary: {
+            "@type": "MonetaryAmount",
+            currency: "GBP",
+            value: {
+              "@type": "QuantitativeValue",
+              minValue: job.salaryMin,
+              maxValue: job.salaryMax,
+              unitText: unitTextBySalaryPeriod[job.salaryPeriod],
+            },
+          },
+        }
+      : {}),
     hiringOrganization: {
       "@type": "Organization",
       name: siteConfig.name,

@@ -63,8 +63,8 @@ export default async function JobPage({ params }: Props) {
           <h1>{job.title}</h1>
           <p className="lede">{job.summary}</p>
           <p className="meta">
-            {job.salary} · {job.location} · {job.hybrid} · {job.employmentType}{" "}
-            · {job.roleType}
+            {job.salaryRange} · {job.location} · {job.workingPattern} ·{" "}
+            {job.roleType}
           </p>
         </div>
       </section>
@@ -72,28 +72,32 @@ export default async function JobPage({ params }: Props) {
         <div className="container grid grid-3">
           <article className="card">
             <span className="tag">Salary / rate</span>
-            <h2>{job.salary}</h2>
+            <h2>{job.salaryRange}</h2>
             <p>{job.salaryTransparencyNote}</p>
             <p className="meta">Status: {job.salaryStatus}</p>
           </article>
           <article className="card">
-            <span className="tag">Hybrid reality</span>
-            <h2>{job.hybrid}</h2>
-            <p>{job.hybridReality}</p>
+            <span className="tag">Working pattern</span>
+            <h2>{job.workingPattern}</h2>
+            <p>{job.hybridPattern}</p>
             <p className="meta">{job.locationExpectation}</p>
           </article>
-          <article className="card">
-            <span className="tag">Quick question</span>
-            <h2>Ask David before you apply.</h2>
-            <p>{job.quickQuestionRoute}</p>
-            <WhatsAppButton
-              intent="jobs"
-              label="Message David on WhatsApp"
-              location="job_detail_transparency"
-              jobSlug={job.slug}
-              variant="secondary"
-            />
-          </article>
+          {job.quickQuestionEnabled ? (
+            <article className="card">
+              <span className="tag">Quick question</span>
+              <h2>Ask David before you apply.</h2>
+              <p>{job.quickQuestionRoute}</p>
+              {job.whatsappQuestionEnabled ? (
+                <WhatsAppButton
+                  intent="jobs"
+                  label="Message David on WhatsApp"
+                  location="job_detail_transparency"
+                  jobSlug={job.slug}
+                  variant="secondary"
+                />
+              ) : null}
+            </article>
+          ) : null}
         </div>
       </section>
       {closed ? (
@@ -127,8 +131,27 @@ export default async function JobPage({ params }: Props) {
         <div className="container split split-start">
           <article className="article-body">
             <section>
-              <h2>Why this role matters</h2>
-              <p>{job.whyThisRoleMatters}</p>
+              <h2>Why the role exists</h2>
+              <p>{job.whyRoleExists}</p>
+            </section>
+            {job.davidsTake.length ? (
+              <section>
+                <h2>David&apos;s Take</h2>
+                {job.davidsTake.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </section>
+            ) : null}
+            <section>
+              <h2>Role shape</h2>
+              <p>
+                {job.seniority} · {job.agencyOrClientSide} ·{" "}
+                {job.officeLocation}
+              </p>
+              <p>
+                Remote possible: {job.remotePossible}. Interview process:{" "}
+                {job.interviewProcessConfirmed}.
+              </p>
             </section>
             <section>
               <h2>Overview</h2>
@@ -154,6 +177,14 @@ export default async function JobPage({ params }: Props) {
                 <p key={item}>{item}</p>
               ))}
             </section>
+            {job.whatGoodLooksLike.length ? (
+              <section>
+                <h2>What good looks like</h2>
+                {job.whatGoodLooksLike.map((item) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </section>
+            ) : null}
             <section>
               <h2>Requirements</h2>
               {job.requirements.map((item) => (
@@ -168,13 +199,19 @@ export default async function JobPage({ params }: Props) {
             </section>
             <section>
               <h2>Interview process</h2>
-              {job.interviewProcess.map((item) => (
+              {job.interviewSteps.map((item) => (
                 <p key={item}>{item}</p>
               ))}
             </section>
+            {job.applicationNotes ? (
+              <section>
+                <h2>Application notes</h2>
+                <p>{job.applicationNotes}</p>
+              </section>
+            ) : null}
             <section>
               <h2>How your data is handled</h2>
-              <p>{job.candidateDataHandling}</p>
+              <p>{job.candidatePrivacyNote}</p>
               <Link className="text-link" href={candidatePrivacyPath}>
                 Candidate Privacy Notice
               </Link>
@@ -204,13 +241,15 @@ export default async function JobPage({ params }: Props) {
                       Candidate Privacy Notice
                     </Link>
                   </div>
-                  <WhatsAppButton
-                    intent="jobs"
-                    label="Quick question about this role? WhatsApp David"
-                    location="job_detail_page"
-                    jobSlug={job.slug}
-                    variant="secondary"
-                  />
+                  {job.whatsappQuestionEnabled ? (
+                    <WhatsAppButton
+                      intent="jobs"
+                      label="Quick question about this role? WhatsApp David"
+                      location="job_detail_page"
+                      jobSlug={job.slug}
+                      variant="secondary"
+                    />
+                  ) : null}
                 </div>
                 <ContactForm
                   type="job"

@@ -193,6 +193,7 @@ docs/google-calendar-booking-setup.md
 docs/essential-resourcing-labs.md
 docs/feature-flags.md
 docs/final-qa-launch-report.md
+docs/job-copy-standards.md
 docs/codebase-forensic-audit-report.md
 docs/non-technical-architecture-map.md
 docs/sanity-cms-audit.md

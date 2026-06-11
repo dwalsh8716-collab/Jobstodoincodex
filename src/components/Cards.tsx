@@ -57,11 +57,15 @@ export function JobCard({ job }: { job: Job }) {
       <h3>{job.title}</h3>
       <p>{job.summary}</p>
       <p className="meta">
-        {job.location} · {job.hybrid} · {job.salary}
+        {job.location} · {job.workingPattern} · {job.salaryRange}
       </p>
       <p className="meta">
         Salary: {job.salaryStatus}. Process:{" "}
-        {job.interviewProcess.length ? "shown" : "not ready"}
+        {job.interviewProcessConfirmed === "confirmed"
+          ? "confirmed"
+          : job.interviewSteps.length
+            ? "shown"
+            : "not ready"}
       </p>
       <Link className="text-link" href={`/jobs/${job.slug}`}>
         View role

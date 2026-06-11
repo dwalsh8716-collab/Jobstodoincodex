@@ -118,12 +118,19 @@ Add a job:
 
 1. Open Recruitment.
 2. Open Jobs.
-3. Add title, slug, salary or rate, salary status, location, hybrid status and
-   role details.
+3. Add title, slug, salary or rate range, salary status, working pattern,
+   location, office location, seniority and role details.
 4. Add the real hybrid rhythm, location expectation, must-haves,
-   nice-to-haves, interview process and what happens after applying.
-5. Keep status as draft until the salary/rate, location, hybrid setup and
-   process are clear enough for candidates.
+   nice-to-haves, what good looks like, David's Take, interview steps,
+   application notes and candidate privacy note.
+5. Keep status as draft until the salary/rate, location, hybrid setup, process
+   and privacy note are clear enough for candidates.
+
+Detailed job standards live in:
+
+```txt
+docs/job-copy-standards.md
+```
 
 Do not publish a role with:
 

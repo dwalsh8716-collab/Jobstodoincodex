@@ -22,9 +22,22 @@ vi.mock("server-only", () => ({}));
 const transparentJob: Job = {
   ...jobs[0],
   status: "live",
+  salaryRange: "GBP 55,000 to GBP 65,000",
+  salaryMin: 55000,
+  salaryMax: 65000,
+  salaryPeriod: "annual",
   salary: "GBP 55,000 to 65,000",
   salaryStatus: "verified",
   salaryTransparencyNote: "Salary range confirmed with the client.",
+  officeLocation: "Manchester",
+  workingPattern: "full-time",
+  hybridPattern: "Two days a week in the Manchester office.",
+  remotePossible: "limited",
+  roleType: "Permanent",
+  seniority: "Senior",
+  agencyOrClientSide: "agency",
+  whyRoleExists:
+    "The agency needs senior client leadership that can reduce pressure on the founder and steady the account team.",
   whyThisRoleMatters:
     "The agency needs senior client leadership that can reduce pressure on the founder and steady the account team.",
   summary:
@@ -33,9 +46,23 @@ const transparentJob: Job = {
     "This is a senior PR agency role with real client leadership responsibility.",
     "The right person will handle complex client conversations and help the team make better decisions.",
   ],
+  davidsTake: [
+    "This is about calm client leadership, not a shiny title. The client needs someone who can spot problems early and make the work easier to run.",
+  ],
   hybridReality: "Two days a week in the Manchester office.",
   locationExpectation:
     "Manchester office access is needed; no regular client-site travel.",
+  whatGoodLooksLike: [
+    "Clients feel better led.",
+    "The account team has clearer priorities.",
+    "The founder is pulled into fewer day-to-day client conversations.",
+  ],
+  interviewSteps: [
+    "Introductory call with David.",
+    "First client interview with the hiring lead.",
+    "Final practical conversation focused on real client scenarios.",
+  ],
+  interviewProcessConfirmed: "confirmed",
   interviewProcess: [
     "Introductory call with David.",
     "First client interview with the hiring lead.",
@@ -46,10 +73,19 @@ const transparentJob: Job = {
     "If there is a fit, David contacts the candidate to discuss the role.",
     "Nothing is sent to the client without the candidate's permission.",
   ],
+  applicationNotes:
+    "Send a short note or LinkedIn URL first. David will ask for more only if the role looks relevant.",
+  candidatePrivacyNote:
+    "Candidate details stay private and are used only for recruitment purposes.",
   candidateDataHandling:
     "Candidate details stay private and are used only for recruitment purposes.",
+  quickQuestionEnabled: true,
+  whatsappQuestionEnabled: true,
   quickQuestionRoute:
     "Candidates can ask David a quick question by WhatsApp before applying.",
+  postedDate: "2026-06-10",
+  publishedDate: "2026-06-10",
+  updatedDate: "2026-06-10",
   benefits: [
     "Clear senior client leadership scope.",
     "Direct process with David before any client introduction.",
@@ -125,5 +161,13 @@ describe("candidate transparency foundation", () => {
         title: "PR Rockstar",
       }),
     ).toContain("buzzword_jargon_present");
+
+    expect(
+      getJobTransparencyIssues({
+        ...transparentJob,
+        salaryRange: "Competitive salary",
+        salary: "Competitive salary",
+      }),
+    ).toContain("salary_or_rate_not_confirmed");
   });
 });
