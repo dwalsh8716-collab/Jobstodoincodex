@@ -8,6 +8,7 @@ import {
   type RecruiterLabsDeclineReason,
   type RecruiterLabsFeedbackAction,
 } from "@/lib/recruiter-labs-feedback-shared";
+import type { RecruiterLabsPortalEngagementEvent } from "@/lib/recruiter-labs-engagement-shared";
 
 type ClientShortlistFeedbackProps = {
   candidateId: string;
@@ -28,6 +29,17 @@ function tokenFromPath() {
   return token || "";
 }
 
+function emitPrivateEngagement(
+  eventType: RecruiterLabsPortalEngagementEvent,
+  shortlistCandidateId: string,
+) {
+  window.dispatchEvent(
+    new CustomEvent("client-shortlist-engagement", {
+      detail: { eventType, shortlistCandidateId },
+    }),
+  );
+}
+
 export function ClientShortlistFeedback({
   candidateId,
   enabled,
@@ -37,6 +49,7 @@ export function ClientShortlistFeedback({
   );
   const [message, setMessage] = useState("");
   const [declineOpen, setDeclineOpen] = useState(false);
+  const declineWasOpenedRef = useRef(false);
   const declinePanelRef = useRef<HTMLDivElement>(null);
   const [declineReason, setDeclineReason] =
     useState<RecruiterLabsDeclineReason>("experience_mismatch");
@@ -91,6 +104,21 @@ export function ClientShortlistFeedback({
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [declineOpen]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    if (declineOpen) {
+      declineWasOpenedRef.current = true;
+      emitPrivateEngagement("modal_opened", candidateId);
+      return;
+    }
+
+    if (declineWasOpenedRef.current) {
+      declineWasOpenedRef.current = false;
+      emitPrivateEngagement("modal_closed", candidateId);
+    }
+  }, [candidateId, declineOpen, enabled]);
 
   return (
     <div className="client-feedback-actions">

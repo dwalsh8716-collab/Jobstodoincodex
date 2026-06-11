@@ -139,8 +139,10 @@ Not safe yet:
 - Passed: no candidate PII should go to GA4/GTM.
 - Passed: token decisions are server-side and must not be logged as raw token
   values.
-- Blocked: future client portal analytics must stay in Postgres/audit logs, not
-  marketing analytics.
+- Staged: private portal engagement events now write to Postgres only when the
+  portal, feedback tracking and database gates are all on.
+- Blocked: real client use still needs privacy wording, retention rules and
+  admin access review before David enables private engagement tracking.
 
 ## Data Flow
 
@@ -156,7 +158,8 @@ flowchart TD
   H -- "No" --> I["Block access and audit denial"]
   H -- "Yes" --> J["Future noindex client shortlist"]
   J --> K["Client feedback in Postgres"]
-  J --> L["Audit log access and feedback"]
+  J --> L["Private engagement events in Postgres"]
+  J --> M["Audit log access and feedback"]
 ```
 
 ## Feature Flags

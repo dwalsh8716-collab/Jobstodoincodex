@@ -30,6 +30,8 @@ Staged now:
 - server-side feature flags
 - private Postgres migration: `006_recruiter_labs_foundation.sql`
 - launch-gate hardening migration: `007_recruiter_labs_launch_gate.sql`
+- private portal engagement migration:
+  `019_recruiter_labs_portal_engagement.sql`
 - server-side launch-gate, token and candidate sharing decision helpers
 - admin launch-gate visibility inside `/admin/recruiter-labs`
 - hashed-token table for future magic links
@@ -77,8 +79,11 @@ The staged client route now has:
 - SHA-256 token hashing helper
 - invalid, expired, revoked, disabled, rate-limited and not-ready states
 - candidate share checks before any profile can render
-- no analytics attributes or event calls on the private route
+- no public analytics attributes or public event calls on the private route
 - feedback action UI staged behind `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- private portal engagement tracking staged behind
+  `FEATURE_SHORTLIST_FEEDBACK_TRACKING`
+- engagement events write to Postgres only, not public website tracking
 - AI candidate summary drafts staged behind `FEATURE_AI_CANDIDATE_SUMMARY_DRAFTS`
 - candidate summary drafts stay hidden until David approval
 - shortlist candidate draft generation has a server-side trigger helper for the
@@ -115,6 +120,7 @@ Postgres/private backend is for:
 - shortlists
 - client contacts
 - shortlist feedback
+- shortlist portal engagement events
 - interview requests
 - audit logs
 - WhatsApp message references
@@ -138,6 +144,8 @@ Important:
 - candidate profile snapshots stay in Postgres, not Sanity
 - shortlist launch status starts as `blocked`
 - feedback actions write to `recruiter_lab_shortlist_feedback`, not GA4
+- portal engagement events write to
+  `recruiter_lab_portal_engagement_events`, not GA4
 - decline feedback uses structured reasons plus optional comments
 - feedback creates a private activity, admin task and candidate feedback status
   update when the database is live
@@ -156,6 +164,12 @@ The AI launch gate lives in:
 
 ```txt
 docs/recruiter-labs-ai-launch-gate.md
+```
+
+The private portal engagement notes live in:
+
+```txt
+docs/recruiter-labs-portal-engagement.md
 ```
 
 ## Required Dependencies
@@ -178,6 +192,7 @@ Before any client portal goes live:
 - WhatsApp Business API configured and approved if used
 - Google Calendar/Meet booking configured and approved if used
 - no PII in analytics
+- private portal engagement wording and retention reviewed
 
 ## Build Phases
 
@@ -185,7 +200,7 @@ Before any client portal goes live:
 2. Shortlist admin CRUD behind `/admin`.
 3. Candidate profile draft workflow with David approval.
 4. Magic-link route with hashed token validation.
-5. Feedback capture and audit logging.
+5. Feedback capture, private engagement records and audit logging.
 6. Interview request workflow.
 7. WhatsApp and Google scheduling only after approval.
 8. AI-assisted drafts only with human verification and no automated candidate
@@ -203,6 +218,8 @@ Do not launch until:
 - candidate consent is recorded
 - David has approved every profile
 - audit logs record access and feedback
+- private engagement records stay in Postgres and are not treated as candidate
+  quality scores
 - retention rules cover shortlist data
 - legal/privacy review is complete
 

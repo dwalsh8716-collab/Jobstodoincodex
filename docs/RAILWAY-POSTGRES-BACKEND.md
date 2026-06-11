@@ -69,6 +69,8 @@ Added:
   drafts with David review state.
 - Recruiter Labs AI launch-gate fields for source summaries, prompt versions,
   deletion state and client-visibility blocking.
+- Recruiter Labs private portal engagement events for shortlist opens, candidate
+  card review timing, modal activity, CV actions and feedback submission.
 - Database migration and status scripts.
 
 ## Architecture Summary

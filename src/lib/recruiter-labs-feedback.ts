@@ -14,6 +14,7 @@ import {
   hashRecruiterLabsClientToken,
   isRecruiterLabsFeatureEnabled,
 } from "./recruiter-labs";
+import { saveRecruiterLabsPortalEngagement } from "./recruiter-labs-engagement";
 
 type RecruiterLabsEnv = Record<string, string | undefined>;
 
@@ -376,6 +377,16 @@ export async function saveRecruiterLabsClientFeedback(
   if (!auditResult.ok) {
     return result("audit_log_failed", 500, auditResult.reason, writeResult.id);
   }
+
+  await saveRecruiterLabsPortalEngagement(
+    {
+      token: parsed.data.token,
+      shortlistCandidateId: parsed.data.shortlistCandidateId,
+      eventType: "feedback_submitted",
+      location: "client_feedback_form",
+    },
+    env,
+  ).catch(() => undefined);
 
   return result("ok", 200, undefined, writeResult.id);
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClientShortlistEngagement } from "@/components/ClientShortlistEngagement";
 import { ClientShortlistFeedback } from "@/components/ClientShortlistFeedback";
 import {
   getRecruiterLabsClientPortalRateLimitDecision,
@@ -111,7 +112,10 @@ function CandidateCard({
   feedbackEnabled: boolean;
 }) {
   return (
-    <article className="card">
+    <article
+      className="card"
+      data-client-shortlist-candidate-id={candidate.id}
+    >
       <span className="tag">
         {candidate.sharingMode === "anonymised" ? "Anonymised" : "Approved"}
       </span>
@@ -239,6 +243,7 @@ export default async function ClientShortlistPage({
                 <p className="lede">{shortlist.davidIntroNote}</p>
               ) : null}
               {expiry ? <p className="meta">Link expires {expiry}.</p> : null}
+              <ClientShortlistEngagement enabled={feedbackEnabled} />
             </div>
           </section>
 

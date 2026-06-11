@@ -53,8 +53,8 @@ Railway Postgres is the staged private operations store for:
 - admin workflow records
 - integration sync event records
 - WhatsApp Business message status logs
-- Recruiter Labs shortlists, hashed access tokens, feedback and interview
-  requests
+- Recruiter Labs shortlists, hashed access tokens, feedback, private portal
+  engagement events and interview requests
 - Recruiter Labs launch-gate, sharing consent, CV access approval and rollback
   state
 - Recruiter Labs AI draft metadata, source summaries, prompt versions, review

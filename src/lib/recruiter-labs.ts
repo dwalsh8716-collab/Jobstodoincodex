@@ -330,7 +330,7 @@ export const recruiterLabsLaunchGateChecks = [
     label: "Access, feedback and CV actions must be logged",
     status: "manual_review",
     evidence:
-      "Typed audit actions are staged. Production logging needs Railway Postgres enabled and migrated.",
+      "Typed audit actions and private portal engagement events are staged. Production logging needs Railway Postgres enabled and migrated.",
     requiredBefore: ["private_beta", "real_client_launch"],
   },
   {
@@ -366,7 +366,7 @@ export const recruiterLabsLaunchGateChecks = [
     label: "Candidate PII stays out of marketing analytics",
     status: "passed",
     evidence:
-      "Analytics events are consent-aware and Recruiter Labs data is kept in private operational stores.",
+      "Public website events are consent-aware and Recruiter Labs portal engagement writes to private Postgres only.",
     requiredBefore: ["private_beta", "real_client_launch"],
   },
   {

@@ -58,7 +58,7 @@ The migration set stages:
 - retention review views
 - optional Loxo reference IDs for private handoff/sync mapping
 - integration sync event records
-- Recruiter Labs shortlists and feedback
+- Recruiter Labs shortlists, feedback and private portal engagement events
 - Recruiter Labs AI draft governance tables
 
 ## Important Boundary
