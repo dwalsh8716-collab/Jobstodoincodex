@@ -20,13 +20,38 @@ function safeRedirect(value: FormDataEntryValue | null) {
   return redirectTo.startsWith("/") && !redirectTo.startsWith("//") ? redirectTo : "/studio";
 }
 
+function withCmsSearchParams(redirectTo: string, params?: Record<string, string>) {
+  const url = new URL("/cms", "https://essentialresourcing.local");
+  url.searchParams.set("next", redirectTo);
+
+  for (const [key, value] of Object.entries(params || {})) {
+    url.searchParams.set(key, value);
+  }
+
+  return `${url.pathname}${url.search}`;
+}
+
+function redirectToLocation(location: string) {
+  return new NextResponse(null, {
+    status: 303,
+    headers: { Location: location },
+  });
+}
+
+function isSecureRequest(request: Request) {
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  if (forwardedProto) {
+    return forwardedProto.split(",")[0]?.trim() === "https";
+  }
+
+  return new URL(request.url).protocol === "https:";
+}
+
 export async function POST(request: Request) {
   const formData = await request.formData();
   const username = String(formData.get("username") || "").trim();
   const password = String(formData.get("password") || "");
   const redirectTo = safeRedirect(formData.get("redirectTo"));
-  const cmsUrl = new URL("/cms", request.url);
-  cmsUrl.searchParams.set("next", redirectTo);
 
   if (!cmsGateConfigured()) {
     await logAuditEvent(
@@ -46,8 +71,9 @@ export async function POST(request: Request) {
         },
       },
     );
-    cmsUrl.searchParams.set("setup", "missing");
-    return NextResponse.redirect(cmsUrl, { status: 303 });
+    return redirectToLocation(
+      withCmsSearchParams(redirectTo, { setup: "missing" }),
+    );
   }
 
   const validUsername = username.toLowerCase() === getCmsUsername().toLowerCase();
@@ -72,8 +98,7 @@ export async function POST(request: Request) {
         },
       },
     );
-    cmsUrl.searchParams.set("error", "1");
-    return NextResponse.redirect(cmsUrl, { status: 303 });
+    return redirectToLocation(withCmsSearchParams(redirectTo, { error: "1" }));
   }
 
   const session = await createCmsSession(username);
@@ -95,13 +120,12 @@ export async function POST(request: Request) {
       },
     },
   );
-  const response = NextResponse.redirect(new URL(redirectTo, request.url), { status: 303 });
-  const secureCookie = new URL(request.url).protocol === "https:";
+  const response = redirectToLocation(redirectTo);
   response.cookies.set({
     name: CMS_SESSION_COOKIE,
     value: session,
     httpOnly: true,
-    secure: secureCookie,
+    secure: isSecureRequest(request),
     sameSite: "lax",
     maxAge: getCmsSessionMaxAge(),
     path: "/"

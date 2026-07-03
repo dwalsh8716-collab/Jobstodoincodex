@@ -11,6 +11,15 @@ function getClientIp(request: NextRequest) {
   return request.headers.get("x-real-ip") || "unknown";
 }
 
+function isSecureRequest(request: NextRequest) {
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  if (forwardedProto) {
+    return forwardedProto.split(",")[0]?.trim() === "https";
+  }
+
+  return new URL(request.url).protocol === "https:";
+}
+
 export async function POST(request: NextRequest) {
   const username = await getCmsSessionUsername(
     request.cookies.get(CMS_SESSION_COOKIE)?.value,
@@ -36,13 +45,15 @@ export async function POST(request: NextRequest) {
     },
   );
 
-  const response = NextResponse.redirect(new URL("/cms", request.url), { status: 303 });
-  const secureCookie = new URL(request.url).protocol === "https:";
+  const response = new NextResponse(null, {
+    status: 303,
+    headers: { Location: "/cms" },
+  });
   response.cookies.set({
     name: CMS_SESSION_COOKIE,
     value: "",
     httpOnly: true,
-    secure: secureCookie,
+    secure: isSecureRequest(request),
     sameSite: "lax",
     maxAge: 0,
     path: "/"
