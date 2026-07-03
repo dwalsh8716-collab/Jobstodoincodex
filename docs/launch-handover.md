@@ -11,6 +11,7 @@ Final QA launch report:
 
 ```txt
 docs/final-qa-launch-report.md
+docs/FINAL-LAUNCH-READINESS-AUDIT.md
 ```
 
 Railway preview:
