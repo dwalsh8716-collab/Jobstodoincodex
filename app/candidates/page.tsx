@@ -107,7 +107,7 @@ export default function CandidatesPage() {
           <p className="eyebrow">Candidate transparency</p>
           <h2>You should not have to guess.</h2>
           <p className="lede">
-            A decent candidate journey answers the practical questions before
+            A decent candidate process answers the practical questions before
             you waste time on a role that was never right.
           </p>
         </div>

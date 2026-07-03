@@ -122,9 +122,7 @@ export function ContactForm({
       <input type="hidden" name="sourcePage" value={sourcePage} />
       <div className="form-assurance">
         <strong>
-          {candidateMode
-            ? "Private two-minute route."
-            : "Direct with David."}
+          {candidateMode ? "Private two-minute note." : "Direct with David."}
         </strong>
         <span>
           {candidateMode
@@ -258,8 +256,8 @@ export function ContactForm({
         />
         {candidateMode ? (
           <p className="form-note">
-            Applying should not mean a cover-letter chore. Add a profile link,
-            a short note, or both.
+            Applying should not mean a cover-letter chore. Add a profile link, a
+            short note, or both.
           </p>
         ) : null}
       </div>

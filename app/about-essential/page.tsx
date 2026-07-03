@@ -6,21 +6,25 @@ import { createMetadata } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "About Essential Resourcing | Senior Marketing & Comms Recruitment",
   description:
-    "Essential Resourcing is a founder-led specialist recruitment and search business for marketing, communications, digital and agency/client-side hiring.",
-  path: "/about-essential"
+    "Founder-led marketing, communications, digital and agency recruitment from Manchester, built around straight advice and sharper senior hiring.",
+  path: "/about-essential",
 });
 
 export default function AboutEssentialPage() {
   return (
     <>
-      <Breadcrumbs items={[{ name: "About Essential", href: "/about-essential" }]} />
+      <Breadcrumbs
+        items={[{ name: "About Essential", href: "/about-essential" }]}
+      />
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">About Essential</p>
-          <h1>A specialist recruitment and search business for marketing, communications, digital and agency hiring.</h1>
+          <h1>
+            Senior marketing and comms recruitment, without the usual noise.
+          </h1>
           <p className="lede">
-            Founder-led, Manchester-rooted and UK-wide. Built for clients who want proper judgement, not recruitment
-            noise.
+            Founder-led, Manchester-rooted and UK-wide. Built for clients who
+            want proper judgement, sharper briefs and fewer wasted weeks.
           </p>
         </div>
       </section>
@@ -28,7 +32,10 @@ export default function AboutEssentialPage() {
         <div className="container split split-start">
           <div>
             <p className="eyebrow">Positioning</p>
-            <h2>Senior enough for the boardroom. Human enough for a real conversation.</h2>
+            <h2>
+              Senior enough for the boardroom. Human enough for a real
+              conversation.
+            </h2>
           </div>
           <div className="grid">
             {[
@@ -36,7 +43,7 @@ export default function AboutEssentialPage() {
               "Genuine agency and communications credibility",
               "Client-side marketing recruitment with commercial context",
               "Straight-talking advice on salary, brief, market and process",
-              "No CV flinging. No recruitment theatre."
+              "No CV flinging. No recruitment theatre.",
             ].map((item) => (
               <article className="card" key={item}>
                 <h3>{item}</h3>
@@ -55,14 +62,18 @@ export default function AboutEssentialPage() {
             <p className="eyebrow">How it works</p>
             <h2>Essential is built around fewer roles, deeper work.</h2>
             <p className="lede">
-              The business is not trying to look like a general recruiter. It is built as a serious, founder-led
-              specialist for senior marketing, comms and agency leadership hiring.
+              The business is not trying to look like a general recruiter. It is
+              built as a serious, founder-led specialist for senior marketing,
+              comms and agency leadership hiring.
             </p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="/clients">
                 For clients
               </Link>
-              <Link className="button button-secondary" href="/about-david-walsh">
+              <Link
+                className="button button-secondary"
+                href="/about-david-walsh"
+              >
                 About David
               </Link>
             </div>

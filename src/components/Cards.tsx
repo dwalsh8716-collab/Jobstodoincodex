@@ -8,7 +8,7 @@ export function ServiceCard({ service }: { service: Service }) {
       <h3>{service.title}</h3>
       <p>{service.shortDescription}</p>
       <Link className="text-link" href={`/services/${service.slug}`}>
-        View service
+        Explore the service
       </Link>
     </article>
   );
@@ -42,7 +42,9 @@ export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
       </p>
       <p>{caseStudy.challengeSummary}</p>
       <Link className="text-link" href={`/case-studies/${caseStudy.slug}`}>
-        View structure
+        {caseStudy.status === "draft"
+          ? "View proof standard"
+          : "Read case study"}
       </Link>
     </article>
   );
@@ -68,7 +70,7 @@ export function JobCard({ job }: { job: Job }) {
             : "not ready"}
       </p>
       <Link className="text-link" href={`/jobs/${job.slug}`}>
-        View role
+        Read the role
       </Link>
     </article>
   );
