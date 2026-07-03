@@ -11,9 +11,11 @@ describe("final QA launch report", () => {
     expect(existsSync(reportPath)).toBe(true);
     expect(handover).toContain(reportPath);
     expect(readme).toContain(reportPath);
-    expect(report).toContain("Status: partially ready.");
-    expect(report).toContain("Not safe for full public launch");
-    expect(report).toContain("Railway deployment has not been connected");
+    expect(report).toContain("Status: production preview ready, launch gated.");
+    expect(report).toContain("Not safe for full public launch until");
+    expect(report).toContain("Railway preview is live");
+    expect(report).toContain("GA4 Measurement ID");
+    expect(report).toContain("Resend email delivery");
     expect(report).toContain("Recruiter Labs");
     expect(report).toContain("No fake green ticks");
   });

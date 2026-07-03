@@ -32,10 +32,17 @@ npm run typecheck
 npm test
 npm run performance:budget
 npm run test:e2e
+npm run qa:production -- --base=https://web-production-ba3b9.up.railway.app
 npm run verify
 ```
 
 `npm run verify` is the release gate. It runs linting, production build, TypeScript, Vitest, public bundle budget and Playwright.
+
+`npm run qa:production -- --base=<preview-or-production-url>` is the live
+production crawler. It checks sitemap routes, required launch assets, canonical
+redirects, 404 behaviour, internal links, desktop/tablet/mobile rendering,
+console errors, page errors, horizontal overflow, visible image URLs, main
+landmarks, H1 counts and visible controls without accessible names.
 
 ## Environment Variables
 
@@ -392,7 +399,14 @@ Recommended deployment target: Railway.
 4. Connect Sanity project and dataset.
 5. Test the Railway-generated URL.
 6. Configure DNS for `essentialresourcing.co.uk` after Railway works.
-7. Run a final production URL QA pass.
+7. Run a final production URL QA pass:
+
+```bash
+npm run qa:production -- --base=https://web-production-ba3b9.up.railway.app
+npm run qa:production -- --base=https://essentialresourcing.co.uk
+```
+
+Run the final-domain command only after David deliberately switches DNS.
 
 Keep public deployment off until manual content, legal review and credentials are complete.
 
@@ -421,7 +435,7 @@ docs/RAILWAY-POSTGRES-BACKEND.md
 - Replace draft case studies with verified outcomes.
 - Add real testimonials only with permission.
 - Review legal pages.
-- Configure Resend or another form delivery provider.
+- Configure Resend or another form delivery provider and test a real enquiry to `david@essentialresourcing.co.uk`.
 - Configure Sanity project credentials.
 - Invite editor users to the Sanity project.
 - Set fresh CMS gate username, password and signing secret.
@@ -431,4 +445,7 @@ docs/RAILWAY-POSTGRES-BACKEND.md
 
 ## Production Status
 
-The codebase builds cleanly and is production-structured, but it should not be considered final-live until the manual content, credential and legal items above are completed.
+The Railway preview is production-preview ready and has passed the live QA
+crawler. It should not be considered final-live until analytics, email delivery,
+legal/privacy review, Search Console, Sanity CORS/editor access and final DNS
+QA are complete.

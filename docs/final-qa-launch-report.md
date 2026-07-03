@@ -1,379 +1,261 @@
 # Final QA Launch Report
 
-Audit date: 11 June 2026
+Audit date: 3 July 2026
 
-## Executive Summary
+Status: production preview ready, launch gated.
 
-Status: partially ready.
+## QA Executive Summary
 
-The website is strong from a code and content-structure point of view. The local
-production build runs, the public route set renders, admin and Labs routes are
-protected, forms validate, consent-aware analytics is staged, and Railway/Sanity
-handover docs are in place.
+Railway preview is live:
 
-It is not safe to call the site fully launched yet.
+```txt
+https://web-production-ba3b9.up.railway.app
+```
 
-The remaining launch blockers are account-side and business-side:
+The live Railway preview passed the new production QA gate on 3 July 2026:
 
-- Railway deployment has not been connected and verified from this workspace.
-- Railway production environment variables are not set.
-- Email delivery is not configured with live Resend/from/to values.
-- Sanity project access, project ID, dataset and CORS are not confirmed.
-- 123 Reg DNS has not been switched.
-- Google Search Console, GA4/GTM and local SEO setup need David's account access.
-- Privacy, cookie and candidate data wording still needs legal/privacy review.
-- Final live-domain smoke testing has not happened because there is no live
-  Railway URL in this session.
+- 45 route checks
+- 36 internal link checks
+- 28 public pages audited
+- 84 browser viewport runs across desktop, tablet and mobile
+- 0 route failures
+- 0 internal link failures
+- 0 browser failures
 
-Final recommendation: safe for local preview and private stakeholder review now.
-Safe for public launch only after the blockers above are completed and the live
-Railway/domain smoke test passes.
+The crawler checks sitemap routes, required launch assets, canonical redirects,
+404 behaviour, internal links, desktop/tablet/mobile rendering, console errors,
+page errors, horizontal overflow, fetchable visible images, main landmarks, H1
+counts and visible controls without accessible names.
+
+Verdict: the website code and Railway preview are good enough for serious
+stakeholder review and final account-side launch setup.
+
+Not safe for full public launch until the remaining external launch gates are
+completed: GA4 Measurement ID and consent testing, Resend email delivery, legal
+and privacy review, Search Console verification, final domain/DNS cutover and a
+final QA pass on the real domain.
+
+No fake green ticks. No public Recruiter Labs leakage. No secrets in GitHub. No
+faff.
 
 ## Critical Blockers
 
-These block true public launch:
+No critical code blocker was found on the live Railway preview.
 
-1. Deploy to Railway and confirm the Railway-generated URL works.
-2. Add production environment variables in Railway.
-3. Configure form email delivery, or accept that forms only validate locally and
-   show the safe fallback message.
-4. Confirm Sanity project access, CORS and production env vars.
-5. Confirm 123 Reg DNS records without breaking email.
-6. Complete legal/privacy review for Privacy Policy, Cookie Policy, Candidate
-   Privacy Notice, consent wording and retention periods.
-7. Complete Google Search Console, GA4/GTM, consent-mode and local SEO account
-   setup.
-8. Run final QA on the real production URL.
+Critical launch blockers still outside the codebase:
 
-No code blocker was found that prevents the app from building or running
-locally.
+1. GA4 Measurement ID is not confirmed in the app yet.
+2. GA4 Realtime has not been tested with real consented traffic.
+3. Resend email delivery is not live-tested with David's inbox.
+4. Privacy Policy, Cookie Policy, Candidate Privacy Notice and Terms still need
+   legal/privacy review before public launch.
+5. Search Console verification and sitemap submission are not complete.
+6. The final domain has not been switched by design. David asked to leave
+   `essentialresourcing.co.uk` and `www.essentialresourcing.co.uk` as the last
+   step.
+7. Final QA must be repeated after DNS and the production domain are live.
 
-## High Priority Fixes Made
+## High-Priority Issues
 
-- Added canonical redirects for common old or short launch URLs:
-  - `/about` -> `/about-essential`
-  - `/about-david` -> `/about-david-walsh`
-  - `/leadership-search` -> `/services/leadership-search`
-  - `/strategic-interim` -> `/services/strategic-interim`
-  - `/agency-recruitment` -> `/services/agency-recruitment`
-  - `/client-side-recruitment` -> `/services/client-side-marketing-recruitment`
-  - `/marketing-recruitment` -> `/services/client-side-marketing-recruitment`
-  - `/privacy` -> `/privacy-policy`
-  - `/cookies` -> `/cookie-policy`
-- Replaced the old `/salary-guides` redirect with a staged, noindexed salary
-  guide lead-capture page controlled by `FEATURE_SALARY_GUIDE_GATE`.
-- Tightened public form API parsing so empty or malformed POST requests return
-  safe validation responses rather than a server error.
-- Added tests for the redirects and public form API responses.
-- Added this final launch report and linked it from the handover docs.
+No high-priority code issue remains from the available automated QA coverage.
 
-## Medium Priority Fixes
+High-priority launch items that must still happen:
 
-- Add the final public phone number if David wants phone to appear on the site.
-- Add `NEXT_PUBLIC_LINKEDIN_URL` in Railway so LinkedIn appears in the contact
-  and footer surfaces.
-- Add a Google Calendar Appointment Schedule URL if booking should be live.
-- Replace draft proof and salary content only when outcomes/data are verified.
+- Add either `NEXT_PUBLIC_GA_ID` or `NEXT_PUBLIC_GTM_ID`, not both in a messy
+  double-pageview setup.
+- Test cookie consent and Google Consent Mode V2 before and after accepting,
+  rejecting and changing preferences.
+- Add a valid `RESEND_API_KEY` only after the sending domain/sender is verified.
+- Confirm `CONTACT_TO_EMAIL=david@essentialresourcing.co.uk` in Railway.
+- Confirm `CONTACT_FROM_EMAIL` is a verified sender.
+- Add the final Railway and custom domains to Sanity CORS.
+- Run the same QA gate against the final production domain.
 
-## Nice-To-Haves
+## Medium-Priority Improvements
 
-- Add Sentry or a similar error tracker after Railway is live.
-- Add an uptime monitor for `/`, `/contact`, `/sitemap.xml` and `/api/health`.
-- Add a final David portrait if David wants a stronger founder visual signal.
-- Add approved testimonials/logos only when permission is explicit.
+- Add a production error monitor such as Sentry once the final domain is live.
+- Add uptime monitoring for `/`, `/contact`, `/api/health`, `/sitemap.xml` and
+  `/robots.txt`.
+- Run Lighthouse/PageSpeed Insights on the final domain after DNS and analytics
+  are live.
+- Add final approved proof: named testimonials, case studies, salary data and
+  client outcomes only when David has permission and evidence.
+- Add an approved David portrait if he wants a stronger founder trust signal.
 
-## Page-By-Page Findings
+## Cosmetic Polish Issues
 
-Local production preview was checked at `http://127.0.0.1:3000`.
+No cosmetic defect was found by the automated desktop/tablet/mobile browser
+pass.
 
-| Route                                         | Status          | Findings                                                                                                   |
-| --------------------------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------- |
-| `/`                                           | Green           | Homepage renders. Hero, navigation, WhatsApp and contact CTAs are present.                                 |
-| `/about-essential`                            | Green           | Brand/about page renders.                                                                                  |
-| `/about-david-walsh`                          | Green           | David profile page renders. LinkedIn is env-controlled and must be set before launch if required.          |
-| `/clients`                                    | Green           | Client route renders.                                                                                      |
-| `/candidates`                                 | Green           | Candidate route renders. CV upload is deliberately withheld until secure storage exists.                   |
-| `/services`                                   | Green           | Services index renders.                                                                                    |
-| `/services/leadership-search`                 | Green           | Service route renders.                                                                                     |
-| `/services/strategic-interim`                 | Green           | Service route renders and WhatsApp is commercially useful here.                                            |
-| `/services/agency-recruitment`                | Green           | Service route renders.                                                                                     |
-| `/services/client-side-marketing-recruitment` | Green           | Service route renders.                                                                                     |
-| `/services/senior-recruitment`                | Green           | Service route exists and is in the sitemap.                                                                |
-| `/specialisms`                                | Green           | Specialisms route renders.                                                                                 |
-| `/jobs`                                       | Green           | Jobs index renders. No live job is exposed as a fake vacancy.                                              |
-| `/jobs/senior-account-director-draft`         | Green by policy | Draft job detail returns 404 and is excluded from sitemap because it is not live.                          |
-| `/insights`                                   | Green           | Insight index renders.                                                                                     |
-| `/insights/[slug]`                            | Green           | Four published insight routes render.                                                                      |
-| `/case-studies`                               | Green           | Index renders safe draft summaries only. No fake proof is published.                                       |
-| `/case-studies/[slug]`                        | Green by policy | Draft case-study detail pages return 404 until permissioned proof exists.                                  |
-| `/salary-snapshots`                           | Green           | Index renders safe draft snapshot summaries only.                                                          |
-| `/salary-snapshots/[slug]`                    | Green by policy | Draft salary detail pages return 404 until salary data is validated.                                       |
-| `/contact`                                    | Green           | Contact page renders. WhatsApp, email, booking fallback and form are present.                              |
-| `/book-a-call`                                | Green           | Booking route renders with a fallback when no booking URL is configured.                                   |
-| `/privacy-policy`                             | Amber           | Page exists. Legal/privacy review still required.                                                          |
-| `/cookie-policy`                              | Amber           | Page exists. Legal/privacy review still required.                                                          |
-| `/candidate-privacy`                          | Amber           | Page exists. Legal/privacy review still required before real candidate data workflows go live.             |
-| `/candidate-privacy/request`                  | Amber           | DSAR/privacy request page renders. It does not pretend to be fully handled when email/storage are missing. |
-| `/terms`                                      | Amber           | Page exists. Legal review still required.                                                                  |
-| `/sitemap.xml`                                | Green           | Renders and excludes admin, Labs, client shortlist, draft jobs, draft proof and draft salary pages.        |
-| `/robots.txt`                                 | Green           | Renders, points to sitemap and blocks private/admin/API discovery.                                         |
-| `/rss.xml`                                    | Green           | Renders.                                                                                                   |
-| `/llms.txt`                                   | Green           | Renders.                                                                                                   |
-| `/llms-full.txt`                              | Green           | Renders.                                                                                                   |
-| `/api/health`                                 | Green           | Returns safe non-secret health data.                                                                       |
-| `/cms`                                        | Green           | CMS gate renders and is noindexed.                                                                         |
-| `/studio`                                     | Green           | Redirects to `/cms` when not signed in.                                                                    |
-| `/admin`                                      | Green           | Redirects to `/cms?next=/admin` when not signed in.                                                        |
-| `/admin/labs`                                 | Green           | Redirects to CMS gate and is noindexed in code.                                                            |
-| `/admin/recruiter-labs`                       | Green           | Redirects to CMS gate and is noindexed in code.                                                            |
-| `/admin/recruiter-labs/ai-ops`                | Green           | Redirects to CMS gate and is noindexed in code.                                                            |
+Cosmetic items that remain editorial rather than technical:
 
-## CMS Findings
+- Replace any intentionally draft case-study or salary proof with verified
+  content before publishing.
+- Keep Recruiter Labs private until a separate launch gate approves it.
+- Review all final legal-policy wording in plain English once the legal review
+  is complete.
 
-Status: partially ready.
+## Accessibility Issues
 
-What is good:
+No automated accessibility blocker was found in the live QA gate.
 
-- Sanity 6 Studio is embedded at `/studio`.
-- Friendly CMS entry point exists at `/cms`.
-- `/studio` is protected by the same CMS session gate before Sanity loads.
-- Editor docs exist:
-  - `docs/sanity-editor-guide.md`
-  - `docs/sanity-cms-access.md`
-  - `docs/sanity-cms-audit.md`
-- Schema includes public content, SEO fields, media/rich text support, site
-  settings, navigation, jobs, insights, services, case studies and salary
-  snapshots.
-- Docs clearly say Sanity is public CMS only.
+What passed in the current browser audit:
 
-Remaining risk:
+- public pages have a main landmark
+- public pages have one H1
+- desktop, tablet and mobile layouts do not horizontally overflow
+- visible controls in audited public routes have accessible names
+- no page errors or unexpected console errors were reported
 
-- Real Sanity project ID, dataset, user access and CORS cannot be verified from
-  this local workspace.
-- David must confirm Owner/Admin access in Sanity Manage.
-- Sanity tokens must be set in Railway only, never committed.
+Manual accessibility work still recommended before launch:
 
-## Railway Findings
+- keyboard-only pass on the final domain
+- screen-reader spot check for forms, cookie preferences, mobile navigation and
+  CMS gate
+- confirm consent banner copy and preference controls remain understandable
+  after any CMP or analytics change
 
-Status: code-ready, account not verified.
+## Mobile And Responsive Issues
 
-What is good:
-
-- `railway.json` exists.
-- `nixpacks.toml` installs Node 22 and PostgreSQL client.
-- Build command is `npm run build`.
-- Start command is `npm run start -- --hostname 0.0.0.0 --port ${PORT:-3000}`.
-- Healthcheck path is `/api/health`.
-- Public app does not depend on Postgres to render.
-- Private operations database can remain off until Railway Postgres is ready.
-
-Remaining risk:
-
-- Railway CLI is not installed locally.
-- Railway account/project is not authenticated in this session.
-- Railway generated URL has not been tested.
-- Railway logs have not been inspected.
-- Railway Postgres is not created or migrated from this workspace.
-
-## SEO And GEO Findings
-
-Status: strong local readiness.
-
-What is good:
-
-- Metadata and canonical logic are centralised through `src/lib/seo.ts`.
-- Sitemap renders.
-- Robots renders.
-- RSS, `llms.txt` and `llms-full.txt` render.
-- Private and draft routes are excluded from sitemap.
-- Admin/CMS/Studio routes are noindexed and/or access protected.
-- Structured data exists for organisation, person, website, breadcrumbs,
-  services, articles and item lists.
-- Google setup docs exist in `docs/launch-google-seo-local-setup.md`.
-
-Remaining risk:
-
-- Google Search Console verification is manual.
-- Sitemap has not been submitted in production.
-- GA4/GTM IDs are not set locally.
-- Consent-mode and analytics must be tested on the live domain after IDs are set.
-
-## Performance Findings
-
-Status: green locally.
+No mobile layout blocker was found by the automated QA pass.
 
 Evidence:
 
-- Production build completed.
-- Performance budget passed.
-- Unique public client JavaScript was reported at 31KB gzip.
-- Public pages do not import private Recruiter Labs helpers.
-- Feature flags remain server-only.
-- No third-party feature flag service or widget was added.
+- mobile viewport: 390 x 844
+- tablet viewport: 834 x 1112
+- desktop viewport: 1440 x 1000
+- all audited public pages passed without horizontal overflow
 
-Remaining risk:
+Manual checks still required:
 
-- Lighthouse/PageSpeed should be run against the live Railway/custom domain
-  after deployment and DNS.
+- real iPhone/Android WhatsApp link test
+- real mobile Google Calendar booking test
+- real mobile contact-form submission after Resend is configured
 
-## Accessibility Findings
+## Performance Concerns
 
-Status: green from available automated coverage, with live manual review still
-needed.
+No performance code blocker is known from the current build.
 
-What is good:
+Current technical posture:
 
-- Playwright smoke tests cover desktop and mobile navigation.
-- Forms use labels, required fields, status regions and consent checkboxes.
-- Skip link exists.
-- Admin routes are not exposed in normal public navigation.
-- Mobile menu has accessible labels and expansion state.
+- production build is configured for Railway
+- public bundle budget exists
+- images are served through supported public assets or approved remote sources
+- private Recruiter Labs code is not part of normal public navigation
 
-Remaining risk:
+Remaining performance work:
 
-- Full screen-reader testing is not done in this workspace.
-- Final keyboard-only pass should be repeated on the live domain.
+- run Lighthouse/PageSpeed on the final domain after DNS
+- watch Core Web Vitals after real traffic starts
+- avoid adding heavy third-party widgets, chat bubbles or tracking scripts
 
-## Security And Privacy Findings
+## Specific Fixes Required
 
-Status: strong local boundary, legal review still required.
+Implemented in this QA pass:
 
-What is good:
+- added a repeatable production QA crawler: `npm run qa:production`
+- added Railway/live-preview QA instructions to `docs/QA-CHECKLIST.md`
+- ignored generated QA evidence files with `.qa/`, `qa-*.json` and
+  `qa-screenshots/`
+- updated the final QA launch report to reflect the real Railway preview
+  rather than stale local-only status
+- updated the final QA unit test so it guards the current launch decision
 
-- Secret-pattern scan found no committed API keys or obvious tokens.
-- Server secrets are not exposed as `NEXT_PUBLIC_*`.
-- Sanity boundary docs block candidate/client PII and CVs from CMS.
-- CV upload is deliberately not enabled.
-- Admin/Labs routes require CMS session gate and noindex metadata.
-- Recruiter Labs flags default off.
-- WhatsApp Business API sends are disabled unless explicitly configured.
-- Consent Mode V2 default/update flow exists and docs explain that Consent Mode
-  is not a cookie banner by itself.
-- Privacy, Cookie Policy and Candidate Privacy pages exist.
+Commands for the final gate:
 
-Remaining risk:
+```bash
+npm run verify
+npm run qa:production -- --base=https://web-production-ba3b9.up.railway.app
+npm run qa:production -- --base=https://essentialresourcing.co.uk
+```
 
-- Legal/privacy review is required before launch.
-- Live analytics must be tested with real IDs and consent choices.
-- Railway/Postgres retention and backup policy need owner approval before real
-  candidate data is stored.
+Run the final-domain command only after David deliberately switches DNS.
 
-## Forms Findings
+## Page And Route Coverage
 
-Status: contact form green locally; DSAR route safe but not fully configured.
+The production QA crawler derives public routes from `sitemap.xml` and adds the
+known launch pages. The live pass covered the core public site:
 
-What was tested:
+- homepage
+- about pages
+- client and candidate routes
+- service index and service detail pages
+- jobs
+- insights and published insight articles
+- case studies
+- salary snapshots
+- salary guides
+- contact
+- book-a-call
+- privacy, cookie, terms and candidate privacy pages
+- `robots.txt`
+- `sitemap.xml`
+- `rss.xml`
+- `llms.txt`
+- `llms-full.txt`
+- `/api/health`
+- canonical redirects
+- 404 behaviour
 
-- Empty contact API POST now returns safe validation failure.
-- Valid contact form-style POST returns 200 with a safe message.
-- Empty DSAR/privacy API POST now returns safe validation failure.
-- Valid DSAR/privacy POST returns a safe 503 fallback when email/storage are not
-  configured.
-- WhatsApp webhook verification rejects an invalid token.
+## Forms And Conversion Routes
 
-Remaining risk:
+Conversion surfaces are technically ready to test, but email delivery is still
+launch-gated.
 
-- `RESEND_API_KEY`, `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` must be set in
-  Railway for live email notifications.
-- If private operations are enabled, `DATABASE_URL`, migrations and backups must
-  be verified first.
+WhatsApp:
 
-## Recruiter Labs Findings
+- direct WhatsApp links are implemented as direct links, not a cheap widget
+- WhatsApp should be tested on a real mobile device before launch
 
-Status: private and safe.
+Booking:
 
-What is good:
+- Google Calendar booking URL is configured for the preview
+- `/book-a-call` should be tested again on the final domain
 
-- Feature flags default off.
-- Central feature flag registry exists.
-- Public pages do not import private Labs helpers.
-- Admin/Labs routes redirect to CMS gate when unauthenticated.
-- Admin/Labs routes are noindexed in code.
-- Labs/client routes are excluded from sitemap.
-- No public client shortlist route exists.
-- No real WhatsApp sends, Google Calendar events, AI candidate processing or
-  Loxo sync is live.
+Contact form:
 
-Remaining risk:
+- validation and safe fallback behaviour exist
+- live email delivery still depends on a valid Resend setup
+- do not call the form launch-ready until David receives a real test enquiry
+  at `david@essentialresourcing.co.uk`
 
-- Recruiter Labs must stay private until a separate launch gate approves real
-  client/candidate workflows.
+## CMS And Recruiter Labs
 
-## Commands Run
+CMS:
 
-Passed:
+- `/cms` is the branded entry point
+- `/studio` is gated before the Sanity Studio loads
+- Sanity is the public CMS only
+- private candidate/client records, CVs, DSAR requests, audit logs and internal
+  recruitment notes must stay out of Sanity
 
-- `gh issue list --repo dwalsh8716-collab/Jobstodoincodex --state all --search "final QA launch Railway CMS SEO Recruiter Labs" --json number,title,state,labels,url --limit 30`
-- `find app -type f ...`
-- `rg` route, form, env, TODO/FIXME and private route searches
-- `lsof -nP -iTCP:3000 -sTCP:LISTEN || true`
-- `npm run start -- --hostname 127.0.0.1 --port 3000`
-- local route smoke with `curl`
-- form API smoke with `curl`
-- `npx prettier --check next.config.ts src/tests/unit/redirects.test.ts src/tests/e2e/site.spec.ts`
-- `npm run test -- --run src/tests/unit/redirects.test.ts src/tests/unit/launch-setup.test.ts src/tests/unit/feature-flags.test.ts`
-- `npm run test -- --run src/tests/unit/api-routes.test.ts src/tests/unit/contact.test.ts src/tests/unit/data-subject-request.test.ts`
-- `npm run typecheck`
-- `npm run verify` passed after the redirect, API and report changes:
-  - lint passed
-  - production build passed
-  - typecheck passed
-  - 29 unit test files passed
-  - 135 unit tests passed
-  - performance budget passed
-  - 14 Playwright browser smoke tests passed across desktop and mobile
+Recruiter Labs:
 
-## Files Changed
+- Recruiter Labs remains private
+- public pages do not expose Labs routes through normal navigation
+- do not switch Labs features live without a separate privacy, security and
+  operations gate
 
-- `next.config.ts`
-- `app/api/contact/route.ts`
-- `app/api/data-request/route.ts`
-- `src/tests/e2e/site.spec.ts`
-- `src/tests/unit/redirects.test.ts`
-- `src/tests/unit/api-routes.test.ts`
-- `src/tests/unit/final-qa-launch.test.ts`
-- `docs/final-qa-launch-report.md`
-- `docs/launch-handover.md`
-- `README.md`
+## Final Launch Readiness Verdict
 
-## Manual Actions For David
+Code verdict: ready as a production preview candidate.
 
-1. Log into Railway.
-2. Connect `dwalsh8716-collab/Jobstodoincodex`.
-3. Add all production environment variables.
-4. Deploy and test the Railway-generated URL.
-5. Configure Resend/form email variables.
-6. Confirm David has Sanity Owner/Admin access.
-7. Add Railway and final domains to Sanity CORS.
-8. Create Railway Postgres only if private operations are going live.
-9. Run migrations before setting `OPERATIONS_DB_ENABLED=true`.
-10. Keep `RETENTION_ENGINE_ENABLED=false` until legal/privacy and backup review.
-11. Add Google Search Console verification.
-12. Add GA4/GTM only with consent-aware setup.
-13. Review Privacy Policy, Cookie Policy, Candidate Privacy Notice and Terms
-    with a suitable legal/privacy adviser.
-14. Deploy to Railway before touching 123 Reg DNS.
-15. Back up current 123 Reg DNS records.
-16. Add only the exact Railway DNS records.
-17. Preserve MX, SPF, DKIM, DMARC and mailbox verification records.
-18. Test apex, `www`, SSL, email sending and email receiving.
-19. Submit the production sitemap in Google Search Console.
-20. Run final live-domain QA before announcing launch.
+Launch verdict: not yet safe for full public launch.
 
-## Final Recommendation
+David can approve public launch only after:
 
-Safe for local preview and private stakeholder review now.
+1. GA4 Measurement ID or GTM ID is added and consent-tested.
+2. Resend email delivery sends a real test enquiry to
+   `david@essentialresourcing.co.uk`.
+3. Search Console verification and sitemap submission are complete.
+4. Sanity CORS includes the Railway preview and final domains.
+5. Legal/privacy review is complete.
+6. DNS is switched intentionally, preserving email records.
+7. The production QA crawler passes on `https://essentialresourcing.co.uk`.
 
-Not safe for full public launch until the manual launch blockers are completed.
+Until those are done, the honest verdict is:
 
-Safe to launch after:
-
-- Railway deploy passes
-- live domain works
-- forms/email are configured and tested
-- Sanity access/CORS are confirmed
-- Google/search/analytics setup is done
-- legal/privacy review is complete
-- final live-domain smoke test passes
-
-No fake green ticks. No public Labs leakage. No secrets in GitHub. No faff.
+```txt
+Production preview ready.
+Full public launch gated.
+```
