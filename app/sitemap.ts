@@ -1,5 +1,12 @@
 import type { MetadataRoute } from "next";
 import {
+  caseStudies as fallbackCaseStudies,
+  insights as fallbackInsights,
+  jobs as fallbackJobs,
+  salarySnapshots as fallbackSalarySnapshots,
+  services as fallbackServices,
+} from "@/lib/content";
+import {
   getPublicCaseStudies,
   getPublicInsights,
   getPublicJobs,
@@ -10,6 +17,23 @@ import { buildPublicSitemap } from "@/lib/sitemap-engine";
 import { launchPages, siteConfig } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (process.env.NODE_ENV === "test") {
+    return buildPublicSitemap({
+      baseUrl: siteConfig.url,
+      launchPages,
+      services: fallbackServices,
+      insights: fallbackInsights,
+      caseStudies: fallbackCaseStudies,
+      salarySnapshots: fallbackSalarySnapshots,
+      jobs: fallbackJobs,
+      booking: siteConfig.booking,
+      salaryGuide: {
+        enabled: process.env.FEATURE_SALARY_GUIDE_GATE === "true",
+        path: "/salary-guides",
+      },
+    });
+  }
+
   const [services, insights, caseStudies, salarySnapshots, jobs] =
     await Promise.all([
       getPublicServices(),
