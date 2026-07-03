@@ -223,6 +223,7 @@ Launch route audit and future-page roadmap:
 ```txt
 docs/LAUNCH-SITEMAP-ROUTES.md
 docs/TECHNICAL-SEO-GEO.md
+docs/SEO-AI-VISIBILITY-AUDIT.md
 docs/FINAL-PRODUCTION-READINESS-AUDIT.md
 docs/FINAL-POLISH-ROADMAP.md
 docs/VISUAL-DESIGN-POLISH.md

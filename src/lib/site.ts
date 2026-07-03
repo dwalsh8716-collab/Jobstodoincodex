@@ -75,10 +75,9 @@ export const siteConfig = {
     }),
   },
   region: "Manchester, North West and UK-wide",
-  defaultTitle:
-    "Essential Resourcing | Senior Marketing & Comms Recruitment Manchester",
+  defaultTitle: "Marketing Recruitment Manchester | Essential Resourcing",
   defaultDescription:
-    "Straight-talking search and recruitment for senior marketing, communications, digital and agency leadership roles across Manchester, the North West and beyond.",
+    "Founder-led marketing, PR, digital and agency recruitment across Manchester, the North West and UK. Senior hires, retained search and strategic interim.",
   ogImage: "/assets/og-image.png",
   logoDark: "/assets/logo-dark.svg",
   logoLight: "/assets/logo-light.svg",

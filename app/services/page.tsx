@@ -6,9 +6,9 @@ import { getPublicServices } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "Recruitment Services | Essential Resourcing",
+  title: "Marketing, PR & Digital Recruitment Services | Essential Resourcing",
   description:
-    "Leadership search, strategic interim, agency recruitment, client-side marketing recruitment and senior recruitment services.",
+    "Marketing, PR, digital, agency, retained search and strategic interim recruitment services across Manchester, the North West and UK.",
   path: "/services",
 });
 

@@ -116,6 +116,8 @@ const serviceFields = /* groq */ `
   whatGoodLooksLike,
   commonMistakes,
   howEssentialWorks,
+  searchSummary,
+  searchPhrases,
   processSteps[]{_key, title, text},
   relatedServices[]->{${serviceCardFields}},
   relatedCaseStudies[]->{${caseStudyCardFields}},

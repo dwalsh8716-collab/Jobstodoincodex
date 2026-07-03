@@ -161,6 +161,11 @@ function mapService(item: SanityService, fallback?: Service): Service {
       ? referenceSlugs(item.relatedCaseStudies)
       : fallback?.relatedCaseStudySlugs || [],
     cta: cta(item.cta, fallback?.cta),
+    searchSummary: item.searchSummary || fallback?.searchSummary || "",
+    searchPhrases: stringsOrFallback(
+      item.searchPhrases,
+      fallback?.searchPhrases,
+    ),
     seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
     metaDescription:
       item.metaDescription ||
@@ -334,9 +339,7 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     salaryPeriod:
       item.salaryPeriod || fallback?.salaryPeriod || "to_be_confirmed",
     salaryVisibility:
-      item.salaryVisibility ||
-      fallback?.salaryVisibility ||
-      "to_be_confirmed",
+      item.salaryVisibility || fallback?.salaryVisibility || "to_be_confirmed",
     rateMin: item.rateMin ?? fallback?.rateMin,
     rateMax: item.rateMax ?? fallback?.rateMax,
     ratePeriod: item.ratePeriod || fallback?.ratePeriod || "to_be_confirmed",

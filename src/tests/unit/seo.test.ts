@@ -1,5 +1,6 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { jobs, services } from "@/lib/content";
+import { aiSearchQuestions, jobs, services } from "@/lib/content";
 import {
   absoluteUrl,
   breadcrumbSchema,
@@ -51,7 +52,9 @@ describe("structured data builders", () => {
     expect(schema).toMatchObject({
       "@type": "Service",
       url: absoluteUrl("/services/strategic-interim"),
+      serviceOutput: service!.searchSummary,
     });
+    expect(schema.keywords).toContain("strategic interim marketing leader");
   });
 
   it("builds breadcrumb positions in order", () => {
@@ -141,5 +144,43 @@ describe("structured data builders", () => {
         },
       },
     });
+  });
+});
+
+describe("SEO and AI visibility audit", () => {
+  it("keeps priority recruitment search intent explicit without fake proof", () => {
+    const clientSide = services.find(
+      (item) => item.slug === "client-side-marketing-recruitment",
+    );
+    const agency = services.find((item) => item.slug === "agency-recruitment");
+    const leadership = services.find(
+      (item) => item.slug === "leadership-search",
+    );
+    const questions = aiSearchQuestions
+      .map((item) => `${item.question} ${item.answer}`)
+      .join("\n");
+    const audit = readFileSync("docs/SEO-AI-VISIBILITY-AUDIT.md", "utf8");
+
+    expect(clientSide?.seoTitle).toContain("Marketing Recruitment Manchester");
+    expect(clientSide?.searchPhrases).toContain(
+      "marketing recruitment Manchester",
+    );
+    expect(agency?.searchPhrases).toEqual(
+      expect.arrayContaining([
+        "PR recruitment Manchester",
+        "digital recruitment North West",
+        "media recruitment North West",
+      ]),
+    );
+    expect(leadership?.searchPhrases).toContain(
+      "exclusive recruitment partner",
+    );
+    expect(questions).toContain(
+      "Who handles marketing recruitment in Manchester?",
+    );
+    expect(questions).toContain("PR recruitment in Manchester");
+    expect(audit).toContain("SEO Executive Summary");
+    expect(audit).toContain("AI/LLM Visibility Recommendations");
+    expect(audit).toContain("No generic SEO waffle");
   });
 });

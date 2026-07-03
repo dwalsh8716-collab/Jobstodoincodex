@@ -133,10 +133,18 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
+    searchSummary:
+      "For retained marketing recruitment, confidential senior searches and exclusive recruitment partner work across Manchester, the North West and UK.",
+    searchPhrases: [
+      "retained marketing recruitment",
+      "exclusive recruitment partner",
+      "marketing recruiters Manchester",
+      "senior marketing recruitment Manchester",
+    ],
     seoTitle:
-      "Leadership Search for Marketing Leaders | Essential Resourcing",
+      "Retained Marketing Recruitment Manchester | Essential Resourcing",
     metaDescription:
-      "Founder-led leadership search for senior marketing, communications and agency leaders across Manchester, the North West and UK.",
+      "Founder-led retained search for senior marketing, comms and agency leaders across Manchester, the North West and UK.",
   },
   {
     title: "Strategic Interim",
@@ -209,6 +217,14 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
+    searchSummary:
+      "For businesses that need senior marketing, PR, digital or agency leadership in place quickly without committing to a permanent hire too soon.",
+    searchPhrases: [
+      "strategic interim marketing leader",
+      "interim CMO",
+      "interim marketing director",
+      "senior marketing interim North West",
+    ],
     seoTitle: "Strategic Interim Marketing Leaders | Essential Resourcing",
     metaDescription:
       "Strategic interim marketing, digital and agency leadership support for teams that need senior direction without another full-time hire.",
@@ -262,10 +278,17 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
-    seoTitle:
-      "Agency Recruitment for PR & Digital Teams | Essential Resourcing",
+    searchSummary:
+      "For PR agency recruitment, digital agency hiring and senior client services roles where commercial judgement matters as much as the CV.",
+    searchPhrases: [
+      "PR recruitment Manchester",
+      "PR agency recruitment",
+      "digital recruitment North West",
+      "media recruitment North West",
+    ],
+    seoTitle: "PR & Agency Recruitment Manchester | Essential Resourcing",
     metaDescription:
-      "Specialist agency recruitment for PR, digital, creative, performance, client services and agency leadership roles.",
+      "Specialist PR agency and digital recruitment for Manchester and North West teams hiring senior client services and agency leaders.",
   },
   {
     title: "Client-side Marketing Recruitment",
@@ -317,9 +340,18 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
-    seoTitle: "Client-side Marketing Recruitment | Essential Resourcing",
+    searchSummary:
+      "For Manchester and North West businesses hiring marketing directors, heads of marketing, communications leaders and senior digital talent.",
+    searchPhrases: [
+      "marketing recruitment Manchester",
+      "marketing recruiters Manchester",
+      "digital recruitment North West",
+      "client-side marketing recruitment",
+    ],
+    seoTitle:
+      "Marketing Recruitment Manchester & North West | Essential Resourcing",
     metaDescription:
-      "Senior client-side marketing recruitment for brands and growth businesses hiring marketing directors, heads of marketing, comms leaders and digital talent.",
+      "Senior marketing recruitment for Manchester and North West businesses hiring marketing directors, heads of marketing, comms and digital talent.",
   },
   {
     title: "Senior Recruitment",
@@ -378,10 +410,18 @@ export const services: Service[] = [
       href: "/contact",
       variant: "primary",
     },
+    searchSummary:
+      "For senior marketing, PR, communications, media and digital roles where the shortlist needs judgement, not volume.",
+    searchPhrases: [
+      "marketing recruitment Manchester",
+      "PR recruitment Manchester",
+      "digital recruitment North West",
+      "media recruitment North West",
+    ],
     seoTitle:
-      "Senior Marketing & Communications Recruitment | Essential Resourcing",
+      "Senior Marketing, PR & Digital Recruitment North West | Essential",
     metaDescription:
-      "Specialist senior recruitment for marketing, PR, communications and digital roles where quality, judgement and market knowledge matter.",
+      "Specialist senior recruitment for marketing, PR, communications, media and digital roles across Manchester and the North West.",
   },
 ];
 
@@ -660,6 +700,28 @@ export const aiSearchQuestions = [
     answer:
       "The honest answer depends on scope, team size, commercial ownership, hybrid expectations and business stage. A generic title-based range can mislead more than it helps.",
   },
+  {
+    question: "Who handles marketing recruitment in Manchester?",
+    answer:
+      "Essential Resourcing is a Manchester-led specialist for senior marketing, PR, communications, digital and agency recruitment. David Walsh works directly on serious briefs rather than passing clients around a big team.",
+  },
+  {
+    question:
+      "Can Essential Resourcing help with PR recruitment in Manchester?",
+    answer:
+      "Yes. Essential Resourcing supports PR recruitment in Manchester and the North West, especially senior agency, communications, client services and leadership roles where fit and judgement matter.",
+  },
+  {
+    question:
+      "Does Essential Resourcing recruit digital talent in the North West?",
+    answer:
+      "Yes. Digital recruitment covers senior digital, performance, CRM, content, growth and agency/client-side roles across Manchester, the North West and wider UK where the brief needs specialist judgement.",
+  },
+  {
+    question: "Can David work as an exclusive recruitment partner?",
+    answer:
+      "Yes, when the brief genuinely needs it. Exclusive or retained work makes sense for senior, confidential or difficult roles where proper market mapping and candidate trust matter.",
+  },
 ];
 
 export const caseStudies: CaseStudy[] = [
@@ -701,8 +763,7 @@ export const caseStudies: CaseStudy[] = [
     impact:
       "Proof is being checked. Add real commercial impact if it can be disclosed.",
     featured: true,
-    seoTitle:
-      "Senior Account Director Case Study | Essential Resourcing",
+    seoTitle: "Senior Account Director Case Study | Essential Resourcing",
     metaDescription:
       "Draft anonymised case study structure for a senior PR agency hire. Add verified outcome before publication.",
   },
@@ -921,8 +982,7 @@ export const salarySnapshots: SalarySnapshot[] = [
     takeaways: [
       "Do not compare digital salaries without checking budget, team and commercial accountability.",
     ],
-    seoTitle:
-      "Digital Marketing Salary Snapshot | Essential Resourcing",
+    seoTitle: "Digital Marketing Salary Snapshot | Essential Resourcing",
     metaDescription:
       "Draft digital and performance marketing salary snapshot for validation before publication.",
   },
@@ -1053,8 +1113,7 @@ export const jobs: Job[] = [
       "This draft exists so David can prepare the role properly before it is shown as a live opportunity.",
     successInThreeMonths:
       "Add the first practical outcomes the person should have delivered.",
-    successInSixMonths:
-      "Add what should be working better by month six.",
+    successInSixMonths: "Add what should be working better by month six.",
     successInTwelveMonths:
       "Add the longer-term impact only if the client has agreed it.",
     summary:

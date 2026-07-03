@@ -171,6 +171,20 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
+      {service.searchSummary ? (
+        <section className="section muted">
+          <div className="container split split-start">
+            <div>
+              <p className="eyebrow">Market fit</p>
+              <h2>Where this service fits.</h2>
+            </div>
+            <div className="statement-list">
+              <p>{service.searchSummary}</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="section">
         <div className="container split split-start">
           <div>

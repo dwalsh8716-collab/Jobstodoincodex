@@ -52,6 +52,8 @@ export type Service = {
   relatedInsightSlugs: string[];
   relatedCaseStudySlugs: string[];
   cta: CTA;
+  searchSummary: string;
+  searchPhrases: string[];
   seoTitle: string;
   metaDescription: string;
 };

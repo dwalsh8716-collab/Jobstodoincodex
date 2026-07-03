@@ -139,6 +139,11 @@ export function buildLlmsFullTxt() {
     "",
     `Audience: ${service.audience.join(", ")}`,
     "",
+    service.searchSummary ? `Market fit: ${service.searchSummary}` : "",
+    service.searchPhrases.length
+      ? `Search language: ${service.searchPhrases.join(", ")}`
+      : "",
+    "",
     "When to use:",
     ...service.whenToUse.map((item) => `- ${item}`),
     "",

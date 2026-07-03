@@ -64,6 +64,14 @@ export function organisationSchema() {
     areaServed: ["Manchester", "North West England", "United Kingdom"],
     founder: { "@type": "Person", name: siteConfig.founder },
     description: siteConfig.defaultDescription,
+    keywords: [
+      "marketing recruitment Manchester",
+      "PR recruitment Manchester",
+      "digital recruitment North West",
+      "media recruitment North West",
+      "retained marketing recruitment",
+      "strategic interim marketing leader",
+    ],
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
     ...(siteConfig.linkedIn ? { sameAs: [siteConfig.linkedIn] } : {}),
     contactPoint: {
@@ -153,6 +161,10 @@ export function serviceSchema(service: Service) {
     "@type": "Service",
     name: service.title,
     description: service.shortDescription,
+    ...(service.searchPhrases.length
+      ? { keywords: service.searchPhrases }
+      : {}),
+    ...(service.searchSummary ? { serviceOutput: service.searchSummary } : {}),
     provider: {
       "@type": "Organization",
       name: siteConfig.name,

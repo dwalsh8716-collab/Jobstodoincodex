@@ -119,6 +119,10 @@ Edit a service page:
 2. Open Services.
 3. Choose the service.
 4. Keep copy plain, specific and commercially useful.
+5. Use the plain-English search summary to explain the buyer problem the page
+   answers.
+6. Use search phrases as an editor checklist, not as copy to paste repeatedly.
+   If the page would sound daft read aloud, rewrite it.
 
 Add a job:
 

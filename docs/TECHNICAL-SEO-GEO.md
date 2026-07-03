@@ -44,6 +44,16 @@ List schema is deliberately guarded. Draft proof, closed roles and unvalidated s
 
 The insights hub includes crawlable answers to common senior hiring questions around Strategic Interim, retained search, senior marketing hiring failure, agency recruitment, Marketing Director briefs, interim leadership, candidate quality and North West salary context.
 
+The latest SEO and AI visibility audit is tracked in:
+
+```txt
+docs/SEO-AI-VISIBILITY-AUDIT.md
+```
+
+That audit records the priority search phrases, metadata rewrites, AI retrieval
+improvements and content roadmap for Manchester/North West recruitment
+visibility.
+
 The priority is useful first-party content in David Walsh's tone, not keyword stuffing.
 
 ## Final Polish Roadmap

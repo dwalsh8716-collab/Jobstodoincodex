@@ -1190,6 +1190,20 @@ const service = defineType({
     stringListField("whatGoodLooksLike", "What good actually looks like"),
     stringListField("commonMistakes", "Common mistakes"),
     stringListField("howEssentialWorks", "How Essential helps"),
+    defineField({
+      name: "searchSummary",
+      title: "Plain-English search summary",
+      type: "text",
+      rows: 3,
+      description:
+        "One useful sentence explaining the search intent this service answers. Keep it human, not keyword-stuffed.",
+      validation: (rule) => rule.max(240),
+    }),
+    stringListField(
+      "searchPhrases",
+      "Search phrases this page should naturally answer",
+      "Use plain buyer phrases such as marketing recruitment Manchester or retained marketing recruitment. Do not stuff this list into copy blindly.",
+    ),
     processStepsField(),
     referenceListField("relatedServices", "Related services", ["service"]),
     referenceListField("relatedCaseStudies", "Related case studies", [

@@ -171,6 +171,8 @@ export type SanityService = SanitySeo & {
   commonMistakes?: string[];
   howEssentialWorks?: string[];
   processSteps?: Array<{ _key?: string; title?: string; text?: string }>;
+  searchSummary?: string;
+  searchPhrases?: string[];
   relatedServices?: SanityCardReference[];
   relatedCaseStudies?: SanityCardReference[];
   relatedInsights?: SanityCardReference[];
