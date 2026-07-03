@@ -12,6 +12,21 @@ export const metadata = createMetadata({
 });
 
 export default function ClientsPage() {
+  const clientNextSteps = [
+    {
+      title: "Send the useful context",
+      copy: "Role title, why it matters, salary reality, timing and what has already been tried.",
+    },
+    {
+      title: "David sense-checks it",
+      copy: "If the brief, market, process or salary needs challenging, you hear that before the search starts.",
+    },
+    {
+      title: "Choose the right route",
+      copy: "Retained search, Strategic Interim, senior recruitment or a straight answer that this is not one for Essential.",
+    },
+  ];
+
   return (
     <>
       <Breadcrumbs items={[{ name: "Clients", href: "/clients" }]} />
@@ -56,6 +71,27 @@ export default function ClientsPage() {
         <div className="container grid grid-3">
           {services.slice(0, 4).map((service) => (
             <ServiceCard key={service.slug} service={service} />
+          ))}
+        </div>
+      </section>
+      <section className="section muted">
+        <div className="container section-heading">
+          <p className="eyebrow">What happens next</p>
+          <h2>
+            A senior brief should feel calmer after the first conversation.
+          </h2>
+          <p className="lede">
+            No sales sequence. No pretending every role needs a search. The
+            first job is to work out what the business actually needs.
+          </p>
+        </div>
+        <div className="container grid grid-3">
+          {clientNextSteps.map((step) => (
+            <article className="card" key={step.title}>
+              <span className="tag">Next step</span>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </article>
           ))}
         </div>
       </section>

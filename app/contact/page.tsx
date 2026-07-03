@@ -56,53 +56,13 @@ export default function ContactPage() {
                 className="button button-secondary"
                 href="#contact-form"
                 {...analyticsAttributes("cta_click", {
-                  label: "I'm hiring",
+                  label: "Send the brief",
                   href: "#contact-form",
                   location: "contact hero",
                 })}
               >
-                I&apos;m hiring
+                Send the brief
               </Link>
-              <Link
-                className="button button-secondary"
-                href="/candidates#candidate-contact"
-                {...analyticsAttributes("cta_click", {
-                  label: "I'm looking for work",
-                  href: "/candidates#candidate-contact",
-                  location: "contact hero",
-                })}
-              >
-                I&apos;m looking for work
-              </Link>
-              <Link
-                className="button button-secondary"
-                href={`mailto:${siteConfig.email}`}
-                {...analyticsAttributes("email_click", {
-                  label: siteConfig.email,
-                  href: `mailto:${siteConfig.email}`,
-                  location: "contact hero",
-                })}
-              >
-                {siteConfig.email}
-              </Link>
-              {phoneHref ? (
-                <Link
-                  className="button button-secondary"
-                  href={phoneHref}
-                  {...analyticsAttributes("phone_click", {
-                    label: "Call David",
-                    href: phoneHref,
-                    location: "contact hero",
-                  })}
-                >
-                  Call David
-                </Link>
-              ) : null}
-              <LinkedInProfileLink
-                label="Connect with David on LinkedIn"
-                location="contact_page"
-                variant="secondary"
-              />
             </div>
             <div className="trust-callout hero-actions">
               <h2>What happens next?</h2>
@@ -137,6 +97,51 @@ export default function ContactPage() {
                 WhatsApp opens in WhatsApp. Booking opens the Google Calendar
                 route when David has connected it.
               </p>
+              <div className="contact-secondary-routes">
+                <h3>Other useful routes</h3>
+                <div className="button-row">
+                  <Link
+                    className="button button-secondary"
+                    href="/candidates#candidate-contact"
+                    {...analyticsAttributes("cta_click", {
+                      label: "I'm looking for work",
+                      href: "/candidates#candidate-contact",
+                      location: "contact options",
+                    })}
+                  >
+                    I&apos;m looking for work
+                  </Link>
+                  <Link
+                    className="button button-secondary"
+                    href={`mailto:${siteConfig.email}`}
+                    {...analyticsAttributes("email_click", {
+                      label: siteConfig.email,
+                      href: `mailto:${siteConfig.email}`,
+                      location: "contact options",
+                    })}
+                  >
+                    {siteConfig.email}
+                  </Link>
+                  {phoneHref ? (
+                    <Link
+                      className="button button-secondary"
+                      href={phoneHref}
+                      {...analyticsAttributes("phone_click", {
+                        label: "Call David",
+                        href: phoneHref,
+                        location: "contact options",
+                      })}
+                    >
+                      Call David
+                    </Link>
+                  ) : null}
+                  <LinkedInProfileLink
+                    label="Connect with David on LinkedIn"
+                    location="contact_options"
+                    variant="secondary"
+                  />
+                </div>
+              </div>
             </div>
             <ContactForm type="client" />
           </div>

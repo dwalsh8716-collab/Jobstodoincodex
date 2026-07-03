@@ -30,6 +30,21 @@ const candidateFaqs = [
   },
 ];
 
+const candidateNextStepsPreview = [
+  {
+    title: "Send a short note",
+    copy: "A LinkedIn/profile URL and a few useful lines is enough. No cover-letter theatre.",
+  },
+  {
+    title: "David checks relevance",
+    copy: "If there is a sensible role or market conversation, he will come back to you directly.",
+  },
+  {
+    title: "Nothing goes anywhere without permission",
+    copy: "Your details are not fired around the market or added to a noisy mailing list.",
+  },
+];
+
 export const metadata = createMetadata({
   title: "Marketing, PR & Digital Careers | Essential Resourcing",
   description:
@@ -123,7 +138,47 @@ export default function CandidatesPage() {
               <JobCard key={job.slug} job={job} />
             ))}
           </div>
-        ) : null}
+        ) : (
+          <div className="container empty-state">
+            <p className="eyebrow">Confidential route</p>
+            <h2>No live roles are published today.</h2>
+            <p className="lede">
+              Good senior roles are not always public. Send a short note or
+              LinkedIn URL and David can tell you whether there is a sensible
+              conversation to have.
+            </p>
+            <div className="button-row hero-actions">
+              <Link className="button button-primary" href="#candidate-contact">
+                Send a confidential note
+              </Link>
+              <WhatsAppButton
+                intent="candidates"
+                label="Quick WhatsApp to David"
+                location="candidate_empty_state"
+                variant="secondary"
+              />
+            </div>
+          </div>
+        )}
+      </section>
+      <section className="section surface">
+        <div className="container section-heading">
+          <p className="eyebrow">What happens next</p>
+          <h2>Simple, private and not over-engineered.</h2>
+          <p className="lede">
+            The candidate route is deliberately light because good people do not
+            need another portal to remember.
+          </p>
+        </div>
+        <div className="container grid grid-3">
+          {candidateNextStepsPreview.map((step) => (
+            <article className="card" key={step.title}>
+              <span className="tag">Candidate route</span>
+              <h3>{step.title}</h3>
+              <p>{step.copy}</p>
+            </article>
+          ))}
+        </div>
       </section>
       <section className="section muted" id="candidate-contact">
         <div className="container split">

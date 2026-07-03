@@ -227,6 +227,7 @@ docs/SEO-AI-VISIBILITY-AUDIT.md
 docs/FINAL-PRODUCTION-READINESS-AUDIT.md
 docs/FINAL-POLISH-ROADMAP.md
 docs/VISUAL-DESIGN-POLISH.md
+docs/UX-CRO-AUDIT.md
 docs/POST-LAUNCH-GROWTH-ROADMAP.md
 docs/launch-google-seo-local-setup.md
 docs/consent-mode-v2-setup.md

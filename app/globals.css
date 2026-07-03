@@ -360,6 +360,7 @@ p {
 
 .button {
   display: inline-flex;
+  max-width: 100%;
   min-height: 48px;
   align-items: center;
   justify-content: center;
@@ -370,6 +371,8 @@ p {
   font-weight: 900;
   line-height: 1.1;
   text-align: center;
+  overflow-wrap: anywhere;
+  white-space: normal;
   transition:
     transform 180ms ease,
     box-shadow 180ms ease,
@@ -1487,6 +1490,19 @@ p {
 
 .contact-options-card p {
   color: var(--color-text-muted);
+}
+
+.contact-secondary-routes {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--color-line);
+  margin-top: 4px;
+  padding-top: 16px;
+}
+
+.contact-secondary-routes h3 {
+  color: var(--color-ink);
+  font-size: 1.18rem;
 }
 
 .booking-panel {
