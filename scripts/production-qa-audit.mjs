@@ -303,6 +303,7 @@ async function browserPageAudit(browser, path, viewportName, viewport) {
   if (pageErrors.length) failures.push(`${pageErrors.length} page errors`);
   if (details.overflowX) failures.push("horizontal overflow");
   if (!details.hasMain) failures.push("missing main landmark");
+  if (!details.hasSkipLink) failures.push("missing skip link");
   if (details.h1Count !== 1)
     failures.push(`expected one h1, found ${details.h1Count}`);
   if (details.brokenImages.length)

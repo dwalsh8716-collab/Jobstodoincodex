@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
@@ -92,6 +93,31 @@ test("key public pages load", async ({ page }) => {
   for (const path of paths) {
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  }
+});
+
+test("key public pages have no obvious WCAG AA violations", async ({
+  page,
+}) => {
+  const paths = [
+    "/",
+    "/services",
+    "/services/leadership-search",
+    "/clients",
+    "/candidates",
+    "/jobs",
+    "/contact",
+    "/cookie-policy",
+    "/privacy-policy",
+  ];
+
+  for (const path of paths) {
+    await page.goto(path);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+
+    expect(results.violations, path).toEqual([]);
   }
 });
 

@@ -15,9 +15,9 @@ npm run qa:production -- --base=https://web-production-ba3b9.up.railway.app
 
 The crawler checks sitemap routes, required launch assets, canonical redirects,
 404 behaviour, internal links, desktop/tablet/mobile rendering, console errors,
-page errors, horizontal overflow, visible broken images, main landmarks, H1
-counts and unlabeled visible controls. It writes JSON evidence to `.qa/`, which
-is intentionally ignored by Git.
+page errors, horizontal overflow, visible broken images, main landmarks, skip
+links, H1 counts and unlabeled visible controls. It writes JSON evidence to
+`.qa/`, which is intentionally ignored by Git.
 
 Individual commands:
 
@@ -53,3 +53,9 @@ Individual commands:
   are set.
 - DNS is switched only after Railway URL, CMS, booking, analytics consent and
   email checks are green.
+
+Accessibility audit:
+
+```txt
+docs/ACCESSIBILITY-WCAG-AA-AUDIT.md
+```

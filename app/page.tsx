@@ -352,13 +352,11 @@ export default async function HomePage() {
           <dl className="home-definition-list">
             {filterDefinitions.map((definition, index) => (
               <Reveal key={definition.number} delay={index * 100}>
-                <div>
-                  <dt>
-                    <span>{definition.number}</span>
-                    <strong>{definition.phrase}</strong>
-                  </dt>
-                  <dd>{definition.copy}</dd>
-                </div>
+                <dt>
+                  <span>{definition.number}</span>
+                  <strong>{definition.phrase}</strong>
+                </dt>
+                <dd>{definition.copy}</dd>
               </Reveal>
             ))}
           </dl>
@@ -455,9 +453,6 @@ export default async function HomePage() {
         className="section home-process"
         aria-labelledby="process-heading"
       >
-        <div className="home-process-number" aria-hidden="true">
-          01
-        </div>
         <div className="container">
           <Reveal>
             <div className="home-section-header home-section-header-simple">

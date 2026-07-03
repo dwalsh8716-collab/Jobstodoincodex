@@ -211,6 +211,11 @@ main {
 }
 
 .muted {
+  --color-text-muted: color-mix(
+    in srgb,
+    var(--color-ink) 84%,
+    var(--color-stone)
+  );
   background: var(--color-surface-muted);
 }
 
@@ -219,7 +224,7 @@ main {
   gap: 10px;
   align-items: center;
   margin: 0 0 16px;
-  color: var(--color-accent);
+  color: var(--color-accent-readable);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0;
@@ -422,7 +427,7 @@ p {
   min-height: 44px;
   align-items: center;
   gap: 8px;
-  color: var(--color-primary);
+  color: var(--color-accent-readable);
   font-weight: 900;
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -1832,7 +1837,7 @@ fieldset.form-row legend {
 
 .consent a,
 .form-note a {
-  color: var(--color-primary);
+  color: var(--color-accent-readable);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
@@ -1913,7 +1918,7 @@ fieldset.form-row legend {
 }
 
 .analytics-consent a {
-  color: var(--color-primary);
+  color: var(--color-accent-readable);
   font-weight: 900;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -2554,13 +2559,10 @@ fieldset.form-row legend {
 
 .home-definition-list > div {
   border-top: 2px solid var(--color-charcoal);
-  padding: 34px 0;
-}
-
-.home-definition-list div {
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
   gap: clamp(24px, 5vw, 72px);
+  padding: 34px 0;
 }
 
 .home-definition-list dt {
@@ -2845,7 +2847,8 @@ fieldset.form-row legend {
   background: var(--color-stone);
 }
 
-.home-process-number {
+.home-process::before {
+  content: "01";
   position: absolute;
   top: 22px;
   right: -8%;
@@ -3519,7 +3522,7 @@ fieldset.form-row legend {
     font-size: 3.25rem;
   }
 
-  .home-definition-list div,
+  .home-definition-list > div,
   .home-ledger-head,
   .home-ledger li {
     grid-template-columns: 1fr;
@@ -3555,7 +3558,7 @@ fieldset.form-row legend {
     translate: 0;
   }
 
-  .home-process-number {
+  .home-process::before {
     font-size: 13rem;
   }
 
@@ -3789,7 +3792,7 @@ fieldset.form-row legend {
     font-size: 1.48rem;
   }
 
-  .home-process-number {
+  .home-process::before {
     font-size: 9rem;
   }
 

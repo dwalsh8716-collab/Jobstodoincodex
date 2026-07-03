@@ -14,10 +14,15 @@
   --color-surface: #fbf8f0;
   --color-surface-muted: var(--color-stone);
   --color-text: var(--color-ink);
-  --color-text-muted: color-mix(in srgb, var(--color-ink) 66%, var(--color-stone));
+  --color-text-muted: color-mix(
+    in srgb,
+    var(--color-ink) 66%,
+    var(--color-stone)
+  );
   --color-primary: var(--color-yellow);
   --color-primary-ink: var(--color-charcoal);
   --color-accent: var(--color-red);
+  --color-accent-readable: #a11d14;
   --color-accent-ink: var(--color-cream);
   --color-accent-on-dark: var(--color-yellow);
   --color-primary-on-dark: var(--color-yellow);
@@ -55,5 +60,6 @@
   --color-primary: #2fbf71;
   --color-primary-ink: #07130d;
   --color-accent: #3858e9;
+  --color-accent-readable: #263fb3;
   --color-accent-ink: #ffffff;
 }
