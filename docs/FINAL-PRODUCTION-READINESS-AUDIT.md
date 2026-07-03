@@ -46,7 +46,7 @@ It is not final-live until the manual content, credential, legal and launch setu
 
 - Next.js 16, React 19, TypeScript and Tailwind CSS.
 - Server Components by default, with client code limited to navigation, forms, video loading, analytics consent and Studio.
-- Sanity 5 schema and Studio setup for structured editing.
+- Sanity 6 schema and Studio setup for structured editing.
 
 ### Components
 

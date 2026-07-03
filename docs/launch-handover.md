@@ -29,7 +29,7 @@ Current framework:
 - Next.js 16 App Router
 - React 19
 - TypeScript
-- Sanity 5 Studio embedded at `/studio`
+- Sanity 6 Studio embedded at `/studio`
 
 Package manager:
 

@@ -2,12 +2,18 @@
 
 ## Status
 
-Partially ready.
+Ready for local editing and production configuration.
 
 The website has an embedded Sanity Studio at:
 
 ```txt
 /studio
+```
+
+The same Studio is also deployed on Sanity hosting at:
+
+```txt
+https://essential-resourcing.sanity.studio/
 ```
 
 The friendly editor entry point is:
@@ -26,22 +32,23 @@ This document does not contain tokens, passwords or real account secrets.
 - CMS provider: Sanity.
 - Studio location: embedded in the Next.js app.
 - Studio route: `/studio`.
+- Hosted Studio URL: `https://essential-resourcing.sanity.studio/`.
 - Editor gate route: `/cms`.
 - Schema file: `sanity/schemas/index.ts`.
 - Studio structure file: `sanity/studioStructure.ts`.
 - Frontend Sanity client: `src/lib/sanity.ts`.
 - Public content fallback: local TypeScript content remains available.
 
-Current configured defaults if env vars are missing:
+Current connected project:
 
 ```txt
-projectId: essentialresourcing
+projectId: sle6d8y3
 dataset: production
 apiVersion: 2026-06-09
 ```
 
-David must confirm the real Sanity project ID and dataset before launch. Do not
-assume the fallback project ID is the production project.
+The project is named Essential Resourcing in Sanity. The website and embedded
+Studio should use this project only for this build.
 
 ## Environment Variables
 
@@ -68,7 +75,9 @@ Do not expose Sanity tokens with `NEXT_PUBLIC_`.
 
 ## David Access
 
-David access status cannot be confirmed from this local workspace.
+David access has been confirmed by the local Sanity CLI session for project
+setup. Before launch, still check the member role in Sanity Manage so day-to-day
+editing does not depend on one local computer session.
 
 Manual check:
 
@@ -203,15 +212,39 @@ Do not enable preview links in production until the secret is set in Railway.
 
 ## CORS And Production Domain
 
-After Railway generates the production URL and after the final custom domain is
-known, add the allowed origins in Sanity project settings:
+Configured origins:
+
+- `http://localhost:3020`
+- `http://127.0.0.1:3020`
+- `http://localhost:3000`
+- `http://127.0.0.1:3000`
+- `https://essentialresourcing.co.uk`
+- `https://www.essentialresourcing.co.uk`
+- `https://essential-resourcing.sanity.studio`
+
+After Railway generates the production URL, add that exact origin in Sanity
+project settings:
 
 - Railway generated domain
-- `https://essentialresourcing.co.uk`
-- `https://www.essentialresourcing.co.uk` if used
-- local development origin if needed
 
 Do not add broad wildcard origins.
+
+## Seeded Content
+
+The production dataset has been seeded with the current public website content:
+
+- Site Settings.
+- Homepage singleton.
+- Navigation.
+- David Walsh author/person record.
+- Services.
+- Insights / Posts.
+- Draft case studies.
+- Draft salary snapshots.
+- Draft job structure.
+
+Do not create a separate `post` type for the tutorial. Posts are managed as
+Insights / Posts in this build.
 
 ## What Not To Store In Sanity
 
@@ -234,12 +267,11 @@ Private operations belong in Railway/Postgres once enabled.
 
 ## Manual Actions For David
 
-1. Confirm the real Sanity project ID and dataset.
-2. Confirm David has Owner or Administrator access.
-3. Invite staff with the lowest sensible role.
-4. Add Railway/custom domain origins in Sanity CORS.
-5. Set Sanity environment variables in Railway.
-6. Confirm `/cms` and `/studio` work on the Railway URL before DNS switch.
-7. Keep Sanity tokens out of GitHub and prompts.
+1. Confirm David has Owner or Administrator access in Sanity Manage.
+2. Invite staff with the lowest sensible role.
+3. Add the Railway production URL to Sanity CORS after deployment.
+4. Set Sanity environment variables in Railway.
+5. Confirm `/cms` and `/studio` work on the Railway URL before DNS switch.
+6. Keep Sanity tokens out of GitHub and prompts.
 
 No shared passwords. No private candidate data in Sanity. No faff.

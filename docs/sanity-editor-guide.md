@@ -43,6 +43,12 @@ Studio route after login:
 /studio
 ```
 
+Direct Sanity-hosted Studio:
+
+```txt
+https://essential-resourcing.sanity.studio/
+```
+
 The site-level CMS gate protects the branded entry point and the embedded
 Studio route. Sanity then handles the actual editor account permissions.
 

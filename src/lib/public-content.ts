@@ -96,15 +96,38 @@ function bodySections(
   body: SanityPortableTextBlock[] | undefined,
   fallback: Insight["body"] = [],
 ): Insight["body"] {
-  const paragraphs = textFromPortableBlocks(body);
-  if (!paragraphs.length) return fallback;
+  if (!body?.length) return fallback;
 
-  return [
-    {
-      heading: "Overview",
-      content: paragraphs,
-    },
-  ];
+  const sections: Insight["body"] = [];
+  let current: Insight["body"][number] | undefined;
+
+  for (const block of body) {
+    if (block._type !== "block") continue;
+
+    const text = block.children
+      ?.map((child) => child.text)
+      .filter(Boolean)
+      .join("")
+      .trim();
+
+    if (!text) continue;
+
+    if (block.style === "h2" || block.style === "h3") {
+      current = { heading: text, content: [] };
+      sections.push(current);
+      continue;
+    }
+
+    if (!current) {
+      current = { heading: "Overview", content: [] };
+      sections.push(current);
+    }
+
+    current.content.push(text);
+  }
+
+  const completeSections = sections.filter((section) => section.content.length);
+  return completeSections.length ? completeSections : fallback;
 }
 
 function mapService(item: SanityService, fallback?: Service): Service {

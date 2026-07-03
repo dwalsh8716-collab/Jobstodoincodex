@@ -11,7 +11,7 @@ This pass was added after the initial full build to make the project sharper, sa
 
 ## Changes Made
 
-- Upgraded the runtime stack to Next.js 16, React 19, Sanity 5 and next-sanity 13.
+- Upgraded the runtime stack to Next.js 16, React 19, Sanity 6 and next-sanity 13.
 - Updated ESLint to the Next 16 flat config package shape.
 - Added `AGENTS.md` so future Codex sessions inherit project rules.
 - Added `/llms.txt` and `/llms-full.txt` generated from canonical content.

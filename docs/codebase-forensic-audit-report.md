@@ -34,7 +34,7 @@ Frontend:
 
 CMS:
 
-- Sanity 5 Studio embedded at `/studio`.
+- Sanity 6 Studio embedded at `/studio`.
 - Branded CMS gate at `/cms`.
 - Public content schemas for pages, services, jobs, insights, case studies, salary snapshots, testimonials, FAQs, people, navigation and site settings.
 - Server-only Sanity fetch layer with local fallback content.

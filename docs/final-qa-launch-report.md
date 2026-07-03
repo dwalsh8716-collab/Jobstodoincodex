@@ -134,7 +134,7 @@ Status: partially ready.
 
 What is good:
 
-- Sanity 5 Studio is embedded at `/studio`.
+- Sanity 6 Studio is embedded at `/studio`.
 - Friendly CMS entry point exists at `/cms`.
 - `/studio` is protected by the same CMS session gate before Sanity loads.
 - Editor docs exist:

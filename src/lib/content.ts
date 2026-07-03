@@ -134,7 +134,7 @@ export const services: Service[] = [
       variant: "primary",
     },
     seoTitle:
-      "Leadership Search for Marketing & Communications Leaders | Essential Resourcing",
+      "Leadership Search for Marketing Leaders | Essential Resourcing",
     metaDescription:
       "Founder-led leadership search for senior marketing, communications and agency leaders across Manchester, the North West and UK.",
   },
@@ -263,7 +263,7 @@ export const services: Service[] = [
       variant: "primary",
     },
     seoTitle:
-      "Agency Recruitment for Marketing, PR & Digital Teams | Essential Resourcing",
+      "Agency Recruitment for PR & Digital Teams | Essential Resourcing",
     metaDescription:
       "Specialist agency recruitment for PR, digital, creative, performance, client services and agency leadership roles.",
   },
@@ -702,7 +702,7 @@ export const caseStudies: CaseStudy[] = [
       "Proof is being checked. Add real commercial impact if it can be disclosed.",
     featured: true,
     seoTitle:
-      "Independent PR Agency Senior Account Director Case Study | Essential Resourcing",
+      "Senior Account Director Case Study | Essential Resourcing",
     metaDescription:
       "Draft anonymised case study structure for a senior PR agency hire. Add verified outcome before publication.",
   },
@@ -922,7 +922,7 @@ export const salarySnapshots: SalarySnapshot[] = [
       "Do not compare digital salaries without checking budget, team and commercial accountability.",
     ],
     seoTitle:
-      "Digital and Performance Marketing Salary Snapshot | Essential Resourcing",
+      "Digital Marketing Salary Snapshot | Essential Resourcing",
     metaDescription:
       "Draft digital and performance marketing salary snapshot for validation before publication.",
   },

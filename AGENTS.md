@@ -8,7 +8,7 @@ This is the Essential Resourcing website build: a premium, content-led recruitme
 
 - Next.js 16 App Router with TypeScript.
 - React 19.
-- Sanity 5 Studio embedded at `/studio`.
+- Sanity 6 Studio embedded at `/studio`.
 - Central CSS token system in `src/styles/theme.css`.
 - Canonical content seed data in `src/lib/content.ts`.
 

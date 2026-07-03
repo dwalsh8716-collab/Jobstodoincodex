@@ -48,7 +48,7 @@ Current stack is suitable:
 - React 19.
 - TypeScript.
 - Tailwind CSS import with a central CSS token system.
-- Sanity 5 CMS.
+- Sanity 6 CMS.
 - Vitest and Playwright.
 - Railway-ready deployment.
 

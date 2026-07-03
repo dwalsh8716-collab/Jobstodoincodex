@@ -47,7 +47,7 @@ Status: Implemented.
 
 - Next.js 16 App Router.
 - React 19.
-- Sanity 5 Studio config and `/studio` route.
+- Sanity 6 Studio config and `/studio` route.
 - Sanity schemas for requested content types.
 - Railway-ready environment setup.
 

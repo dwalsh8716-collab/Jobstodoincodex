@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@/components/Analytics";
@@ -14,6 +15,20 @@ import {
   websiteSchema,
 } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   ...createMetadata({
@@ -35,7 +50,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#101114"
+  themeColor: "#0b0b0d"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -47,9 +62,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en-GB"
+      className={`${fraunces.variable} ${inter.variable}`}
       data-palette={palette}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
+      <Script id="html-js-class" strategy="beforeInteractive">
+        {`document.documentElement.classList.add('js');`}
+      </Script>
       {hasGoogleTag ? (
         <Script id="google-consent-mode-default" strategy="beforeInteractive">
           {`
@@ -63,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
       ) : null}
       <body>
+        <div aria-hidden="true" className="scroll-progress" />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

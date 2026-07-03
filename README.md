@@ -8,7 +8,7 @@ Premium Next.js + Sanity-ready website for Essential Resourcing.
 - TypeScript
 - React 19
 - Clean CSS design system with central tokens
-- Sanity 5 Studio schemas and `/studio` route
+- Sanity 6 Studio schemas and `/studio` route
 - Railway-ready deployment
 - JSON-LD schema, dynamic sitemap, robots, RSS, `llms.txt` and `llms-full.txt`
 - API-backed contact forms with optional Resend email delivery
@@ -57,6 +57,16 @@ Required for Sanity:
 - `SANITY_DATASET`
 - `SANITY_API_VERSION`
 - `SANITY_READ_TOKEN` if private data is queried
+
+Current Sanity project for this build:
+
+- Project ID: `sle6d8y3`
+- Dataset: `production`
+- Hosted Studio: `https://essential-resourcing.sanity.studio/`
+
+Do not create a separate `studio-essential-resourcing` or
+`nextjs-essential-resourcing` tutorial app for this build. The website already
+contains the embedded Studio and Sanity frontend integration.
 
 Optional tracking:
 
@@ -401,7 +411,7 @@ docs/RAILWAY-POSTGRES-BACKEND.md
 - `X-Powered-By` is disabled.
 - Contact API accepts both browser form posts and JSON, with the same validation.
 - CV upload is intentionally disabled until secure storage is configured.
-- Dependency audit currently reports zero vulnerabilities after the Next 16 / Sanity 5 upgrade and targeted safe overrides.
+- Dependency audit currently reports zero vulnerabilities after the Next 16 / Sanity 6 upgrade and targeted safe overrides.
 
 ## Manual Items Before True Production
 

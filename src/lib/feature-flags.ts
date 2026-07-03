@@ -69,6 +69,18 @@ function defineFlags(
   }));
 }
 
+function dedupeFeatureFlagDefinitions(
+  flags: readonly FeatureFlagDefinition[],
+): FeatureFlagDefinition[] {
+  const byName = new Map<FeatureFlagName, FeatureFlagDefinition>();
+
+  for (const flag of flags) {
+    byName.set(flag.name, flag);
+  }
+
+  return Array.from(byName.values());
+}
+
 export const issue117SuggestedFeatureFlags = [
   "FEATURE_RECRUITER_LABS_ENABLED",
   "FEATURE_CLIENT_SHORTLIST_PORTAL",
@@ -82,40 +94,41 @@ export const issue117SuggestedFeatureFlags = [
   "FEATURE_INTERIM_BENCH_PORTAL",
 ] as const satisfies readonly FeatureFlagName[];
 
-export const featureFlagDefinitions: readonly FeatureFlagDefinition[] = [
-  ...defineFlags(labsFeatureFlagDefinitions, {
-    area: "Essential Resourcing Labs",
-    ownerDoc: "docs/essential-resourcing-labs.md",
-    publicBundleRule:
-      "Do not import Labs helpers into public page components. Use protected admin routes until a launch gate passes.",
-    launchRule:
-      "Default off. Enable only for protected admin planning or a reviewed, separate public release.",
-  }),
-  ...defineFlags(recruiterLabsFlagDefinitions, {
-    area: "Recruiter Labs client pipeline",
-    ownerDoc: "docs/recruiter-labs-client-pipeline-launch-gate.md",
-    publicBundleRule:
-      "Keep client-pipeline code under protected admin/private routes until signed access, consent and audit gates pass.",
-    launchRule:
-      "Default off. Do not use with real client or candidate data until the Recruiter Labs launch gate is green.",
-  }),
-  ...defineFlags(candidateTransparencyFlagDefinitions, {
-    area: "Recruiter Labs candidate transparency",
-    ownerDoc: "docs/recruiter-labs-candidate-transparency.md",
-    publicBundleRule:
-      "Keep candidate-workflow logic server-side unless a specific public job-page change is reviewed and approved.",
-    launchRule:
-      "Default off. Enable only after storage, consent, data handling and candidate copy are reviewed.",
-  }),
-  ...defineFlags(recruiterLabsAiFlagDefinitions, {
-    area: "Recruiter Labs AI Ops",
-    ownerDoc: "docs/recruiter-labs-ai-launch-gate.md",
-    publicBundleRule:
-      "Keep AI Ops code private. Do not import it into public routes or client components.",
-    launchRule:
-      "Default off. Synthetic admin testing only until provider, DPA, consent, retention and David approval gates pass.",
-  }),
-];
+export const featureFlagDefinitions: readonly FeatureFlagDefinition[] =
+  dedupeFeatureFlagDefinitions([
+    ...defineFlags(labsFeatureFlagDefinitions, {
+      area: "Essential Resourcing Labs",
+      ownerDoc: "docs/essential-resourcing-labs.md",
+      publicBundleRule:
+        "Do not import Labs helpers into public page components. Use protected admin routes until a launch gate passes.",
+      launchRule:
+        "Default off. Enable only for protected admin planning or a reviewed, separate public release.",
+    }),
+    ...defineFlags(recruiterLabsFlagDefinitions, {
+      area: "Recruiter Labs client pipeline",
+      ownerDoc: "docs/recruiter-labs-client-pipeline-launch-gate.md",
+      publicBundleRule:
+        "Keep client-pipeline code under protected admin/private routes until signed access, consent and audit gates pass.",
+      launchRule:
+        "Default off. Do not use with real client or candidate data until the Recruiter Labs launch gate is green.",
+    }),
+    ...defineFlags(candidateTransparencyFlagDefinitions, {
+      area: "Recruiter Labs candidate transparency",
+      ownerDoc: "docs/recruiter-labs-candidate-transparency.md",
+      publicBundleRule:
+        "Keep candidate-workflow logic server-side unless a specific public job-page change is reviewed and approved.",
+      launchRule:
+        "Default off. Enable only after storage, consent, data handling and candidate copy are reviewed.",
+    }),
+    ...defineFlags(recruiterLabsAiFlagDefinitions, {
+      area: "Recruiter Labs AI Ops",
+      ownerDoc: "docs/recruiter-labs-ai-launch-gate.md",
+      publicBundleRule:
+        "Keep AI Ops code private. Do not import it into public routes or client components.",
+      launchRule:
+        "Default off. Synthetic admin testing only until provider, DPA, consent, retention and David approval gates pass.",
+    }),
+  ]);
 
 export function isFeatureFlagEnabled(
   flagName: FeatureFlagName,

@@ -10,7 +10,15 @@ const eslintConfig = [
     rules: jsxA11y.flatConfigs.recommended.rules
   },
   {
-    ignores: [".next/**", "node_modules/**", ".npm-cache/**", "New Website 2026/**", "next-env.d.ts"]
+    ignores: [
+      ".next/**",
+      ".npm-cache/**",
+      ".sanity/**",
+      "dist/**",
+      "New Website 2026/**",
+      "next-env.d.ts",
+      "node_modules/**"
+    ]
   }
 ];
 

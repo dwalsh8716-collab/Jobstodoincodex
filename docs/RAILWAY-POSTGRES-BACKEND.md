@@ -32,7 +32,7 @@ Current project:
 - Next.js 16 App Router.
 - React 19.
 - TypeScript strict mode.
-- Sanity 5 Studio at `/studio`.
+- Sanity 6 Studio at `/studio`.
 - Public content fallback in local TypeScript content.
 - Contact form posts to `/api/contact`.
 - Zod validates public form payloads.
