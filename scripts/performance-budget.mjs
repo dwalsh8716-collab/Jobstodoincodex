@@ -4,8 +4,8 @@ import vm from "node:vm";
 import zlib from "node:zlib";
 
 const appDir = ".next/server/app";
-const maxRouteGzipBytes = 120 * 1024;
-const maxUniquePublicGzipBytes = 180 * 1024;
+const maxRouteGzipBytes = 80 * 1024;
+const maxUniquePublicGzipBytes = 120 * 1024;
 const ignoredRoutePattern = /^\/(studio|cms|api|llms|rss|robots|sitemap)/;
 
 function walk(dir) {

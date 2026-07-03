@@ -230,6 +230,7 @@ docs/VISUAL-DESIGN-POLISH.md
 docs/UX-CRO-AUDIT.md
 docs/BRAND-COPY-TONE-AUDIT.md
 docs/ACCESSIBILITY-WCAG-AA-AUDIT.md
+docs/PERFORMANCE-CORE-WEB-VITALS-AUDIT.md
 docs/POST-LAUNCH-GROWTH-ROADMAP.md
 docs/launch-google-seo-local-setup.md
 docs/consent-mode-v2-setup.md

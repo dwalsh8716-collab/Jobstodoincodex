@@ -282,10 +282,12 @@ export default async function HomePage() {
             <div className="home-plate-offset" aria-hidden="true" />
             <figure className="home-plate home-hero-plate">
               <Image
-                src="https://images.unsplash.com/photo-1638178350556-a7385a77981a?auto=format&fit=crop&w=1280&q=85"
+                src="https://images.unsplash.com/photo-1638178350556-a7385a77981a?auto=format&fit=crop&w=1280&q=75"
                 alt="Cinematic Manchester architecture used as an editorial recruitment image"
                 fill
                 priority
+                fetchPriority="high"
+                quality={75}
                 sizes="(min-width: 1024px) 28rem, (min-width: 640px) 24rem, 92vw"
               />
               <span className="home-plate-rule" aria-hidden="true" />
@@ -798,9 +800,11 @@ export default async function HomePage() {
         <Reveal variant="mask">
           <figure className="grain">
             <Image
-              src="https://images.unsplash.com/photo-1638178350556-a7385a77981a?auto=format&fit=crop&w=2400&q=85"
+              src="https://images.unsplash.com/photo-1638178350556-a7385a77981a?auto=format&fit=crop&w=2000&q=75"
               alt="Manchester towers at dusk, windows catching the last of the light"
               fill
+              loading="lazy"
+              quality={75}
               sizes="100vw"
             />
             <span>Plate 03 - Deansgate at dusk</span>

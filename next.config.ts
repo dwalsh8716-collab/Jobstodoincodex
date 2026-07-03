@@ -17,7 +17,8 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    minimumCacheTTL: 14400,
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 86400,
     qualities: [75, 85],
     remotePatterns: [
       {

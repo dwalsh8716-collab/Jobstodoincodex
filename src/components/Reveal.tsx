@@ -4,6 +4,36 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
 type RevealVariant = "rise" | "fade" | "mask";
 
+let sharedRevealObserver: IntersectionObserver | null = null;
+
+function revealElement(element: HTMLElement) {
+  element.classList.add("is-revealed");
+}
+
+function shouldSkipMotion() {
+  return (
+    !("IntersectionObserver" in window) ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+
+function revealObserver() {
+  if (!sharedRevealObserver) {
+    sharedRevealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          revealElement(entry.target as HTMLElement);
+          sharedRevealObserver?.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.15 },
+    );
+  }
+
+  return sharedRevealObserver;
+}
+
 export function Reveal({
   children,
   delay = 0,
@@ -21,25 +51,14 @@ export function Reveal({
     const element = ref.current;
     if (!element) return;
 
-    if (!("IntersectionObserver" in window)) {
-      element.classList.add("is-revealed");
+    if (shouldSkipMotion()) {
+      revealElement(element);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            element.classList.add("is-revealed");
-            observer.disconnect();
-          }
-        }
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.15 },
-    );
-
+    const observer = revealObserver();
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => observer.unobserve(element);
   }, []);
 
   return (
