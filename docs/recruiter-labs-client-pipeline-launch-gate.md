@@ -35,6 +35,38 @@ Safe now:
 - schema and documentation review
 - private beta preparation without real client access
 
+## David Access
+
+David can use the same private website login as the CMS.
+
+Simple route:
+
+```txt
+/recruiter-labs
+```
+
+Direct protected route:
+
+```txt
+/admin/recruiter-labs
+```
+
+If David is not signed in, the site redirects to:
+
+```txt
+/cms?next=/admin/recruiter-labs
+```
+
+The required environment variables are the existing CMS gate values:
+
+```txt
+CMS_GATE_USERNAME
+CMS_GATE_PASSWORD
+CMS_GATE_SECRET
+```
+
+No second password system is needed.
+
 Not safe yet:
 
 - sending a client a shortlist link

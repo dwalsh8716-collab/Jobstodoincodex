@@ -36,6 +36,7 @@ export const privateSitemapPathPrefixes = [
   "/cms",
   "/client",
   "/labs",
+  "/recruiter-labs",
   "/studio",
   "/preview",
 ] as const;

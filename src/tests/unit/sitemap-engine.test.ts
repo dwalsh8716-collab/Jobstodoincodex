@@ -105,6 +105,7 @@ describe("dynamic sitemap engine", () => {
   it("defensively blocks private, preview and malformed paths", () => {
     expect(isPublicSitemapPath("/services")).toBe(true);
     expect(isPublicSitemapPath("/admin")).toBe(false);
+    expect(isPublicSitemapPath("/recruiter-labs")).toBe(false);
     expect(isPublicSitemapPath("/client/shortlist/token")).toBe(false);
     expect(isPublicSitemapPath("/api/health")).toBe(false);
     expect(isPublicSitemapPath("/preview/draft")).toBe(false);
@@ -120,6 +121,7 @@ describe("dynamic sitemap engine", () => {
         "/services",
         "/services/leadership-search",
         "/admin",
+        "/recruiter-labs",
         "/client/shortlist/example",
       ],
       services: [

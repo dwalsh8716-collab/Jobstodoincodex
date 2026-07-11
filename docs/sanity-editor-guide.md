@@ -37,10 +37,29 @@ Live site route:
 /cms
 ```
 
+After login, `/cms` gives David a simple choice:
+
+- CMS Studio: public website content.
+- Recruiter Labs: private future recruitment tools.
+- Labs: private roadmap and product ideas.
+- Private admin: enquiries, tasks and operations.
+
 Studio route after login:
 
 ```txt
 /studio
+```
+
+Recruiter Labs shortcut:
+
+```txt
+/recruiter-labs
+```
+
+This shortcut uses the same CMS gate and then opens:
+
+```txt
+/admin/recruiter-labs
 ```
 
 Direct Sanity-hosted Studio:
@@ -49,8 +68,10 @@ Direct Sanity-hosted Studio:
 https://essential-resourcing.sanity.studio/
 ```
 
-The site-level CMS gate protects the branded entry point and the embedded
-Studio route. Sanity then handles the actual editor account permissions.
+The site-level CMS gate protects the branded entry point, the embedded Studio
+route and the private admin/Labs areas. Use the same username and password for
+CMS Studio, Recruiter Labs, Labs and private admin. Sanity then handles the
+actual editor account permissions inside Studio.
 
 If the CMS gate says setup is missing, add these in Railway:
 

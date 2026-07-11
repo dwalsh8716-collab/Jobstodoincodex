@@ -9,6 +9,7 @@ import {
 } from "@/lib/cms-auth";
 import { logAuditEvent } from "@/lib/operations/audit";
 import {
+  type RecruiterLabsFlagName,
   type RecruiterLabsLaunchGateStatus,
   getRecruiterLabsOverview,
 } from "@/lib/recruiter-labs";
@@ -40,8 +41,171 @@ const statusLabel = {
   manual_review: "Manual review",
 } as const;
 
+type FeatureStatus = "built" | "staged" | "discovery" | "blocked";
+
+type RecruiterLabsFeature = {
+  title: string;
+  status: FeatureStatus;
+  summary: string;
+  built: readonly string[];
+  next: string;
+  href?: string;
+  route?: string;
+  flagName?: RecruiterLabsFlagName;
+};
+
+const featureStatusLabel = {
+  built: "Built private tool",
+  staged: "Staged, not live",
+  discovery: "Discovery built",
+  blocked: "Blocked from client use",
+} as const;
+
+const recruiterLabsFeatures: readonly RecruiterLabsFeature[] = [
+  {
+    title: "Client shortlist portal",
+    status: "staged",
+    summary:
+      "A future one-link client view for shortlisted candidates. It is private, noindexed and feature-gated.",
+    built: [
+      "Magic-link route with invalid, expired, revoked and not-ready states.",
+      "Candidate cards for David summaries, strengths, watch-outs, package and working preference.",
+      "Hashed token model so raw links are not stored.",
+    ],
+    next:
+      "Do not send to real clients until Railway Postgres, audit proof, CV access and legal/privacy wording are signed off.",
+    route: "/client/shortlist/[token]",
+    flagName: "FEATURE_CLIENT_PRESENTATION_PORTAL",
+  },
+  {
+    title: "Branded candidate profiles",
+    status: "staged",
+    summary:
+      "Private candidate presentation cards for shortlists, written in David's voice and approved before a client sees them.",
+    built: [
+      "Profile fields for headline, seniority, background, strengths and watch-outs.",
+      "Named or anonymised presentation modes.",
+      "Server-side checks block missing consent, approval or unsafe retention state.",
+    ],
+    next:
+      "Needs real candidate consent flow, private CV access and David approval workflow before use.",
+    flagName: "FEATURE_BRANDED_CANDIDATE_PROFILES",
+  },
+  {
+    title: "Client feedback and engagement tracking",
+    status: "staged",
+    summary:
+      "Future private activity trail for what a client opens, expands or feeds back on inside a shortlist.",
+    built: [
+      "Private engagement event model.",
+      "Feedback actions for shortlist candidates.",
+      "Audit-safe event naming without GA4 candidate data.",
+    ],
+    next:
+      "Only becomes useful when the private database is live and the shortlist portal is approved.",
+    route: "/api/client-shortlist-feedback",
+    flagName: "FEATURE_SHORTLIST_FEEDBACK_TRACKING",
+  },
+  {
+    title: "Candidate transparency scorecard",
+    status: "built",
+    summary:
+      "A private checker that shows whether a job advert is clear enough for candidates before it goes live.",
+    built: [
+      "Checks salary clarity, must-haves, interview process, privacy notes and placeholder copy.",
+      "Blocks weak JobPosting schema until the advert is candidate-ready.",
+      "No candidate ranking or private candidate data.",
+    ],
+    next:
+      "Use this before publishing or indexing live jobs, then fix the advert copy in Sanity.",
+    href: "/admin/recruiter-labs/candidate-transparency",
+    route: "/admin/recruiter-labs/candidate-transparency",
+  },
+  {
+    title: "AI Ops sandbox",
+    status: "built",
+    summary:
+      "A private AI governance area for future admin drafting. It uses fake data only and blocks real candidate data.",
+    built: [
+      "Allowed and banned AI-use rules.",
+      "Fake interview-note prototype.",
+      "Launch gate for provider approval, consent, retention and human review.",
+    ],
+    next:
+      "Do not use with real candidate data until the AI launch gate is cleared.",
+    href: "/admin/recruiter-labs/ai-ops",
+    route: "/admin/recruiter-labs/ai-ops",
+  },
+  {
+    title: "WhatsApp CRM sync discovery",
+    status: "discovery",
+    summary:
+      "A private research area for future WhatsApp Business and Loxo workflow sync.",
+    built: [
+      "Vendor comparison and risk notes.",
+      "Candidate communication boundary rules.",
+      "Fake candidate timeline only.",
+    ],
+    next:
+      "No WhatsApp automation is live. Keep this as discovery until David approves provider, templates and consent wording.",
+    href: "/admin/recruiter-labs/whatsapp-crm-sync",
+    route: "/admin/recruiter-labs/whatsapp-crm-sync",
+    flagName: "FEATURE_WHATSAPP_CRM_SYNC",
+  },
+  {
+    title: "Retained search dashboard",
+    status: "staged",
+    summary:
+      "A future aggregate-only client dashboard for retained search progress. It must not expose candidate records.",
+    built: [
+      "Noindexed retained-search client route.",
+      "Aggregate pipeline event model.",
+      "Access logging and launch-gate notes.",
+    ],
+    next:
+      "Needs source-of-truth metrics, client wording and audit proof before client use.",
+    route: "/client/retained-search/[token]",
+    flagName: "FEATURE_RETAINED_SEARCH_DASHBOARD",
+  },
+  {
+    title: "Interview workflow and scheduling",
+    status: "blocked",
+    summary:
+      "Future interview request, WhatsApp logistics and Google Meet scheduling support.",
+    built: [
+      "Interview request model and documentation.",
+      "WhatsApp logistics flags default off.",
+      "Google scheduling remains manual-first until approved.",
+    ],
+    next:
+      "Needs Google OAuth approval, WhatsApp Business setup, candidate consent and clear audit trails.",
+    flagName: "FEATURE_INTERVIEW_REQUEST_WORKFLOW",
+  },
+  {
+    title: "David's Take audio notes",
+    status: "blocked",
+    summary:
+      "Future private audio notes from David inside candidate shortlist profiles.",
+    built: [
+      "Audio-note metadata and approval states are staged.",
+      "APIs fail closed until private storage exists.",
+      "No public audio URLs.",
+    ],
+    next:
+      "Needs private object storage, compression, signed playback, retention and legal/privacy review.",
+    route: "/api/recruiter-labs/audio-notes",
+    flagName: "FEATURE_DAVIDS_AUDIO_NOTES",
+  },
+];
+
 function launchGateStatusClass(status: RecruiterLabsLaunchGateStatus) {
   if (status === "passed") return styles.labsFlagOn;
+  if (status === "blocked") return `${styles.labsRisk} ${styles.labsRiskHigh}`;
+  return styles.labsRisk;
+}
+
+function featureStatusClass(status: FeatureStatus) {
+  if (status === "built") return styles.labsFlagOn;
   if (status === "blocked") return `${styles.labsRisk} ${styles.labsRiskHigh}`;
   return styles.labsRisk;
 }
@@ -138,6 +302,88 @@ export default async function AdminRecruiterLabsPage() {
             </Link>
           </div>
         </div>
+
+        <section
+          className={styles.featureDirectory}
+          aria-labelledby="recruiter-labs-feature-directory"
+        >
+          <div className={styles.featureDirectoryHeader}>
+            <div>
+              <p className="eyebrow">What you have built</p>
+              <h2 id="recruiter-labs-feature-directory">
+                Recruiter Labs feature map.
+              </h2>
+              <p>
+                These are private tools and staged foundations. Green means
+                useful as a private admin tool. Grey means staged. Strong
+                warning means do not use with real clients yet.
+              </p>
+            </div>
+            <span className={styles.labsRisk}>Private, noindexed</span>
+          </div>
+
+          <div
+            className={styles.featureGrid}
+            aria-label="Recruiter Labs built features"
+          >
+            {recruiterLabsFeatures.map((feature) => {
+              const flag = feature.flagName
+                ? overview.flags.find((item) => item.name === feature.flagName)
+                : undefined;
+
+              return (
+                <article className={styles.featureCard} key={feature.title}>
+                  <div className={styles.featureCardHeader}>
+                    <div>
+                      <span className={featureStatusClass(feature.status)}>
+                        {featureStatusLabel[feature.status]}
+                      </span>
+                      <h3>{feature.title}</h3>
+                    </div>
+                    {flag ? (
+                      <span
+                        className={
+                          flag.enabled ? styles.labsFlagOn : styles.labsFlagOff
+                        }
+                      >
+                        {flag.enabled ? "Flag on" : "Flag off"}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <p>{feature.summary}</p>
+
+                  <dl className={styles.featureMeta}>
+                    <div>
+                      <dt>Built</dt>
+                      <dd>
+                        <ul>
+                          {feature.built.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Where it lives</dt>
+                      <dd>
+                        {feature.href ? (
+                          <Link href={feature.href}>{feature.route}</Link>
+                        ) : (
+                          <code>{feature.route || "Private model/docs"}</code>
+                        )}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Next before real use</dt>
+                      <dd>{feature.next}</dd>
+                    </div>
+                  </dl>
+                </article>
+              );
+            })}
+          </div>
+        </section>
 
         <div className={styles.adminGrid} aria-label="Recruiter Labs overview">
           <div className={styles.adminStat}>

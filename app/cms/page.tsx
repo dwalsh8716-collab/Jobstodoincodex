@@ -26,6 +26,30 @@ const editableAreas = [
   "Insights, case studies, images, video and galleries",
 ];
 
+const privateAreaLinks = [
+  {
+    href: "/studio",
+    label: "CMS Studio",
+    detail: "Edit public website content.",
+    primary: true,
+  },
+  {
+    href: "/admin/recruiter-labs",
+    label: "Recruiter Labs",
+    detail: "Open the private future recruitment tools area.",
+  },
+  {
+    href: "/admin/labs",
+    label: "Labs",
+    detail: "Review the private ideas and roadmap area.",
+  },
+  {
+    href: "/admin",
+    label: "Private admin",
+    detail: "Check enquiries, tasks and operations.",
+  },
+];
+
 export const metadata: Metadata = {
   title: "CMS Login | Essential Resourcing",
   description: "Private editor login for the Essential Resourcing website.",
@@ -80,15 +104,26 @@ export default async function CmsPage({ searchParams }: Props) {
               <span className="tag">Signed in</span>
               <h2>Welcome back, David.</h2>
               <p>
-                The front door is open. Go into the CMS Studio to edit content,
-                add media, review jobs or prepare launch updates.
+                Same login. Same password. Choose where you want to go.
               </p>
+              <nav
+                className="cms-choice-list"
+                aria-label="Private website areas"
+              >
+                {privateAreaLinks.map((item) => (
+                  <Link
+                    className={item.primary ? "is-primary" : undefined}
+                    href={item.href}
+                    key={item.href}
+                  >
+                    <span>{item.label}</span>
+                    <small>{item.detail}</small>
+                  </Link>
+                ))}
+              </nav>
               <div className="button-row">
-                <Link className="button button-primary" href="/studio">
-                  Open CMS Studio
-                </Link>
                 <Link className="button button-secondary" href="/">
-                  View website
+                  View public website
                 </Link>
               </div>
               <form action="/api/cms/logout" method="post">
@@ -103,8 +138,8 @@ export default async function CmsPage({ searchParams }: Props) {
               <h2>Log in to the CMS.</h2>
               <p>
                 This is a simple site-level gate for the preview and live
-                website. The connected Sanity account then handles the full
-                editor workspace.
+                website. Use the same login for CMS Studio, Recruiter Labs,
+                Labs and private admin.
               </p>
 
               {!hasSetup || params?.setup === "missing" ? (

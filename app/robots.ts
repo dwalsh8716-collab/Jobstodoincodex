@@ -11,6 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         "/cms",
         "/admin",
         "/labs",
+        "/recruiter-labs",
         "/client",
         "/candidate",
         "/api",

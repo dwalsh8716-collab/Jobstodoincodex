@@ -167,6 +167,109 @@
   font-weight: 800;
 }
 
+.featureDirectory {
+  margin-top: 22px;
+}
+
+.featureDirectoryHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.featureDirectoryHeader h2 {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+}
+
+.featureDirectoryHeader p:not(.eyebrow) {
+  max-width: 820px;
+  margin-top: 8px;
+  color: var(--color-text-muted);
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  gap: 16px;
+}
+
+.featureCard {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  padding: clamp(18px, 3vw, 24px);
+}
+
+.featureCardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.featureCard h3 {
+  margin-top: 10px;
+  font-size: 1.45rem;
+}
+
+.featureCard p {
+  color: var(--color-text);
+  line-height: 1.48;
+}
+
+.featureMeta {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.featureMeta div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  border-top: 1px solid var(--color-line);
+  padding-top: 12px;
+}
+
+.featureMeta dt {
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.featureMeta dd {
+  margin: 0;
+  color: var(--color-text);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.featureMeta ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.featureMeta a {
+  color: var(--color-primary);
+  font-weight: 900;
+}
+
+.featureMeta code {
+  color: var(--color-ink);
+  font-size: 0.88rem;
+  white-space: normal;
+}
+
 .labsRoadmap {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
@@ -312,6 +415,11 @@
   }
 
   .labsCardHeader {
+    display: grid;
+  }
+
+  .featureDirectoryHeader,
+  .featureCardHeader {
     display: grid;
   }
 }

@@ -14,10 +14,15 @@ const eslintConfig = [
       ".next/**",
       ".npm-cache/**",
       ".sanity/**",
+      "bd-intelligence/.venv/**",
+      "bd-intelligence/.pytest_cache/**",
+      "bd-intelligence/exports/**",
+      "bd-intelligence/logs/**",
       "dist/**",
       "New Website 2026/**",
       "next-env.d.ts",
-      "node_modules/**"
+      "node_modules/**",
+      "outreach-recorder/**"
     ]
   }
 ];

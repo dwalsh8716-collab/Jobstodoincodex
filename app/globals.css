@@ -2129,6 +2129,48 @@ fieldset.form-row legend {
   color: var(--color-text-muted);
 }
 
+.cms-choice-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.cms-choice-list a {
+  display: grid;
+  gap: 5px;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-text);
+  padding: 15px 0;
+  text-decoration: none;
+}
+
+.cms-choice-list a:hover,
+.cms-choice-list a:focus-visible {
+  color: var(--color-ink);
+}
+
+.cms-choice-list a:focus-visible {
+  outline-offset: 6px;
+}
+
+.cms-choice-list span {
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.cms-choice-list small {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.cms-choice-list .is-primary span {
+  color: var(--color-primary);
+}
+
 .cms-login-form {
   display: grid;
   gap: 16px;

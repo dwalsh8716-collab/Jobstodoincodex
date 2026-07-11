@@ -46,9 +46,12 @@ describe("Recruiter Labs foundation", () => {
 
   it("keeps private Recruiter Labs and client routes out of the sitemap", async () => {
     const urls = (await sitemap()).map((entry) => entry.url);
+    const robots = readFileSync("app/robots.ts", "utf8");
 
     expect(urls).not.toContain(`${siteConfig.url}/admin/recruiter-labs`);
+    expect(urls).not.toContain(`${siteConfig.url}/recruiter-labs`);
     expect(urls.some((url) => url.includes("/client/shortlist"))).toBe(false);
+    expect(robots).toContain('"/recruiter-labs"');
   });
 
   it("stages the client shortlist route without making it public", () => {
@@ -395,6 +398,8 @@ describe("Recruiter Labs foundation", () => {
   it("maps the private admin workflow for the client presentation portal", () => {
     const overview = getRecruiterLabsOverview({});
     const adminPage = readFileSync("app/admin/recruiter-labs/page.tsx", "utf8");
+    const cmsPage = readFileSync("app/cms/page.tsx", "utf8");
+    const shortcutPage = readFileSync("app/recruiter-labs/page.tsx", "utf8");
 
     expect(recruiterLabsClientPresentationPortalAdminWorkflow).toEqual(
       expect.arrayContaining([
@@ -412,5 +417,14 @@ describe("Recruiter Labs foundation", () => {
     );
     expect(adminPage).toContain("Client presentation portal");
     expect(adminPage).toContain("One secure shortlist link");
+    expect(adminPage).toContain("Recruiter Labs feature map");
+    expect(adminPage).toContain("Candidate transparency scorecard");
+    expect(adminPage).toContain("WhatsApp CRM sync discovery");
+    expect(adminPage).toContain("David's Take audio notes");
+    expect(cmsPage).toContain("Recruiter Labs");
+    expect(cmsPage).toContain("/admin/recruiter-labs");
+    expect(cmsPage).toContain("Same login. Same password.");
+    expect(shortcutPage).toContain('redirect("/admin/recruiter-labs")');
+    expect(shortcutPage).toContain("index: false");
   });
 });

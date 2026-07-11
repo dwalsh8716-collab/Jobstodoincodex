@@ -56,6 +56,7 @@ describe("launch search setup", () => {
         "/cms",
         "/admin",
         "/labs",
+        "/recruiter-labs",
         "/client",
         "/candidate",
         "/api",
