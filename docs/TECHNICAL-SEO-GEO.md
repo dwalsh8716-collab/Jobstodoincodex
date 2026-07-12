@@ -10,6 +10,26 @@
 
 No second metadata system has been introduced. The config files are thin exports over the existing implementation.
 
+## Production Setup Status
+
+Current Railway production setup:
+
+- Canonical site URL: `https://essentialresourcing.co.uk`.
+- Live temporary Railway URL: `https://web-production-ba3b9.up.railway.app`.
+- GA4 is configured directly with Measurement ID `G-PS0X1DFQ4D`.
+- GTM is intentionally not configured, avoiding duplicate GA4 pageviews.
+- Google Search Console meta verification is present in deployed HTML.
+- Sitemap and robots output use the final canonical domain.
+- Final Search Console verification is still blocked until either DNS is
+  switched to Railway or David adds a DNS TXT verification record.
+- Google Business Profile and Bing Webmaster Tools remain external setup items,
+  because they require business-owner approval and/or Search Console
+  verification.
+
+There is no `meta keywords` switch to turn on. Priority search intent is handled
+through page titles, descriptions, headings, internal links, schema,
+AI-readable files and content that answers real hiring questions.
+
 ## Structured Data
 
 The site emits:
@@ -43,6 +63,20 @@ List schema is deliberately guarded. Draft proof, closed roles and unvalidated s
 ## GEO / AI Search
 
 The insights hub includes crawlable answers to common senior hiring questions around Strategic Interim, retained search, senior marketing hiring failure, agency recruitment, Marketing Director briefs, interim leadership, candidate quality and North West salary context.
+
+Public AI/entity signals now include:
+
+- `/llms.txt` for a concise public site map.
+- `/llms-full.txt` for expanded service, insight and FAQ context.
+- Founder `Person` schema for David Walsh.
+- Organisation / ProfessionalService schema for Essential Resourcing.
+- Service schema on each live service page.
+- Article schema on published insights.
+- FAQ schema only where questions and answers are visible.
+- JobPosting schema only for genuinely live jobs.
+
+Private areas, CMS, Studio, client token routes, candidate privacy journeys and
+Recruiter Labs are excluded from public indexing and public analytics.
 
 The latest SEO and AI visibility audit is tracked in:
 

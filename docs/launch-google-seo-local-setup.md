@@ -1,6 +1,8 @@
 # Launch Google SEO And Local Setup
 
-This is the manual launch setup guide for Google Search Console, GA4, Google Tag Manager, Google Business Profile, local SEO and search compliance.
+This is the launch setup guide for Google Search Console, GA4, Google Business
+Profile, Bing Webmaster Tools, local SEO, GEO / AI search and search
+compliance.
 
 The site can prepare the ground. David still needs to own the Google account, DNS, Business Profile and verification steps.
 
@@ -18,7 +20,13 @@ Google Tag Manager is optional. It is useful if you want one container to manage
 
 Google Business Profile supports local visibility on Google Search and Maps. It needs accurate business details, real service areas, genuine reviews, real photos and no fake address.
 
-Some of this cannot be automated safely. You need to log in, verify ownership and approve anything connected to Google accounts or DNS.
+Some of this cannot be automated safely. David needs to approve anything that
+changes public business details, DNS, legal wording or Google ownership.
+
+There is no modern "turn keywords on" switch. Google does not use the old
+`meta keywords` tag for ranking. Keyword work now means clear titles, helpful
+page copy, internal links, structured data, Search Console query data,
+local/entity consistency and genuinely useful content.
 
 ## Audit Summary
 
@@ -27,6 +35,10 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - `GOOGLE_SITE_VERIFICATION` env var is supported in `app/layout.tsx`.
 - `NEXT_PUBLIC_GA_ID` is supported.
 - `NEXT_PUBLIC_GTM_ID` is supported.
+- Railway production has `GOOGLE_SITE_VERIFICATION` set.
+- Railway production has direct GA4 set with Measurement ID `G-PS0X1DFQ4D`.
+- Railway production does not have `NEXT_PUBLIC_GTM_ID` set, deliberately avoiding duplicate GA4/GTM tracking.
+- Railway production has booking, WhatsApp, LinkedIn, Sanity and email delivery env vars set.
 - LinkedIn, Meta, Clarity and Hotjar env-controlled tracking is supported.
 - Tracking scripts are consent-gated and do not load when env vars are absent.
 - Google Consent Mode V2 default and update flow is implemented for Google tags.
@@ -44,26 +56,31 @@ Some of this cannot be automated safely. You need to log in, verify ownership an
 - Privacy and cookie pages explain that analytics is environment-controlled and consent-gated.
 - Contact page and footer include business identity, email and service-area signals without faking an address.
 - Draft jobs, draft proof and unvalidated salary snapshots are excluded from live indexing routes.
+- Search Console meta verification is present in the deployed HTML.
+- Canonical URLs, robots, sitemap and AI index routes use `https://essentialresourcing.co.uk`.
+- `/llms.txt` and `/llms-full.txt` are live for AI-readable site/entity mapping.
 
 ### Added In This Pass
 
 - Form error tracking event.
 - LinkedIn click tracking event.
 - Salary snapshot view tracking for future published snapshots.
-- Unit tests for sitemap and robots launch behaviour.
+- GA4 property and web stream for `https://essentialresourcing.co.uk`.
+- Direct GA4 Railway env var using `G-PS0X1DFQ4D`.
+- Consent-aware deployment verified on the Railway production URL.
+- Analytics route exclusions tightened so private/sensitive areas do not load the public analytics banner or tag scripts.
+- Unit tests for sitemap, robots and analytics privacy behaviour.
 - This Google/local launch setup guide.
 - Consent Mode V2 setup is documented in `docs/consent-mode-v2-setup.md`.
 
 ### Missing Or Manual
 
-- Google Search Console property.
-- DNS TXT verification or URL-prefix verification.
-- Sitemap submission inside Search Console.
-- GA4 property and Measurement ID.
-- Optional GTM container.
-- Search Console / GA4 linking.
-- Google Business Profile ownership and verification.
-- Bing Webmaster Tools setup.
+- Final-domain DNS switch to Railway.
+- Google Search Console final-domain verification.
+- Sitemap submission inside Search Console after verification.
+- Search Console / GA4 linking after Search Console is verified.
+- Bing Webmaster Tools setup/import after Search Console is verified.
+- Google Business Profile ownership, verification and public business-detail approval.
 - PageSpeed Insights checks on the production URL.
 - Legal review of privacy/cookie wording.
 - Final CMP approval if marketing or advertising tags are enabled.
@@ -87,6 +104,19 @@ Recommended setup:
    - `https://essentialresourcing.co.uk/contact`
 8. Request indexing for the homepage and core service pages after launch.
 9. Watch coverage, page experience and enhancement reports once Google has crawled the site.
+
+Current status:
+
+- The site already emits the Search Console meta verification tag from
+  `GOOGLE_SITE_VERIFICATION`.
+- The final production domain is still not switched to Railway, so Google cannot
+  reliably verify the URL-prefix property by crawling the current site yet.
+- Domain-property verification can be done before launch only if David adds the
+  Google DNS TXT record at the DNS provider. This does not need to switch the
+  website to Railway, but it does require DNS access and care.
+- Search Console API access needs a separate OAuth scope from the Analytics
+  setup. The current Google CLI login can read GA4 but cannot yet manage Search
+  Console.
 
 URL-prefix fallback:
 
@@ -175,19 +205,27 @@ docs/consent-mode-v2-setup.md
 Environment variable:
 
 ```txt
-NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_GA_ID=G-PS0X1DFQ4D
 ```
 
-Manual setup:
+Current setup:
 
-1. Create a GA4 property.
-2. Create a web data stream for `https://essentialresourcing.co.uk`.
-3. Copy the Measurement ID.
-4. Add it to the hosting environment as `NEXT_PUBLIC_GA_ID`.
-5. Deploy.
-6. Accept analytics consent on the site.
-7. Check GA4 Realtime.
-8. Mark useful events as conversions where appropriate.
+1. GA4 account: `Essential Resourcing`.
+2. GA4 property: `Essential Resourcing Website`.
+3. Web stream URL: `https://essentialresourcing.co.uk`.
+4. Measurement ID: `G-PS0X1DFQ4D`.
+5. Railway production env var is set.
+6. Railway deployment has succeeded.
+7. Direct GA4 is used; GTM is not currently enabled.
+8. GA4 only loads after analytics consent on public pages.
+
+Manual checks after DNS switch:
+
+1. Visit the production domain.
+2. Accept analytics cookies.
+3. Check GA4 Realtime.
+4. Mark useful events as conversions where appropriate.
+5. Link Search Console once Search Console is verified.
 
 Supported events:
 
@@ -213,7 +251,8 @@ Environment variable:
 NEXT_PUBLIC_GTM_ID=
 ```
 
-Use GTM if David wants tags managed in one place.
+Use GTM only if David wants tags managed in one place. It is not needed for the
+current launch because direct GA4 is simpler and already configured.
 
 Manual setup:
 
@@ -252,6 +291,15 @@ Do not fake an address.
 Do not use a PO box or virtual mailbox if it breaks Google rules.
 
 If Essential Resourcing is a service-area or remote founder-led business, configure it honestly.
+
+Do not change Google Business Profile details until David confirms:
+
+- whether a real address should be public or hidden;
+- the correct primary phone number;
+- opening hours or appointment-only status;
+- the primary category;
+- approved photos and logo;
+- whether there is already an existing claimed profile.
 
 Checklist:
 
@@ -331,6 +379,13 @@ Manual setup:
 3. Submit `https://essentialresourcing.co.uk/sitemap.xml`.
 4. Check crawl and indexing reports.
 5. Review any SEO reports.
+
+Recommended route:
+
+- Verify Google Search Console first.
+- Then import that verified property into Bing Webmaster Tools. Bing supports
+  importing verified sites from Google Search Console, which avoids a second
+  ownership-verification route.
 
 Other local consistency options:
 
@@ -481,17 +536,42 @@ Safer approach:
 2. Add `GOOGLE_SITE_VERIFICATION` if using Search Console meta verification.
 3. Create and verify Search Console property.
 4. Submit sitemap.
-5. Create GA4 property and add `NEXT_PUBLIC_GA_ID`, or create GTM and add `NEXT_PUBLIC_GTM_ID`.
-6. Confirm consent banner blocks tracking until accepted.
-7. Confirm GA4 Realtime events.
-8. Link Search Console and GA4.
-9. Create or claim Google Business Profile.
-10. Add accurate services, areas, photos and description.
-11. Set up Bing Webmaster Tools.
-12. Run Rich Results and schema checks.
-13. Run PageSpeed checks on production URLs.
-14. Review privacy and cookie pages legally.
-15. Start the week-one monitoring routine.
+5. Confirm direct GA4 remains set as `NEXT_PUBLIC_GA_ID=G-PS0X1DFQ4D`.
+6. Confirm `NEXT_PUBLIC_GTM_ID` remains absent unless GTM is intentionally adopted.
+7. Confirm consent banner blocks tracking until accepted.
+8. Confirm GA4 Realtime events.
+9. Link Search Console and GA4.
+10. Create or claim Google Business Profile.
+11. Add accurate services, areas, photos and description.
+12. Set up Bing Webmaster Tools.
+13. Run Rich Results and schema checks.
+14. Run PageSpeed checks on production URLs.
+15. Review privacy and cookie pages legally.
+16. Start the week-one monitoring routine.
+
+## Current Hard Blockers
+
+These are not developer tasks:
+
+1. DNS must be switched or a Search Console DNS TXT record must be added before
+   final-domain Search Console verification can truly complete.
+2. David must approve or supply the Google Business Profile facts. No fake
+   address, fake hours, fake reviews or guessed phone number.
+3. Search Console API access needs a fresh Google OAuth scope if Codex is going
+   to submit the sitemap through the API.
+4. Legal/privacy wording still needs review. This is not legal advice.
+
+## Source Notes
+
+- Google Search Central states that the `meta keywords` tag is not used by
+  Google Search.
+- Google Search Central recommends helping search engines understand content,
+  using crawlable pages, useful titles and structured data rather than keyword
+  stuffing.
+- Google recommends JSON-LD for structured data where possible.
+- Google Business Profile local visibility depends on complete, accurate
+  business information and honest service-area/address handling.
+- Bing Webmaster Tools can import verified sites from Google Search Console.
 
 ## Final Principle
 
