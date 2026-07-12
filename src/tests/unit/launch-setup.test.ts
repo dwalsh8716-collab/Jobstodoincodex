@@ -58,9 +58,21 @@ describe("launch search setup", () => {
         "/labs",
         "/recruiter-labs",
         "/client",
-        "/candidate",
+        "/candidate/",
         "/api",
       ],
     });
+  });
+
+  it("keeps public candidate pages crawlable while blocking private token routes", () => {
+    const rules = robots();
+    const disallow = Array.isArray(rules.rules)
+      ? rules.rules.flatMap((rule) => rule.disallow || [])
+      : rules.rules.disallow || [];
+
+    expect(disallow).toContain("/candidate/");
+    expect(disallow).not.toContain("/candidate");
+    expect(disallow).not.toContain("/candidates");
+    expect(disallow).not.toContain("/candidate-privacy");
   });
 });

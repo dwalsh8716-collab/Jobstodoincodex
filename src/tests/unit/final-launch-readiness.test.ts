@@ -24,9 +24,9 @@ describe("final launch readiness audit", () => {
     const audit = readFileSync("docs/FINAL-LAUNCH-READINESS-AUDIT.md", "utf8");
 
     expect(audit).toContain("public domain switch still gated");
-    expect(audit).toContain("RESEND_API_KEY");
-    expect(audit).toContain("NEXT_PUBLIC_GA_ID");
-    expect(audit).toContain("GOOGLE_SITE_VERIFICATION");
+    expect(audit).toContain("GA4 is configured directly");
+    expect(audit).toContain("Resend/contact form delivery is configured");
+    expect(audit).toContain("Search Console DNS TXT record");
     expect(audit).toContain("Sanity CORS");
     expect(audit).toContain("npm audit --audit-level=high");
     expect(audit).toContain("No fake green ticks");

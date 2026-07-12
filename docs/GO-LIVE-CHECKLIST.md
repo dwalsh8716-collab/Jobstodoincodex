@@ -6,23 +6,42 @@ The site is close to launch from a build point of view. It has the public websit
 
 Treat it as preview-ready now, not fully public-live until the items below are complete.
 
+## 12 July 2026 Status
+
+Done:
+
+- Railway production preview is live.
+- WhatsApp is configured through the central site configuration.
+- LinkedIn URL is configured.
+- Google Calendar booking URL is configured.
+- Resend/contact email variables are configured for
+  `david@essentialresourcing.co.uk`.
+- Sanity project `sle6d8y3` and dataset `production` are connected.
+- GA4 direct measurement is configured with `G-PS0X1DFQ4D`.
+- GTM is not set, deliberately avoiding duplicate analytics tags.
+- Search Console property setup has been started.
+- Public `/candidates` and `/candidate-privacy` pages are crawlable; private
+  candidate token routes are blocked.
+
 ## Must Do Before Public Launch
 
-- Add the real phone number.
-- Add the correct LinkedIn URL.
-- Confirm David's WhatsApp Business number and default message.
+- Add the real public phone number only if David wants phone shown on the site.
+- Keep the LinkedIn URL current.
+- Keep David's WhatsApp Business number and default message current.
 - Keep WhatsApp Business Cloud API disabled until Meta setup, templates and consent wording are approved.
-- Add the booking URL, if calls should go through a booking tool.
-- Create the Google Calendar Appointment Schedule and set `NEXT_PUBLIC_GOOGLE_BOOKING_URL`.
-- Configure `RESEND_API_KEY`, `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` so forms send email.
-- Create or connect the real Sanity project.
-- Add `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_VERSION` and any required read token.
+- Confirm the Google Calendar booking page still works on desktop and mobile.
+- Send one final real contact-form enquiry and confirm email delivery.
+- Keep the connected Sanity project as the single production project.
 - Invite the editor users in Sanity.
 - Set fresh `CMS_GATE_USERNAME`, `CMS_GATE_PASSWORD` and `CMS_GATE_SECRET`.
 - Review privacy policy, cookie policy and terms.
 - Review the Candidate Privacy Notice and candidate data journey.
 - Confirm analytics consent wording and tracking requirements.
-- Confirm Google Search Console verification.
+- Add the Search Console DNS TXT record at 123-reg or verify once final DNS
+  points to Railway.
+- Submit `https://essentialresourcing.co.uk/sitemap.xml` after Search Console
+  verification.
+- Link Search Console to GA4 after verification.
 - Confirm any CV handling/storage is legally and technically safe before enabling uploads.
 - Replace placeholder/draft salary data with verified salary data.
 - Replace draft case-study proof with approved outcomes.

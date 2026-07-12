@@ -56,7 +56,8 @@ List schema is deliberately guarded. Draft proof, closed roles and unvalidated s
 - Closed, expired, draft and candidate-unready jobs are excluded from the
   sitemap.
 - `app/robots.ts` allows the public site and blocks `/studio`, `/cms`,
-  `/admin`, `/labs`, `/client` and `/api`.
+  `/admin`, `/labs`, `/recruiter-labs`, `/client`, private `/candidate/`
+  token routes and `/api`.
 - `/rss.xml` lists published insights.
 - `/llms.txt` and `/llms-full.txt` expose a concise AI-readable site map and expanded content map.
 
@@ -75,8 +76,9 @@ Public AI/entity signals now include:
 - FAQ schema only where questions and answers are visible.
 - JobPosting schema only for genuinely live jobs.
 
-Private areas, CMS, Studio, client token routes, candidate privacy journeys and
-Recruiter Labs are excluded from public indexing and public analytics.
+Private areas, CMS, Studio, client token routes, private candidate token routes
+and Recruiter Labs are excluded from public indexing and public analytics. The
+public `/candidates` and `/candidate-privacy` pages remain crawlable.
 
 The latest SEO and AI visibility audit is tracked in:
 

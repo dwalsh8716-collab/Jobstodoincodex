@@ -51,6 +51,8 @@ Individual commands:
 - CMS login, `/studio`, Sanity CORS and editor access are tested.
 - Search Console, GA4 Realtime and Consent Mode V2 are tested after Google IDs
   are set.
+- Robots must block private `/candidate/` token routes without blocking public
+  `/candidates` or `/candidate-privacy` pages.
 - DNS is switched only after Railway URL, CMS, booking, analytics consent and
   email checks are green.
 

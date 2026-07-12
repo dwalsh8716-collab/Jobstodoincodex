@@ -17,6 +17,36 @@ Evidence from the final engineering gate:
 - `npm audit --audit-level=high` found 0 vulnerabilities.
 - Local production QA crawler passed with 0 route failures, 0 link failures and 0 browser failures across 84 viewport runs.
 
+## 12 July 2026 Production Update
+
+The Railway production preview is materially stronger than the original audit
+state.
+
+Now confirmed:
+
+- Railway production preview is live at `https://web-production-ba3b9.up.railway.app`.
+- GA4 is configured directly with `G-PS0X1DFQ4D`.
+- GTM is intentionally not configured, avoiding duplicate pageviews.
+- WhatsApp Business links use the central number configuration.
+- Google Calendar booking is configured.
+- Resend/contact form delivery is configured for
+  `david@essentialresourcing.co.uk`.
+- Sanity project `sle6d8y3` and dataset `production` are connected.
+- Search Console domain property setup has been started.
+- Public candidate pages are crawlable, while private `/candidate/` token
+  routes remain blocked.
+
+Still hard-blocked before final domain launch:
+
+- Add the Google Search Console DNS TXT record at the DNS provider, or verify
+  after the final domain is switched to Railway.
+- Submit the sitemap inside Search Console after verification.
+- Link Search Console to GA4 after verification.
+- Confirm or claim the Google Business Profile with accurate public business
+  facts.
+- Complete legal/privacy/cookie review.
+- Run final QA again on `https://essentialresourcing.co.uk` after DNS cutover.
+
 ## 1. Launch Readiness Verdict
 
 ### Code And Build
@@ -42,20 +72,25 @@ Recruiter Labs remains private under `/admin` routes, guarded by the CMS session
 These are launch blockers before the real domain is switched.
 
 1. Email delivery
-   - Verify Resend sender/domain.
-   - Set `RESEND_API_KEY`, `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` in Railway.
-   - Send a real contact form test and confirm it lands at `david@essentialresourcing.co.uk`.
+   - Railway email variables are configured.
+   - A browser-style contact form test has succeeded on the Railway URL.
+   - Send one final real contact form test from desktop and mobile and confirm
+     it lands at `david@essentialresourcing.co.uk`.
    - Test candidate/data request routes if they are in launch scope.
 
 2. Analytics and consent
-   - Add either `NEXT_PUBLIC_GA_ID` or `NEXT_PUBLIC_GTM_ID`, not both unless GTM is intentionally managing GA4.
+   - `NEXT_PUBLIC_GA_ID=G-PS0X1DFQ4D` is configured.
+   - `NEXT_PUBLIC_GTM_ID` is deliberately absent unless GTM is intentionally
+     adopted later.
    - Test before consent: no analytics cookies where consent is required.
    - Test accept, reject and manage-preference flows.
    - Confirm GA4 Realtime receives consented events.
    - Keep Google Consent Mode V2 in place.
 
 3. Search Console and metadata
-   - Add `GOOGLE_SITE_VERIFICATION` or complete DNS verification.
+   - Search Console property setup has been started.
+   - Complete DNS TXT verification at the DNS provider, or verify after DNS
+     points the final domain to Railway.
    - Submit `https://essentialresourcing.co.uk/sitemap.xml`.
    - Check `robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt` and `rss.xml` on the final domain.
 

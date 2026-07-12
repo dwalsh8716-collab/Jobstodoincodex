@@ -109,7 +109,7 @@ describe("interim availability magic-link staging", () => {
     expect(page).toContain('dynamic = "force-dynamic"');
     expect(api).toContain("export async function POST");
     expect(api).not.toContain("export async function GET");
-    expect(disallow).toContain("/candidate");
+    expect(disallow).toContain("/candidate/");
     expect(urls).not.toContain(`${siteConfig.url}${interimAvailabilityPath}`);
   });
 });

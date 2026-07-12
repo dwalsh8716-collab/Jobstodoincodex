@@ -138,6 +138,8 @@ test("search control routes respond and exclude private areas", async ({
   expect(robotsTxt).toContain("Sitemap:");
   expect(robotsTxt).toContain("Disallow: /admin");
   expect(robotsTxt).toContain("Disallow: /api");
+  expect(robotsTxt).toContain("Disallow: /candidate/");
+  expect(robotsTxt).not.toContain("Disallow: /candidate\n");
 });
 
 test("common short launch URLs redirect to canonical pages", async ({

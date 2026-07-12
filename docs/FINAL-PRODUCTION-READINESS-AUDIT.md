@@ -6,6 +6,16 @@ The site is production-structured, tested and preview-ready.
 
 It is not final-live until the manual content, credential, legal and launch setup items below are complete.
 
+## 12 July 2026 Production Update
+
+The Railway-hosted production preview now has the key operational integrations
+in place: GA4 direct measurement, WhatsApp, Google Calendar booking, Sanity,
+CMS gate and Resend-backed contact delivery. The remaining launch blockers are
+external ownership checks, not missing website plumbing.
+
+Do not switch DNS until Search Console verification, final-domain QA,
+legal/privacy review and Google Business Profile facts are handled properly.
+
 ## Audit Summary
 
 ### Already Existed And Preserved
@@ -106,18 +116,20 @@ It is not final-live until the manual content, credential, legal and launch setu
 
 - Add final David Walsh portrait.
 - Add real phone number.
-- Add real LinkedIn URL.
-- Confirm WhatsApp Business number and message wording.
-- Add real Google Calendar booking URL if booking should happen outside the contact form.
+- Keep the configured LinkedIn URL current.
+- Keep the configured WhatsApp Business number and message wording current.
+- Keep the configured Google Calendar booking URL current.
 - Add verified salary data.
 - Replace draft case studies with verified outcomes.
 - Add real testimonials and logos only with permission.
 - Review privacy policy, cookie policy and terms with a qualified adviser.
-- Configure Resend or another form delivery provider.
-- Configure Sanity project credentials and invite editors.
+- Resend/contact email delivery is configured; send one final real enquiry
+  before DNS cutover.
+- Sanity project credentials are configured; invite any remaining editor users.
 - Configure fresh CMS gate username, password and signing secret.
 - Confirm analytics requirements and consent wording.
-- Confirm Google Search Console verification.
+- Complete Google Search Console DNS TXT verification, then submit the sitemap
+  and link Search Console to GA4.
 - Confirm any CV handling/storage is legally and technically safe before enabling uploads.
 - Run final QA on the live production domain.
 
