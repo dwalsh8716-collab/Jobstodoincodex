@@ -208,7 +208,29 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="home-hero grain dark" aria-labelledby="hero-heading">
+      <section
+        className="home-hero home-hero-video grain dark"
+        aria-labelledby="hero-heading"
+      >
+        <video
+          className="home-hero-video-media"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/assets/video/homepage-hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source
+            src="/assets/video/homepage-hero-muted.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="/assets/video/homepage-hero-muted.webm"
+            type="video/webm"
+          />
+        </video>
         <div className="home-hero-ambient" aria-hidden="true" />
         <div className="container home-hero-grid">
           <div className="home-hero-copy">
@@ -231,10 +253,10 @@ export default async function HomePage() {
               </Reveal>
             </h1>
             <Reveal delay={360}>
-              <p className="home-hero-subhead">
+              <h2 className="home-hero-subhead">
                 Founder-led recruitment for senior marketing, PR,
                 communications, digital and agency hires.
-              </p>
+              </h2>
             </Reveal>
             <Reveal delay={480}>
               <p className="home-hero-lede">
@@ -278,31 +300,10 @@ export default async function HomePage() {
             </Reveal>
           </div>
 
-          <Reveal variant="mask" delay={380} className="home-hero-plate-wrap">
-            <div className="home-plate-offset" aria-hidden="true" />
-            <figure className="home-plate home-hero-plate">
-              <Image
-                src="https://images.unsplash.com/photo-1638178350556-a7385a77981a?auto=format&fit=crop&w=1280&q=75"
-                alt="Cinematic Manchester architecture used as an editorial recruitment image"
-                fill
-                priority
-                fetchPriority="high"
-                quality={75}
-                sizes="(min-width: 1024px) 28rem, (min-width: 640px) 24rem, 92vw"
-              />
-              <span className="home-plate-rule" aria-hidden="true" />
-              <figcaption>
-                <span>Plate 01 - Manchester</span>
-                <span>The standard. Uncompromised.</span>
-              </figcaption>
-            </figure>
-            <blockquote className="home-note">
-              <p>
-                &ldquo;The job title is <em>not</em> the brief.&rdquo;
-              </p>
-              <cite>- D. Walsh</cite>
-            </blockquote>
-          </Reveal>
+          <div className="home-hero-video-mark" aria-hidden="true">
+            <span>Manchester-led</span>
+            <span>UK-wide search</span>
+          </div>
         </div>
 
         <Reveal delay={640}>

@@ -2244,6 +2244,65 @@ fieldset.form-row legend {
   mix-blend-mode: overlay;
 }
 
+.home-hero-video {
+  background:
+    linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--color-charcoal) 94%, transparent) 0%,
+      color-mix(in srgb, var(--color-charcoal) 72%, transparent) 42%,
+      color-mix(in srgb, var(--color-charcoal) 38%, transparent) 72%,
+      color-mix(in srgb, var(--color-charcoal) 62%, transparent) 100%
+    ),
+    url("/assets/video/homepage-hero-poster.jpg") center / cover no-repeat;
+}
+
+.home-hero-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-charcoal) 56%, transparent),
+      color-mix(in srgb, var(--color-charcoal) 18%, transparent) 42%,
+      color-mix(in srgb, var(--color-charcoal) 82%, transparent)
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-charcoal) 88%, transparent),
+      color-mix(in srgb, var(--color-charcoal) 56%, transparent) 45%,
+      color-mix(in srgb, var(--color-charcoal) 18%, transparent)
+    );
+}
+
+.home-hero-video-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 54% 50%;
+  pointer-events: none;
+}
+
+.home-hero-video .home-hero-ambient {
+  z-index: 1;
+  background:
+    radial-gradient(
+      circle at 18% 16%,
+      color-mix(in srgb, var(--color-yellow) 16%, transparent),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 76% 74%,
+      color-mix(in srgb, var(--color-red) 12%, transparent),
+      transparent 34%
+    );
+}
+
 .home-hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(330px, 0.55fr);
@@ -2251,9 +2310,18 @@ fieldset.form-row legend {
   align-items: center;
 }
 
+.home-hero-video .home-hero-grid {
+  min-height: min(720px, calc(100svh - 210px));
+  grid-template-columns: minmax(0, 900px) minmax(160px, 1fr);
+}
+
 .home-hero-copy {
   position: relative;
   min-width: 0;
+}
+
+.home-hero-video .home-hero-copy {
+  max-width: 900px;
 }
 
 .home-hero-copy::before {
@@ -2266,6 +2334,13 @@ fieldset.form-row legend {
   background: linear-gradient(
     var(--color-dark-line),
     color-mix(in srgb, var(--color-dark-line) 0%, transparent)
+  );
+}
+
+.home-hero-video .home-hero-copy::before {
+  background: linear-gradient(
+    var(--color-yellow),
+    color-mix(in srgb, var(--color-yellow) 0%, transparent)
   );
 }
 
@@ -2299,12 +2374,24 @@ fieldset.form-row legend {
   line-height: 0.9;
 }
 
+.home-hero-video h1 span {
+  text-shadow: 0 20px 60px
+    color-mix(in srgb, var(--color-charcoal) 72%, transparent);
+}
+
 .home-hero h1 em {
   font-style: italic;
 }
 
 .home-punctuation {
   color: var(--color-yellow);
+}
+
+.home-hero h1 .home-punctuation {
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 .home-hero-lede {
@@ -2325,6 +2412,10 @@ fieldset.form-row legend {
   line-height: 1.5;
 }
 
+.home-hero-video .home-hero-subhead {
+  max-width: 760px;
+}
+
 .home-hero-lede strong {
   border-bottom: 1px solid
     color-mix(in srgb, var(--color-cream) 34%, transparent);
@@ -2342,6 +2433,25 @@ fieldset.form-row legend {
 .home-founder .button-primary {
   box-shadow: 0 18px 40px
     color-mix(in srgb, var(--color-yellow) 14%, transparent);
+}
+
+.home-hero-video-mark {
+  align-self: end;
+  justify-self: end;
+  display: grid;
+  gap: 8px;
+  border-right: 2px solid var(--color-yellow);
+  padding-right: 18px;
+  color: color-mix(in srgb, var(--color-cream) 72%, transparent);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.home-hero-video-mark span:first-child {
+  color: var(--color-cream);
 }
 
 .home-hero-plate-wrap {
@@ -3534,6 +3644,15 @@ fieldset.form-row legend {
     display: grid;
   }
 
+  .home-hero-video .home-hero-grid {
+    min-height: min(680px, calc(100svh - 180px));
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-video-mark {
+    display: none;
+  }
+
   .home-section-header {
     display: grid;
     align-items: start;
@@ -3732,13 +3851,40 @@ fieldset.form-row legend {
     padding-top: 64px;
   }
 
+  .home-hero-video {
+    min-height: calc(100svh - 76px);
+  }
+
+  .home-hero-video::before {
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-charcoal) 70%, transparent),
+        color-mix(in srgb, var(--color-charcoal) 42%, transparent) 44%,
+        color-mix(in srgb, var(--color-charcoal) 88%, transparent)
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-charcoal) 90%, transparent),
+        color-mix(in srgb, var(--color-charcoal) 58%, transparent)
+      );
+  }
+
+  .home-hero-video-media {
+    object-position: 58% 50%;
+  }
+
   .home-hero h1 {
     margin-top: 34px;
   }
 
   .home-hero h1 span {
-    font-size: 3.65rem;
+    font-size: 3.35rem;
     line-height: 0.95;
+  }
+
+  .home-hero-subhead {
+    margin-top: 24px;
   }
 
   .home-hero-lede,
@@ -3746,6 +3892,25 @@ fieldset.form-row legend {
   .home-large-copy {
     font-size: 1.04rem;
     line-height: 1.7;
+  }
+
+  .home-hero-lede {
+    margin-top: 28px;
+  }
+
+  .home-hero .home-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 28px;
+  }
+
+  .home-hero .home-actions > :not(.button-primary) {
+    display: none;
+  }
+
+  .home-hero .home-actions .button-primary {
+    justify-content: center;
+    width: 100%;
   }
 
   .home-hero-proof {
@@ -3904,5 +4069,15 @@ fieldset.form-row legend {
     translate: 0 0;
     clip-path: none;
     transition: none;
+  }
+
+  .home-hero-video-media {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-data: reduce) {
+  .home-hero-video-media {
+    display: none;
   }
 }
