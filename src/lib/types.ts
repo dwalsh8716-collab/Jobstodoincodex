@@ -209,6 +209,7 @@ export type Job = {
   quickQuestionRoute: string;
   applicationCta: CTA;
   applicationEmail: string;
+  applicationFormEnabled?: boolean;
   postedDate: string;
   publishedDate: string;
   updatedDate: string;

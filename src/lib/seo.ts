@@ -213,18 +213,113 @@ export function articleSchema(insight: Insight) {
   };
 }
 
+const htmlEscapes: Record<string, string> = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+};
+
+function escapeHtml(value: string) {
+  return value.replace(
+    /[&<>"']/g,
+    (character) => htmlEscapes[character] ?? character,
+  );
+}
+
+function cleanJobText(value?: string) {
+  return value?.replace(/\s+/g, " ").trim() || "";
+}
+
+function jobPostingParagraph(label: string, value?: string) {
+  const text = cleanJobText(value);
+  if (!text) return "";
+  return `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(text)}</p>`;
+}
+
+function jobPostingList(label: string, items: string[]) {
+  const cleanItems = items.map(cleanJobText).filter(Boolean);
+  if (!cleanItems.length) return "";
+
+  return `<p><strong>${escapeHtml(label)}:</strong></p><ul>${cleanItems
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("")}</ul>`;
+}
+
+export function jobPostingDescriptionHtml(job: Job) {
+  const salaryText = [job.salaryRange, job.salaryTransparencyNote]
+    .map(cleanJobText)
+    .filter(Boolean)
+    .join(". ");
+  const locationText = [
+    job.location,
+    job.officeLocation,
+    job.workingPattern,
+    job.hybridPattern,
+    job.hybridReality,
+    job.locationExpectation,
+    job.travelExpectation,
+  ]
+    .map(cleanJobText)
+    .filter(Boolean)
+    .join(". ");
+
+  return [
+    jobPostingParagraph("Summary", job.summary),
+    jobPostingParagraph("Why the role exists", job.whyRoleExists),
+    jobPostingList("Role overview", job.description),
+    jobPostingList("David's take", job.davidsTake),
+    jobPostingList("Responsibilities", job.responsibilities),
+    jobPostingList("Must-haves", job.mustHaves),
+    jobPostingList("Useful extras", job.niceToHaves),
+    jobPostingList("What good looks like", job.whatGoodLooksLike),
+    jobPostingList("Requirements", job.requirements),
+    jobPostingList("Benefits", job.benefits),
+    jobPostingParagraph("Salary or rate", salaryText),
+    jobPostingParagraph("Location and working pattern", locationText),
+    jobPostingList(
+      "Interview process",
+      job.interviewSteps.length ? job.interviewSteps : job.interviewProcess,
+    ),
+    jobPostingList("What happens after applying", job.applicationProcess),
+    jobPostingParagraph("How to apply", job.applicationNotes),
+  ]
+    .filter(Boolean)
+    .join("");
+}
+
+function googleEmploymentType(job: Job) {
+  const copy = [job.employmentType, job.workingPattern, job.roleType]
+    .join(" ")
+    .toLowerCase();
+  const types = new Set<string>();
+
+  if (/\b(part[- ]time|fractional)\b/.test(copy)) types.add("PART_TIME");
+  if (/\b(full[- ]time|permanent)\b/.test(copy)) types.add("FULL_TIME");
+  if (/\b(contract|contractor|freelance)\b/.test(copy)) {
+    types.add("CONTRACTOR");
+  }
+  if (/\b(interim|temporary|temp|fixed[- ]term)\b/.test(copy)) {
+    types.add("TEMPORARY");
+  }
+  if (/\b(day rate|daily rate|per diem)\b/.test(copy)) types.add("PER_DIEM");
+
+  const values = [...types];
+  if (!values.length) return "OTHER";
+  return values.length === 1 ? values[0] : values;
+}
+
 export function jobPostingSchema(job: Job) {
-  const unitTextBySalaryPeriod: Record<
-    Job["salaryPeriod"] | Job["ratePeriod"],
-    string
+  type SalaryUnitText = "YEAR" | "DAY" | "HOUR" | "WEEK" | "MONTH";
+  const unitTextBySalaryPeriod: Partial<
+    Record<Job["salaryPeriod"] | Job["ratePeriod"], SalaryUnitText>
   > = {
     annual: "YEAR",
     daily: "DAY",
     hourly: "HOUR",
     weekly: "WEEK",
     monthly: "MONTH",
-    fixed: "PROJECT",
-    to_be_confirmed: "YEAR",
   };
   const canPublishSalary = ["public_range", "indicative_range"].includes(
     job.salaryVisibility,
@@ -237,11 +332,12 @@ export function jobPostingSchema(job: Job) {
     typeof job.salaryMin === "number" && typeof job.salaryMax === "number"
       ? job.salaryPeriod
       : job.ratePeriod;
+  const salaryUnitText = unitTextBySalaryPeriod[salaryPeriod];
   const hasStructuredSalary =
     canPublishSalary &&
     typeof salaryMin === "number" &&
     typeof salaryMax === "number" &&
-    salaryPeriod !== "to_be_confirmed";
+    Boolean(salaryUnitText);
 
   return {
     "@context": "https://schema.org",
@@ -252,14 +348,26 @@ export function jobPostingSchema(job: Job) {
       name: siteConfig.name,
       value: job.slug,
     },
-    description: `${job.summary}\n\n${job.description.join("\n")}`,
-    datePosted: job.publishedDate,
-    dateModified: job.updatedDate,
+    url: absoluteUrl(`/jobs/${job.slug}`),
+    description: jobPostingDescriptionHtml(job),
+    datePosted: job.postedDate || job.publishedDate,
+    dateModified: job.updatedDate || job.postedDate || job.publishedDate,
     ...(job.closingDate ? { validThrough: job.closingDate } : {}),
-    employmentType: job.employmentType.toUpperCase().replaceAll("-", "_"),
+    employmentType: googleEmploymentType(job),
     industry: job.sector,
     occupationalCategory: job.specialism,
-    directApply: true,
+    directApply:
+      job.applicationFormEnabled !== false ||
+      Boolean(job.applicationEmail.trim()),
+    ...(job.responsibilities.length
+      ? { responsibilities: job.responsibilities.join("\n") }
+      : {}),
+    ...(job.mustHaves.length || job.requirements.length
+      ? { qualifications: [...job.mustHaves, ...job.requirements].join("\n") }
+      : {}),
+    ...(job.mustHaves.length || job.niceToHaves.length
+      ? { skills: [...job.mustHaves, ...job.niceToHaves].join("\n") }
+      : {}),
     ...(hasStructuredSalary
       ? {
           baseSalary: {
@@ -269,7 +377,7 @@ export function jobPostingSchema(job: Job) {
               "@type": "QuantitativeValue",
               minValue: salaryMin,
               maxValue: salaryMax,
-              unitText: unitTextBySalaryPeriod[salaryPeriod],
+              unitText: salaryUnitText,
             },
           },
         }

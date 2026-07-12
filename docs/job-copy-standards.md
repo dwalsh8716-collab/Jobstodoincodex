@@ -65,6 +65,47 @@ Required public fields:
 - closing date where relevant
 - SEO title and meta description
 
+## Google Jobs Rules
+
+Google Jobs only works properly when the public advert and the structured data
+say the same thing.
+
+For Essential Resourcing:
+
+- `JobPosting` schema belongs on the individual job page only, never on the
+  jobs listing page.
+- Draft jobs must stay out of the sitemap, AI index routes and JobPosting
+  schema.
+- Closed or expired jobs must not keep live JobPosting schema. Close the role,
+  remove it, return 404/410, or set the expiry in the past.
+- The job title must be the plain role title. Do not add salary, "apply now",
+  urgency wording, location stuffing, brand stuffing or punctuation tricks.
+- The description must be complete and visible on the page: role overview,
+  responsibilities, requirements, must-haves, location, working pattern,
+  salary/rate, process and how to apply.
+- Salary/rate schema should use real client- or employer-provided pay data.
+  Do not invent a number to make the advert look better.
+- Fixed project fees can be shown in the advert, but they are not pushed into
+  salary schema with a made-up unit.
+- Use remote = Yes only for a role that is genuinely 100% remote. Hybrid,
+  occasional home working and negotiable flexibility are not 100% remote.
+- Fully remote jobs must state where applicants are eligible to work, usually
+  the United Kingdom unless David has confirmed otherwise.
+- Every live role needs a direct application route: the website form, direct
+  email instructions, or another clear route to David.
+
+Before asking Google to crawl a new role:
+
+1. Publish only when the candidate advert is complete.
+2. Check the page in Google's Rich Results Test.
+3. Inspect the URL in Google Search Console after the final domain is live.
+4. Use the sitemap and, for job posting updates, Google's Indexing API if it is
+   configured later.
+
+Google can still choose not to show a role in Google Jobs. The job of this site
+is to give Google clean, policy-safe, complete data and avoid the obvious
+reasons for rejection.
+
 ## David's Take
 
 David's Take should be short, useful and plain English.

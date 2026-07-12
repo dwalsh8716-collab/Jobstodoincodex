@@ -1234,11 +1234,131 @@ const service = defineType({
   },
 });
 
+type CmsDocumentValue = Record<string, unknown>;
+
+function cmsText(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function cmsArrayHasText(value: unknown) {
+  return (
+    Array.isArray(value) &&
+    value.some((item) => typeof item === "string" && item.trim().length > 0)
+  );
+}
+
+function cmsPortableTextHasText(value: unknown) {
+  return (
+    Array.isArray(value) &&
+    value.some(
+      (block) =>
+        typeof block === "object" &&
+        block !== null &&
+        Array.isArray((block as { children?: unknown }).children) &&
+        ((block as { children?: Array<{ text?: unknown }> }).children || [])
+          .map((child) => cmsText(child.text))
+          .join("")
+          .trim().length > 0,
+    )
+  );
+}
+
+function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
+  if (!document || document.status !== "live") return true;
+
+  const title = cmsText(document.title);
+  if (
+    /\b(apply now|hiring now|urgent|immediate start|job vacancy|essential resourcing)\b|[£$€]|\*{2,}|!{2,}/i.test(
+      title,
+    )
+  ) {
+    return "Use the plain role title only. No salary, urgency, brand stuffing or punctuation tricks.";
+  }
+
+  if (!cmsText(document.publishedDate) && !cmsText(document.postedDate)) {
+    return "Add a posted or published date before marking the role live.";
+  }
+
+  if (
+    document.salaryStatus === "unverified" ||
+    !["public_range", "indicative_range"].includes(
+      cmsText(document.salaryVisibility),
+    ) ||
+    !cmsText(document.salaryRange)
+  ) {
+    return "Keep this as draft until the public salary or rate range is confirmed enough to show.";
+  }
+
+  if (!cmsText(document.location) || !cmsText(document.officeLocation)) {
+    return "Add the job location and office base before marking the role live.";
+  }
+
+  if (
+    !cmsText(document.workingPattern) ||
+    document.workingPattern === "to_be_confirmed" ||
+    !cmsText(document.hybridPattern) ||
+    !cmsText(document.locationExpectation) ||
+    !cmsText(document.travelExpectation)
+  ) {
+    return "Add the working pattern, hybrid rhythm, location expectation and travel expectation first.";
+  }
+
+  if (
+    document.remotePossible === "yes" &&
+    !/\b(100% remote|fully remote|remote-first|remote first|work remotely|work from home)\b/i.test(
+      [
+        document.summary,
+        document.hybridPattern,
+        document.hybridReality,
+        document.locationExpectation,
+      ]
+        .map(cmsText)
+        .join(" "),
+    )
+  ) {
+    return "Use remote = Yes only for roles that are clearly 100% remote in the public advert.";
+  }
+
+  if (
+    !cmsText(document.summary) ||
+    !cmsPortableTextHasText(document.body) ||
+    !cmsArrayHasText(document.responsibilities) ||
+    !cmsArrayHasText(document.mustHaves)
+  ) {
+    return "Add a proper summary, role overview, responsibilities and must-haves before marking the role live.";
+  }
+
+  if (
+    !cmsArrayHasText(document.interviewSteps) ||
+    document.interviewProcessConfirmed === "to_be_confirmed" ||
+    !cmsArrayHasText(document.applicationProcess)
+  ) {
+    return "Add interview steps, process confidence and what happens after applying first.";
+  }
+
+  if (
+    document.applicationFormEnabled === false &&
+    !cmsText(document.applicationEmail)
+  ) {
+    return "Enable the application form or add an application email before marking the role live.";
+  }
+
+  if (
+    !cmsText(document.applicationNotes) ||
+    !cmsText(document.candidatePrivacyNote)
+  ) {
+    return "Add application notes and the candidate privacy note before marking the role live.";
+  }
+
+  return true;
+}
+
 const job = defineType({
   name: "job",
   title: "Job",
   type: "document",
   icon: RocketIcon,
+  validation: (rule) => rule.custom(liveJobReadinessIssue),
   fields: [
     defineField({
       name: "title",
@@ -1421,6 +1541,8 @@ const job = defineType({
       name: "remotePossible",
       title: "Remote possible?",
       type: "string",
+      description:
+        "Use Yes only for a role that is genuinely 100% remote. Use Limited for hybrid or occasional home working.",
       options: {
         list: [
           { title: "Yes", value: "yes" },
@@ -1460,6 +1582,20 @@ const job = defineType({
       name: "employmentType",
       title: "Employment type",
       type: "string",
+      description:
+        "Choose the closest Google Jobs-safe type. Use Permanent full-time for normal permanent roles.",
+      options: {
+        list: [
+          { title: "Permanent full-time", value: "permanent-full-time" },
+          { title: "Permanent part-time", value: "permanent-part-time" },
+          { title: "Fixed-term", value: "fixed-term" },
+          { title: "Contractor / freelance", value: "contractor" },
+          { title: "Temporary", value: "temporary" },
+          { title: "Interim", value: "interim" },
+          { title: "Other", value: "other" },
+        ],
+        layout: "radio",
+      },
     }),
     defineField({
       name: "roleType",
@@ -1720,6 +1856,8 @@ const job = defineType({
       title: "Application form enabled",
       type: "boolean",
       initialValue: true,
+      description:
+        "Keep enabled unless there is another direct application route. Google Jobs requires clear application instructions.",
     }),
     defineField({
       name: "publishedDate",

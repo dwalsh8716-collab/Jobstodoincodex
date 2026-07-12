@@ -55,6 +55,7 @@ describe("job copy standards", () => {
         "niceToHaves",
         "whatGoodLooksLike",
         "applicationNotes",
+        "applicationFormEnabled",
         "candidatePrivacyNote",
         "quickQuestionEnabled",
         "whatsappQuestionEnabled",
@@ -77,6 +78,8 @@ describe("job copy standards", () => {
     expect(standards).toContain("salary visibility");
     expect(standards).toContain("travel expectation");
     expect(standards).toContain("Success Indicator Rules");
+    expect(standards).toContain("Google Jobs Rules");
+    expect(standards).toContain("Rich Results Test");
     expect(standards).toContain("Private candidate and application records");
     expect(editorGuide).toContain("docs/job-copy-standards.md");
     expect(readme).toContain("docs/job-copy-standards.md");

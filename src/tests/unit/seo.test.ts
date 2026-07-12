@@ -6,6 +6,7 @@ import {
   breadcrumbSchema,
   createMetadata,
   itemListSchema,
+  jobPostingDescriptionHtml,
   jobPostingSchema,
   serviceSchema,
 } from "@/lib/seo";
@@ -97,14 +98,46 @@ describe("structured data builders", () => {
   });
 
   it("builds job posting schema without exposing draft as live state", () => {
-    const job = jobs[0];
+    const job = {
+      ...jobs[0],
+      employmentType: "Permanent full-time",
+      postedDate: "2026-06-10",
+      publishedDate: "2026-06-10",
+      updatedDate: "2026-06-10",
+    };
     const schema = jobPostingSchema(job);
 
     expect(schema).toMatchObject({
       "@type": "JobPosting",
       title: job.title,
+      url: absoluteUrl(`/jobs/${job.slug}`),
+      datePosted: "2026-06-10",
+      employmentType: "FULL_TIME",
       directApply: true,
     });
+    expect(schema.description).toContain("<p><strong>Summary:</strong>");
+    expect(schema.description).toContain("Responsibilities");
+  });
+
+  it("builds a full HTML job description from visible advert sections", () => {
+    const description = jobPostingDescriptionHtml({
+      ...jobs[0],
+      summary: "Clear summary.",
+      description: ["Plain role overview."],
+      responsibilities: ["Lead the work."],
+      mustHaves: ["Senior PR judgement."],
+      niceToHaves: ["Agency experience."],
+      whatGoodLooksLike: ["Clients feel well led."],
+      requirements: ["Relevant experience."],
+      benefits: ["Direct process with David."],
+      salaryRange: "GBP 55,000 to GBP 65,000",
+      salaryTransparencyNote: "Salary confirmed with the client.",
+    });
+
+    expect(description).toContain("<ul>");
+    expect(description).toContain("Must-haves");
+    expect(description).toContain("Salary or rate");
+    expect(description).not.toContain("<script");
   });
 
   it("omits salary schema when pay is not publishable", () => {
@@ -115,6 +148,20 @@ describe("structured data builders", () => {
       salaryMin: 55000,
       salaryMax: 65000,
       salaryPeriod: "annual",
+    });
+
+    expect(schema).not.toHaveProperty("baseSalary");
+  });
+
+  it("omits fixed project fees from salary schema rather than using a non-standard unit", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      salaryRange: "GBP 8,000 fixed project fee",
+      salaryVisibility: "public_range",
+      salaryStatus: "verified",
+      salaryMin: 8000,
+      salaryMax: 8000,
+      salaryPeriod: "fixed",
     });
 
     expect(schema).not.toHaveProperty("baseSalary");

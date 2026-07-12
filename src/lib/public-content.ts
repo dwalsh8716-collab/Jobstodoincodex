@@ -477,6 +477,8 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       item.applicationEmail ||
       fallback?.applicationEmail ||
       "hello@essentialresourcing.co.uk",
+    applicationFormEnabled:
+      item.applicationFormEnabled ?? fallback?.applicationFormEnabled ?? true,
     postedDate,
     publishedDate: postedDate,
     updatedDate:

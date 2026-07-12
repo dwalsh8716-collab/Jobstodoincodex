@@ -9,6 +9,7 @@ import {
   candidateTrustQuestions,
 } from "@/lib/candidate-transparency-content";
 import {
+  getGoogleJobPostingIssues,
   getJobTransparencyIssues,
   isJobCandidateTransparent,
   isJobLive,
@@ -183,5 +184,54 @@ describe("candidate transparency foundation", () => {
         salary: "Competitive salary",
       }),
     ).toContain("salary_or_rate_not_confirmed");
+  });
+
+  it("blocks Google Jobs risks before a role is treated as schema-ready", () => {
+    expect(
+      getGoogleJobPostingIssues({
+        ...transparentJob,
+        title: "Apply now: Senior PR Account Director £65k!!",
+      }),
+    ).toContain("job_title_not_plain_role_title");
+
+    expect(
+      getGoogleJobPostingIssues({
+        ...transparentJob,
+        description: [],
+      }),
+    ).toContain("job_description_incomplete");
+
+    expect(
+      getGoogleJobPostingIssues({
+        ...transparentJob,
+        applicationFormEnabled: false,
+        applicationEmail: "",
+      }),
+    ).toContain("job_apply_route_missing");
+
+    expect(
+      getGoogleJobPostingIssues({
+        ...transparentJob,
+        remotePossible: "yes",
+        hybridPattern: "Flexible remote setup.",
+        hybridReality: "Remote can be discussed.",
+        locationExpectation: "Work from anywhere.",
+      }),
+    ).toEqual(
+      expect.arrayContaining([
+        "remote_not_clearly_100_percent",
+        "remote_applicant_location_missing",
+      ]),
+    );
+
+    expect(
+      getGoogleJobPostingIssues(
+        {
+          ...transparentJob,
+          closingDate: "2026-01-01",
+        },
+        new Date("2026-06-10"),
+      ),
+    ).toContain("expired_live_job");
   });
 });

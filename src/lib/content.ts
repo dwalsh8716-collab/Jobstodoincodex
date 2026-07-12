@@ -1250,8 +1250,83 @@ const emptyJobListPattern =
   /\b(add |to be confirmed|tbc|confirm |before publication|draft only|draft role|this draft)\b/i;
 const candidateBuzzwordPattern =
   /\b(ninja|rockstar|superstar|wizard|guru|unicorn|exciting opportunity|fast-paced environment|dynamic team|hit the ground running|wear many hats)\b/i;
+const googleJobTitleRiskPattern =
+  /\b(apply now|hiring now|urgent|immediate start|job vacancy|essential resourcing)\b|[£$€]|\*{2,}|!{2,}/i;
+const fullyRemotePattern =
+  /\b(100% remote|fully remote|remote-first|remote first|work remotely|work from home)\b/i;
+const ukApplicantLocationPattern =
+  /\b(uk|united kingdom|great britain|britain|england|scotland|wales|northern ireland)\b/i;
 const publishableSalaryVisibility = ["public_range", "indicative_range"];
 const ratePeriods = ["daily", "hourly", "weekly", "monthly", "fixed"];
+
+export function getGoogleJobPostingIssues(
+  job: Job,
+  referenceDate = new Date(),
+) {
+  const issues: string[] = [];
+  const descriptionCopy = [
+    job.summary,
+    ...job.description,
+    ...job.responsibilities,
+    ...job.mustHaves,
+    ...job.requirements,
+    ...job.benefits,
+    job.applicationNotes,
+  ]
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (googleJobTitleRiskPattern.test(job.title)) {
+    issues.push("job_title_not_plain_role_title");
+  }
+
+  if (!job.postedDate.trim() && !job.publishedDate.trim()) {
+    issues.push("job_posted_date_missing");
+  }
+
+  if (
+    !job.summary.trim() ||
+    job.description.length === 0 ||
+    job.responsibilities.length === 0 ||
+    job.mustHaves.length === 0 ||
+    descriptionCopy.length < 240
+  ) {
+    issues.push("job_description_incomplete");
+  }
+
+  if (job.applicationFormEnabled === false && !job.applicationEmail.trim()) {
+    issues.push("job_apply_route_missing");
+  }
+
+  if (job.remotePossible === "yes") {
+    const remoteCopy = [
+      job.summary,
+      job.hybridPattern,
+      job.hybridReality,
+      job.locationExpectation,
+      job.travelExpectation,
+    ].join(" ");
+
+    if (!fullyRemotePattern.test(remoteCopy)) {
+      issues.push("remote_not_clearly_100_percent");
+    }
+
+    if (!ukApplicantLocationPattern.test(remoteCopy)) {
+      issues.push("remote_applicant_location_missing");
+    }
+  }
+
+  if (
+    job.status === "live" &&
+    job.closingDate &&
+    job.closingDate < todayIsoDate(referenceDate)
+  ) {
+    issues.push("expired_live_job");
+  }
+
+  return issues;
+}
 
 export function getJobTransparencyIssues(job: Job) {
   const issues: string[] = [];
@@ -1455,7 +1530,9 @@ export function getJobTransparencyIssues(job: Job) {
     issues.push("buzzword_jargon_present");
   }
 
-  return issues;
+  issues.push(...getGoogleJobPostingIssues(job));
+
+  return [...new Set(issues)];
 }
 
 export function isJobCandidateTransparent(job: Job) {
