@@ -208,6 +208,20 @@ export default async function HomePage() {
 
   return (
     <>
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/video/homepage-hero-mobile-poster.jpg"
+        media="(max-width: 640px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/video/homepage-hero-poster.jpg"
+        media="(min-width: 641px)"
+        fetchPriority="high"
+      />
       <section
         className="home-hero home-hero-video grain dark"
         aria-labelledby="hero-heading"
@@ -219,90 +233,76 @@ export default async function HomePage() {
           loop
           playsInline
           preload="metadata"
-          poster="/assets/video/homepage-hero-poster.jpg"
           aria-hidden="true"
         >
           <source
-            src="/assets/video/homepage-hero-mobile-muted.mp4"
-            type="video/mp4"
-            media="(max-width: 640px)"
-          />
-          <source
             src="/assets/video/homepage-hero-muted.mp4"
             type="video/mp4"
+            media="(min-width: 641px)"
           />
           <source
             src="/assets/video/homepage-hero-muted.webm"
             type="video/webm"
+            media="(min-width: 641px)"
           />
         </video>
         <div className="home-hero-ambient" aria-hidden="true" />
         <div className="container home-hero-grid">
           <div className="home-hero-copy">
-            <Reveal>
-              <p className="eyebrow home-eyebrow home-eyebrow-light">
-                Founder-led search · Marketing · Comms · PR · Digital · Agency
-              </p>
-            </Reveal>
+            <p className="eyebrow home-eyebrow home-eyebrow-light">
+              Founder-led search · Marketing · Comms · PR · Digital · Agency
+            </p>
             <h1 id="hero-heading" aria-label="No faff. No dickheads.">
-              <Reveal delay={120}>
-                <span>
-                  No faff<span className="home-punctuation">.</span>
-                </span>
-              </Reveal>
-              <Reveal delay={280}>
-                <span>
-                  <em>No dickheads</em>
-                  <span className="home-punctuation">.</span>
-                </span>
-              </Reveal>
+              <span>
+                No faff<span className="home-punctuation">.</span>
+              </span>
+              <span>
+                <em>No dickheads</em>
+                <span className="home-punctuation">.</span>
+              </span>
             </h1>
-            <Reveal delay={360}>
-              <h2 className="home-hero-subhead">
-                Founder-led recruitment for senior marketing, PR,
-                communications, digital and agency hires.
-              </h2>
-            </Reveal>
-            <Reveal delay={480}>
-              <p className="home-hero-lede">
-                It&rsquo;s not a slogan. It&rsquo;s the filter. David Walsh
-                finds premium marketing, comms, PR and digital talent for
-                serious clients, and serious roles for serious candidates.{" "}
-                <strong>Hiring done properly.</strong>
-              </p>
-            </Reveal>
-            <Reveal delay={620}>
-              <div className="button-row home-actions">
-                <Link
-                  className="button button-primary"
-                  href="/contact"
-                  {...analyticsAttributes("cta_click", {
-                    label: "Sense-check a brief",
-                    href: "/contact",
-                    location: "home hero",
-                  })}
-                >
-                  Sense-check a brief
-                </Link>
-                <Link
-                  className="button button-secondary"
-                  href="/about-david-walsh"
-                  {...analyticsAttributes("cta_click", {
-                    label: "Talk to David",
-                    href: "/about-david-walsh",
-                    location: "home hero",
-                  })}
-                >
-                  Talk to David
-                </Link>
-                <WhatsAppButton
-                  intent="hiring"
-                  label="Message David on WhatsApp"
-                  location="homepage_hero"
-                  variant="secondary"
-                />
-              </div>
-            </Reveal>
+            <h2 className="home-hero-subhead">
+              Founder-led recruitment for senior marketing, PR, communications,
+              digital and agency hires.
+            </h2>
+            <p className="home-hero-lede">
+              It&rsquo;s not a slogan. It&rsquo;s the filter. David Walsh finds
+              premium marketing, comms, PR and digital talent for serious
+              clients, and serious roles for serious candidates.{" "}
+              <strong>Hiring done properly.</strong>
+            </p>
+            <div className="button-row home-actions">
+              <Link
+                className="button button-primary"
+                href="/contact"
+                prefetch={false}
+                {...analyticsAttributes("cta_click", {
+                  label: "Sense-check a brief",
+                  href: "/contact",
+                  location: "home hero",
+                })}
+              >
+                Sense-check a brief
+              </Link>
+              <Link
+                className="button button-secondary"
+                href="/about-david-walsh"
+                prefetch={false}
+                {...analyticsAttributes("cta_click", {
+                  label: "Talk to David",
+                  href: "/about-david-walsh",
+                  location: "home hero",
+                })}
+              >
+                Talk to David
+              </Link>
+              <WhatsAppButton
+                intent="hiring"
+                label="Message David on WhatsApp"
+                location="homepage_hero"
+                variant="secondary"
+              />
+            </div>
           </div>
 
           <div className="home-hero-video-mark" aria-hidden="true">

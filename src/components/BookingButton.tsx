@@ -52,7 +52,7 @@ export function BookingButton({
   }
 
   return (
-    <Link className={classes} href={href} {...analytics}>
+    <Link className={classes} href={href} prefetch={false} {...analytics}>
       {label}
     </Link>
   );

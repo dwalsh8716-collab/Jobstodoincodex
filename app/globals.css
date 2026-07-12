@@ -1851,7 +1851,7 @@ fieldset.form-row legend {
 .mobile-sticky-cta {
   position: fixed;
   right: 14px;
-  bottom: 14px;
+  bottom: calc(14px + env(safe-area-inset-bottom));
   left: 14px;
   z-index: 80;
   display: none;
@@ -1861,6 +1861,13 @@ fieldset.form-row legend {
 .mobile-sticky-cta .button {
   width: 100%;
   box-shadow: 0 18px 44px rgba(16, 17, 20, 0.2);
+}
+
+.mobile-sticky-cta .button-secondary {
+  border-color: color-mix(in srgb, var(--color-charcoal) 16%, transparent);
+  background: color-mix(in srgb, var(--color-cream) 94%, transparent);
+  color: var(--color-charcoal);
+  backdrop-filter: blur(14px);
 }
 
 .form-note,
@@ -2245,6 +2252,8 @@ fieldset.form-row legend {
 }
 
 .home-hero-video {
+  --home-hero-poster: url("/assets/video/homepage-hero-poster.jpg");
+
   background:
     linear-gradient(
       105deg,
@@ -2253,7 +2262,7 @@ fieldset.form-row legend {
       color-mix(in srgb, var(--color-charcoal) 38%, transparent) 72%,
       color-mix(in srgb, var(--color-charcoal) 62%, transparent) 100%
     ),
-    url("/assets/video/homepage-hero-poster.jpg") center / cover no-repeat;
+    var(--home-hero-poster) center / cover no-repeat;
 }
 
 .home-hero-video::before {
@@ -2285,6 +2294,8 @@ fieldset.form-row legend {
   height: 100%;
   object-fit: cover;
   object-position: 54% 50%;
+  background: url("/assets/video/homepage-hero-poster.jpg") center / cover
+    no-repeat;
   pointer-events: none;
 }
 
@@ -3645,7 +3656,7 @@ fieldset.form-row legend {
   }
 
   .home-hero-video .home-hero-grid {
-    min-height: min(680px, calc(100svh - 180px));
+    min-height: 0;
     grid-template-columns: 1fr;
   }
 
@@ -3848,10 +3859,13 @@ fieldset.form-row legend {
 
   .home-hero {
     min-height: 0;
-    padding-top: 64px;
+    padding-top: 48px;
+    padding-bottom: 44px;
   }
 
   .home-hero-video {
+    --home-hero-poster: url("/assets/video/homepage-hero-mobile-poster.jpg");
+
     min-height: calc(100svh - 76px);
   }
 
@@ -3871,11 +3885,11 @@ fieldset.form-row legend {
   }
 
   .home-hero-video-media {
-    object-position: 58% 50%;
+    display: none;
   }
 
   .home-hero h1 {
-    margin-top: 34px;
+    margin-top: 24px;
   }
 
   .home-hero h1 span {
@@ -3884,7 +3898,7 @@ fieldset.form-row legend {
   }
 
   .home-hero-subhead {
-    margin-top: 24px;
+    margin-top: 18px;
   }
 
   .home-hero-lede,
@@ -3895,13 +3909,13 @@ fieldset.form-row legend {
   }
 
   .home-hero-lede {
-    margin-top: 28px;
+    margin-top: 22px;
   }
 
   .home-hero .home-actions {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 28px;
+    margin-top: 24px;
   }
 
   .home-hero .home-actions > :not(.button-primary) {

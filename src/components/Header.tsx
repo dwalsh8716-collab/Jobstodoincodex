@@ -21,7 +21,12 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <Link className="brand" href="/" aria-label="Essential Resourcing home">
+      <Link
+        className="brand"
+        href="/"
+        aria-label="Essential Resourcing home"
+        prefetch={false}
+      >
         <Image
           src={siteConfig.logoDark}
           width={300}
@@ -59,6 +64,7 @@ export function Header() {
                 href={item.href}
                 aria-current={currentFor(item.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
+                prefetch={false}
               >
                 {item.label}
               </Link>
@@ -68,6 +74,7 @@ export function Header() {
                     key={service.href}
                     href={service.href}
                     onClick={() => setOpen(false)}
+                    prefetch={false}
                   >
                     {service.label}
                   </Link>
@@ -81,6 +88,7 @@ export function Header() {
               key={item.href}
               aria-current={currentFor(item.href) ? "page" : undefined}
               onClick={() => setOpen(false)}
+              prefetch={false}
               {...("cta" in item && item.cta
                 ? analyticsAttributes("cta_click", {
                     label: "Talk to David",

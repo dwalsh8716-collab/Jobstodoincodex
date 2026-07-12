@@ -38,6 +38,7 @@ export function StickyMobileCTA() {
         <Link
           className="button button-secondary"
           href="/contact"
+          prefetch={false}
           {...analyticsAttributes("cta_click", {
             label: "Talk to David",
             href: "/contact",
