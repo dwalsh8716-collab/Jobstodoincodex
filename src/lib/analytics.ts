@@ -72,6 +72,23 @@ export const defaultConsentModeState: ConsentModeState = {
   ad_personalization: "denied",
 };
 
+const analyticsBlockedPathPrefixes = [
+  "/admin",
+  "/candidate/interim-availability",
+  "/candidate-privacy",
+  "/client",
+  "/cms",
+  "/design-system",
+  "/recruiter-labs",
+  "/studio",
+] as const;
+
+export function shouldRenderAnalyticsForPath(pathname: string) {
+  return !analyticsBlockedPathPrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 export function consentModeStateFromPreferences(
   preferences: ConsentPreferences,
 ): ConsentModeState {

@@ -4,6 +4,7 @@ import {
   analyticsConsentStorageKey,
   analyticsParamsFromElement,
   consentModeStateFromPreferences,
+  shouldRenderAnalyticsForPath,
   trackEvent,
 } from "@/lib/analytics";
 
@@ -43,6 +44,29 @@ describe("analytics utility", () => {
       ad_user_data: "granted",
       ad_personalization: "granted",
     });
+  });
+
+  it("keeps analytics off private and sensitive routes", () => {
+    expect(shouldRenderAnalyticsForPath("/admin/recruiter-labs")).toBe(false);
+    expect(shouldRenderAnalyticsForPath("/cms")).toBe(false);
+    expect(shouldRenderAnalyticsForPath("/studio/structure")).toBe(false);
+    expect(
+      shouldRenderAnalyticsForPath("/candidate/interim-availability/token"),
+    ).toBe(false);
+    expect(shouldRenderAnalyticsForPath("/candidate-privacy/request")).toBe(
+      false,
+    );
+    expect(shouldRenderAnalyticsForPath("/client/shortlist/token")).toBe(false);
+    expect(shouldRenderAnalyticsForPath("/recruiter-labs")).toBe(false);
+  });
+
+  it("keeps analytics available on public commercial pages", () => {
+    expect(shouldRenderAnalyticsForPath("/")).toBe(true);
+    expect(shouldRenderAnalyticsForPath("/services/leadership-search")).toBe(
+      true,
+    );
+    expect(shouldRenderAnalyticsForPath("/contact")).toBe(true);
+    expect(shouldRenderAnalyticsForPath("/candidates")).toBe(true);
   });
 
   it("creates safe data attributes for delegated CTA tracking", () => {

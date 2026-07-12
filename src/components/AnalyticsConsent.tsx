@@ -10,6 +10,7 @@ import {
   consentModeStateFromPreferences,
   consentPreferencesStorageKey,
   defaultConsentPreferences,
+  shouldRenderAnalyticsForPath,
   trackEvent,
   type AnalyticsEventName,
   type ConsentPreferences,
@@ -366,14 +367,7 @@ export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
   }, [preferences]);
 
   if (!hasTracking(config)) return null;
-  if (
-    pathname.startsWith("/admin") ||
-    pathname.startsWith("/client") ||
-    pathname.startsWith("/cms") ||
-    pathname.startsWith("/studio")
-  ) {
-    return null;
-  }
+  if (!shouldRenderAnalyticsForPath(pathname)) return null;
 
   function savePreferences(nextPreferences: ConsentPreferences) {
     storePreferences(nextPreferences);
