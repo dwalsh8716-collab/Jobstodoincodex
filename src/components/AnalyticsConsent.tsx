@@ -398,8 +398,14 @@ export function AnalyticsConsent({ config }: { config: AnalyticsConfig }) {
             <p>
               We use essential site functions. Analytics and marketing tags only
               load if you say yes. You can read the{" "}
-              <Link href="/cookie-policy">Cookie Policy</Link> and{" "}
-              <Link href="/privacy-policy">Privacy Policy</Link>.
+              <Link href="/cookie-policy" prefetch={false}>
+                Cookie Policy
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy-policy" prefetch={false}>
+                Privacy Policy
+              </Link>
+              .
             </p>
             {manageOpen ? (
               <div className="consent-preferences">

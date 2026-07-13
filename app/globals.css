@@ -2294,8 +2294,7 @@ fieldset.form-row legend {
   height: 100%;
   object-fit: cover;
   object-position: 54% 50%;
-  background: url("/assets/video/homepage-hero-poster.jpg") center / cover
-    no-repeat;
+  background: var(--home-hero-poster) center / cover no-repeat;
   pointer-events: none;
 }
 
@@ -3885,7 +3884,7 @@ fieldset.form-row legend {
   }
 
   .home-hero-video-media {
-    display: none;
+    object-position: 58% 50%;
   }
 
   .home-hero h1 {

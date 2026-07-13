@@ -236,6 +236,11 @@ export default async function HomePage() {
           aria-hidden="true"
         >
           <source
+            src="/assets/video/homepage-hero-mobile-muted.mp4"
+            type="video/mp4"
+            media="(max-width: 640px)"
+          />
+          <source
             src="/assets/video/homepage-hero-muted.mp4"
             type="video/mp4"
             media="(min-width: 641px)"
