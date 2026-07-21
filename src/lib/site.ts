@@ -75,9 +75,10 @@ export const siteConfig = {
     }),
   },
   region: "Manchester, North West and UK-wide",
-  defaultTitle: "Marketing Recruitment Manchester | Essential Resourcing",
+  defaultTitle:
+    "Specialist Marketing, Digital & Agency Recruitment | Essential Resourcing",
   defaultDescription:
-    "Founder-led marketing, PR, digital and agency recruitment across Manchester, the North West and UK. Senior hires, retained search and strategic interim.",
+    "AI-powered search and human judgement for specialist marketing, digital and agency recruitment. Permanent, retained and fractional hires for brands and agencies.",
   ogImage: "/assets/og-image.png",
   logoDark: "/assets/logo-dark.svg",
   logoLight: "/assets/logo-light.svg",

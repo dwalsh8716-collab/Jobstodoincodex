@@ -15,7 +15,7 @@ test("homepage loads with accessible hero and navigation", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "No faff. No dickheads.",
+      name: "Specialist marketing, digital and agency recruitment.",
     }),
   ).toBeVisible();
   await expect(page.locator("h1")).toHaveCount(1);

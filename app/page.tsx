@@ -39,18 +39,18 @@ const disciplines = [
 const filterDefinitions = [
   {
     number: "01",
-    phrase: "No faff.",
-    copy: "Straight answers, fast feedback and a process that respects everyone's time. No padded shortlists, no invented urgency, no surprises at offer stage.",
+    phrase: "AI-powered search.",
+    copy: "Useful technology helps widen the map, spot signals and remove busywork. It does not replace judgement, relationship feel or a proper conversation.",
   },
   {
     number: "02",
-    phrase: "No dickheads.",
-    copy: "It cuts both ways. Clients who respect candidates' time, and candidates who turn up properly. Work with decent people and recruitment gets remarkably simple.",
+    phrase: "Human judgement.",
+    copy: "David still sense-checks the brief, the salary, the market and the person. The point is better decisions, not a bigger spreadsheet.",
   },
   {
     number: "03",
-    phrase: "No CV flinging.",
-    copy: "Nothing goes to market until the brief survives scrutiny. If the role, the salary or the expectations are off, you'll hear it before the search starts.",
+    phrase: "No recruiter nonsense.",
+    copy: "No padded shortlists, no invented urgency, no copy-paste outreach. Fewer, better candidates with honest notes on each.",
   },
 ];
 
@@ -116,7 +116,7 @@ const processSteps = [
   },
   {
     title: "Map the market",
-    copy: "Who's genuinely good, who's genuinely available, and what they're genuinely paid. Specialist focus makes the map sharper.",
+    copy: "AI-assisted search helps widen the map and spot useful signals. Human judgement decides who's genuinely good, genuinely available and worth a proper conversation.",
   },
   {
     title: "Approach properly",
@@ -174,6 +174,7 @@ const manifestoLines = [
   "The job title is not the brief.",
   "Salary advice should be honest, not flattering.",
   "Feedback is basic respect, not a favour.",
+  "AI can sharpen the search. Human judgement makes the hire.",
   "Fewer, better candidates.",
   "Hiring done properly.",
 ];
@@ -257,24 +258,26 @@ export default async function HomePage() {
             <p className="eyebrow home-eyebrow home-eyebrow-light">
               Founder-led search · Marketing · Comms · PR · Digital · Agency
             </p>
-            <h1 id="hero-heading" aria-label="No faff. No dickheads.">
+            <h1
+              id="hero-heading"
+              aria-label="Specialist marketing, digital and agency recruitment."
+            >
               <span>
-                No faff<span className="home-punctuation">.</span>
+                Specialist marketing<span className="home-punctuation">,</span>
               </span>
               <span>
-                <em>No dickheads</em>
-                <span className="home-punctuation">.</span>
+                <em>digital and agency</em>
+              </span>
+              <span>
+                recruitment<span className="home-punctuation">.</span>
               </span>
             </h1>
             <h2 className="home-hero-subhead">
-              Founder-led recruitment for senior marketing, PR, communications,
-              digital and agency hires.
+              AI-powered search. Human judgement. No recruiter nonsense.
             </h2>
             <p className="home-hero-lede">
-              It&rsquo;s not a slogan. It&rsquo;s the filter. David Walsh finds
-              premium marketing, comms, PR and digital talent for serious
-              clients, and serious roles for serious candidates.{" "}
-              <strong>Hiring done properly.</strong>
+              Permanent, retained and fractional hires for brands and agencies
+              that need better people, not bigger shortlists.
             </p>
             <div className="button-row home-actions">
               <Link
@@ -349,15 +352,16 @@ export default async function HomePage() {
               <div>
                 <p className="eyebrow home-eyebrow">The filter</p>
                 <h2 id="filter-heading">
-                  A filter, <em>not</em> a punchline.
+                  Better search, <em>sharper</em> judgement.
                 </h2>
               </div>
             </Reveal>
             <Reveal delay={120}>
               <p className="lede home-large-copy">
                 Recruitment has a reputation problem, and it earned it.
-                Essential Resourcing runs on a shorter rulebook: three lines,
-                applied to clients and candidates alike.
+                Essential Resourcing uses technology where it helps and human
+                judgement where it matters: clearer briefs, better market
+                mapping and fewer pointless shortlists.
               </p>
             </Reveal>
           </div>

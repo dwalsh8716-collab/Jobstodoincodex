@@ -2379,9 +2379,9 @@ fieldset.form-row legend {
 .home-hero h1 span {
   display: block;
   color: var(--color-cream);
-  font-size: 7.25rem;
+  font-size: 5.35rem;
   font-weight: 600;
-  line-height: 0.9;
+  line-height: 0.94;
 }
 
 .home-hero-video h1 span {
@@ -3669,7 +3669,7 @@ fieldset.form-row legend {
   }
 
   .home-hero h1 span {
-    font-size: 5rem;
+    font-size: 4.55rem;
   }
 
   .home-hero-copy::before {
@@ -3852,13 +3852,20 @@ fieldset.form-row legend {
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   }
 
+  .mobile-sticky-cta .button {
+    gap: 4px;
+    padding-inline: 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
   .analytics-consent {
     bottom: 88px;
   }
 
   .home-hero {
     min-height: 0;
-    padding-top: 48px;
+    padding-top: 36px;
     padding-bottom: 44px;
   }
 
@@ -3888,33 +3895,35 @@ fieldset.form-row legend {
   }
 
   .home-hero h1 {
-    margin-top: 24px;
+    margin-top: 20px;
   }
 
   .home-hero h1 span {
-    font-size: 3.35rem;
+    font-size: 2.36rem;
     line-height: 0.95;
   }
 
   .home-hero-subhead {
-    margin-top: 18px;
+    margin-top: 16px;
+    font-size: 0.96rem;
+    line-height: 1.45;
   }
 
   .home-hero-lede,
   .home-founder-copy,
   .home-large-copy {
-    font-size: 1.04rem;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.62;
   }
 
   .home-hero-lede {
-    margin-top: 22px;
+    margin-top: 18px;
   }
 
   .home-hero .home-actions {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 24px;
+    margin-top: 20px;
   }
 
   .home-hero .home-actions > :not(.button-primary) {
@@ -4054,6 +4063,45 @@ fieldset.form-row legend {
   .home-city-band figcaption {
     inset-inline: 24px;
     font-size: 1.72rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-hero {
+    padding-top: 24px;
+  }
+
+  .home-eyebrow {
+    font-size: 0.68rem;
+  }
+
+  .home-hero h1 {
+    margin-top: 14px;
+  }
+
+  .home-hero h1 span {
+    font-size: 2.06rem;
+  }
+
+  .home-hero-subhead {
+    margin-top: 12px;
+    font-size: 0.88rem;
+    line-height: 1.42;
+  }
+
+  .home-hero-lede {
+    margin-top: 14px;
+  }
+
+  .home-hero-lede,
+  .home-founder-copy,
+  .home-large-copy {
+    font-size: 0.94rem;
+    line-height: 1.52;
+  }
+
+  .home-hero .home-actions {
+    margin-top: 14px;
   }
 }
 
