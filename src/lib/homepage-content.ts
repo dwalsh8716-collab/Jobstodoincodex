@@ -187,7 +187,7 @@ export const defaultHomePageContent: HomePageContent = {
       "Recruitment has a reputation problem. And, let's be fair, some of it is deserved.",
       "Technology can search a market faster than ever. AI can help analyse CVs, spot patterns and remove a lot of the boring stuff.",
       "But it can't replace judgement.",
-      "Essential Resourcing combines smart technology with proper conversations, nearly 13 years in specialist recruitment and a healthy willingness to challenge the brief when something doesn't stack up.",
+      "Essential Resourcing combines smart technology with proper conversations, nearly 15 years in specialist recruitment and a healthy willingness to challenge the brief when something doesn't stack up.",
     ],
     definitions: [
       {
@@ -294,7 +294,7 @@ export const defaultHomePageContent: HomePageContent = {
     eyebrow: "Founder-led search",
     heading: "When you work with Essential, you work with David.",
     paragraphs: [
-      "David Walsh started recruiting in 2013 and went independent in 2017. Essential Resourcing Ltd was incorporated in 2019 — the paperwork caught up later.",
+      "David Walsh has nearly 15 years of recruitment experience and went independent in 2017. Essential Resourcing Ltd was incorporated in 2019 — the paperwork caught up later.",
       "It's deliberately founder-led.",
       "No getting sold to by one person and handed to somebody else. No huge team chasing the same database.",
       "Just specialist market knowledge, proper relationships and one person accountable for doing the job properly.",
