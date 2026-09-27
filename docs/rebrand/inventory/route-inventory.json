@@ -1,0 +1,302 @@
+[
+  {
+    "file": "app/about-david-walsh/page.tsx",
+    "route": "/about-david-walsh"
+  },
+  {
+    "file": "app/about-essential/page.tsx",
+    "route": "/about-essential"
+  },
+  {
+    "file": "app/admin/audit/page.tsx",
+    "route": "/admin/audit"
+  },
+  {
+    "file": "app/admin/labs/ai-brief-builder/page.tsx",
+    "route": "/admin/labs/ai-brief-builder"
+  },
+  {
+    "file": "app/admin/labs/bad-hire-calculator/page.tsx",
+    "route": "/admin/labs/bad-hire-calculator"
+  },
+  {
+    "file": "app/admin/labs/functional-matrix/page.tsx",
+    "route": "/admin/labs/functional-matrix"
+  },
+  {
+    "file": "app/admin/labs/interim-bench/page.tsx",
+    "route": "/admin/labs/interim-bench"
+  },
+  {
+    "file": "app/admin/labs/market-dashboards/page.tsx",
+    "route": "/admin/labs/market-dashboards"
+  },
+  {
+    "file": "app/admin/labs/market-mapping/page.tsx",
+    "route": "/admin/labs/market-mapping"
+  },
+  {
+    "file": "app/admin/labs/page.tsx",
+    "route": "/admin/labs"
+  },
+  {
+    "file": "app/admin/labs/salary-benchmark/page.tsx",
+    "route": "/admin/labs/salary-benchmark"
+  },
+  {
+    "file": "app/admin/labs/salary-guides/page.tsx",
+    "route": "/admin/labs/salary-guides"
+  },
+  {
+    "file": "app/admin/page.tsx",
+    "route": "/admin"
+  },
+  {
+    "file": "app/admin/recruiter-labs/ai-ops/page.tsx",
+    "route": "/admin/recruiter-labs/ai-ops"
+  },
+  {
+    "file": "app/admin/recruiter-labs/candidate-transparency/page.tsx",
+    "route": "/admin/recruiter-labs/candidate-transparency"
+  },
+  {
+    "file": "app/admin/recruiter-labs/page.tsx",
+    "route": "/admin/recruiter-labs"
+  },
+  {
+    "file": "app/admin/recruiter-labs/whatsapp-crm-sync/page.tsx",
+    "route": "/admin/recruiter-labs/whatsapp-crm-sync"
+  },
+  {
+    "file": "app/api/candidate-application-drop/route.ts",
+    "route": "/api/candidate-application-drop"
+  },
+  {
+    "file": "app/api/client-shortlist-audio-note/route.ts",
+    "route": "/api/client-shortlist-audio-note"
+  },
+  {
+    "file": "app/api/client-shortlist-engagement/route.ts",
+    "route": "/api/client-shortlist-engagement"
+  },
+  {
+    "file": "app/api/client-shortlist-feedback/route.ts",
+    "route": "/api/client-shortlist-feedback"
+  },
+  {
+    "file": "app/api/cms/login/route.ts",
+    "route": "/api/cms/login"
+  },
+  {
+    "file": "app/api/cms/logout/route.ts",
+    "route": "/api/cms/logout"
+  },
+  {
+    "file": "app/api/contact/route.ts",
+    "route": "/api/contact"
+  },
+  {
+    "file": "app/api/data-request/confirm/route.ts",
+    "route": "/api/data-request/confirm"
+  },
+  {
+    "file": "app/api/data-request/route.ts",
+    "route": "/api/data-request"
+  },
+  {
+    "file": "app/api/health/route.ts",
+    "route": "/api/health"
+  },
+  {
+    "file": "app/api/interim-availability/route.ts",
+    "route": "/api/interim-availability"
+  },
+  {
+    "file": "app/api/preview/disable/route.ts",
+    "route": "/api/preview/disable"
+  },
+  {
+    "file": "app/api/preview/route.ts",
+    "route": "/api/preview"
+  },
+  {
+    "file": "app/api/recruiter-labs/audio-notes/route.ts",
+    "route": "/api/recruiter-labs/audio-notes"
+  },
+  {
+    "file": "app/api/recruiter-labs/brief-diagnostic/route.ts",
+    "route": "/api/recruiter-labs/brief-diagnostic"
+  },
+  {
+    "file": "app/api/salary-guide/route.ts",
+    "route": "/api/salary-guide"
+  },
+  {
+    "file": "app/api/webhooks/sanity/route.ts",
+    "route": "/api/webhooks/sanity"
+  },
+  {
+    "file": "app/api/webhooks/whatsapp/route.ts",
+    "route": "/api/webhooks/whatsapp"
+  },
+  {
+    "file": "app/book-a-call/page.tsx",
+    "route": "/book-a-call"
+  },
+  {
+    "file": "app/candidate-privacy/page.tsx",
+    "route": "/candidate-privacy"
+  },
+  {
+    "file": "app/candidate-privacy/request/confirm/page.tsx",
+    "route": "/candidate-privacy/request/confirm"
+  },
+  {
+    "file": "app/candidate-privacy/request/page.tsx",
+    "route": "/candidate-privacy/request"
+  },
+  {
+    "file": "app/candidate/interim-availability/[token]/page.tsx",
+    "route": "/candidate/interim-availability/[token]"
+  },
+  {
+    "file": "app/candidates/page.tsx",
+    "route": "/candidates"
+  },
+  {
+    "file": "app/case-studies/[slug]/page.tsx",
+    "route": "/case-studies/[slug]"
+  },
+  {
+    "file": "app/case-studies/page.tsx",
+    "route": "/case-studies"
+  },
+  {
+    "file": "app/client/retained-search/[token]/page.tsx",
+    "route": "/client/retained-search/[token]"
+  },
+  {
+    "file": "app/client/shortlist/[token]/page.tsx",
+    "route": "/client/shortlist/[token]"
+  },
+  {
+    "file": "app/clients/page.tsx",
+    "route": "/clients"
+  },
+  {
+    "file": "app/cms/page.tsx",
+    "route": "/cms"
+  },
+  {
+    "file": "app/contact/page.tsx",
+    "route": "/contact"
+  },
+  {
+    "file": "app/cookie-policy/page.tsx",
+    "route": "/cookie-policy"
+  },
+  {
+    "file": "app/design-system/page.tsx",
+    "route": "/design-system"
+  },
+  {
+    "file": "app/how-essential-resourcing-works/page.tsx",
+    "route": "/how-essential-resourcing-works"
+  },
+  {
+    "file": "app/indexnow-key.txt/route.ts",
+    "route": "/indexnow-key.txt"
+  },
+  {
+    "file": "app/insights/[slug]/page.tsx",
+    "route": "/insights/[slug]"
+  },
+  {
+    "file": "app/insights/manchester-north-west-marketing-salary-guide-2026/page.tsx",
+    "route": "/insights/manchester-north-west-marketing-salary-guide-2026"
+  },
+  {
+    "file": "app/insights/page.tsx",
+    "route": "/insights"
+  },
+  {
+    "file": "app/jobs/[slug]/page.tsx",
+    "route": "/jobs/[slug]"
+  },
+  {
+    "file": "app/jobs/page.tsx",
+    "route": "/jobs"
+  },
+  {
+    "file": "app/llms-full.txt/route.ts",
+    "route": "/llms-full.txt"
+  },
+  {
+    "file": "app/llms.txt/route.ts",
+    "route": "/llms.txt"
+  },
+  {
+    "file": "app/page.tsx",
+    "route": "/"
+  },
+  {
+    "file": "app/privacy-policy/page.tsx",
+    "route": "/privacy-policy"
+  },
+  {
+    "file": "app/recruiter-labs/page.tsx",
+    "route": "/recruiter-labs"
+  },
+  {
+    "file": "app/robots.ts",
+    "route": "/robots.ts"
+  },
+  {
+    "file": "app/rss.xml/route.ts",
+    "route": "/rss.xml"
+  },
+  {
+    "file": "app/salary-guides/page.tsx",
+    "route": "/salary-guides"
+  },
+  {
+    "file": "app/salary-guides/thanks/page.tsx",
+    "route": "/salary-guides/thanks"
+  },
+  {
+    "file": "app/salary-snapshots/[slug]/page.tsx",
+    "route": "/salary-snapshots/[slug]"
+  },
+  {
+    "file": "app/salary-snapshots/page.tsx",
+    "route": "/salary-snapshots"
+  },
+  {
+    "file": "app/services/[slug]/page.tsx",
+    "route": "/services/[slug]"
+  },
+  {
+    "file": "app/services/page.tsx",
+    "route": "/services"
+  },
+  {
+    "file": "app/sitemap.ts",
+    "route": "/sitemap.ts"
+  },
+  {
+    "file": "app/specialisms/[slug]/page.tsx",
+    "route": "/specialisms/[slug]"
+  },
+  {
+    "file": "app/specialisms/page.tsx",
+    "route": "/specialisms"
+  },
+  {
+    "file": "app/studio/[[...tool]]/page.tsx",
+    "route": "/studio/[[...tool]]"
+  },
+  {
+    "file": "app/terms/page.tsx",
+    "route": "/terms"
+  }
+]

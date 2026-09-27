@@ -30,3 +30,4 @@ bd-intelligence/data/*.sqlite
 !.env.example
 *.log
 .npm-cache
+.rebrand-preview-access.json

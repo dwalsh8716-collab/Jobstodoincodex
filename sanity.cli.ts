@@ -3,9 +3,6 @@ import { defineCliConfig } from "sanity/cli";
 export default defineCliConfig({
   api: {
     projectId: process.env.SANITY_PROJECT_ID || "sle6d8y3",
-    dataset: process.env.SANITY_DATASET || "production",
-  },
-  deployment: {
-    appId: "vzk734bjtszg6f7ac662yfbi",
+    dataset: process.env.SANITY_DATASET || "rebrand-preview",
   },
 });

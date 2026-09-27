@@ -25,6 +25,7 @@ const eslintConfig = [
       "next-env.d.ts",
       "node_modules/**",
       "outreach-recorder/**",
+      "recruiter-labs/interview-coordination-agent/frontend/**",
       "recruiter-labs/interview-coordination-agent/backend/.pytest_cache/**",
       "recruiter-labs/interview-coordination-agent/backend/.venv/**",
       "recruiter-labs/interview-coordination-agent/frontend/tsconfig.tsbuildinfo"

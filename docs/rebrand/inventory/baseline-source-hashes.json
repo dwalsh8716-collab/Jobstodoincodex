@@ -1,0 +1,2450 @@
+[
+  {
+    "path": ".env.example",
+    "sha256": "13e80a01a8df8905d3631709f730a1310499fd56178032d919d2f82c7c8bfd67"
+  },
+  {
+    "path": ".github/dependabot.yml",
+    "sha256": "2d6c4a8636b61c677b6bb2ae2b2f9a8cf2187ca8cdb119209fd650db54721d1c"
+  },
+  {
+    "path": ".github/pull_request_template.md",
+    "sha256": "318902697d2d928c0501246e985c556f30b69ad7b906fd8b7574e74854b7b91a"
+  },
+  {
+    "path": ".github/workflows/production-monitor.yml",
+    "sha256": "bf74c409935b3d6b130460df375ec92160182be4b73fb1d190013f7347398166"
+  },
+  {
+    "path": ".github/workflows/quality.yml",
+    "sha256": "4477a5f8ceaacfe656ae3ab2c70cd5fba02d1719ba9796d6bb0d94dc853c5816"
+  },
+  {
+    "path": ".github/workflows/retention-review.yml",
+    "sha256": "1f224a6d36fdad603ec50f253d1dab5d8f2759374b5a979c5f82e20f3bb220f3"
+  },
+  {
+    "path": "AGENTS.md",
+    "sha256": "d3609a63c9198d2fff79e5b49e3a140ced53cac481bea468684cf661cf60764c"
+  },
+  {
+    "path": "CHANGELOG.md",
+    "sha256": "10533faf44cd6b4b459746a40d67ab012231ffbc89001efb7f35173fbcb8229d"
+  },
+  {
+    "path": "README.md",
+    "sha256": "54b8cff2bc750d5bb53dec06cf0b4c5327f20d5b6ad4ebf8d4e46409b3d98cc2"
+  },
+  {
+    "path": "app/about-david-walsh/page.tsx",
+    "sha256": "fb8e6c3687c69345a6da10d5cdcb22d2439879ef134be9c66ed65a6dadd589c7"
+  },
+  {
+    "path": "app/about-essential/page.tsx",
+    "sha256": "79c7bce3c91eef720ddb7bc72f3e42fe6d6f8d7b0b6fe20340227a1a0221dec5"
+  },
+  {
+    "path": "app/admin/admin.module.css",
+    "sha256": "ab80e20bfed50c9f802bf532d6945acea5a956671d9fc27083cf7ec70cee1a26"
+  },
+  {
+    "path": "app/admin/audit/page.tsx",
+    "sha256": "62c5d19add21cf44f0d1477adb599a470fc0b50c964315e1dc52a8bc0e8540d2"
+  },
+  {
+    "path": "app/admin/labs/ai-brief-builder/page.tsx",
+    "sha256": "bb77dc71ed69532bc6e0d6f4fcb4abfbe580ee85115d583097c0c39b9306729f"
+  },
+  {
+    "path": "app/admin/labs/bad-hire-calculator/page.tsx",
+    "sha256": "0979239cb7bc6aa8d974d410688181e506d03851ee0483d51974bd44433dd36a"
+  },
+  {
+    "path": "app/admin/labs/functional-matrix/page.tsx",
+    "sha256": "1fac66bf191c792ac090a42af4def78266496fd81e143f2d817c4c14c5f85154"
+  },
+  {
+    "path": "app/admin/labs/interim-bench/page.tsx",
+    "sha256": "ddc338fa1a87507392afff0b50b75e4c4ad5745b064135233982cfc600ce3240"
+  },
+  {
+    "path": "app/admin/labs/market-dashboards/page.tsx",
+    "sha256": "894864e00240666f787aa2ec4f57f492d096123df17037e573ac5b353cd2a548"
+  },
+  {
+    "path": "app/admin/labs/market-mapping/page.tsx",
+    "sha256": "01d5ca20285026840b65d406aad28543e279908110ccb0f9f0c51315f1d43070"
+  },
+  {
+    "path": "app/admin/labs/page.tsx",
+    "sha256": "c101b44f58f778dbcef664932e8b28b8603251730f9a8ddc6c8ec0042a34017b"
+  },
+  {
+    "path": "app/admin/labs/salary-benchmark/page.tsx",
+    "sha256": "fb28bd87cdd6356e59e8a8e8a2ff0cbd44d53073a8a3b9feba80b4a4592e1f54"
+  },
+  {
+    "path": "app/admin/labs/salary-guides/page.tsx",
+    "sha256": "9e3d0820fa166343d1e033f27d72927784092e70789992b66a4623d29d9b052d"
+  },
+  {
+    "path": "app/admin/page.tsx",
+    "sha256": "fbdb447bc81ec5db7c29c5e3c0dff70f96f181356ed1ff51147e55551a32c39f"
+  },
+  {
+    "path": "app/admin/recruiter-labs/ai-ops/page.tsx",
+    "sha256": "2bef885caa813cb666c271d5fd198f294b42672c0b4474bdddc2830cdde678a8"
+  },
+  {
+    "path": "app/admin/recruiter-labs/candidate-transparency/page.tsx",
+    "sha256": "18605216933f149417d9759c4ac9d58854c67927acadc62c0722d6d9f2eedb25"
+  },
+  {
+    "path": "app/admin/recruiter-labs/page.tsx",
+    "sha256": "fdebf5020aa84b20e2f2cc1cfeda5b870aaf3570f12eaaebcb5ea71b4fb16333"
+  },
+  {
+    "path": "app/admin/recruiter-labs/whatsapp-crm-sync/page.tsx",
+    "sha256": "17e24997456a0ba842af8dffe9793d31022381bf575c6684c6bdada36663654d"
+  },
+  {
+    "path": "app/api/candidate-application-drop/route.ts",
+    "sha256": "4ec5ff523c1f2d631b1c2157879e036aef560b2d7e043b909a041931017cf55d"
+  },
+  {
+    "path": "app/api/client-shortlist-audio-note/route.ts",
+    "sha256": "ef22809ecc9a75b2edfcc506aa86bb72d12b8642f28fe2044f12f018c96fd84b"
+  },
+  {
+    "path": "app/api/client-shortlist-engagement/route.ts",
+    "sha256": "b2d4101714ccc2b003d2821a29360640ce9d29a3555adf25671b08781f4f14b6"
+  },
+  {
+    "path": "app/api/client-shortlist-feedback/route.ts",
+    "sha256": "a20d5b5445f7c3893209a84b7d4e102a7eb60fe5062ac69415d28f56f1472925"
+  },
+  {
+    "path": "app/api/cms/login/route.ts",
+    "sha256": "f93913d5b600ed3af1efa0aaa15f9ac4ed5feb30b852b6403afb25dccc11e3be"
+  },
+  {
+    "path": "app/api/cms/logout/route.ts",
+    "sha256": "46ae14b4cc7f5e4775d9902a57d5dcf8448f09fa6587fabea6a63b457d2aba2f"
+  },
+  {
+    "path": "app/api/contact/route.ts",
+    "sha256": "66aa1df084a9b856b13d3a8b94ec79433fdef691be92e47c75cf70e377a9ee64"
+  },
+  {
+    "path": "app/api/data-request/confirm/route.ts",
+    "sha256": "aa5d5a52b0cc6a20ad0363c6e1983d62b481c1f403ce242a2dbea3ba349e6310"
+  },
+  {
+    "path": "app/api/data-request/route.ts",
+    "sha256": "107644f64d1d918760919f20048d8563a97f496de3d2c1a30762830dc7c9aafc"
+  },
+  {
+    "path": "app/api/health/route.ts",
+    "sha256": "53d47376f67af74963d614275ad9c87e2329f0df83868972cec6d2e9f0a344b7"
+  },
+  {
+    "path": "app/api/interim-availability/route.ts",
+    "sha256": "74ace5fd59f426368224b63eef7b3b112dc5348ed6b3da017cc922c7daba8e23"
+  },
+  {
+    "path": "app/api/preview/disable/route.ts",
+    "sha256": "7c10805a7b9b0afaf2da7840981f9d3faa2eadc55dd8cc934274d9916315325b"
+  },
+  {
+    "path": "app/api/preview/route.ts",
+    "sha256": "7359b049d6decee39f587129cb6fc0966df5b87ec7adf11e1a2615fc0a92550c"
+  },
+  {
+    "path": "app/api/recruiter-labs/audio-notes/route.ts",
+    "sha256": "f6933b5e22822e8b1784609d671f2935696ebc0de5aadccc8ad5794b0a1f15f0"
+  },
+  {
+    "path": "app/api/recruiter-labs/brief-diagnostic/route.ts",
+    "sha256": "c6c412b8508bb279848b10eb890d23aca2f9b73ee5e9c04f97f8543ba55006a4"
+  },
+  {
+    "path": "app/api/salary-guide/route.ts",
+    "sha256": "e33752500eb92d65aeed86fce732f43e4dbadf0cbc65b712d003411959acf2aa"
+  },
+  {
+    "path": "app/api/webhooks/sanity/route.ts",
+    "sha256": "ed07c0cc769a0e8e028c289cbb526bc6ab6c661c76c51c606d270c0159c4f4a9"
+  },
+  {
+    "path": "app/api/webhooks/whatsapp/route.ts",
+    "sha256": "fa4b23d981507797c15aec430ca16eea62b0b5183ec6686ff6c70efdbf8c05a2"
+  },
+  {
+    "path": "app/book-a-call/page.tsx",
+    "sha256": "7ccd26ef940cd5d73a3e2fc346b46a544b05c31908096c356e0050d177d0eff7"
+  },
+  {
+    "path": "app/candidate-privacy/page.tsx",
+    "sha256": "04f0a23279f742803a9500b92932ebcc15290caec06cc07fc84e62ef85d4cf1c"
+  },
+  {
+    "path": "app/candidate-privacy/request/confirm/page.tsx",
+    "sha256": "a25f650b2bb62cc697939e33678af42d8eebe4376cd036bb3d487fe5f4cce6e2"
+  },
+  {
+    "path": "app/candidate-privacy/request/page.tsx",
+    "sha256": "6d305b161a0392ff24d2be94dc3fc9d71cc74d64acdbf086e30c69bf518bf343"
+  },
+  {
+    "path": "app/candidate/interim-availability/[token]/page.tsx",
+    "sha256": "0c134f27744ad758d807f9172c6eb7b7a029cad61bde649f813445f33b6cfe63"
+  },
+  {
+    "path": "app/candidates/page.tsx",
+    "sha256": "e20a93694f8b3496d827f5fd77a2fcbd44731a0322c37eafc2c063a6d893f244"
+  },
+  {
+    "path": "app/case-studies/[slug]/page.tsx",
+    "sha256": "bdca5c593d49393330e0eefa095fe49c4bcf04206624ebca4a40698040733105"
+  },
+  {
+    "path": "app/case-studies/page.tsx",
+    "sha256": "eec2a3ebe633896a15dbe94fbe33ca63d81492022b2f2d9fab0e78621d7412df"
+  },
+  {
+    "path": "app/client/retained-search/[token]/page.tsx",
+    "sha256": "9069e6fa3478cf7bdd346efd1fd8761d9c30143d08516dae3d8cab64b7956674"
+  },
+  {
+    "path": "app/client/shortlist/[token]/page.tsx",
+    "sha256": "9d3542649302a428fc58f30e5a1a46a228a04235e643a54269f64aace515023d"
+  },
+  {
+    "path": "app/clients/page.tsx",
+    "sha256": "ee368e91f3cc5a32f6d606294ee9459a76764741471225c2704d10370d357fdf"
+  },
+  {
+    "path": "app/cms/page.tsx",
+    "sha256": "0286bd4a7bb9b4d5597021814b3431c00b9a023acbcaef1598f004c07bcc3432"
+  },
+  {
+    "path": "app/contact/page.tsx",
+    "sha256": "7208c3b1cda330e4f4e2e9722c368983364cb1c01b20a7122b60cf6d408ff71e"
+  },
+  {
+    "path": "app/cookie-policy/page.tsx",
+    "sha256": "7ab039b60ca195dec001ae0e990a365e2a19f6a27b1ebb4de62c3385c7e93249"
+  },
+  {
+    "path": "app/design-system/page.tsx",
+    "sha256": "035ec8f83d7bd21457e28aa2c7f7bae38423891b3e1394bce948835cb70d5bc4"
+  },
+  {
+    "path": "app/global-error.tsx",
+    "sha256": "589e6cab65bec11a9670e2ffdb5b622fe3ccaf52aaf11c1c4e78a73f12390f10"
+  },
+  {
+    "path": "app/globals.css",
+    "sha256": "3907ac3c7f59d64618ccf416f6343a6b9c82413365a9a668633340f6f94c4c16"
+  },
+  {
+    "path": "app/how-essential-resourcing-works/page.tsx",
+    "sha256": "0d2571c45fbf782333f965455247b4d188772b0e763bc9133d48b49248249cbf"
+  },
+  {
+    "path": "app/indexnow-key.txt/route.ts",
+    "sha256": "84412de9d8fd23dc5c637ee127a5c7eaf976b68a95b2b33807ee40772cca6467"
+  },
+  {
+    "path": "app/insights/[slug]/page.tsx",
+    "sha256": "ceb9426def457b07b1cec95e6bc0ab79580f7f2e71fd3e99e4ae889a684abdf1"
+  },
+  {
+    "path": "app/insights/manchester-north-west-marketing-salary-guide-2026/SalaryGuideShare.tsx",
+    "sha256": "70159fe1ffa8aaf295787c0cda54bb14b09440bd7bda88868c61d46d51eb04a9"
+  },
+  {
+    "path": "app/insights/manchester-north-west-marketing-salary-guide-2026/page.tsx",
+    "sha256": "465b682381a5dcb02266dae88b4a11e5fba50761ab3f4ab8eef84178b55d66c9"
+  },
+  {
+    "path": "app/insights/manchester-north-west-marketing-salary-guide-2026/salary-guide.module.css",
+    "sha256": "895fcb082416c2cece3da33211fe5e14bd8f4497949b1d7f14a6122d04ae6918"
+  },
+  {
+    "path": "app/insights/page.tsx",
+    "sha256": "6b7daa075041dd224a66fd1ab4ab39d299edd8ad8f4d6633540698d555f9edce"
+  },
+  {
+    "path": "app/jobs/[slug]/page.tsx",
+    "sha256": "daa3f97138dbcd7be9973ee91b7d75317bd3cf6dafdf546225ee68c8ac8ec91c"
+  },
+  {
+    "path": "app/jobs/page.tsx",
+    "sha256": "b7594c57550224990b25560f0c7add1a644cdfce54679d67ae0eaf46b2eb1585"
+  },
+  {
+    "path": "app/layout.tsx",
+    "sha256": "111b3a07c801573f9be1b4e6c92a88284e04a8b29b48b6453dd3dc848217552b"
+  },
+  {
+    "path": "app/llms-full.txt/route.ts",
+    "sha256": "d3281a1b8aa604fb6805d49c032fc585d20651f2a07fc63dc83c289860e8569a"
+  },
+  {
+    "path": "app/llms.txt/route.ts",
+    "sha256": "c2e6106e90f455c83a022b541fba435fac9e240075dacfd94a8a113c4e51f5d6"
+  },
+  {
+    "path": "app/not-found.tsx",
+    "sha256": "888f0a03bbda412ebefac1e3a689bfd9e8e524f99fe11929ac617ae23b10066e"
+  },
+  {
+    "path": "app/page.tsx",
+    "sha256": "630f2aecec1d5e02f534c49ca8a8a4859be9a1d64ddb89c7731457e4ca78cd8e"
+  },
+  {
+    "path": "app/privacy-policy/page.tsx",
+    "sha256": "30f2c2f825c61d752108e9d83e46b676cbc7b61623a546a56d0cfe80d9a15930"
+  },
+  {
+    "path": "app/recruiter-labs/page.tsx",
+    "sha256": "7ba4eb95354a31d66bb8f9cebbcc1346a72c8b80111bdc45ce54fefefb0a7000"
+  },
+  {
+    "path": "app/robots.ts",
+    "sha256": "a4e4fff5b4795a9d0282ddc22cf224c82edb6538ed78b97b1a10e67aba961d13"
+  },
+  {
+    "path": "app/rss.xml/route.ts",
+    "sha256": "9b3082251e8777d7661652c71971dd2510f4a3b775fca3d3d9e9f3e69dec79fd"
+  },
+  {
+    "path": "app/salary-guides/page.tsx",
+    "sha256": "5fd8edb6d85b1a6e15ad51bb7dfe862d3c775f750345dc6b87d86732bc9d4caf"
+  },
+  {
+    "path": "app/salary-guides/thanks/page.tsx",
+    "sha256": "edae59245ef15246ee723fff911158b4d0906b56824cef192b3410d2603a17e2"
+  },
+  {
+    "path": "app/salary-snapshots/[slug]/page.tsx",
+    "sha256": "54f7cedc489bb1a65399c4c6c9b48dfd1deadf830a68760b172d0b03eba869dc"
+  },
+  {
+    "path": "app/salary-snapshots/page.tsx",
+    "sha256": "66bcddebfcaf81caaa33503d03570cbab15d42afaa2e2cdcb21d5ff5ad75171e"
+  },
+  {
+    "path": "app/services/[slug]/page.tsx",
+    "sha256": "3ea2fb46384c006780c25fb7a89215ff6cd5d1e3c2a5e579f38f1163a8d95be9"
+  },
+  {
+    "path": "app/services/page.tsx",
+    "sha256": "dc876bc6358ab421e6826aca0c8760b5fd984da2faa7f9c148342004b4a93dc0"
+  },
+  {
+    "path": "app/sitemap.ts",
+    "sha256": "e5d7f373d62e5555f570f4bff99b618d26b3370e0e744c9e960b77517c8106f3"
+  },
+  {
+    "path": "app/specialisms/[slug]/page.tsx",
+    "sha256": "97070532509ca685635f76774271a9ae316ae7dd0e5d908f8b7e4bfb1a65b237"
+  },
+  {
+    "path": "app/specialisms/page.tsx",
+    "sha256": "c249171340a046e58ac2658673857ca1950ff3808b6271d868f01697a166f755"
+  },
+  {
+    "path": "app/studio/[[...tool]]/StudioClient.tsx",
+    "sha256": "7b51a65cdba2b8dfe1240da1a675674a94786f730188e8baf25570c9f9ebed45"
+  },
+  {
+    "path": "app/studio/[[...tool]]/page.tsx",
+    "sha256": "ab03bcf43de46c3660e978b2b71901126f5e5fc543ebc8914fb0b660236e5568"
+  },
+  {
+    "path": "app/terms/page.tsx",
+    "sha256": "91fd31ff73416ff0fc23ea57d977f56d1f9f7c40417cb9c9f96ceccd8dfd7672"
+  },
+  {
+    "path": "bd-intelligence/.env.example",
+    "sha256": "ee0531c126a6a87b9c69f7bbb52803013a92bc19180c54636de6c3c4e77768ec"
+  },
+  {
+    "path": "bd-intelligence/README.md",
+    "sha256": "5a3e776a4dde7afa08f20329a7d1ce65b4d85d66cfd2005a41dfabfc28a3212a"
+  },
+  {
+    "path": "bd-intelligence/app.py",
+    "sha256": "005403266055f5c4140200e4dfdb93d4d5f132a88216ef730524fd4f9ca2eedc"
+  },
+  {
+    "path": "bd-intelligence/src/__init__.py",
+    "sha256": "e290407870fca6a16d95c520858b92e4226586e6021bc4d480997a857b6db214"
+  },
+  {
+    "path": "bd-intelligence/src/ai_prompts.py",
+    "sha256": "ac54e9ad89a1a95350df84b849a9d5016c91aca43077c6695678d74b5b386625"
+  },
+  {
+    "path": "bd-intelligence/src/cli.py",
+    "sha256": "147d6dfdd3513fbc773133d3eaaeff4dfd2f7c8bd1c30332847cba4323eeb21f"
+  },
+  {
+    "path": "bd-intelligence/src/config.py",
+    "sha256": "bc7b7a89caffd477dbe7824e7dba33d4c516d016401b63fdb19ed19b9545f5c4"
+  },
+  {
+    "path": "bd-intelligence/src/daily_digest.py",
+    "sha256": "6a80d5a50b6c6e09808a13561028516badda65c47b11a099c40a90b20916c3ba"
+  },
+  {
+    "path": "bd-intelligence/src/daily_runner.py",
+    "sha256": "08e30e8e2085f304b55954e954f71a8ff9fb3ca82326837b0ba5bdf826adc14b"
+  },
+  {
+    "path": "bd-intelligence/src/database.py",
+    "sha256": "398bb3901dd33f4646a20317bb80e12379d1ab8ef371e83a2cbbf4ccd7cba37b"
+  },
+  {
+    "path": "bd-intelligence/src/dedupe.py",
+    "sha256": "3139a4148f488d514b72a81676e951c25abab7fc27906fa166aedeee0a3ff863"
+  },
+  {
+    "path": "bd-intelligence/src/ingest_csv.py",
+    "sha256": "c5acd6a9a92fa28e87800f9402fff44369513320465b764a9dcdec2f5016b727"
+  },
+  {
+    "path": "bd-intelligence/src/ingest_gmail.py",
+    "sha256": "475ab876a7902f9268ec2766773791437e6b047f5e2411cde0d4c55e211badcb"
+  },
+  {
+    "path": "bd-intelligence/src/ingest_rss.py",
+    "sha256": "e591223f153ba5868dc62d389b2f5173950b9dc999d92029f6e9cc3915ac68ad"
+  },
+  {
+    "path": "bd-intelligence/src/ingest_search.py",
+    "sha256": "54cfa59d9e9be53fa8ac8da4513c1ebb392a6f02e139e02d38113b0945f30711"
+  },
+  {
+    "path": "bd-intelligence/src/models.py",
+    "sha256": "2bffe1ea2fb0005d5d78dcc5345765d661a5940b9721a70a60f317d1bb1727d9"
+  },
+  {
+    "path": "bd-intelligence/src/monitor_careers.py",
+    "sha256": "6baa3f50d2164c8d79db7d15c8e365b53f805a52e77671e38d77e4b7495235a3"
+  },
+  {
+    "path": "bd-intelligence/src/outreach_generator.py",
+    "sha256": "b8f73357e54746e4a49c012a34ec05c7b915991587d44dde4e15913fe368c915"
+  },
+  {
+    "path": "bd-intelligence/src/scoring.py",
+    "sha256": "1a760d47e99a9f0810a41e6aff6704cbc2b4a4433ac80d07d421007216966ab3"
+  },
+  {
+    "path": "bd-intelligence/src/utils.py",
+    "sha256": "51b2f262e5a25a57e7e45c6d1271f05ccd36c045b73d845f0c8f35c08b853b86"
+  },
+  {
+    "path": "bd-intelligence/tests/test_dedupe.py",
+    "sha256": "3a771c249568d63057a316a030815760aaf600dd3a5bf7f1def68e79e24223cd"
+  },
+  {
+    "path": "bd-intelligence/tests/test_ingest_gmail.py",
+    "sha256": "06c817aa563694141aecadfe5a54cf83a35039d167848f365a9cd630bee971ff"
+  },
+  {
+    "path": "bd-intelligence/tests/test_scoring.py",
+    "sha256": "20a4217f6c482afa5b604543b3e0d2b39c16226e0f4b4b30dc38e4b38d2d97ab"
+  },
+  {
+    "path": "database/migrations/001_operations_foundation.sql",
+    "sha256": "21d1935be283c0dd1e270eea565359e244a4b9e47b37cb15a883a4e4902490df"
+  },
+  {
+    "path": "database/migrations/002_whatsapp_business_messages.sql",
+    "sha256": "1834a14685d6f80312fad6028c5b750a2f79768930a9e11b80fafc4705f5d496"
+  },
+  {
+    "path": "database/migrations/003_data_subject_requests.sql",
+    "sha256": "4b6ba30502ba316b948c077fd785b0949f750a7b0f7cd058e741b13274e54c4d"
+  },
+  {
+    "path": "database/migrations/004_audit_logging_enhancements.sql",
+    "sha256": "e1ce9587c25b0a233a1f3553aff0564400a33e7eea3d0ecc05ac1f123127ec5e"
+  },
+  {
+    "path": "database/migrations/005_retention_engine.sql",
+    "sha256": "89701d5db63c50c535d48a4f91ec9494e8d22836f4aa6e218192e1efbb9a286e"
+  },
+  {
+    "path": "database/migrations/006_recruiter_labs_foundation.sql",
+    "sha256": "94da37e3b9dc9412f166c88a4daac104e8a2cf1677f3d1cb50caae0963854e20"
+  },
+  {
+    "path": "database/migrations/007_recruiter_labs_launch_gate.sql",
+    "sha256": "d9d32d1edfd0934185b6b7e2ee94d15269e4c544e6693ebae084e3532fc18ae8"
+  },
+  {
+    "path": "database/migrations/008_recruiter_labs_ai_governance.sql",
+    "sha256": "41c225d5f8122fa732909e08fb7d4ac0c45f9acc3fb0ac951175e50dc3745cc1"
+  },
+  {
+    "path": "database/migrations/009_recruiter_labs_ai_launch_gate.sql",
+    "sha256": "69dcf7c45bf0988b2e7e43682896a0505e4480f149053b9a9dbc9c65af2f6c8c"
+  },
+  {
+    "path": "database/migrations/010_loxo_reference_boundary.sql",
+    "sha256": "ce8e126d6f3501dd1b82a674a7ab619af828b5fdcab9569769788b315eda54d3"
+  },
+  {
+    "path": "database/migrations/011_recruiter_labs_feedback_tracking.sql",
+    "sha256": "9fc9ce868aafbcbbfbd8e1420dc5ee3c97423d4ac9e723f8f4729dc174491545"
+  },
+  {
+    "path": "database/migrations/012_salary_guide_leads.sql",
+    "sha256": "34f01ce7da4091232898b519609e64ece91a020c4b785e224c3465a92aac1bc3"
+  },
+  {
+    "path": "database/migrations/013_cv_anonymization_drafts.sql",
+    "sha256": "2dece0533c17a2989335262a6d2df80c4ca2d00942020808f3919142954ee3ab"
+  },
+  {
+    "path": "database/migrations/014_whatsapp_crm_sync.sql",
+    "sha256": "08b5bbf0970d03d6c6950b2a7b46c866bdc9401ddb616b1803ac99851fcf9fac"
+  },
+  {
+    "path": "database/migrations/015_whatsapp_interview_logistics.sql",
+    "sha256": "b630deb6b6d2e7d4c99affce1172ead36420833c96b3556bee02bb544213b5ff"
+  },
+  {
+    "path": "database/migrations/016_candidate_summary_drafts.sql",
+    "sha256": "da863b8330eac1f53e268f61f1ddc06c25d7ac3de7d6af21fe3ec12079f3f466"
+  },
+  {
+    "path": "database/migrations/017_dsar_email_verification.sql",
+    "sha256": "98f2aa6ef5b231aa8aa0cbd3c9f5f15636b58284e5a6aa06124563b29ce7b7bf"
+  },
+  {
+    "path": "database/migrations/018_interim_availability_toggle.sql",
+    "sha256": "a039b6184d563ee506cb91fa85f783bc79d4755aef66e865945b63487447d548"
+  },
+  {
+    "path": "database/migrations/019_recruiter_labs_portal_engagement.sql",
+    "sha256": "bb0d7149f66fc543f1498c2fd9b57557a2096225087a52de7821e4419a443f1a"
+  },
+  {
+    "path": "database/migrations/020_recruiter_labs_audio_notes.sql",
+    "sha256": "81ebe238dff15b03710e7ca8d32bef90ed8aebd657e3171b58564763bdf92da6"
+  },
+  {
+    "path": "database/migrations/021_retained_search_dashboard.sql",
+    "sha256": "4abf7098065f2af8a3b066f03c8557af69f1099de66505497ad643ec79e4afa2"
+  },
+  {
+    "path": "database/migrations/022_ai_brief_diagnostic.sql",
+    "sha256": "4b60362301edf958eb69ae7ab20e2af6e2384f49a87681294e7503913887b993"
+  },
+  {
+    "path": "database/migrations/023_candidate_summary_review_versions.sql",
+    "sha256": "9a1afafffa488a9db62382ea83dde6228ba24312a144d87fe590b5d7d1833fcb"
+  },
+  {
+    "path": "database/migrations/024_ai_interview_notes.sql",
+    "sha256": "cb21bf652fa175afb51194d44cdcd9b4ba0d64ec0914aeefd9a0082e400fa8bd"
+  },
+  {
+    "path": "database/migrations/025_whatsapp_loxo_crm_discovery.sql",
+    "sha256": "e199f2fd6274a0184b17c0b8a0870b5c8b09f7d93f4f552bd27d26af06aa2662"
+  },
+  {
+    "path": "database/migrations/026_candidate_communication_preferences.sql",
+    "sha256": "a95ea1bfb8f5e4aabee43968010b3dba7f30cfa9e6f588fbd5c02b915ed0f5bc"
+  },
+  {
+    "path": "database/migrations/027_candidate_application_drop.sql",
+    "sha256": "6c1a6c43c37ddd52a8814ff36472c26a999d0701abe450adb673e6903423d9ab"
+  },
+  {
+    "path": "database/migrations/028_recruiter_labs_interview_scheduling_orchestration.sql",
+    "sha256": "d7817fe923eb50dab874fa4131e71213ddd6bd3fd94e5ad183cc26a03f873dab"
+  },
+  {
+    "path": "database/migrations/029_recruiter_labs_interview_request_workflow.sql",
+    "sha256": "8335324b53dcc83268b7edea2893bf41b9140e7f7957688fab9f76ade7154035"
+  },
+  {
+    "path": "database/migrations/030_recruiter_labs_portal_engagement_rollup.sql",
+    "sha256": "71cd935d2d2400170b15d559e0f8af2c402b9beb38519d30f876caf1b882508b"
+  },
+  {
+    "path": "database/migrations/031_recruiter_labs_candidate_profile_builder.sql",
+    "sha256": "8abb7764f9bedd1568b89a4f6cf6c6ac332f21366475b611115114800dfc4fa7"
+  },
+  {
+    "path": "database/migrations/032_recruiter_labs_client_presentation_portal_alignment.sql",
+    "sha256": "90b0d2e3738eac15738139c8ce4f5b70c302af0a06fdfd984f229c13670f4867"
+  },
+  {
+    "path": "database/migrations/033_labs_market_dashboards.sql",
+    "sha256": "4fc70fb18845609b41a997e9db10fcbbaf686ac77a3c2693608d54243dec25be"
+  },
+  {
+    "path": "database/migrations/034_labs_interim_bench_portal.sql",
+    "sha256": "b84b91e48b2a68636287e6ac14129fb5c5f72e75193b433d58ef897c3a81ce34"
+  },
+  {
+    "path": "database/migrations/035_labs_ai_brief_builder_alignment.sql",
+    "sha256": "146cb41f6cd6c4e3482b08ab430f8049f0629942e7660a2a2934003feecd895f"
+  },
+  {
+    "path": "database/migrations/036_labs_client_shortlists_alignment.sql",
+    "sha256": "ae796fa66c20dcdaca474d14212adff6a7113eabd46559b2067bf15df2066e91"
+  },
+  {
+    "path": "database/migrations/037_labs_functional_matrix.sql",
+    "sha256": "a2c6a17ebf6b861ccc2605490cb01b80ed85a7a827757c860b80fe53c08dd381"
+  },
+  {
+    "path": "database/migrations/038_labs_bad_hire_calculator.sql",
+    "sha256": "8d99c301b151b9c1009348f152fca7f23af6c57aa7677932012559e6f2208b8b"
+  },
+  {
+    "path": "database/migrations/039_labs_market_mapping.sql",
+    "sha256": "3551e790f0d389dc0c040d015f018dabd403839e6943f0af57ba525f3d9b0ce3"
+  },
+  {
+    "path": "database/migrations/040_labs_salary_benchmark_asset.sql",
+    "sha256": "76f0ae8f2ebde3dd1173cbe15aa94f26aa620febc2579c8ac06a88c118b7bba6"
+  },
+  {
+    "path": "database/migrations/041_labs_salary_guide_asset_alignment.sql",
+    "sha256": "5e3661214767ccfc217a26afd64d2e6fc77a4d546f37122c7a683f283a218c00"
+  },
+  {
+    "path": "docs/123-reg-domain-switch.md",
+    "sha256": "628a83cb2e0e08e83fcaf81e4ae91eb429cc23453001476b0dc10a2651da7277"
+  },
+  {
+    "path": "docs/ACCESSIBILITY-WCAG-AA-AUDIT.md",
+    "sha256": "7384d9746e114ae0f011a1c9837f178aadcd4325369e861d9c9cacbd4cee4bc4"
+  },
+  {
+    "path": "docs/ANALYTICS-TRACKING.md",
+    "sha256": "157b73cc07d5c739142837a0521fb809bacdc2ff6c05d3fe7d2a944c670e267f"
+  },
+  {
+    "path": "docs/BRAND-COPY-TONE-AUDIT.md",
+    "sha256": "e155ed72cbc6dafc8134d41fccf1e620b4e9e5e9a70e63d548eda1cde19e4877"
+  },
+  {
+    "path": "docs/BRIEF-COMPLETION-MATRIX.md",
+    "sha256": "99694f20d85caa648bee0b9d193435dc51c29274f7b3744ff27bf030c15c2c84"
+  },
+  {
+    "path": "docs/CMS-ARCHITECTURE.md",
+    "sha256": "1f9b8a979fb9b1803e80ba2c9bc8f58573f83e03099ef624081a616e21d3a4d9"
+  },
+  {
+    "path": "docs/CODEX-RESEARCH-UPGRADE-PASS.md",
+    "sha256": "8f82ed8b11e5f5f4cba5f54d04981de4a2fb01105d2551146813e016eeabb8f4"
+  },
+  {
+    "path": "docs/DAVID-WALSH-TONE-OF-VOICE.md",
+    "sha256": "b11e27caf1cb0bdd1fd03619dc21827c76f9f24f2c86f8dd2d0bdcea87d27792"
+  },
+  {
+    "path": "docs/DESIGN-SYSTEM.md",
+    "sha256": "db070df798028854e05e9ece8d6647c83aaac9ef9ba90495e6c96f1ffa663096"
+  },
+  {
+    "path": "docs/FINAL-LAUNCH-READINESS-AUDIT.md",
+    "sha256": "59c651b55f5fcf32fc9407b4e37a0d62434f86c5a49f8c737ba03f56ae3db3c0"
+  },
+  {
+    "path": "docs/FINAL-POLISH-ROADMAP.md",
+    "sha256": "6085d83fa2d6b166f986165f4a7e56fd8bb6c694bcc6ad0575eb61f7ddb0f128"
+  },
+  {
+    "path": "docs/FINAL-PRE-LAUNCH-AUDIT-2026-09-12.md",
+    "sha256": "bc883c3500283b6261e3043339cb567a79c4c2e37ee355d91a1db0f165cb3ff8"
+  },
+  {
+    "path": "docs/FINAL-PRODUCTION-READINESS-AUDIT.md",
+    "sha256": "6bb8c491c2d0a07067f96283256d55dc7ece565ca56d36b36d9e1de37eba37c5"
+  },
+  {
+    "path": "docs/GO-LIVE-CHECKLIST.md",
+    "sha256": "c31216c9942800966dd931d011062eb6e5bf3ca3ba408f891a2ea98904495674"
+  },
+  {
+    "path": "docs/LAUNCH-SITEMAP-ROUTES.md",
+    "sha256": "5f3444d5791ba34203908253fa8dd8b3fb2603eb616b820c8629b75fd8c432b9"
+  },
+  {
+    "path": "docs/LEGAL-PRIVACY-COPY-DECK.md",
+    "sha256": "5b2edadb0563334606f6f8fa0d93486dacdadbead61d4e64ff7a5ec5525499bf"
+  },
+  {
+    "path": "docs/LEGAL-PRIVACY-REVIEW-2026-09-22.md",
+    "sha256": "c864496333cefd73011a67848107c4e0dddd64cc7dda052b9bdb2763c61c5cf5"
+  },
+  {
+    "path": "docs/MASTER-BUILD-COMPLETION-REPORT.md",
+    "sha256": "413a48a6c4e4935f6a535f0d943b1cd8f9873812a551ab1f9d81165248994d61"
+  },
+  {
+    "path": "docs/PERFORMANCE-CORE-WEB-VITALS-AUDIT.md",
+    "sha256": "1a93ddbaaa74781960916d200c65bc2d052f21c971f97110b3e915fe4a74aed6"
+  },
+  {
+    "path": "docs/POST-LAUNCH-GROWTH-ROADMAP.md",
+    "sha256": "36538a70a6463ee18ef0f525c9703054a0bab8afa39bafd907d09a9f82c9879e"
+  },
+  {
+    "path": "docs/QA-CHECKLIST.md",
+    "sha256": "e4044c00a969836a25c28a309b5c721465d60da1514234937b63f1cc1fb4651c"
+  },
+  {
+    "path": "docs/RAILWAY-POSTGRES-BACKEND.md",
+    "sha256": "064347e9f6286af573b14e7aeac5244b00db310ec23d94b795ca318ee7903e9b"
+  },
+  {
+    "path": "docs/SALARY-GUIDE-LAUNCH-2026.md",
+    "sha256": "899eb8e93ea21d7722f8241a89866ed9174aebfd0310f04970b121c8ddf635f3"
+  },
+  {
+    "path": "docs/SEO-AI-VISIBILITY-AUDIT.md",
+    "sha256": "ae75713671fbf29a823509ed483820787c5ca357bbc7501bd6fa61a7fb7f6063"
+  },
+  {
+    "path": "docs/TECHNICAL-SEO-GEO.md",
+    "sha256": "ea1e1912879ae70b7556699c7650148ace93042d5a2027740c8fa6d69ba16f45"
+  },
+  {
+    "path": "docs/UX-CRO-AUDIT.md",
+    "sha256": "f034834ec90d529e1edc61782a5f6489c64d21e79d61d96a02c204cd10e04d9f"
+  },
+  {
+    "path": "docs/VISUAL-DESIGN-POLISH.md",
+    "sha256": "852b60031ab5820c2c173579be1b76d670522a51f2d820cbe6bc76a81a732e29"
+  },
+  {
+    "path": "docs/WEBSITE_COPY_DECK.md",
+    "sha256": "2d04bb36f7efe0b27d992e928ed41ec237f3d1ef935e56c594a1f75d134d0d28"
+  },
+  {
+    "path": "docs/WHATSAPP-CONTACT-INTEGRATION.md",
+    "sha256": "266245366f2bcb76966247424126ce187a2835f3e7147ada09baa4547c8a648c"
+  },
+  {
+    "path": "docs/adr/0001-use-nextjs-app-router-for-public-frontend.md",
+    "sha256": "18e5af30bba30bc6aecd7d99792032d1d610e4fd746657f6c7799368ced1b16d"
+  },
+  {
+    "path": "docs/adr/0002-use-sanity-for-public-cms-only.md",
+    "sha256": "d18fc07872d23fd326b2c6bb9a59c6ad928676b6cc1096313c468c4e8e65ab58"
+  },
+  {
+    "path": "docs/adr/0003-use-loxo-as-primary-crm-ats.md",
+    "sha256": "03b3d269d5e4fe765456f9cc9695ec11051ad2eb7b66279df5ee2c3729f86c9d"
+  },
+  {
+    "path": "docs/adr/0004-use-postgres-only-for-private-website-workflows.md",
+    "sha256": "c5278bd58e1afeedcf9a0a6d6bbe17e22e52201de236135e53bb140813ddc600"
+  },
+  {
+    "path": "docs/adr/0005-keep-recruiter-labs-private-feature-flagged-and-noindexed.md",
+    "sha256": "3e4ceebab27883e6de0ac6d1eed9821950443521c5d3d033daa2f1427822b426"
+  },
+  {
+    "path": "docs/adr/0006-use-railway-for-hosting.md",
+    "sha256": "22bf7bc405e63eb67e53c089d0a38cc74bc75b138dd99a7fdd59e866acc6e560"
+  },
+  {
+    "path": "docs/adr/0007-ai-assists-operations-not-candidate-evaluation.md",
+    "sha256": "413f40f606d04d60670acb1883a3d2b7e36b5b91c77fb5e7460ee2a518575c83"
+  },
+  {
+    "path": "docs/adr/0008-whatsapp-used-for-logistics-not-negative-news.md",
+    "sha256": "517d7c054b13c67206f3b8a74f1c1ab71ae6d1268852f95ccfb4404460e18fc6"
+  },
+  {
+    "path": "docs/adr/README.md",
+    "sha256": "c4cf05beb2c5316f5f0dea4eaf36b7441d755d8f1e0894ddeaae8bbf7e45b530"
+  },
+  {
+    "path": "docs/audit-logging.md",
+    "sha256": "3564bac1999753b0eb36e0cd7e5b4f9f29f4721bd19909433c515301cce9be87"
+  },
+  {
+    "path": "docs/backend-data-boundary-audit.md",
+    "sha256": "9a6f44de011c4695d27ae9289dd557f31f54e8865aca54de81601aee8d96d6ee"
+  },
+  {
+    "path": "docs/bad-hire-calculator-methodology.md",
+    "sha256": "dbcd0371fb9948bfcf73d6f135f5536bb13f02a5e5870604d70cd14a60f53af1"
+  },
+  {
+    "path": "docs/candidate-application-drop.md",
+    "sha256": "78e9f4d6d452da3cebc961839b26d09366f25533d75c8b7c7914d6a9ab4a586a"
+  },
+  {
+    "path": "docs/candidate-data-journey.md",
+    "sha256": "c2a6a682995ec2bc860e1b358b73f9b745002678083bb4d2fa5ef684f927dc00"
+  },
+  {
+    "path": "docs/ci-quality-gates.md",
+    "sha256": "e531ce4463d144ff09b48f4f2ed7aa9cac29d082a02369d990c8eba35dce61f1"
+  },
+  {
+    "path": "docs/codebase-forensic-audit-report.md",
+    "sha256": "5f2e51ab78d473992f8d35bec9a91caa1e8589c8c94ce17369fdda53441f978f"
+  },
+  {
+    "path": "docs/consent-mode-v2-setup.md",
+    "sha256": "e4f1947205c18854c3d774466689433095b605735eb8ba54f77edb7a038bea77"
+  },
+  {
+    "path": "docs/cv-anonymization.md",
+    "sha256": "c58493629042712a43de410553d52099b84f9f3fcb284c8c10144fcfbc3035e1"
+  },
+  {
+    "path": "docs/cv-storage-and-retention.md",
+    "sha256": "37f99fd41dfcf0f0c0191c6ba29a9f14f2ba2bc93461b601266382a2b8de2fd0"
+  },
+  {
+    "path": "docs/data-boundaries.md",
+    "sha256": "005bb08b88442cc4070437b8602b1864c9896aca7ead46a3b3d1cd4c276d7008"
+  },
+  {
+    "path": "docs/data-retention-engine.md",
+    "sha256": "5598508e10f0d5994e682e36842bdf484830b407c2c32897e62750b52ccae3f8"
+  },
+  {
+    "path": "docs/david-non-technical-owner-checklist.md",
+    "sha256": "197e256e5877ed32740b3d7fc793640caa3761551dc153d29143eaf92c601cb5"
+  },
+  {
+    "path": "docs/dependency-update-policy.md",
+    "sha256": "4a2b1f0cf42ee38740420776882d2aaba8bcdad9636aca251173b7f1ae9fee3e"
+  },
+  {
+    "path": "docs/dsar-framework.md",
+    "sha256": "ceabce2050df2c4fcf34186e5fd88a6ffa5bad6dfaa9bb292cf67c022765ef69"
+  },
+  {
+    "path": "docs/dynamic-sitemap-engine.md",
+    "sha256": "ba3bee825e5d75a8d68b5ec403eae27313ab43a1c8f857050ae2a5d4f05895a4"
+  },
+  {
+    "path": "docs/essential-resourcing-labs-roadmap.md",
+    "sha256": "6bfe968661e9766f60c95ad9c7c315cae651bcdc45f3ce159cbed820ce12f5ab"
+  },
+  {
+    "path": "docs/essential-resourcing-labs.md",
+    "sha256": "990d8d971399e224f5480b946c73fabe741037a1c2527cf0518348740d8c14f8"
+  },
+  {
+    "path": "docs/feature-flags.md",
+    "sha256": "79acc41d97cfbeb59edbab2d78bdd603a07427ac862914954754d3bb8dd5724c"
+  },
+  {
+    "path": "docs/final-qa-launch-report.md",
+    "sha256": "9a515aaac49b46980b32c5f807b885a6ab47d56bbacffa6df171435a99c2994b"
+  },
+  {
+    "path": "docs/frontend-architecture.md",
+    "sha256": "e5fcbbc52410419d7fe11c8e987469b471e06e34c5b97bec07bb5e3f8bd6a823"
+  },
+  {
+    "path": "docs/future-proof-architecture.md",
+    "sha256": "fdabb3c50c52e53e05f2b9bd240235d81e6909a46b7a05b3d855328403c97887"
+  },
+  {
+    "path": "docs/google-calendar-booking-setup.md",
+    "sha256": "2b0a4bc6c9d35cdb884595696df62576f2eba5c75258d1569e6f3b6cc70d69c3"
+  },
+  {
+    "path": "docs/job-copy-standards.md",
+    "sha256": "a20ec7420d12ebf7976f11a18729afe46848786b258763c695d245a25e79c9d0"
+  },
+  {
+    "path": "docs/labs-ai-brief-builder.md",
+    "sha256": "3bdea0ca35aee4dd2509b6c83aa6803fb3b22b24a2a5d7fd6b66f1ed0ca65c24"
+  },
+  {
+    "path": "docs/labs-client-shortlists.md",
+    "sha256": "515931fc07af2412b9ca5df28c1fe3c2f0cb69f4657fc563c76163cc004fb7d7"
+  },
+  {
+    "path": "docs/labs-functional-matrix.md",
+    "sha256": "61c52480d703c3d5fbef2b26b42345989136bf018d69ef46b995880e15ecb2a3"
+  },
+  {
+    "path": "docs/labs-live-market-dashboards.md",
+    "sha256": "1d1764069a6adf3823d4dc7eba7523ad3bccdb041e7058395583ed3739e02b78"
+  },
+  {
+    "path": "docs/labs-market-mapping.md",
+    "sha256": "56dcfd371d48847db64b47d004bffc8c8bfa5bd650940a16674b4d7303e2b57b"
+  },
+  {
+    "path": "docs/labs-salary-benchmark-asset.md",
+    "sha256": "44dfb32043b4a5d45fc7d9fd68e0aff77ba60edc32a50a883081339992fa636e"
+  },
+  {
+    "path": "docs/labs-salary-guides.md",
+    "sha256": "8682a9215e73c3bcffb9e348a7ac5fd938e2bc6b094e178571121e5db1abf7ae"
+  },
+  {
+    "path": "docs/labs-strategic-interim-bench.md",
+    "sha256": "c26916d205d655d5957d527c40ab707253ad0e828a784a27e7d2c6eef086b9c7"
+  },
+  {
+    "path": "docs/launch-google-seo-local-setup.md",
+    "sha256": "2c115a3426a13874edacb5ea615d3ded2f92a092236e5f26297658eb7f1f5e6c"
+  },
+  {
+    "path": "docs/launch-handover.md",
+    "sha256": "0f4cc1ca1fef276d7dd3e04f35f6a99400a74d7719312c07abb1e5a98ebfe3c0"
+  },
+  {
+    "path": "docs/monthly-website-health-report-template.md",
+    "sha256": "5ced39d9ca2760eb978634e1beffa8a912af49f9546c613ec30d51125ae87ab2"
+  },
+  {
+    "path": "docs/non-technical-architecture-map.md",
+    "sha256": "109e512290d19a544b3756d474962b6adc61e5dbc59a521033059b1df7a21fb9"
+  },
+  {
+    "path": "docs/observability-and-alerts.md",
+    "sha256": "1a760a14ad8d65b611d3907f7b968a3eca9bfc60857a10f0aa03f4fb07835dac"
+  },
+  {
+    "path": "docs/observability-audit.md",
+    "sha256": "2abedfc6987a73869e55a3028d62227cde8cb10de6af186bd727d65953ef8033"
+  },
+  {
+    "path": "docs/railway-deployment.md",
+    "sha256": "6a54ea2bb0724ab4193897c400a0130813f6f5334a515caf808e855ee5254059"
+  },
+  {
+    "path": "docs/railway-readiness-audit.md",
+    "sha256": "705db6a768b6b4573549f0134b9ac48e91600991fa412179d81f9a5d3015d37c"
+  },
+  {
+    "path": "docs/recruiter-labs-ai-brief-diagnostic.md",
+    "sha256": "ef0e4b211f12f452ec1a264dfb39ce4486927e9904c975bef72491e2c8903b6b"
+  },
+  {
+    "path": "docs/recruiter-labs-ai-governance.md",
+    "sha256": "d4410f822b94a769bb22fa3134ff54f85eb1b2c5b5efde19783bf909b874f5a5"
+  },
+  {
+    "path": "docs/recruiter-labs-ai-interview-notes.md",
+    "sha256": "a345014a7e5304d3447ce290bd0c58dc8b40d60477c354b8ae16941da1e6dee6"
+  },
+  {
+    "path": "docs/recruiter-labs-ai-launch-gate.md",
+    "sha256": "e5af985181b7ec0415b9525f90314be942cf2be57da792369ba8dea39e69b3ac"
+  },
+  {
+    "path": "docs/recruiter-labs-ai-ops-roadmap.md",
+    "sha256": "8ec2eb4c7e83215fc3b875bdbbe3d3fa0e35f803b26a858bf248e94710fe625f"
+  },
+  {
+    "path": "docs/recruiter-labs-ai-vendor-discovery.md",
+    "sha256": "a466627a1763aabe47b8eabb5fd56dbd5a441f2bcb77b1743f59b1fa5cd0a126"
+  },
+  {
+    "path": "docs/recruiter-labs-candidate-process-transparency.md",
+    "sha256": "c95126e255f18bfc191cd03d85902903e51552694fd99019a06aa7f663aea431"
+  },
+  {
+    "path": "docs/recruiter-labs-candidate-profiles.md",
+    "sha256": "16e9a961e162cf66013668de35f4517c8d5a7c9f5f5b2eef2c0fe6c442bea351"
+  },
+  {
+    "path": "docs/recruiter-labs-candidate-transparency-roadmap.md",
+    "sha256": "7291e47a0869d390b1360977d1713638b64b26db7cf950644ddeb01f626c0d4f"
+  },
+  {
+    "path": "docs/recruiter-labs-candidate-transparency-scorecard.md",
+    "sha256": "84f3868da01690803ebfa82e33bb5dcd68d00601c9a9c9eb908f1f585088f8e5"
+  },
+  {
+    "path": "docs/recruiter-labs-candidate-transparency.md",
+    "sha256": "202cf7cdd1f1cdabf2205a2523b45758421d6c4099b95f56c35eb1c5a4497dc2"
+  },
+  {
+    "path": "docs/recruiter-labs-candidate-whatsapp-preferences.md",
+    "sha256": "c952ec96d36d1592bda7330a7d803752aa96ac931ffb8c63e9183c1be545c99f"
+  },
+  {
+    "path": "docs/recruiter-labs-client-pipeline-launch-gate.md",
+    "sha256": "8ed5aab65d938daad52c5ff397cf1fc534c318b395758b60667e5bc019a4fb43"
+  },
+  {
+    "path": "docs/recruiter-labs-client-pipeline-roadmap.md",
+    "sha256": "cb41cedab322f053254f61fd78f7a03f9a550391758f3caf0639239669da86c7"
+  },
+  {
+    "path": "docs/recruiter-labs-client-pipeline.md",
+    "sha256": "5a19c26f632e4f487a53daab7cbe27e361823b776afb654efd2e35c6f44dd66e"
+  },
+  {
+    "path": "docs/recruiter-labs-client-presentation-portal.md",
+    "sha256": "343710a87985995c80702ee556237bbc089eb8e15c6c806548c32199668b3d5e"
+  },
+  {
+    "path": "docs/recruiter-labs-davids-audio-notes.md",
+    "sha256": "5ef8e69920349941273066c418596f5bd61a0d45871edc15f9390801d317353b"
+  },
+  {
+    "path": "docs/recruiter-labs-interview-requests.md",
+    "sha256": "2ce1ee8d9efb2195cb6858048e5c99b35b347b4feae8194c62a5c977773433c8"
+  },
+  {
+    "path": "docs/recruiter-labs-interview-scheduling.md",
+    "sha256": "e7ce77eb28d0876235796313877517b690e71bf1271c7d8638ebb62c55c0c0a8"
+  },
+  {
+    "path": "docs/recruiter-labs-portal-engagement.md",
+    "sha256": "4b1c58d4559f9dd610b022cf32b3edd044405b3b62f1b1d3d587f29e368897b3"
+  },
+  {
+    "path": "docs/recruiter-labs-retained-search-dashboard.md",
+    "sha256": "fe323f64d62fd613d9fff6e1cea4bf91f0c8cd6b04be6112b4e258bed8de92a8"
+  },
+  {
+    "path": "docs/recruiter-labs-whatsapp-crm-sync.md",
+    "sha256": "5416bf10ad3202107016b0b0340a20a15b30bcf4c16f8fe05fd83a3f6d19bd54"
+  },
+  {
+    "path": "docs/release-process.md",
+    "sha256": "7c1fd7f08037711b138a23fa681f0b7f4340bece5454fc623f110aa90f58b4bf"
+  },
+  {
+    "path": "docs/salary-guide-lead-capture.md",
+    "sha256": "ad402b744f183a0e0c0cb33a464d48b709b090b32168e7a551a8abf661c63f70"
+  },
+  {
+    "path": "docs/sanity-cms-access.md",
+    "sha256": "b1c0046605672a20c4ba87a90d42ee1b4a303162a192e86038797122504c65d8"
+  },
+  {
+    "path": "docs/sanity-cms-audit.md",
+    "sha256": "bae4be2b70874970c014a230d5451474e5695cae0d63ab817358745626a46e8a"
+  },
+  {
+    "path": "docs/sanity-editor-guide.md",
+    "sha256": "7b97944c5d055d74b5b8d72b6534f41b7afd1ca294fdd014b0ed118c2a8491ad"
+  },
+  {
+    "path": "docs/sanity-nextjs-fetching.md",
+    "sha256": "1d7241731a85ba224257c010dac12512025837871b57638e0e4f35c38a1c44e7"
+  },
+  {
+    "path": "docs/security-privacy-audit.md",
+    "sha256": "a1b561b1b8aa6dc331627efec18e40d75ebb7d01dca9ea7a10d706a8c750ed92"
+  },
+  {
+    "path": "docs/strategic-interim-availability-toggle.md",
+    "sha256": "ecfdda2bbe316366e7a8b5e00a23892cf70847c172e373f94020f78729d5ad83"
+  },
+  {
+    "path": "docs/whatsapp-business-cloud-api.md",
+    "sha256": "500df9efe4b7d1f3ea30dc9ba1496c69ce4ab72e0a193e81b813d51ffc31764d"
+  },
+  {
+    "path": "eslint.config.mjs",
+    "sha256": "b618d058619018d3261856df5ce581463a0fd68e5c94fa2dc224555bce5964cf"
+  },
+  {
+    "path": "instrumentation-client.ts",
+    "sha256": "fe21fcfaf37fee6adfb060139108ca8594b7aed195a70f7d539adb48f15a8c89"
+  },
+  {
+    "path": "instrumentation.ts",
+    "sha256": "158fe4c748f1599b56a1681e417ceddcda7ce40b988f95fca298c5ab548ca38c"
+  },
+  {
+    "path": "next-env.d.ts",
+    "sha256": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc"
+  },
+  {
+    "path": "next.config.ts",
+    "sha256": "115c648f8a2d93d5cfbda21d9f8bc019e90f8b6ac865f39bf0c99f777c9e0550"
+  },
+  {
+    "path": "nixpacks.toml",
+    "sha256": "998e838ad3a14e47eb7e98a73805eca4bc810aae81c50e79e3ff198475c6c372"
+  },
+  {
+    "path": "outreach-recorder/README.md",
+    "sha256": "a2baee199aadfc72f0e4345702448d224405506ad68fdd6903b5e198dd9c4dfd"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/README.md",
+    "sha256": "1c65873a64bb5e55341073ce97959cc3fc5e9b6e4b1681010a59c9ee6f4f468a"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/content.js",
+    "sha256": "ffe3e1b49800449fd310d688d2e609ecc42f83ecc80f4622795b86a0f3929938"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/manifest.json",
+    "sha256": "f86361800619470c81c7996a9f6f9a939124f0fefd23ce58c4951fe1eb6cf564"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/offscreen.html",
+    "sha256": "9abc7630b51c00728f0976f37bc9cfac0a5d6310164b2c54f0f7d34a72fdc280"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/offscreen.js",
+    "sha256": "b30d5c71bc403fae652b9ba85004f537a95e578ab9e9f6dbba7fd6554a384cfb"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/popup.css",
+    "sha256": "c8bb69507590d86e6fb6dc357ed69c60540db77098439d49ed38a1d4996a44bd"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/popup.html",
+    "sha256": "67eafa24a003334e089855cc2f221f90749d104858bc643337c06b06cabb891a"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/popup.js",
+    "sha256": "2d4dd5666f25d19b3007f57554730bfd6ac335266351270f9459cdf13e563e28"
+  },
+  {
+    "path": "outreach-recorder/chrome-extension/service-worker.js",
+    "sha256": "bebae79fb58ee8e14eab3aea999c9c6e91160f471a24586b6fc488e6875b10e2"
+  },
+  {
+    "path": "outreach-recorder/docs/MANUAL-QA-CHECKLIST.md",
+    "sha256": "b7da8b109a03c9cd3dde5fb8620c1fcbe46be4bc549655edb66954b86cd8b2df"
+  },
+  {
+    "path": "outreach-recorder/docs/QA-REPORT.md",
+    "sha256": "6ebfb6a498e41eaf84490000bfa004e22437892585b1ffa9350dc2037ead3c53"
+  },
+  {
+    "path": "outreach-recorder/index.html",
+    "sha256": "547093a21104d3fa18cbd984072e6a0185811525156553b5b47328dfaf036eb9"
+  },
+  {
+    "path": "outreach-recorder/package.json",
+    "sha256": "af8a977a1f9d43993d979bed8dd241dca2217e062f5cde510b0aaaf54b8d3503"
+  },
+  {
+    "path": "outreach-recorder/scripts/check-extension.mjs",
+    "sha256": "3f428cec6749cf891947e73485ab9adc45d8ca775da910133cd2707aa104ec4d"
+  },
+  {
+    "path": "outreach-recorder/scripts/extension-smoke.mjs",
+    "sha256": "54210366d0e8c9f0e67542ce5f2162eca39c4aa9f09d7f0271a904d0fd9c6eaf"
+  },
+  {
+    "path": "outreach-recorder/scripts/qa-smoke.mjs",
+    "sha256": "6ae7e4808c7e5988adb92819b767da20bba9380d93e830a8a35787d7ed5e48a2"
+  },
+  {
+    "path": "outreach-recorder/src/App.tsx",
+    "sha256": "b3419a149ba2b796140215d55df5032dc0d7b2336784e75ee825b1fe8c79e145"
+  },
+  {
+    "path": "outreach-recorder/src/components/ConversionPanel.tsx",
+    "sha256": "afafde13abb5c56b6ef001fcf2a987dab1a824bcdc8bceeb856ad9521020cfcf"
+  },
+  {
+    "path": "outreach-recorder/src/components/LocalActivityLog.tsx",
+    "sha256": "9b13d78a244c3077d3228d48940f90df3ca3aa7914b7fb7d4a49f011c6348b95"
+  },
+  {
+    "path": "outreach-recorder/src/components/ProspectDetails.tsx",
+    "sha256": "644911861991d418c64aadd336eed4e2ff6c60956cc1085c32b594adeb1c883d"
+  },
+  {
+    "path": "outreach-recorder/src/components/RecorderControls.tsx",
+    "sha256": "49df49d19ff6de64ea1d172234c96ab3f61cb3287cf1a7b1f499564177ad3585"
+  },
+  {
+    "path": "outreach-recorder/src/components/ScriptNotes.tsx",
+    "sha256": "cc5adeff8593281e472036e7092beb2f9c113bd3cc6a7ac47f6bb4a02dc15f9c"
+  },
+  {
+    "path": "outreach-recorder/src/components/SharePagePanel.tsx",
+    "sha256": "d285a9ee8628d4622713100fefd6a52322a1bf8dd92fbcf93ed74fcebd36417a"
+  },
+  {
+    "path": "outreach-recorder/src/components/TemplateLibrary.tsx",
+    "sha256": "34c734d6b53e36efca5fca26c420f96dc96f60c00b8861d3f6ef189984fa3dcd"
+  },
+  {
+    "path": "outreach-recorder/src/components/VideoPreview.tsx",
+    "sha256": "fb4bf5ab7204c4f6cb4ac42363558c85e371d3cb320b4280f5097b0fc0a8e209"
+  },
+  {
+    "path": "outreach-recorder/src/components/WebcamBubble.tsx",
+    "sha256": "256c688694a9758b8f10bac4b0bce753b0633b754b5445224b1e492b41c1e92e"
+  },
+  {
+    "path": "outreach-recorder/src/hooks/useDraggable.ts",
+    "sha256": "62e2f497b72ee74ace782bb9565ed1f95edbcd6f0aff1fb6703af7c9d5ac7081"
+  },
+  {
+    "path": "outreach-recorder/src/hooks/useScreenRecorder.ts",
+    "sha256": "7f73d61d2c99a965774915f1ccb9f93aa094ed39211d814bee58ce454303d5ee"
+  },
+  {
+    "path": "outreach-recorder/src/main.tsx",
+    "sha256": "ccbefe7be6c69706a1bb01c4c3f20492eb002435af6ba7e5a6d45f7c6aa3a140"
+  },
+  {
+    "path": "outreach-recorder/src/styles.css",
+    "sha256": "f43af88661a87ef6d350b29a22f0d39e2082c7837981f8edca5aa52b40629441"
+  },
+  {
+    "path": "outreach-recorder/src/utils/browserSupport.ts",
+    "sha256": "946ce111666cae2c3dbccb7143d8876e4d650066be354b0bbf696c7b14839243"
+  },
+  {
+    "path": "outreach-recorder/src/utils/conversion.ts",
+    "sha256": "289ee7d84fac287c733680c84bae5ff1b0294058e1645fec3f7aa997a4275d89"
+  },
+  {
+    "path": "outreach-recorder/src/utils/filename.ts",
+    "sha256": "c5b5dbb8c15cc3a3e3e11c47f7495309a89cd98804493d020b1dd4a16a723b22"
+  },
+  {
+    "path": "outreach-recorder/src/utils/localLog.ts",
+    "sha256": "b27f1bcfb92274f8caee345724fbcc15f5185fee063fc72f55d9225c885fc369"
+  },
+  {
+    "path": "outreach-recorder/src/utils/media.ts",
+    "sha256": "718fcdb979964c50e325274b36803ee6095dc415e3c810dbbc9bb28debdfc7ef"
+  },
+  {
+    "path": "outreach-recorder/src/utils/sharePage.ts",
+    "sha256": "2e91fee672ba5b209c984e369e590051b4da00b80813790cc38ed9fed3d544db"
+  },
+  {
+    "path": "outreach-recorder/tsconfig.app.json",
+    "sha256": "ccfb0d2c7b4c35a224762935ef838bec71bcd61b6a7c4bc3ef140f7a8b178701"
+  },
+  {
+    "path": "outreach-recorder/tsconfig.json",
+    "sha256": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+  },
+  {
+    "path": "outreach-recorder/tsconfig.node.json",
+    "sha256": "591d5cdccebaa644981873d966c02db7e628fe3f8a97d4ba5db4e486e0fda107"
+  },
+  {
+    "path": "outreach-recorder/vite.config.ts",
+    "sha256": "f13d53441776288f03133789e2c74e6fc832ce891da01b3043c6b0a54d7cd542"
+  },
+  {
+    "path": "package.json",
+    "sha256": "6dbc4c4afc798be5cf8b210083e7898c314807be31187fe86f0664bd927971dd"
+  },
+  {
+    "path": "playwright.config.ts",
+    "sha256": "bcb87d1f9e2da789e49237969ca19eb4bd381947306073ac992a5efaed6d953e"
+  },
+  {
+    "path": "postcss.config.mjs",
+    "sha256": "37dcf5f6f2f7d2cc94f102a1f741d84869231e44c5cd787129f03b85db2b19aa"
+  },
+  {
+    "path": "proxy.ts",
+    "sha256": "d0f69135a01b534e7405078ed00f344123929bffcb06a8d39914908a6b95bb99"
+  },
+  {
+    "path": "public/site.webmanifest",
+    "sha256": "112deb97d16fd22e7dcb87c1cfba6310d382a1335c68ee5a50ceab7dac4fb4c2"
+  },
+  {
+    "path": "qa-browser-results.json",
+    "sha256": "34d1ea1e582b88f3a7338a5b6eb1e41b669242e48b92832bf3a8356ebee6b7f9"
+  },
+  {
+    "path": "qa-link-results.json",
+    "sha256": "943d179336c9197c0e1097df68db318274f9b1d793927b2bb79e0aa3b192906c"
+  },
+  {
+    "path": "qa-route-results.json",
+    "sha256": "3dc40cd3bdc7bbfa30ff2f174657fa0357618bcd99fb2edac078beba2e40abac"
+  },
+  {
+    "path": "railway.json",
+    "sha256": "613bb538583778c297579f2d87daaca829412b1be65b339f65e31ca13f4a35c2"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/AGENTS.md",
+    "sha256": "eabacedaeefba4121ee80bd24bcfe1522b5cd0807940dd2ab4ada5de91553d33"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/AI_COST_REPORT.md",
+    "sha256": "0fa8248c1316d9d000f675fa4b614cb52635bdbec234e428067d94da0df030a7"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/AI_RELIABILITY_REPORT.md",
+    "sha256": "b7b9e967653d6ddff5d4f24064e49387e1cab553c623544bb27baa5932971185"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/ARCHITECTURE.md",
+    "sha256": "f8b95b6e4a7d0701899171bb091c6a66439968a02092d627e2d381ea72734afc"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/CODE_REVIEW_RULES.md",
+    "sha256": "bae2e9170ac7b64caf803a412f9e664253d445d4ee7542ba286da742f207ba81"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/COMPETITIVE_BENCHMARK.md",
+    "sha256": "786bfa43fc1f2b8688b5d787d97260e17f26247a1fe2fa3490b21e6c28324649"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/DATA_MODEL.md",
+    "sha256": "0a2a61fb323477c437f8b7987372211bd84ad3d94983998feac43546acce06c1"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/DEPLOYMENT.md",
+    "sha256": "960ab21f634358d3a6750835623798a8710c6bcf1c8cfd7d4b83f9274173c1a3"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/DISASTER_RECOVERY.md",
+    "sha256": "8b7b4df33d17c93cca732505ffad180d4b3e9f6052466210321a89e709a85ffa"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/EMAIL_SETUP.md",
+    "sha256": "2cab32cc2dae83681ccccb1efb5375839f6e4c1b01cef0a9c972a115b5f3fcb4"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/GOOGLE_SETUP.md",
+    "sha256": "59fad899c4809957578516378f91957e19ff8b4e1b91983dc8ef36315c88681f"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/GOOGLE_WORKSPACE_PRODUCTION.md",
+    "sha256": "c878bbf367af78a929083a67e738774c73971e718d948ac24102a3f888f474ae"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/IMPLEMENTATION_PLAN.md",
+    "sha256": "d532e59e48fc17a9283afc504491be01953ca3e0335190b6fef9a6b79d31eb36"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/INTEGRATIONS.md",
+    "sha256": "54a6f67ee8c37a2eb151f0f0a1cd3aa1fa906945b35d462938b4e0c4f9d72cda"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/MASTER_QA_REPORT.md",
+    "sha256": "8598490b7bcb9dad4b8b7ab54479770f496033e46f6f8cc3216b5f8b60183461"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/MESSAGE_STYLE_TESTS.md",
+    "sha256": "721657669424ab1c6f8cdbc55b37e3ef6281c99a0714088d02868b3ba9a3f4fd"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/PRIVACY.md",
+    "sha256": "f2a7ad44d470c95eeea83ade4bf33ca71a8a7f4053377b94cc3a427e5b0e839e"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/PRIVACY_AUDIT.md",
+    "sha256": "ae5418c22a0493b0adaf58527cc8f7ca3f2ad21f2841fd46f445033999675440"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/PRODUCTION_READINESS.md",
+    "sha256": "23a6a32adf105e09ec9acbb1709d82c868eb511f07e2d2ee0c0f4b6e1f9a9532"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/QA_BASELINE.md",
+    "sha256": "97dfd072672951b7b8c5065b068270e5617da0eda625990bfd53293bb309df58"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/README.md",
+    "sha256": "5b6f9b1ee5d416b4ebb133d5e4a462c1b46b1b87fa089078060f510cc2421013"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/SECURITY.md",
+    "sha256": "a5838fd80369e9ace1fde5a9a84392b07e2eb72a00f2e2bc34462d9e9ee37e02"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/SECURITY_AUDIT.md",
+    "sha256": "7aa843baaa78be22a65a193ad1000287c7781043a1d8aed7361a074b12dfec92"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/TESTING.md",
+    "sha256": "55988c8c0b2039ccfd75a7d98c16b0f7659c6580ef3263d88d00886a0ab5967e"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/TEST_MATRIX.md",
+    "sha256": "48b9ad0ba2e2007f0c1ae231ba1f37c50e283756bfac4fd8e1530133519afba3"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/UPGRADE_ROADMAP.md",
+    "sha256": "98ff06e4e61502e6f45128ac15c6f599990f57f0c39aa4432e596332f79b6ff5"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/UX_AUDIT.md",
+    "sha256": "a8c5fce0033587ac6cd66a648dcd94f624acfa9dbafe703eb1259365b01a1d90"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/WORKFLOW.md",
+    "sha256": "664365adf071dc6fc9015643a5063340cdf098d2121f01244be4cc3217119d41"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/.env.example",
+    "sha256": "d62f08751a9b74c3c75af174846bc301b30970b96209b0ddcb5827a182dd31a2"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/__init__.py",
+    "sha256": "fafb17447fd5871f8e7991038022eda68de5a6c532ffcdb4525f3f68362b953f"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/api/__init__.py",
+    "sha256": "12f3634ac4a14f05b3f7cfafb039cf7e421f9d2935f638904256fd4e46515f4f"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/api/auth.py",
+    "sha256": "7e03a84701f713081d1af1e2270163494d5b1972327dc1103ac4947cca20d332"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/api/dashboard.py",
+    "sha256": "2288432805c6da812c87d657ee0719ba200a4e5f43a8351dd278eb6a537fe5fe"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/api/integrations.py",
+    "sha256": "34bd6de9aabea7a9d12e5f86ba3e971a7b429bf55d094273cd7902b703fba204"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/api/interviews.py",
+    "sha256": "ae1af9323498f21d02da3c3b1be2bf2181840d39dae81cc8ab3b620e9a4a4433"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/api/public_availability.py",
+    "sha256": "2aa3e67e9755f7dd70bc98976b415971763c60e8377bca33bf4e9dac31bf0659"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/config.py",
+    "sha256": "7a700de8169659653b006666cd52c7d40dd35bba431cb83652d22722d133bd46"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/database.py",
+    "sha256": "9a725d2df51dd08e1cca82351493871461a8c8107993d786cf06979a9cc264c3"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/enums.py",
+    "sha256": "57eb532734b47fddbb706dbf4f26e28edbac20b465f9a6f91b2d0a99f329990d"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/main.py",
+    "sha256": "6a8a8709cff76208c30e66e649d5f9067a6cf5b1c187ba35dbe04de01da3282f"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/models.py",
+    "sha256": "965c457041c450d68b22b9837735ae15d1ed4cb27ad175bb48fec6bf58dc41b0"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/schemas.py",
+    "sha256": "ada2cc015fc4907767f59a034033dac84d0d761799be8ed214ea489295742e97"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/security.py",
+    "sha256": "9eeb5aa4ce855b64e8c4a5d509ebe07addba67b2b639f80fd8c6a72d7bbda48e"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/automation.py",
+    "sha256": "a999cb255697c67a0203a298009eda37918179c858737f4622005fe73d3fcde3"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/availability_links.py",
+    "sha256": "a0c78aa480146129c6baac1ebc0e4038e9ebe094281ce1729c8e43567c63f2e8"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/availability_parser.py",
+    "sha256": "00e89225a8e4d588a3b4db907991af9266ae0eec2b3d2a48241a1c6893017ae6"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/crm.py",
+    "sha256": "a0cd2c05af43736c9b73af650b787589323d9197a54f0a86a89d60c7a6ef191d"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/crypto.py",
+    "sha256": "75b51ad2af6d881e2b103c088656bc0f553a879eb29d9364a3c655e2e92b07a0"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/gmail_sync.py",
+    "sha256": "bb383b9b9b7acd0df9cfb3657b6255d11df0f3de8b899e9a44649298dac1b277"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/google.py",
+    "sha256": "d258c3aecc1784430f219073f5a67c725bb6e59e12d15da7a06b5b99411968bf"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/messages.py",
+    "sha256": "64685d94ae2b3666100509e2b76b9fbaf14e5222c012c10ed59b42bcd67e2aba"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/providers.py",
+    "sha256": "c9a7dc4bec9c46fec55dd9f23f0107fc90f17566a813de1783dc9211011566de"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/scheduling.py",
+    "sha256": "055df3ca16b52c0fbc8a18a9bd0848c8f3e6e66928df5f2d09a151e6cb54e534"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/app/services/workflow.py",
+    "sha256": "700a313eed011ba1d036b9effbad7dd10f55921fead6b45e1217bc841af5679a"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/tests/test_availability_parser.py",
+    "sha256": "3ccb528d8af8ed419b7b2cace7f798c52d8df5bc0b7b798f82c70cfe9443d3b6"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/tests/test_google_integrations.py",
+    "sha256": "f88f4572cafc04c5b225c50bcd542e8b90c9fd2febd02059c935805c8ae5ddcb"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/tests/test_public_availability.py",
+    "sha256": "71a56276b7e9fca41b2b4daeac519a47fe39faa8b457b4fb79c0485bd4d78f61"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/tests/test_scheduling.py",
+    "sha256": "c35a15813e64a65c8f1fd0e8408d984138ac23604b497cc58af96ba501733121"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/backend/tests/test_workflow.py",
+    "sha256": "597b06708ecda7767b81f14df9bb82a52e8897ac8faf02102b7161e492bef5c1"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/docker-compose.yml",
+    "sha256": "5b093e63e9770322387163dd3dce24289c893be81c949164e6602b47db3dba23"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/AGENTS.md",
+    "sha256": "75ba512a9066172056efdb1d5167b9ca2cf34ef923967963519e2f2c04d6a3dd"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/CLAUDE.md",
+    "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/app/availability/[token]/page.tsx",
+    "sha256": "522d8c30eafbcc0486b7aa2217519c6c536510929250381354d80797082dc4c5"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/app/availability/[token]/picker.tsx",
+    "sha256": "6ae294e72a269b540411c1db198e6eb9220b1eb1550a689f23eab064226dae64"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/app/globals.css",
+    "sha256": "44bd8ac6bbe3e7efc742ea87ef2e7f5d355c53feab67ec10afd4241878571a5e"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/app/layout.tsx",
+    "sha256": "59b8e8305b57bc86bc66036fcc57a8f17e3eb2baa036ee0191c74ee13e4f7c69"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/app/page.tsx",
+    "sha256": "1627c1e058c156e510b5e0490aa7622831fb29c39418c0e5a3395ecc2ad5f5ca"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/next-env.d.ts",
+    "sha256": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/next.config.ts",
+    "sha256": "546054bdec0d4519035a7910b8c95947dc5651ee5179f0e5bf2964b0f8191031"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/package.json",
+    "sha256": "70a7f17899090590e0a023cc541933a7311cea971f5fc1b82a46108f77ada67d"
+  },
+  {
+    "path": "recruiter-labs/interview-coordination-agent/frontend/tsconfig.json",
+    "sha256": "12c263bc319b0e3560a0cb8dfb8c479659e5f977c9f68770abf17e6e8cc44ef4"
+  },
+  {
+    "path": "sanity.cli.ts",
+    "sha256": "b637d3207a7b7bdeac32f0b72c0699ad4ab336a218813b3e78da60959d466fb2"
+  },
+  {
+    "path": "sanity.config.ts",
+    "sha256": "1802f47afcd96962120609744e75f6ceb1a54acd710d63ee40ec8a2ab16d64a8"
+  },
+  {
+    "path": "sanity/schemas/index.ts",
+    "sha256": "07666b501ca1d186bcc041142700b5ca5a1d8fda6b8e49fed53f4e5d21b9c602"
+  },
+  {
+    "path": "sanity/studioStructure.ts",
+    "sha256": "d89353c138a0f95b7be56f95ecdaf99d4c91c0d15cae7bc51641e578723e4cba"
+  },
+  {
+    "path": "scripts/clean-next-dev-types.mjs",
+    "sha256": "11b88f02660b24a41d7a0d4d57edffd5f313b7cfdebd86e2a187fe383bc0deae"
+  },
+  {
+    "path": "scripts/correct-founder-timeline.mjs",
+    "sha256": "ee2880712d66ec4b774122efb11469f91f1d82213febe1cd90a3b67152bf1d92"
+  },
+  {
+    "path": "scripts/cv-retention-review.mjs",
+    "sha256": "6cdbda535e0ac8887120fa561f13d0efea521b6daad95679aa881f4dcc61c47b"
+  },
+  {
+    "path": "scripts/db-migrate.mjs",
+    "sha256": "cff68d852dd90358a0aac51c6de97ed36f02751cac6007759149b5a94ceb9e13"
+  },
+  {
+    "path": "scripts/db-status.mjs",
+    "sha256": "c40a1a4e6f70f7d205d2e934642703f823ade1f77f637dbf2202c001feaa0d6f"
+  },
+  {
+    "path": "scripts/export-legal-copy-deck.mjs",
+    "sha256": "58b5fc2887723358024ba6d7d3e54dd1511e93af969d71aea3aaa4ce692d2919"
+  },
+  {
+    "path": "scripts/generate_whatsapp_legal_transcript.py",
+    "sha256": "f4c656674c39846bf072b72dcbcbf94fa9c43715376024cdd186cf476c085e7b"
+  },
+  {
+    "path": "scripts/monthly-health-check.mjs",
+    "sha256": "5e5d39f8dfc18b5df7119e8b7020f173fdf13e560d782009baa8ff8a02dff961"
+  },
+  {
+    "path": "scripts/performance-budget.mjs",
+    "sha256": "437164de1acb69424c49595e5f30ef71e20bfe99aa97387e8f43a87857127d7c"
+  },
+  {
+    "path": "scripts/production-monitor.mjs",
+    "sha256": "c2009d7a7edfdfd643c2da5f8423758cfc68c08eeaca131c26c4234071093aad"
+  },
+  {
+    "path": "scripts/production-qa-audit.mjs",
+    "sha256": "9174a851fce0521de2db12e5522fb0a05af709a9cb89e8d44fc0d6327f919692"
+  },
+  {
+    "path": "scripts/retention-check.mjs",
+    "sha256": "1aef03be2f84b7131c011d86bc9364fc6593aedcaaf96d907050a474fa820d39"
+  },
+  {
+    "path": "scripts/seo-launch-audit.mjs",
+    "sha256": "5f5e46bcc264c593cdbc89dc14770692bbbbbd463d792f844638fae3c85ee93f"
+  },
+  {
+    "path": "scripts/set-homepage-founder-media.mjs",
+    "sha256": "5a3d159f62cf2056475a947270f0e60c3e0952c38ebd1acd0a5c4645869d63a6"
+  },
+  {
+    "path": "scripts/sync-approved-copy-to-sanity.mjs",
+    "sha256": "370fd4977a51dcab040614edfa8bd08815d062bcf2fc7bc4e5e1234d7c217255"
+  },
+  {
+    "path": "scripts/sync-sanity-launch-shell.mjs",
+    "sha256": "6a3265cc672faf594d1368579ba8f32446808baaef3c0786c7af7e7cb58e2e11"
+  },
+  {
+    "path": "scripts/update-homepage-proof-sections.mjs",
+    "sha256": "d5a8b91e908c5e3e33ffe34de8cd8568d3ad718628e47732d6ba20a16e345645"
+  },
+  {
+    "path": "scripts/verify-whatsapp-business-api.mjs",
+    "sha256": "db1f23a9287453acd2bf7c2aa5bf37c8ab63d4e288fdc1c72a223f4a3f691e06"
+  },
+  {
+    "path": "sentry.edge.config.ts",
+    "sha256": "956428fead1b8a9890a7e624124e25557bcbaa824514cf5f1a4e13be0a545d43"
+  },
+  {
+    "path": "sentry.server.config.ts",
+    "sha256": "956428fead1b8a9890a7e624124e25557bcbaa824514cf5f1a4e13be0a545d43"
+  },
+  {
+    "path": "src/actions/contact.ts",
+    "sha256": "3a56359390e8f22749762799e6fc49837e49ce64ba2b295c496d43ff85d4cccb"
+  },
+  {
+    "path": "src/actions/data-subject-request.ts",
+    "sha256": "3cbbeaea27b3942d7dc0b01fadcc0d4dc299075d753ebaf01115b85061b91517"
+  },
+  {
+    "path": "src/components/Analytics.tsx",
+    "sha256": "b969744a5741cf3603997938d4e1c789170a63b4869d42a6c2481f22e6677fb1"
+  },
+  {
+    "path": "src/components/AnalyticsConsent.tsx",
+    "sha256": "304ab73f1fb1f80fed012aae1bbd8803763de9d27e2a4f7f2737ba2ec36a8e30"
+  },
+  {
+    "path": "src/components/AnalyticsPageEvent.tsx",
+    "sha256": "8c612b5b55e56cf24228ca16e792462ad55401d9e94f686d250c9e6d7cd0de13"
+  },
+  {
+    "path": "src/components/BookingButton.tsx",
+    "sha256": "68fd4e01a0fb24ae899718178bd3f542e6d2de7beb4e03ae7d9ad667182d8266"
+  },
+  {
+    "path": "src/components/Breadcrumbs.tsx",
+    "sha256": "6e169fe5b5b261cc83e89578e3fba2f167b9fa638693016acb0f18d28c7fd517"
+  },
+  {
+    "path": "src/components/CTASection.tsx",
+    "sha256": "2f1a46f29687d07472b0ac0de9e7078a6eaba72c1b7479d0def5092c02b16121"
+  },
+  {
+    "path": "src/components/CandidateApplicationDrop.tsx",
+    "sha256": "6a495bc64e4f812b82bc428b8d1dce1868a667abca7a7540cd608ffa5a2cd057"
+  },
+  {
+    "path": "src/components/CandidateApplicationDropForm.tsx",
+    "sha256": "a5644e7048cd21af3d99103b662e40edd2092dd8199ad7e9bee9ae57ab895c1e"
+  },
+  {
+    "path": "src/components/CandidateProcessTimeline.tsx",
+    "sha256": "86389c2fa952785d8d9edec748c933159220c1bc72e171f762b2c5e37f0199c4"
+  },
+  {
+    "path": "src/components/Cards.tsx",
+    "sha256": "0d78dff6cee645c9c976412c8991b37501a94fb0de4bb0323cea5ac3875a5def"
+  },
+  {
+    "path": "src/components/ClientProofCards.tsx",
+    "sha256": "1d5586ee4c30dd3677fe3ae4fc3db8f6ab1af791384f74c17902e5f1263bfe44"
+  },
+  {
+    "path": "src/components/ClientShortlistEngagement.tsx",
+    "sha256": "73af2e618dff1f9f22e0e90dd9b828c55b994ad94f08b0940a731e5cf1f21a1f"
+  },
+  {
+    "path": "src/components/ClientShortlistFeedback.tsx",
+    "sha256": "418f7f0b9b9dd8cb93707c5d8413a652e9a0316146a62886bca92491005a68e2"
+  },
+  {
+    "path": "src/components/ContactForm.tsx",
+    "sha256": "b6f718f9c70c14430de27e52fad1fb646e0c1c5a518e97772bc406c6e847a12f"
+  },
+  {
+    "path": "src/components/CookiePreferencesButton.tsx",
+    "sha256": "69e6faa18b38361a371f491e3b43e4ccda7422e3a8113892a19b16266d4f27e6"
+  },
+  {
+    "path": "src/components/DataSubjectRequestConfirmForm.tsx",
+    "sha256": "2ac3ba1bdf70cf37c90c4685ec4a9a762017c7259dace155290e5ec5039a3712"
+  },
+  {
+    "path": "src/components/DataSubjectRequestForm.tsx",
+    "sha256": "c4d8e18b1bea78028d98480b4353b458f04a52b8701193f9f8364c0570ce86db"
+  },
+  {
+    "path": "src/components/DeferredVideoEmbed.tsx",
+    "sha256": "587bb99fd9058a5fb07396f2f284b9aa9b0d2f9316e75262e5b077f340dfaa9a"
+  },
+  {
+    "path": "src/components/FAQAccordion.tsx",
+    "sha256": "c42190e77fbe0291fc9e76aa35361c9d3b62e5f075328d8a591747f7431b0486"
+  },
+  {
+    "path": "src/components/Footer.tsx",
+    "sha256": "25306f75ebd79e0514f58250d7bb63f3816b770e6320901fc3c3994ceaa28f32"
+  },
+  {
+    "path": "src/components/Header.tsx",
+    "sha256": "e0f336edd065e4a044269421ebfb61415bc56395323d5442882946597357bd00"
+  },
+  {
+    "path": "src/components/HomeHeroVideo.tsx",
+    "sha256": "a98bc0fee79a4379aa9addfb0adb7048ee4413f795acb2beb6a830f4a50877d9"
+  },
+  {
+    "path": "src/components/InterimAvailabilityForm.tsx",
+    "sha256": "910dbb70146c2e690bda5acbc76919543fef02817a2ae2417507030a576658ee"
+  },
+  {
+    "path": "src/components/JobRoleSnapshot.tsx",
+    "sha256": "5699d40176ab477af3cd31b785b0f5ddef0d0c36bfdf269b54c750c75dfbd366"
+  },
+  {
+    "path": "src/components/LinkedInProfileLink.tsx",
+    "sha256": "aac13bbbb2da7722f7892de4f411f4bc9dfcebbd88e740cf6dd9d87bacdf18fd"
+  },
+  {
+    "path": "src/components/LinkedInRecommendations.tsx",
+    "sha256": "c2d3284e1bca8dbe274692ea5ab364922deabdc8149f571d5eac6eea608d9ed5"
+  },
+  {
+    "path": "src/components/Reveal.tsx",
+    "sha256": "e4f73e94d16a2099e66677e4dff57a904dd748f80b9cfdf41805ff9042cd28c8"
+  },
+  {
+    "path": "src/components/RichMedia.tsx",
+    "sha256": "1ad07477fa537de3535a6e5acd951c0236e27d11da899660588cbb155f6ac8b3"
+  },
+  {
+    "path": "src/components/SalaryGuideLeadForm.tsx",
+    "sha256": "b83d47bb478ba056640206410ec25c2adf5fd34fa832f7900c88c0c0f1de1bc3"
+  },
+  {
+    "path": "src/components/SalaryTable.tsx",
+    "sha256": "f2c50ab5baa90f014f73251add8a88b8539dc4213a6529f8c519b66c43ac8cf4"
+  },
+  {
+    "path": "src/components/SchemaScript.tsx",
+    "sha256": "fc3885fc8a708e5cdf4c4364f857a0608ac85d24d5a3f721f03871976a8709dc"
+  },
+  {
+    "path": "src/components/StickyMobileCTA.tsx",
+    "sha256": "e658532bcb948fa54889edf007c0e601652b4aea85de9f5b06389698300ed02f"
+  },
+  {
+    "path": "src/components/VideoEmbed.tsx",
+    "sha256": "45905263bd6fda65d9efeca73575b2c9f95952b4d59ebc72d7dfe13ff0304807"
+  },
+  {
+    "path": "src/components/VideoPoster.tsx",
+    "sha256": "8356e755f4b9e1acd3e04500499a4875feba9e733c93dbd6664df767b8eee991"
+  },
+  {
+    "path": "src/components/WhatsAppButton.tsx",
+    "sha256": "d961a34945870d7b8df456e4b29bbd263c89f732ba14c5f121dcacd16cc36bb8"
+  },
+  {
+    "path": "src/components/seo/breadcrumbs-json-ld.tsx",
+    "sha256": "8876e4efc07f6caee46a247147753035c30fd5ba5078b37c7cdbb5532e35b4d2"
+  },
+  {
+    "path": "src/components/seo/job-posting-json-ld.tsx",
+    "sha256": "6cfe144917a743e3ddcefc1726d79b8c95bfa983e71cf5beff659e4a70f6bef9"
+  },
+  {
+    "path": "src/components/seo/json-ld.tsx",
+    "sha256": "d2704411930495b0677f1da7962b0d40de7983bb57d9d70d1180da8d6e382eae"
+  },
+  {
+    "path": "src/components/seo/organisation-json-ld.tsx",
+    "sha256": "8996167c43ab4874d07fed5122dd9bec8dadbd6dd398139309e552d838742a73"
+  },
+  {
+    "path": "src/components/seo/service-json-ld.tsx",
+    "sha256": "64c15679f897ccf8a8f87295019e4c98a54c1405380e13211a2c23a7de65133e"
+  },
+  {
+    "path": "src/components/ui/Primitives.tsx",
+    "sha256": "15028ce6aa4ae6f6e835c0ec22a4bb339487d2a2ce87dadfec85b4d80878a9c4"
+  },
+  {
+    "path": "src/config/seo.ts",
+    "sha256": "0838f6e01a0f4ba2638a02745dc921713cd695ff50f79ea2f1b471bb70f9a548"
+  },
+  {
+    "path": "src/config/site.ts",
+    "sha256": "80cf4474c9ba101bbe17aa0ec7c211c1896a7f87e46ce4b4e3a5c6e7b13b218b"
+  },
+  {
+    "path": "src/content/fallback/index.ts",
+    "sha256": "239d5633e7f025d6435e13452352484c0141015b2b745a6a64911b7b5086ae21"
+  },
+  {
+    "path": "src/lib/ai-brief-diagnostic.ts",
+    "sha256": "6043fa361b8a1bed356d10c53ba9cffa432d8bc6b2a1977851320e93daf2ce90"
+  },
+  {
+    "path": "src/lib/ai-index.ts",
+    "sha256": "4779b8bbcfd387957bbfe08f9adda6db6728ddc98a51e610855fcc18319167ba"
+  },
+  {
+    "path": "src/lib/analytics.ts",
+    "sha256": "04d9ff087a38b0a80b65deac7f2eb045c7ff530d83335f4f32498a4f8f50d5fe"
+  },
+  {
+    "path": "src/lib/candidate-application-drop.ts",
+    "sha256": "9be417ad749f660bdfadc6bb034fb3178050320bdbc2451504575a920f71a77f"
+  },
+  {
+    "path": "src/lib/candidate-transparency-content.ts",
+    "sha256": "0f11154549fc8d0233e4daf95af03f34abe0ec0d6f813392dda39b69f13edec7"
+  },
+  {
+    "path": "src/lib/candidate-transparency-scorecard.ts",
+    "sha256": "4755a2637cf38f8fa914ca33bb616febec6eef0a30c15d43b842725ff952ccb9"
+  },
+  {
+    "path": "src/lib/candidate-transparency.ts",
+    "sha256": "4cf7f88bacbe670b7bf1b2920bb5abf2a19d1eb628c40f7c6d990434b58baee6"
+  },
+  {
+    "path": "src/lib/candidate-trust.ts",
+    "sha256": "1692b406f7dcb4da3f14d8661a8d0ba4e673999d9ba672fbc26052a8a69e0fef"
+  },
+  {
+    "path": "src/lib/client-shortlist-portal.ts",
+    "sha256": "3b4b7ec2801b2fad0c3998b0349e9715613911588f5981c99aa011368a40f9cc"
+  },
+  {
+    "path": "src/lib/cms-auth.ts",
+    "sha256": "60c2eddf85dc1c12abb6ee487a4db9a2abcdb288aeb8cb343eb2568843aff4ff"
+  },
+  {
+    "path": "src/lib/cms/image-url.ts",
+    "sha256": "d99758288eec3cbd271d2d9c185536cab84b50b1ce699e5a6d6b8411d1bc32e3"
+  },
+  {
+    "path": "src/lib/content.ts",
+    "sha256": "0eba3d2f62f5600b2645c25f09a3f822f119db038ea05060f736fc7b953222a5"
+  },
+  {
+    "path": "src/lib/cv-anonymization.ts",
+    "sha256": "f2bffaf7e383ee87d42e1be0fa50ebf6ca99142db708d492b9f471e396d84a1c"
+  },
+  {
+    "path": "src/lib/cv-malware-scan.ts",
+    "sha256": "6c4afdf56be98b1dbc06226c2b677d853871aed2ec7b9a462a5b2eec8e3907dc"
+  },
+  {
+    "path": "src/lib/data-boundaries.ts",
+    "sha256": "8c4bb09ca2aac3880e448ecf3fd688e9ff6a1d67d8853088201d9f7db2f5f261"
+  },
+  {
+    "path": "src/lib/dsar-verification.ts",
+    "sha256": "58b35b9214ba0f3461a0b96fdae97db2bbd648e870c086f415e5199c2e76bebb"
+  },
+  {
+    "path": "src/lib/dsar.ts",
+    "sha256": "d8e23dfd50986a6a2b3e601907a689ab7ea0df6a51e98f1b5021b4bdf1121de8"
+  },
+  {
+    "path": "src/lib/env.ts",
+    "sha256": "7113dab6b34d33479b8df734cad8857ff46e8ddfe64980753a91a796647bbc12"
+  },
+  {
+    "path": "src/lib/feature-flags.ts",
+    "sha256": "c0c262a2e91350e0d804eadafffa2d0365575266eda418ac22f2429b389e4aa2"
+  },
+  {
+    "path": "src/lib/homepage-content.ts",
+    "sha256": "75f16a25c064b0e6873fddb55a4b16f2461fce6a5dd6b8ed6e7cdbbdb0f2a8b3"
+  },
+  {
+    "path": "src/lib/images.ts",
+    "sha256": "38d996bceb4cabf41783dc3c03242b51679b7a204c9ce2637f79c81be5ab00bc"
+  },
+  {
+    "path": "src/lib/indexnow.ts",
+    "sha256": "e05a278c3f47a6e11e776b40ee0a31236ca2ad859368670a1b367c464bcc7249"
+  },
+  {
+    "path": "src/lib/interim-availability-shared.ts",
+    "sha256": "fa4fcfb0044fc14f013276cbe7cecc26526bed2fa8c32f088d550bcecfea8b9a"
+  },
+  {
+    "path": "src/lib/interim-availability.ts",
+    "sha256": "d612a11ab573d0bf20f4a490452aed68ecc09cdda44845ce507e287d5e48d18d"
+  },
+  {
+    "path": "src/lib/labs-ai-brief-builder.ts",
+    "sha256": "3f052d7419328c92a4a4185102fb851749a7a744ac712c38c456e36f1c794761"
+  },
+  {
+    "path": "src/lib/labs-bad-hire-calculator.ts",
+    "sha256": "ee9c7a2ed44f68c207fdb6f937587637aa4464dc2fd7160a4d1e96c7dc0e78df"
+  },
+  {
+    "path": "src/lib/labs-functional-matrix.ts",
+    "sha256": "a423d4f4a5cf48d9dadf4927cb329aa1f7a48d01f88d314b84f6f0242a7fc56d"
+  },
+  {
+    "path": "src/lib/labs-interim-bench.ts",
+    "sha256": "493dc530ecadf343baaaab786c765cae373e932bb9f746ca0083d7f129e9ab62"
+  },
+  {
+    "path": "src/lib/labs-market-dashboards.ts",
+    "sha256": "abedf2fc6d4cbd46c4117ddc185ae94fc2ef2ff10bbd6253406aabc65bdd8cf8"
+  },
+  {
+    "path": "src/lib/labs-market-mapping.ts",
+    "sha256": "478732ea6c22b93af4d261d462d5c8f4412b862513a0052a49fed4fa5f65816c"
+  },
+  {
+    "path": "src/lib/labs-salary-benchmark.ts",
+    "sha256": "253a3d8041af9ae20d8ec40270d70fdb470386d208cd3773d647f84be7946e78"
+  },
+  {
+    "path": "src/lib/labs-salary-guides.ts",
+    "sha256": "c8e35ceae209c699c9e1abafc2ea036667d627c9fddb4db4526d11ea14fb6406"
+  },
+  {
+    "path": "src/lib/labs.ts",
+    "sha256": "bfbaa7fc3cb75809ddfb5d3c616c78c105445b11059258c456c929873351b76c"
+  },
+  {
+    "path": "src/lib/metadata.ts",
+    "sha256": "bc3b8cdb333e9a11e86971c48e56ce8d8ee0da9c59bf197c0db70e70a1afd20b"
+  },
+  {
+    "path": "src/lib/monitoring.ts",
+    "sha256": "f10af67d9addb0a9f424fffb611d3c8fd446bf27bef461f7151f964da8a1a084"
+  },
+  {
+    "path": "src/lib/operations/audit.ts",
+    "sha256": "e169426493b056826556b47e0520e1c12f05389da90224e774c512a4725e958b"
+  },
+  {
+    "path": "src/lib/operations/database.ts",
+    "sha256": "2b109ae2c9186cc851f4af74ef0b82c3251f10ca1dedc4add07e1f69bdc8f429"
+  },
+  {
+    "path": "src/lib/operations/store.ts",
+    "sha256": "bf6594adbd463d82869272ce367529142d681a7ca091710f3cb67187fe4c04ae"
+  },
+  {
+    "path": "src/lib/operations/types.ts",
+    "sha256": "920235b69b55dc2ac5353991b7034ee9d59a683ad8c6234746b27683f676a945"
+  },
+  {
+    "path": "src/lib/post-launch-growth.ts",
+    "sha256": "8760c37015f058261ba3ffb3aad2b46ac75d6689456f7dca01a909d784296652"
+  },
+  {
+    "path": "src/lib/public-content.ts",
+    "sha256": "5e6ab54a10990057757b08ab710cf7fbb68651370efcfa80b7f3e22670725794"
+  },
+  {
+    "path": "src/lib/recruiter-labs-ai-candidate-summary.ts",
+    "sha256": "9f458661427ca78d665f16d9f731682d3c09870640bf49e70c73c831c84b8485"
+  },
+  {
+    "path": "src/lib/recruiter-labs-ai-interview-notes.ts",
+    "sha256": "55d496adfdb8add3c6a64a41cbf202aaef35eae0c110b79b3f37950253edeb79"
+  },
+  {
+    "path": "src/lib/recruiter-labs-ai.ts",
+    "sha256": "b701c739bdeda4791de0ed26acf19f4a4fff51f1c6d0365c04e556d8bbd4613e"
+  },
+  {
+    "path": "src/lib/recruiter-labs-audio-notes.ts",
+    "sha256": "8adba9362753eb47a9a38505455ea1549739c899a9bca385faca7ff8c5da553c"
+  },
+  {
+    "path": "src/lib/recruiter-labs-candidate-profiles.ts",
+    "sha256": "8b03a7228c7b7c867bf1057675b7aebb9001efa0214d3871ae4725bd7c538930"
+  },
+  {
+    "path": "src/lib/recruiter-labs-engagement-shared.ts",
+    "sha256": "c71ed9994a592b2efa185bc1271659c45e1ca17185ee5ae0894dc6572bd4d4c2"
+  },
+  {
+    "path": "src/lib/recruiter-labs-engagement.ts",
+    "sha256": "aeaa579cf1a3d05a516ade6aacddcbb06069684b727258aad81b500382f1a1a7"
+  },
+  {
+    "path": "src/lib/recruiter-labs-feedback-shared.ts",
+    "sha256": "f61357de4dab7d5fc022f0ecc06ec5393e6a5237898f6999ae2c9b23db81e5a4"
+  },
+  {
+    "path": "src/lib/recruiter-labs-feedback.ts",
+    "sha256": "c658bf3aa83549febffbab8cf37b8d2d18a55097c52cd0f146e16cf30b102833"
+  },
+  {
+    "path": "src/lib/recruiter-labs-interview-scheduling.ts",
+    "sha256": "7d87f9ba4785306a3b2771a6ebd129c3c6963e7193e9063be7a33092213203a5"
+  },
+  {
+    "path": "src/lib/recruiter-labs-whatsapp-crm-sync.ts",
+    "sha256": "8ee8158a7b61a02271686a696bf4745a7d96a54cdaa088bee46b6352825f4ad5"
+  },
+  {
+    "path": "src/lib/recruiter-labs.ts",
+    "sha256": "ef36b1aca637043361b20ae1f6b83ea8b02e9a627149214882fee6b3429399f7"
+  },
+  {
+    "path": "src/lib/retained-search-dashboard.ts",
+    "sha256": "6b506addfdd7254b709cffda6588e8b06b8a4044ba0521221bb35a4d7450f31a"
+  },
+  {
+    "path": "src/lib/retention.ts",
+    "sha256": "6ceb2b062db07da730a8744dd5124df3fd7d703a7072821ccc35936f1f3707e3"
+  },
+  {
+    "path": "src/lib/salary-guide-2026-tables.ts",
+    "sha256": "7e1a07866d50bbcb029592e847c7334d810f2965978a5d555aa8b07b4c6c5a69"
+  },
+  {
+    "path": "src/lib/salary-guide-2026.ts",
+    "sha256": "7c44e012dc5dcd4ad44a9bf7eb25dd33106e0857894a47a795c162ec3837b055"
+  },
+  {
+    "path": "src/lib/salary-guide-shared.ts",
+    "sha256": "f331a2fb88283011002a3a14446449b1685b13b5ca356f9d71aaada2913c7116"
+  },
+  {
+    "path": "src/lib/salary-guide.ts",
+    "sha256": "adaa836fd726a16553599a0e2275bb8209101fcbf8ed5fdccf92666179301300"
+  },
+  {
+    "path": "src/lib/sanity-content.ts",
+    "sha256": "d9722782abcb77d6d9665453af2bbafe8fe6babcf336150bf07f6d4d6703ed2b"
+  },
+  {
+    "path": "src/lib/sanity-core.ts",
+    "sha256": "127b7f4e2dad38b9f5f75b82e4102e4787d90a5fbec9824b3d39c47d07d926b8"
+  },
+  {
+    "path": "src/lib/sanity-queries.ts",
+    "sha256": "1d83adc63efc51d8a980c64021009666de32603b3564686e67109c94703d4651"
+  },
+  {
+    "path": "src/lib/sanity-types.ts",
+    "sha256": "7b150c101b8047521298905385d499dce10cafe5cd197109fc5a25ac1ad16500"
+  },
+  {
+    "path": "src/lib/sanity.ts",
+    "sha256": "138dd6b92415e4fd564e312e6d6acefbbafda3402792c6cb47c9c5a3f9ffa482"
+  },
+  {
+    "path": "src/lib/seo.ts",
+    "sha256": "ce66681edd434733f0a6189a9868a2d335382e825df7deddc9fc27fe777fc792"
+  },
+  {
+    "path": "src/lib/site.ts",
+    "sha256": "85268c8ee252e76fc7ba16e8fd7c6eb9c12aa76b928b48bea19ab6eef79c11ca"
+  },
+  {
+    "path": "src/lib/sitemap-engine.ts",
+    "sha256": "0bbb1805407d960268b2a4c3f80da591f6c4eba0249d253d8067634b157e54b2"
+  },
+  {
+    "path": "src/lib/types.ts",
+    "sha256": "44f3f26d2d33d213b213b9f8bc2bfca9a24cc0112b31efdda70ae379beb5dd9d"
+  },
+  {
+    "path": "src/lib/whatsapp-business/client.ts",
+    "sha256": "ddb5034525e35a58bdad0a120aa5409b3e5271f90813dbc3bbef73271f221c69"
+  },
+  {
+    "path": "src/lib/whatsapp-business/interview-logistics.ts",
+    "sha256": "582a90a7eb1e395f56e9ae5935930a5479d67f8c745dc075499227ecb16d1b6b"
+  },
+  {
+    "path": "src/lib/whatsapp-business/templates.ts",
+    "sha256": "a96f08cc90d6b29ecb0b31ebaf2bbc46905dbb1e3d894626f6f76e300c299a80"
+  },
+  {
+    "path": "src/lib/whatsapp-business/webhook.ts",
+    "sha256": "d3eea257b02d81734315d5aa3d239f5008984d3e546902c696ee8f0adbf77740"
+  },
+  {
+    "path": "src/lib/whatsapp.ts",
+    "sha256": "c5c92cb19cd305eb2141cd9850408a0dcb01208833c99dd2fdb7e71871b4bb88"
+  },
+  {
+    "path": "src/styles/theme.css",
+    "sha256": "11e249ff69e68be106d8add398bfd83190b39fd500dad567441d26a771c3df32"
+  },
+  {
+    "path": "src/tests/e2e/site.spec.ts",
+    "sha256": "7848bbc10ac7a39cb7106177bea77dd3199c34adc6a04a748f12417afc2badd1"
+  },
+  {
+    "path": "src/tests/unit/accessibility-audit.test.ts",
+    "sha256": "ccb222df2bba478456df3a24199504ebf5f25969eecf606637128979bd5da228"
+  },
+  {
+    "path": "src/tests/unit/ai-brief-diagnostic.test.ts",
+    "sha256": "6349e924a4950277e6ea6fb3d7737643ccdb1586674eb71449301f01463b6af2"
+  },
+  {
+    "path": "src/tests/unit/analytics.test.ts",
+    "sha256": "83dfa254125b9ceb4b944ddeeb05738d882f22fa0f3180b7408270bea435a54d"
+  },
+  {
+    "path": "src/tests/unit/api-routes.test.ts",
+    "sha256": "631278f15a4744ed555f06fadc6149bea564ff5f1c1949ebe607f2cf31805bde"
+  },
+  {
+    "path": "src/tests/unit/architecture-decisions.test.ts",
+    "sha256": "2f7e47f1430f89b7a8ae1b0be89543a5b97ae892e7d6548a77fd53026bd89e60"
+  },
+  {
+    "path": "src/tests/unit/audit.test.ts",
+    "sha256": "92fd27472ce699c153a7fb7c96b0b195ddbe90bc1d3a7782774eb03446283ed3"
+  },
+  {
+    "path": "src/tests/unit/booking.test.ts",
+    "sha256": "5fb1eae1a0597f8d35dccddc4518996684f02f4a2f70da6ddec593c6a530893e"
+  },
+  {
+    "path": "src/tests/unit/brand-copy.test.ts",
+    "sha256": "06f5369ba8f93ef50fc8dd0ef795580b101936ea11bc55e782af2958d750b317"
+  },
+  {
+    "path": "src/tests/unit/candidate-application-drop.test.ts",
+    "sha256": "c7c085eaebbbcbca338ff3171756bcd94c27d7373dbaf4c187a948fad41fdb94"
+  },
+  {
+    "path": "src/tests/unit/candidate-process-timeline.test.ts",
+    "sha256": "8b04640ba264b02393024b2334ac3b07e01374dfbdec36bd574cebef7040fc1d"
+  },
+  {
+    "path": "src/tests/unit/candidate-transparency-roadmap.test.ts",
+    "sha256": "0a41efee1afdf46969f7ffb21c93f85c129baa6381ea90a22446c283ae423682"
+  },
+  {
+    "path": "src/tests/unit/candidate-transparency-scorecard.test.ts",
+    "sha256": "88165126f70d6dbce1f0547e339b27aad3fd2e7da25d5f3bfbeb0c16bede5833"
+  },
+  {
+    "path": "src/tests/unit/candidate-transparency.test.ts",
+    "sha256": "230790ad5e951736b87b1b343ca3d5ffb1465d11fd4bce527faac30c5e6b535e"
+  },
+  {
+    "path": "src/tests/unit/candidate-trust.test.ts",
+    "sha256": "ff29dd58e6d86249cfedfa7c8086ffb070f0fb53f666257b122fe12d65cde863"
+  },
+  {
+    "path": "src/tests/unit/candidate-whatsapp-preferences.test.ts",
+    "sha256": "b2cfffd869f3dc868d8a656c0609d889d7e4acbd67064688cc6386c87212ef80"
+  },
+  {
+    "path": "src/tests/unit/cms-auth.test.ts",
+    "sha256": "601bf0a451e7b98864edb18f3f7a94a3de0a3415ec9e6783de7665b3d96f5eab"
+  },
+  {
+    "path": "src/tests/unit/codebase-audit.test.ts",
+    "sha256": "24f7f4f813dc77a441a593fcac165b8fb02411d2b5c82de85498732561293627"
+  },
+  {
+    "path": "src/tests/unit/contact.test.ts",
+    "sha256": "230ec08cccf8a72cb2430cea19e97e13757adf605ce6fc76f20a4ee1270e9564"
+  },
+  {
+    "path": "src/tests/unit/cv-anonymization.test.ts",
+    "sha256": "5cbb66b8144036eb42668ae5777aed96b28b5f296a8bb18ded397d5604cb95a8"
+  },
+  {
+    "path": "src/tests/unit/cv-malware-scan.test.ts",
+    "sha256": "7fab7348c13642d28368498ee32c43c999058917aa0e1187bf0f74c8cb705487"
+  },
+  {
+    "path": "src/tests/unit/data-boundaries.test.ts",
+    "sha256": "8d210f78f6d57e40461da4de921e47195cd77eba0c99ef7ee7d69049955ed533"
+  },
+  {
+    "path": "src/tests/unit/data-subject-request.test.ts",
+    "sha256": "8152f189118ad96f6498e61a63ea6348726ebd90ebcf80b85c1db2cdc59c04c2"
+  },
+  {
+    "path": "src/tests/unit/feature-flags.test.ts",
+    "sha256": "4b796e672fff11dce3f4c89d1848d82c81d0da8a7b5df091c0b61d79ae51149d"
+  },
+  {
+    "path": "src/tests/unit/final-launch-readiness.test.ts",
+    "sha256": "53a57827752f48eb349d351f6767788038dbb1dd9aff83901edcbd8bf46f6234"
+  },
+  {
+    "path": "src/tests/unit/final-qa-launch.test.ts",
+    "sha256": "757db8efeae4f13a307f928fa42e09fceac8dd7c99d17d93a698d0f12a0d2d41"
+  },
+  {
+    "path": "src/tests/unit/future-proof-architecture.test.ts",
+    "sha256": "9573749cb28a7c9068e0fd9455045b1562b8de86b5c7cd4b2ade6b8774e6e138"
+  },
+  {
+    "path": "src/tests/unit/indexnow.test.ts",
+    "sha256": "67b1797236e9878291a33473c8a3dd3f65f4c9211a01a41b2c4fc02f23ccdd49"
+  },
+  {
+    "path": "src/tests/unit/interim-availability.test.ts",
+    "sha256": "804c377e9bd2146cae1f161801e76d77bd304c37900c2f4606e90b52ec42a52b"
+  },
+  {
+    "path": "src/tests/unit/job-copy-standards.test.ts",
+    "sha256": "7d9d48e6b7c3b69ea69cbf9f69607dcccf55e33ced9469ea440f0bd1340a2311"
+  },
+  {
+    "path": "src/tests/unit/labs-ai-brief-builder.test.ts",
+    "sha256": "3aa2f6eb0b6b49e1d2e671a1b1681c363771198d47004297b76a3805f5fbf92b"
+  },
+  {
+    "path": "src/tests/unit/labs-bad-hire-calculator.test.ts",
+    "sha256": "052d4644612747ceb31d76c3ef52d089ee7bdba42720492f704f00f41eeab0a2"
+  },
+  {
+    "path": "src/tests/unit/labs-client-shortlists.test.ts",
+    "sha256": "452ecee1eae7b8e807e3139b47edae9cb643f4462a3f2b40385571d2d7a71b35"
+  },
+  {
+    "path": "src/tests/unit/labs-functional-matrix.test.ts",
+    "sha256": "1fac0df74ad8d3dc13f453ee016fabaa685e95bb29f17cae53ce3218ce015486"
+  },
+  {
+    "path": "src/tests/unit/labs-interim-bench.test.ts",
+    "sha256": "11550da937c7dacf91947d17f8dbd8cb35e0343bfffad7bbf7bcbced75ceb953"
+  },
+  {
+    "path": "src/tests/unit/labs-market-dashboards.test.ts",
+    "sha256": "2a3675a7a0587978cacb5a0a81eac124749710927db25d2220f68e2fa9063af2"
+  },
+  {
+    "path": "src/tests/unit/labs-market-mapping.test.ts",
+    "sha256": "c0832f11384bd9bd7bab0846cc5678650eed8acf8fc01832aea1de8e0d174b96"
+  },
+  {
+    "path": "src/tests/unit/labs-salary-benchmark.test.ts",
+    "sha256": "dc6f2f60279bb33c77e549cfac997689e6700ea2f8876bb4fc13ad608f74a87f"
+  },
+  {
+    "path": "src/tests/unit/labs-salary-guides.test.ts",
+    "sha256": "ab32b792d169b53f3b284fab8e8d56d2bc8791b91247a24ad5b5ffc17c1b8826"
+  },
+  {
+    "path": "src/tests/unit/labs.test.ts",
+    "sha256": "6a60e6285e2dd11e54f1e0bc4ab6d35f14ee84b6567e026439af9bef3a321e80"
+  },
+  {
+    "path": "src/tests/unit/launch-setup.test.ts",
+    "sha256": "ad2db6508111500a1b6f94d14a3e2306905dc8cdd5b5c8e185ad09b2061b87ce"
+  },
+  {
+    "path": "src/tests/unit/legal-privacy-pages.test.ts",
+    "sha256": "597686e04ec1516c4837bb0cd139844063e83012711ef13bb29b0b7935068614"
+  },
+  {
+    "path": "src/tests/unit/linkedin-profile.test.ts",
+    "sha256": "1ab961d1200876c071655e9518f0c1d1f7e5c7caddec490ff81d5e59965f3743"
+  },
+  {
+    "path": "src/tests/unit/loxo-boundary.test.ts",
+    "sha256": "b16f00fef8a70757336f26906b1c2d13a93b8f76e17b913d90c65681548cfafd"
+  },
+  {
+    "path": "src/tests/unit/observability.test.ts",
+    "sha256": "7df4dcc33f00160b39aaafc9ad5a6ef3bd7c747fdbdc193176b5f57c81bf745c"
+  },
+  {
+    "path": "src/tests/unit/operations.test.ts",
+    "sha256": "2e8969cd8d8fa4425651c30e46e6ece15471461cb2978317d8ba1b0eb3aa2213"
+  },
+  {
+    "path": "src/tests/unit/performance-audit.test.ts",
+    "sha256": "e3d1f9d8d2e928edc988bf7ef85144b5ef8f77262d130f0684dfd1dbc1de7d58"
+  },
+  {
+    "path": "src/tests/unit/post-launch-growth.test.ts",
+    "sha256": "75fa39538a3d39f9de671b4087ff0ea20994f40b1a2c3da8161b3dbb42c76a40"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs-ai.test.ts",
+    "sha256": "78af4359069a2c59233a04518341e843fb450815c92457872c0ff54741e46b8a"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs-audio-notes.test.ts",
+    "sha256": "dc295e4a70ce02b8f16d4d42ebf4d1c768d9e84de44ed31171c9c85ca7ab5db6"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs-candidate-profiles.test.ts",
+    "sha256": "03a832af50f6bfe6603801ed509778639f16c6d5ce19346c187cad8ff50387dc"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs-engagement.test.ts",
+    "sha256": "afbab9dcc251dbd4833b92ab52ce122c8009c92ca24bbde6481c485928f5176c"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs-feedback.test.ts",
+    "sha256": "e3087bfa00402bdf273b52ed94ac212c8652af80fb0da1e12e36b64ce746687c"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs-interview-scheduling.test.ts",
+    "sha256": "a28685a12ee1343d77bc40334ff68c1251d8d62ffec29129d2a4ca32b1652be1"
+  },
+  {
+    "path": "src/tests/unit/recruiter-labs.test.ts",
+    "sha256": "fa16feb4652c7023216c2a1340648a82b4ff3bcba362f9d5885b716c1cf85486"
+  },
+  {
+    "path": "src/tests/unit/redirects.test.ts",
+    "sha256": "18df88f10146f573ae4af6e3e6dc6ad7f8876d14ffaea95be69b3bb69bfd04bb"
+  },
+  {
+    "path": "src/tests/unit/release-process.test.ts",
+    "sha256": "093aa335de3886f61be32086464713226e7557089e7d252a92c10fa264314189"
+  },
+  {
+    "path": "src/tests/unit/retained-search-dashboard.test.ts",
+    "sha256": "05876f2be34cd367a9c422223412875876211824c861c7e59eb24f6cea0f1b99"
+  },
+  {
+    "path": "src/tests/unit/retention.test.ts",
+    "sha256": "3d8ccb596443c5dc3636a5ebc11d352fac4717aed80e94b71dcddeaf3fb2d0b1"
+  },
+  {
+    "path": "src/tests/unit/salary-guide-2026.test.ts",
+    "sha256": "101e0cd84242f82f823be2fbca834c8dac91a18825201319548551e15936a990"
+  },
+  {
+    "path": "src/tests/unit/salary-guide.test.ts",
+    "sha256": "106751a29c6ef010b73751aa0eef4aaa77fefe8bb71b4d23ee62182d29615fbf"
+  },
+  {
+    "path": "src/tests/unit/sanity-core.test.ts",
+    "sha256": "4601039818676d898ebaa69234b07bafe4c84c0c2f54f20ba808cc155f1e2bfd"
+  },
+  {
+    "path": "src/tests/unit/sanity-fetching.test.ts",
+    "sha256": "3dc8152c73567dba809a8f118af57fc65605b98f3b4dc0fded2a02f16cfeafe3"
+  },
+  {
+    "path": "src/tests/unit/seo.test.ts",
+    "sha256": "f3bedab2969fbc167cc34407faaeceafac4e49dc27a4288a33a2075223c53399"
+  },
+  {
+    "path": "src/tests/unit/sitemap-engine.test.ts",
+    "sha256": "3a86e082b06e0ce7127d459f11935bdf061c495afcd6bc34ee4d47fee204e445"
+  },
+  {
+    "path": "src/tests/unit/ux-cro.test.ts",
+    "sha256": "da6b105599d779416663b8b78ec7c9c6bec8ccbe5fc4a78e7c02c47d1d3dc43a"
+  },
+  {
+    "path": "src/tests/unit/whatsapp-business.test.ts",
+    "sha256": "1d7679ab1ddfe1022795ff031f4c1ff85d25c98c6c239bbffbbd11a3dbd9e914"
+  },
+  {
+    "path": "src/tests/unit/whatsapp-crm-sync.test.ts",
+    "sha256": "0fbd1a714fe6d26662dcf708462c8e620a9698c72078d15b5757bf12d8faf8ac"
+  },
+  {
+    "path": "src/tests/unit/whatsapp.test.ts",
+    "sha256": "18d20d65d8269c5eb046ba174cb2f03bf5489016bb7817e43f9486747d3f517e"
+  },
+  {
+    "path": "src/validations/candidate-application-drop.ts",
+    "sha256": "c687d55957473d8f01132a6b6588c9cbe8dd030771e967aedeb673942b509d7f"
+  },
+  {
+    "path": "src/validations/contact.ts",
+    "sha256": "66daea745d00d72be8194d9e04ccda8c7cedc81041530ad505e16a682e095df8"
+  },
+  {
+    "path": "src/validations/data-subject-request.ts",
+    "sha256": "750848ccf9ec1c6595ecb9967581df6faf5231be5340b52aa99d3c17a9227a98"
+  },
+  {
+    "path": "src/validations/interim-availability.ts",
+    "sha256": "8789a8db0a02d58333f0cfdb95b99c9b89f22e64369c3ecdb4e19f428684bbd0"
+  },
+  {
+    "path": "src/validations/salary-guide.ts",
+    "sha256": "2c619e834e7a1561829aea2a5510aaead853534235e56934e5a618e336942696"
+  },
+  {
+    "path": "tailwind.config.ts",
+    "sha256": "f4accdfe4599db18fbb0f605bd9b05eff5f926adc19b048fe550972b9da1c77e"
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "184afc8dc2dfcf52cafa0aa6975ab26b925bf4ae660837a8f73a95de72201646"
+  }
+]

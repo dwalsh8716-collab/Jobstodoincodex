@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createClient } from "next-sanity";
+import { brand } from "./brand";
 
 // Sanity is the public content engine for the website.
 // Do not use this client to write private enquiries, candidate records,
@@ -13,7 +14,7 @@ export const sanityConfig = {
   dataset:
     process.env.NEXT_PUBLIC_SANITY_DATASET ||
     process.env.SANITY_DATASET ||
-    "production",
+    "rebrand-preview",
   apiVersion:
     process.env.NEXT_PUBLIC_SANITY_API_VERSION ||
     process.env.SANITY_API_VERSION ||
@@ -27,6 +28,7 @@ export const sanityClient = createClient({
 });
 
 export function isSanityReady(env: NodeJS.ProcessEnv = process.env) {
+  if (brand.preview) return false;
   return Boolean(
     (env.NEXT_PUBLIC_SANITY_PROJECT_ID || env.SANITY_PROJECT_ID) &&
     (env.NEXT_PUBLIC_SANITY_DATASET || env.SANITY_DATASET),

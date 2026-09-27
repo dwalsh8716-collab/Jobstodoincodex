@@ -5,6 +5,7 @@ import { CookiePreferencesButton } from "@/components/CookiePreferencesButton";
 import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
+import { brand } from "@/lib/brand";
 import { serviceNavigation, siteConfig } from "@/lib/site";
 
 export function Footer() {
@@ -23,9 +24,9 @@ export function Footer() {
         <div>
           <Image
             src={siteConfig.logoLight}
-            width={300}
-            height={83}
-            alt="Essential Resourcing"
+            width={brand.logoWidth}
+            height={brand.logoHeight}
+            alt={siteConfig.name}
           />
           <p className="footer-line">
             Marketing recruitment and leadership search, done properly.

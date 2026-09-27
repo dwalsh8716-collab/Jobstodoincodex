@@ -1,0 +1,218 @@
+[
+  {
+    "source": "/:path*",
+    "destination": "https://essentialresourcing.co.uk/:path*",
+    "origin": "next.config.ts",
+    "scope": "host-condition"
+  },
+  {
+    "source": "/about",
+    "destination": "/about-essential",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/about-david",
+    "destination": "/about-david-walsh",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/privacy",
+    "destination": "/privacy-policy",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/cookies",
+    "destination": "/cookie-policy",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/marketing-recruitment-north-west",
+    "destination": "/clients",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/marketing-recruitment-liverpool",
+    "destination": "/clients",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/marketing-recruitment-leeds",
+    "destination": "/clients",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/marketing-recruitment-cheshire",
+    "destination": "/clients",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/marketing-recruitment-manchester",
+    "destination": "/clients",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/pr-recruitment-manchester",
+    "destination": "/specialisms/pr-communications-content",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/digital-recruitment",
+    "destination": "/specialisms/digital-performance-ecommerce",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/exclusive-search",
+    "destination": "/services/retained-search",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/retained-search",
+    "destination": "/services/retained-search",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/hiring-models",
+    "destination": "/services",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/testimonials",
+    "destination": "/clients",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/bad-hire-calculator",
+    "destination": "/services/market-intelligence-advisory",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/book",
+    "destination": "/book-a-call",
+    "origin": "next.config.ts",
+    "scope": "exact"
+  },
+  {
+    "source": "/leadership-search",
+    "destination": "/services/retained-search",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/leadership-search",
+    "destination": "/services/retained-search",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/strategic-interim",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/fractional",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/fractional-marketing",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/fractional-marketing-leaders",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/fractional-strategic-interim",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/strategic-interim",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/fractional-strategic-interim",
+    "destination": "/services/fractional",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/senior-recruitment",
+    "destination": "/services/permanent-recruitment",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/senior-recruitment",
+    "destination": "/services/permanent-recruitment",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/agency-recruitment",
+    "destination": "/specialisms",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/client-side-recruitment",
+    "destination": "/specialisms",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/marketing-recruitment",
+    "destination": "/specialisms",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/agency-recruitment",
+    "destination": "/specialisms",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/client-side-marketing-recruitment",
+    "destination": "/specialisms",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/services/market-intelligence-hiring-advisory",
+    "destination": "/services/market-intelligence-advisory",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  },
+  {
+    "source": "/insights/what-is-a-strategic-interim-marketing-leader",
+    "destination": "/insights/what-is-a-fractional-marketing-leader",
+    "origin": "proxy.ts",
+    "scope": "prefix"
+  }
+]

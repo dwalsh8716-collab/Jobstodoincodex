@@ -8,6 +8,7 @@ import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import { imageSizes } from "@/lib/images";
+import { brand } from "@/lib/brand";
 import { primaryNavigation, serviceNavigation, siteConfig } from "@/lib/site";
 
 export function Header() {
@@ -24,15 +25,15 @@ export function Header() {
       <Link
         className="brand"
         href="/"
-        aria-label="Essential Resourcing home"
+        aria-label={`${siteConfig.name} home`}
         prefetch={false}
       >
         <Image
           src={siteConfig.logoDark}
-          width={300}
-          height={83}
+          width={brand.logoWidth}
+          height={brand.logoHeight}
           sizes={imageSizes.logo}
-          alt="Essential Resourcing"
+          alt={siteConfig.name}
         />
       </Link>
 

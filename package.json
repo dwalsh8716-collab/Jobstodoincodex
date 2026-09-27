@@ -6,9 +6,10 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build --webpack",
-    "start": "next start",
+    "dev": "node scripts/rebrand-preview.mjs --dev",
+    "build": "node scripts/rebrand-preview.mjs --check && next build --webpack",
+    "start": "node scripts/rebrand-preview.mjs",
+    "test:rebrand": "node --test scripts/rebrand-preview-safety.test.mjs",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

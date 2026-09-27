@@ -1,0 +1,320 @@
+{
+  "results": [
+    {
+      "unauthenticated": "/",
+      "status": 401,
+      "noindex": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+    },
+    {
+      "unauthenticated": "/assets/dwr/dwr-horizontal-dark.png",
+      "status": 401,
+      "noindex": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+    },
+    {
+      "unauthenticated": "/_next/image?url=%2Fassets%2Fdwr%2Fdwr-horizontal-dark.png&w=640&q=75",
+      "status": 401,
+      "noindex": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "logo": [
+        {
+          "alt": "David Walsh Recruitment",
+          "loaded": true
+        },
+        {
+          "alt": "David Walsh Recruitment",
+          "loaded": false
+        }
+      ],
+      "banner": "DAVID WALSH RECRUITMENT — REBRAND PREVIEWPrivate design review. Forms and live integrations are disabled.",
+      "nav": [
+        "Clients",
+        "Candidates",
+        "Services",
+        "Jobs",
+        "Insight",
+        "About",
+        "WhatsApp David"
+      ],
+      "robots": "noindex, nofollow",
+      "canonical": "http://127.0.0.1:3027/"
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "logo": [
+        {
+          "alt": "David Walsh Recruitment",
+          "loaded": true
+        },
+        {
+          "alt": "David Walsh Recruitment",
+          "loaded": false
+        }
+      ],
+      "banner": "DAVID WALSH RECRUITMENT — REBRAND PREVIEWPrivate design review. Forms and live integrations are disabled.",
+      "nav": [
+        "Clients",
+        "Candidates",
+        "Services",
+        "Jobs",
+        "Insight",
+        "About",
+        "WhatsApp David"
+      ],
+      "robots": "noindex, nofollow",
+      "canonical": "http://127.0.0.1:3027/"
+    },
+    {
+      "path": "/api/contact",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "path": "/contact",
+      "method": "POST",
+      "status": 405
+    },
+    {
+      "path": "/studio",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "/admin",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "/client/shortlist/synthetic",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "path": "/robots.txt",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/sitemap.xml",
+      "method": "GET",
+      "status": 404
+    }
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "routeChecks": [
+    {
+      "path": "/",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/about-essential",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/about-david-walsh",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/clients",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/candidates",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/how-essential-resourcing-works",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/services/permanent-recruitment",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/services/retained-search",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/services/fractional",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/services/market-intelligence-advisory",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/specialisms",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/specialisms/marketing-and-leadership",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/specialisms/digital-performance-ecommerce",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/specialisms/pr-communications-content",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/specialisms/agency-client-services-leadership",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/case-studies",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/jobs",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/candidate-privacy",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/candidate-privacy/request",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/privacy-policy",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/cookie-policy",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/book-a-call",
+      "status": 307,
+      "noindex": true
+    },
+    {
+      "path": "/insights/do-you-actually-need-a-full-time-marketing-director",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/how-much-does-senior-marketing-recruitment-cost",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/marketing-recruitment-manchester-north-west-guide",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/retained-search-vs-contingent-recruitment",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/the-job-title-isnt-the-brief-senior-marketing-hire",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/marketing-recruitment-market-isnt-dead-businesses-hiring-differently",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/what-should-you-pay-a-senior-marketing-hire-in-2026",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/why-hiring-senior-agency-people-is-harder-than-matching-clients-and-job-titles",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/your-cv-tells-me-where-youve-worked-what-you-actually-did",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/your-first-marketing-director-what-should-you-actually-be-hiring-for",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/how-to-hire-a-marketing-director-without-wasting-six-weeks",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/what-is-a-fractional-marketing-leader",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/when-should-an-agency-use-retained-search",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/why-senior-marketing-hiring-goes-wrong",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/insights/manchester-north-west-marketing-salary-guide-2026",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "path": "/case-studies/havas-media-manchester-managing-partner-james-reddington",
+      "status": 200,
+      "noindex": true
+    }
+  ]
+}

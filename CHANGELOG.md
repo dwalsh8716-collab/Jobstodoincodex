@@ -368,3 +368,12 @@ changes are easier to review, approve and roll back.
 
 - This release can be rolled back by reverting the process/docs commit. It does
   not affect runtime website behaviour.
+# 2026-09-27 - Private David Walsh Recruitment preparation
+
+Phase One only, on the isolated `codex/dwr-rebrand` worktree. Preserved the existing page/navigation structure and source-only Recruiter Labs tools. Added supplied header/footer logos and favicon assets, a visible private-preview notice, local password protection, blocked writes/private APIs, and indexing prevention. Saved a read-only published-content snapshot without changing production Sanity.
+
+Added architecture, asset, integration, source-reference and URL-migration inventories under `docs/rebrand/`. No production deploy, DNS, account, email, database, storage or CMS mutation. No second paid hosting resource created.
+
+Checks: build, typecheck, lint, eight isolation tests, desktop/mobile inspection, public-route checks and baseline-bundle restoration passed within the Phase One scope; detailed limitations and expected disconnected-booking redirect are in `docs/rebrand/VERIFICATION.md`.
+
+Rollback: private baseline `d5ef8012a315867fb0122cd959f459ef4ef21dfd`, backed up in a verified local Git bundle. Production is unchanged and needs no rollback. Final domain, brand/copy/legal approval and integration/launch checks remain outstanding.

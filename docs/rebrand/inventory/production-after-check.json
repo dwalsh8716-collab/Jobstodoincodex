@@ -1,0 +1,61 @@
+{
+  "checkedAt": "2026-09-27T06:34:41.970Z",
+  "check": [
+    {
+      "path": "/",
+      "status": 200,
+      "sha256": "52a2002d9b418d3bf981f6e01fbf71a38d8e5d70b2395984ebbecea858d12da8",
+      "palette": "graphite",
+      "newBrandFound": false
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "sha256": "53173b7e67ef4b67d392240cee13844f11428d20050dd740d1da55aacd79b968"
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "sha256": "49957aecdbe7b2275bf861931a58ba027b08144819b4537371e399694382e13c"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "sha256": "5f396be87f7ae4709ccd5daecbbf1a05dec03c7d713c31bec745a8e510ddb80b"
+    }
+  ],
+  "environments": [
+    {
+      "id": "8f01d4cb-7ce6-4455-a4b9-d46ce4f3b2de",
+      "name": "production",
+      "services": [
+        {
+          "name": "web",
+          "deployment": "58876159-ac8b-44dc-a1f9-990e741dc2a7",
+          "status": "SUCCESS",
+          "domains": {
+            "customDomains": [
+              {
+                "domain": "essentialresourcing.co.uk",
+                "id": "cc796bc7-84a7-4721-a642-53729d2e4da0",
+                "targetPort": 8080
+              },
+              {
+                "domain": "www.essentialresourcing.co.uk",
+                "id": "0bd37625-d220-49d2-80a3-9bf228152360",
+                "targetPort": 8080
+              }
+            ],
+            "serviceDomains": [
+              {
+                "domain": "web-production-ba3b9.up.railway.app",
+                "id": "9cb69e2e-8e31-4e52-885e-09a38c39a19c",
+                "targetPort": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,7 @@
+import { brand } from "@/lib/brand";
+
 export function SchemaScript({ data }: { data: unknown }) {
+  if (brand.preview) return null;
   return (
     <script
       type="application/ld+json"

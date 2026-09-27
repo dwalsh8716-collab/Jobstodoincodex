@@ -1500,6 +1500,22 @@ p {
   box-shadow: 0 10px 36px rgba(16, 17, 20, 0.05);
 }
 
+.rebrand-preview-notice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 20px;
+  padding: 12px var(--space-page);
+  border-bottom: 3px solid var(--color-preview-accent);
+  background: var(--color-preview-bg);
+  color: var(--color-preview-text);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.rebrand-preview-notice strong { color: var(--color-preview-accent); }
+
 .brand {
   display: inline-flex;
   align-items: center;

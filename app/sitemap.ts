@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { brand } from "@/lib/brand";
 import {
   caseStudies as fallbackCaseStudies,
   insights as fallbackInsights,
@@ -17,6 +18,7 @@ import { buildPublicSitemap } from "@/lib/sitemap-engine";
 import { launchPages, siteConfig } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (brand.preview) return [];
   if (process.env.NODE_ENV === "test") {
     return buildPublicSitemap({
       baseUrl: siteConfig.url,

@@ -36,6 +36,9 @@
     rgba(255, 255, 255, 0.72)
   );
   --radius-xs: 4px;
+  --color-preview-accent: #00d1a7;
+  --color-preview-bg: #000000;
+  --color-preview-text: #ffffff;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
