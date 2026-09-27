@@ -1,5 +1,6 @@
 # Local environment and dependency folders
 /.env
+/.rebrand-preview-access.json
 /.env.*
 !.env.example
 /.next/

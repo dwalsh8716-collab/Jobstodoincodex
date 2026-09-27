@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "./site";
+import { brand } from "./brand";
 import type { CaseStudy, FAQ, Insight, Job, Service } from "./types";
 
 export function absoluteUrl(path = "/") {
@@ -28,7 +29,7 @@ export function createMetadata({
     title,
     description,
     alternates: { canonical: url },
-    robots: noIndex ? { index: false, follow: false } : undefined,
+    robots: noIndex || brand.preview ? { index: false, follow: false } : undefined,
     openGraph: {
       title,
       description,

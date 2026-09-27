@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@/components/Analytics";
+import { RebrandPreviewNotice } from "@/components/RebrandPreviewNotice";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { SchemaScript } from "@/components/SchemaScript";
@@ -36,11 +37,10 @@ export const metadata: Metadata = {
   }),
   icons: {
     icon: [
-      { url: "/assets/icon-dark.svg", type: "image/svg+xml" },
-      { url: "/assets/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/assets/favicon-16x16.png", sizes: "16x16", type: "image/png" }
+      { url: "/assets/dwr/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/assets/dwr/favicon-16.png", sizes: "16x16", type: "image/png" }
     ],
-    apple: [{ url: "/assets/apple-touch-icon.png", sizes: "180x180" }]
+    apple: [{ url: "/assets/dwr/apple-touch-icon.png", sizes: "180x180" }]
   },
   manifest: "/site.webmanifest",
   verification: {
@@ -67,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body>
+        <RebrandPreviewNotice />
         <Script id="html-js-class" strategy="beforeInteractive">
           {`document.documentElement.classList.add('js');`}
         </Script>

@@ -1,6 +1,8 @@
 import "server-only";
 
 import { isSanityReady, sanityClient } from "./sanity";
+import { brand } from "./brand";
+import { getRebrandSnapshot } from "./rebrand-snapshot";
 
 type SanityFetchOptions<T> = {
   query: string;
@@ -31,6 +33,12 @@ export async function sanityFetchWithFallback<T>({
   revalidate = publicContentRevalidateSeconds,
   fallbackOnEmpty = true,
 }: SanityFetchOptions<T>): Promise<T> {
+  if (brand.preview) {
+    const result = getRebrandSnapshot(query, params);
+    return result == null || (fallbackOnEmpty && isEmptyResult(result))
+      ? fallback
+      : (result as T);
+  }
   if (!isSanityReady()) return fallback;
 
   try {

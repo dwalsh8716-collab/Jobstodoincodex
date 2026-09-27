@@ -467,3 +467,6 @@ The Railway preview is production-preview ready and has passed the live QA
 crawler. It should not be considered final-live until analytics, email delivery,
 legal/privacy review, Search Console, Sanity CORS/editor access and final DNS
 QA are complete.
+# Private David Walsh Recruitment preparation
+
+This worktree is the local-only rebrand branch. Start with [the Phase One review](docs/rebrand/PHASE-ONE-REVIEW.md) and [verification/access notes](docs/rebrand/VERIFICATION.md). Essential Resourcing production remains unchanged. Do not deploy this branch: its current runtime deliberately blocks Railway, private integrations and submissions. Final domain, brand/copy/legal approval, CMS reconciliation and integration QA are still required before an explicitly authorised release.

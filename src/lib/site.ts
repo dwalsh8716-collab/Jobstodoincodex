@@ -3,6 +3,7 @@ import {
   defaultWhatsAppNumber,
   whatsAppMessages,
 } from "@/lib/whatsapp";
+import { brand } from "@/lib/brand";
 
 const whatsAppNumber =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || defaultWhatsAppNumber;
@@ -20,7 +21,7 @@ const normaliseExternalUrl = (value: string | undefined) => {
     return "";
   }
 };
-export const defaultSiteUrl = "https://essentialresourcing.co.uk";
+export const defaultSiteUrl = brand.previewUrl;
 export const defaultLinkedInProfileUrl =
   "https://www.linkedin.com/in/davidwalshmarketingsearch/";
 export const defaultLinkedInCompanyUrl =
@@ -53,7 +54,7 @@ const linkedInRecommendationsUrl =
   defaultLinkedInRecommendationsUrl;
 
 export const siteConfig = {
-  name: "Essential Resourcing",
+  name: brand.name,
   founder: "David Walsh",
   url: normaliseSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   email: "david@essentialresourcing.co.uk",
@@ -86,14 +87,14 @@ export const siteConfig = {
   },
   region: "Manchester, North West and UK-wide",
   defaultTitle:
-    "Marketing Recruitment Agency Manchester & North West | Essential Resourcing",
+    "David Walsh Recruitment | Private rebrand preview",
   defaultDescription:
     "Specialist marketing, digital, PR and agency recruitment across Manchester, the North West and UK. Permanent, retained, fractional and advisory support.",
   ogImage: "/assets/og-image.png",
-  logoDark: "/assets/logo-dark.svg",
-  logoLight: "/assets/logo-light.svg",
-  iconDark: "/assets/icon-dark.svg",
-  iconLight: "/assets/icon-light.svg",
+  logoDark: brand.logoDark,
+  logoLight: brand.logoLight,
+  iconDark: brand.iconDark,
+  iconLight: brand.iconLight,
 } as const;
 
 export const primaryNavigation = [
