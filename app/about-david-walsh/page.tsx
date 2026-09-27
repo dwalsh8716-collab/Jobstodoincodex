@@ -9,7 +9,7 @@ import { createMetadata, profilePageSchema } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "David Walsh | Founder of Essential Resourcing",
   description:
-    "Meet David Walsh, founder of Essential Resourcing. Nearly 15 years in specialist marketing, PR, digital and agency recruitment. Manchester-based, UK-wide.",
+    "Meet David Walsh, founder of Essential Resourcing. More than a decade in marketing, PR, digital and agency recruitment. Manchester-based, UK-wide.",
   path: "/about-david-walsh",
 });
 
@@ -28,9 +28,9 @@ export default function AboutDavidPage() {
               the work.
             </h1>
             <p className="lede">
-              David has nearly 15 years of recruitment experience, specialising across
-              marketing, digital, PR, communications and agencies. He went
-              independent in 2017; Essential Resourcing Ltd was incorporated in
+              David has more than a decade of specialist recruitment experience
+              across marketing, digital, PR, communications and agencies. He started
+              recruiting in 2013 and went independent in 2017; Essential Resourcing Ltd was incorporated in
               2019 — the paperwork caught up later.
             </p>
             <p className="lede">

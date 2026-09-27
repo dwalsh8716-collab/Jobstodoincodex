@@ -6,7 +6,7 @@ Public URL: https://essentialresourcing.co.uk/insights/manchester-north-west-mar
 
 - Complete, ungated guide with nine salary groups, 77 approved source entries and 14 visible FAQs. The user requested removal of Fractional Managing Partner after previewing; Fractional Agency MD remains unchanged.
 - All original 78 table rows compared against the supplied NLW_CHECKED Word document. Exact match apart from the user-approved clarification “Advisory-only (per month)”; one row subsequently removed at the user's request.
-- Confirmed “nearly 15 years’ experience recruiting in the market” wording retained.
+- Experience wording corrected to “more than a decade’s experience recruiting in the market” after David confirmed his recruitment career began in 2013.
 - No PDF, download promise or lead-capture gate added to the guide.
 - Existing brand typography and palette; semantic text tables, anchor navigation, clear methodology and direct recruitment links. No decorative stock images or extra image payload.
 - Statutory wage context is distinguished from planning ranges; age and contracted-hours caveats accompany affected junior ranges.

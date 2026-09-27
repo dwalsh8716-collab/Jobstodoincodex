@@ -6,10 +6,14 @@ const client = getCliClient({ apiVersion: "2026-06-09" }).withConfig({
 });
 const documents = await client.fetch('*[_type in ["homePage","page","person","siteSettings","service","insight","caseStudy","salarySnapshot","faq","ctaBlock","proofItem"]]');
 const replacements = [
-  ["nearly 13 years", "nearly 15 years"],
-  ["Nearly 13 years", "Nearly 15 years"],
-  ["David Walsh started recruiting in 2013 and went independent in 2017.", "David Walsh has nearly 15 years of recruitment experience and went independent in 2017."],
-  ["David has worked in recruitment since 2013", "David has nearly 15 years of recruitment experience"],
+  ["nearly 15 years in specialist recruitment", "more than a decade specialising in marketing recruitment"],
+  ["nearly 13 years in specialist recruitment", "more than a decade specialising in marketing recruitment"],
+  ["David Walsh has nearly 15 years of recruitment experience and went independent in 2017.", "David Walsh started recruiting in 2013 and went independent in 2017."],
+  ["nearly 15 years’ experience", "more than a decade’s experience"],
+  ["nearly 15 years", "more than a decade"],
+  ["Nearly 15 years", "More than a decade"],
+  ["nearly 13 years", "more than a decade"],
+  ["Nearly 13 years", "More than a decade"],
 ];
 function collect(value, path = "", changes = {}) {
   if (typeof value === "string") {
