@@ -270,6 +270,11 @@ p {
   margin-bottom: 40px;
 }
 
+.section-heading > h1 + .lede,
+.section-heading > h2 + .lede {
+  margin-top: 16px;
+}
+
 .clients-section-intro {
   max-width: none;
 }
@@ -2712,6 +2717,14 @@ fieldset.form-row legend {
   z-index: 80;
   display: none;
   gap: 10px;
+  transition: transform 180ms ease, opacity 180ms ease, visibility 180ms ease;
+}
+
+.mobile-sticky-cta[data-hidden="true"] {
+  transform: translateY(calc(100% + 24px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .mobile-sticky-cta .button {
@@ -2724,6 +2737,12 @@ fieldset.form-row legend {
   background: color-mix(in srgb, var(--color-cream) 94%, transparent);
   color: var(--color-charcoal);
   backdrop-filter: blur(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-sticky-cta {
+    transition: none;
+  }
 }
 
 .form-note,
