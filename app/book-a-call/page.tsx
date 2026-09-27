@@ -11,7 +11,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata = createMetadata({
   title: "Book a Call with David Walsh | Essential Resourcing",
   description:
-    "Book 15 minutes with David Walsh to discuss a marketing hire, leadership search, Fractional requirement or recruitment question.",
+    "Book a 15-minute phone call with David Walsh to discuss a marketing hire, leadership search, Fractional requirement or recruitment question.",
   path: siteConfig.booking.pagePath,
   noIndex: !siteConfig.booking.enabled,
 });
@@ -30,7 +30,7 @@ const bookingSetupSchema = {
   name: "Book a 15-minute call with David",
   url: absoluteUrl(siteConfig.booking.pagePath),
   description:
-    "A short booking route for hiring, Fractional and recruitment questions.",
+    "A 15-minute phone call for hiring, Fractional and recruitment questions.",
   ...(siteConfig.booking.enabled
     ? {
         potentialAction: {
@@ -70,9 +70,10 @@ export default function BookCallPage() {
                 <span className="tag">Google Calendar</span>
                 <h2>Choose a time that works.</h2>
                 <p>
-                  Booking opens David&apos;s Google Calendar appointment page.
-                  Google Calendar can add the Google Meet link when David has
-                  configured it in the appointment schedule.
+                  Booking opens David’s Google Calendar appointment page.
+                  Choose a 15-minute slot, add the best number to reach you and
+                  a short note about what you’d like to discuss. David will call
+                  you at the booked time.
                 </p>
                 <BookingButton
                   direct
@@ -158,7 +159,8 @@ export default function BookCallPage() {
           <div className="statement-list">
             <p>
               The booking button opens Google Calendar in a new tab. Google
-              handles availability, calendar invitations and Meet links.
+              handles availability, calendar invitations and reminders. The
+              appointment itself is a phone call to the number you provide.
             </p>
             <p>
               Please don&apos;t put sensitive candidate information or
