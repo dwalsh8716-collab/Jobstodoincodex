@@ -310,7 +310,7 @@ export default async function ClientsPage() {
       <CTASection
         eyebrow="Next step"
         title="Start with the problem."
-        text="Tell me who you’re thinking about hiring, why you need them and what you need them to change.\n\nI’ll give you a straight view on the brief, salary, market and how I’d approach it.\n\nIf Essential is the right answer, brilliant. If it isn’t, I’ll tell you that too."
+        text={"Tell me who you’re thinking about hiring, why you need them and what you need them to change.\n\nI’ll give you a straight view on the brief, salary, market and how I’d approach it.\n\nIf Essential is the right answer, brilliant. If it isn’t, I’ll tell you that too."}
         ctaLabel="Sense-check a brief"
         ctaHref="/contact"
         whatsAppIntent="hiring"
