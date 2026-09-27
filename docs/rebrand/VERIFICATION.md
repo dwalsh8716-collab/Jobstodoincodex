@@ -48,3 +48,6 @@ Recovery bundle: `/Users/walsh/.codex/rebrand-backups/2026-09-27/essential-pre-r
 The restoration drill recovered the baseline into an independent bare repository and checked the full Git tree ID. No production database or site was restored or interrupted. The original checkout and all private records remain in place.
 
 Current production recovery deployment: `58876159-ac8b-44dc-a1f9-990e741dc2a7`. Save a fresh deployment/configuration baseline again immediately before any future launch, because the live site may continue changing meanwhile.
+# In-app browser access
+
+The local preview also supports a single-use browser access link, generated on server startup in the ignored `.qa/preview-browser-access.json` file (owner-readable only). It expires after 15 minutes and exchanges for an HttpOnly, SameSite=Strict session cookie lasting at most eight hours. Restarting the server invalidates it. This avoids unsupported HTTP Basic authentication dialogs in the in-app browser; existing Basic authentication and all local-only, indexing, integration and write protections remain active. Never publish or share this access file.
