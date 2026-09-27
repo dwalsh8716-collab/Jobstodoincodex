@@ -38,6 +38,8 @@
   ],
   "exclude": [
     "node_modules",
-    "New Website 2026"
+    "New Website 2026",
+    "outreach-recorder",
+    "recruiter-labs/interview-coordination-agent/frontend"
   ]
 }
