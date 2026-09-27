@@ -6,7 +6,7 @@ export const whatsAppMessages = {
   hiring:
     "Hi David, I'm hiring and wanted to speak to you about a marketing or communications role.",
   strategicInterim:
-    "Hi David, I'd like to speak to you about strategic interim support.",
+    "Hi David, I'd like to speak to you about fractional or interim support.",
   candidates:
     "Hi David, I've seen Essential Resourcing and wanted to speak to you about my next move.",
   jobs: "Hi David, I've seen the role on Essential Resourcing and wanted to ask about it.",

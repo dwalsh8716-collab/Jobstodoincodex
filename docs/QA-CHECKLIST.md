@@ -36,7 +36,7 @@ Individual commands:
 - Mobile menu opens, closes and routes without trapping focus.
 - Footer links work.
 - Contact form validates required fields and returns a safe success or error.
-- Services, Strategic Interim, insights, jobs, case studies, salary snapshots
+- Services, Fractional, insights, jobs, case studies, salary snapshots
   and salary guide pages load.
 - 404 page is useful and has a route back.
 - Sitemap, robots, metadata, Open Graph and JSON-LD output are present.

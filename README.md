@@ -31,12 +31,22 @@ npm run build
 npm run typecheck
 npm test
 npm run performance:budget
+npm run seo:audit -- --base=http://127.0.0.1:3000
+npm run whatsapp:verify
 npm run test:e2e
 npm run qa:production -- --base=https://web-production-ba3b9.up.railway.app
 npm run verify
 ```
 
 `npm run verify` is the release gate. It runs linting, production build, TypeScript, Vitest, public bundle budget and Playwright.
+
+`npm run seo:audit` checks the rendered launch pages for sitemap/robots coverage,
+canonicals, H1s, meta descriptions, Open Graph, Twitter cards and valid JSON-LD.
+
+`npm run whatsapp:verify` confirms whether the prepared WhatsApp Business API
+path is genuinely live. Current launch mode is free/manual `wa.me` click-to-chat,
+so the command should report the API as disabled until Meta credentials are
+deliberately added.
 
 `npm run qa:production -- --base=<preview-or-production-url>` is the live
 production crawler. It checks sitemap routes, required launch assets, canonical
@@ -430,7 +440,8 @@ docs/RAILWAY-POSTGRES-BACKEND.md
 - Security headers are configured in `next.config.ts`.
 - `X-Powered-By` is disabled.
 - Contact API accepts both browser form posts and JSON, with the same validation.
-- CV upload is intentionally disabled until secure storage is configured.
+- CV upload uses the private candidate application route when Railway bucket
+  storage and Resend delivery are configured.
 - Dependency audit currently reports zero vulnerabilities after the Next 16 / Sanity 6 upgrade and targeted safe overrides.
 
 ## Manual Items Before True Production
@@ -447,7 +458,8 @@ docs/RAILWAY-POSTGRES-BACKEND.md
 - Set fresh CMS gate username, password and signing secret.
 - Confirm analytics consent wording and tracking requirements.
 - Confirm Google Search Console verification.
-- Confirm CV handling/storage is legally and technically safe before enabling uploads.
+- Keep CV handling/storage under the private Railway bucket, Resend delivery and
+  manual-review rules in `docs/cv-storage-and-retention.md`.
 
 ## Production Status
 

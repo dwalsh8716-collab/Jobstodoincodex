@@ -16,11 +16,11 @@ describe("metadata helpers", () => {
     const metadata = createMetadata({
       title: "Test title",
       description: "Test description",
-      path: "/services/strategic-interim",
+      path: "/services/fractional",
     });
 
     expect(metadata.alternates?.canonical).toBe(
-      "https://essentialresourcing.co.uk/services/strategic-interim",
+      "https://essentialresourcing.co.uk/services/fractional",
     );
     const openGraphImages = metadata.openGraph?.images;
     const firstImage = Array.isArray(openGraphImages)
@@ -46,16 +46,16 @@ describe("metadata helpers", () => {
 
 describe("structured data builders", () => {
   it("builds service schema with an absolute URL", () => {
-    const service = services.find((item) => item.slug === "strategic-interim");
+    const service = services.find((item) => item.slug === "fractional");
     expect(service).toBeDefined();
 
     const schema = serviceSchema(service!);
     expect(schema).toMatchObject({
       "@type": "Service",
-      url: absoluteUrl("/services/strategic-interim"),
+      url: absoluteUrl("/services/fractional"),
       serviceOutput: service!.searchSummary,
     });
-    expect(schema.keywords).toContain("strategic interim marketing leader");
+    expect(schema.keywords).toContain("fractional marketing director");
   });
 
   it("builds breadcrumb positions in order", () => {
@@ -75,8 +75,8 @@ describe("structured data builders", () => {
       name: "Visible services",
       items: [
         {
-          name: "Strategic Interim",
-          url: "/services/strategic-interim",
+          name: "Fractional",
+          url: "/services/fractional",
           description: "Senior interim support.",
         },
       ],
@@ -89,8 +89,8 @@ describe("structured data builders", () => {
         {
           "@type": "ListItem",
           position: 1,
-          url: absoluteUrl("/services/strategic-interim"),
-          name: "Strategic Interim",
+          url: absoluteUrl("/services/fractional"),
+          name: "Fractional",
           description: "Senior interim support.",
         },
       ],
@@ -196,32 +196,30 @@ describe("structured data builders", () => {
 
 describe("SEO and AI visibility audit", () => {
   it("keeps priority recruitment search intent explicit without fake proof", () => {
-    const clientSide = services.find(
-      (item) => item.slug === "client-side-marketing-recruitment",
+    const permanent = services.find(
+      (item) => item.slug === "permanent-recruitment",
     );
-    const agency = services.find((item) => item.slug === "agency-recruitment");
-    const leadership = services.find(
-      (item) => item.slug === "leadership-search",
+    const marketIntelligence = services.find(
+      (item) => item.slug === "market-intelligence-advisory",
     );
+    const retained = services.find((item) => item.slug === "retained-search");
     const questions = aiSearchQuestions
       .map((item) => `${item.question} ${item.answer}`)
       .join("\n");
     const audit = readFileSync("docs/SEO-AI-VISIBILITY-AUDIT.md", "utf8");
 
-    expect(clientSide?.seoTitle).toContain("Marketing Recruitment Manchester");
-    expect(clientSide?.searchPhrases).toContain(
-      "marketing recruitment Manchester",
+    expect(permanent?.seoTitle).toContain("Permanent Marketing Recruitment");
+    expect(permanent?.searchPhrases).toContain(
+      "permanent marketing recruitment",
     );
-    expect(agency?.searchPhrases).toEqual(
+    expect(marketIntelligence?.searchPhrases).toEqual(
       expect.arrayContaining([
-        "PR recruitment Manchester",
-        "digital recruitment North West",
-        "media recruitment North West",
+        "marketing recruitment market intelligence",
+        "salary benchmarking marketing roles",
+        "talent mapping marketing recruitment",
       ]),
     );
-    expect(leadership?.searchPhrases).toContain(
-      "exclusive recruitment partner",
-    );
+    expect(retained?.searchPhrases).toContain("retained marketing recruitment");
     expect(questions).toContain(
       "Who handles marketing recruitment in Manchester?",
     );

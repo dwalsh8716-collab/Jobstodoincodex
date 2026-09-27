@@ -12,6 +12,15 @@ Fastest way to reach me? Message me on WhatsApp.
 
 The integration uses direct `wa.me` links only. It does not add a WhatsApp widget, chatbot, tracking pixel or intrusive floating bubble.
 
+Launch decision on 2026-09-13:
+
+- Keep WhatsApp optimised for free/manual use.
+- Public CTAs open the official `wa.me` click-to-chat route to David's WhatsApp
+  number.
+- Do not enable automated WhatsApp Business API messages until Meta setup,
+  pricing, templates and consent wording have been reviewed.
+- Email remains the automated production channel for website forms.
+
 Future WhatsApp Business and Loxo CRM sync is a separate Recruiter Labs
 discovery item, not part of these public contact buttons:
 
@@ -28,7 +37,7 @@ WhatsApp should be primary where speed is commercially useful:
 - Mobile menu quick action.
 - Homepage hero.
 - Contact page.
-- Strategic Interim page and urgent interim CTAs.
+- Fractional page and urgent interim CTAs.
 
 WhatsApp should be secondary where a more detailed route still matters:
 
@@ -90,10 +99,10 @@ Hiring:
 Hi David, I'm hiring and wanted to speak to you about a marketing or communications role.
 ```
 
-Strategic Interim:
+Fractional:
 
 ```txt
-Hi David, I'd like to speak to you about strategic interim support.
+Hi David, I'd like to speak to you about fractional support.
 ```
 
 Candidates:
@@ -117,7 +126,7 @@ Sanity Site Settings now include editor-friendly WhatsApp fields:
 - Default WhatsApp message.
 - WhatsApp hiring message.
 - WhatsApp candidate message.
-- WhatsApp strategic interim message.
+- WhatsApp fractional message.
 - Show WhatsApp buttons on the website?
 - Show WhatsApp in the mobile menu?
 - Show WhatsApp in the footer?

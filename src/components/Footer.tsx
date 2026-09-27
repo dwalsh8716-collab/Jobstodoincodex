@@ -28,15 +28,14 @@ export function Footer() {
             alt="Essential Resourcing"
           />
           <p className="footer-line">
-            Senior marketing and comms hiring, done properly.
+            Marketing recruitment and leadership search, done properly.
           </p>
           <p className="footer-brand-note">
-            Manchester-led judgement. North West roots. UK-wide senior hiring
-            support.
+            Manchester roots. North West market knowledge. UK-wide search.
           </p>
         </div>
         <div>
-          <h2>Need good marketing, PR or digital people?</h2>
+          <h2>Need good marketing, PR, comms or digital people?</h2>
           <p>Give David a shout before it becomes a hiring headache.</p>
           <div className="footer-contact" aria-label="Contact details">
             <WhatsAppButton
@@ -52,10 +51,7 @@ export function Footer() {
               variant="text"
             />
             <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
-            <LinkedInProfileLink
-              label="David on LinkedIn"
-              location="footer"
-            />
+            <LinkedInProfileLink label="David on LinkedIn" location="footer" />
           </div>
           <Link
             className="button button-primary"
@@ -81,8 +77,14 @@ export function Footer() {
           <h3>Site</h3>
           <Link href="/clients">Clients</Link>
           <Link href="/candidates">Candidates</Link>
-          <Link href="/case-studies">Case Studies</Link>
-          <Link href="/salary-snapshots">Salary Snapshots</Link>
+          <Link href="/jobs">Jobs</Link>
+          <Link href="/insights">Insight</Link>
+          <Link href="/specialisms">Specialisms</Link>
+          <Link href="/case-studies">Case studies</Link>
+          <Link href="/about-david-walsh">About David</Link>
+          <Link href={siteConfig.companyLinkedIn} target="_blank" rel="noopener noreferrer">
+            Essential Resourcing on LinkedIn
+          </Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/candidate-privacy">Candidate Privacy Notice</Link>
           <Link href="/candidate-privacy/request">Data Request</Link>
@@ -94,11 +96,9 @@ export function Footer() {
       <div className="container footer-bottom">
         <p>
           © {new Date().getFullYear()} Essential Resourcing. Founder-led
-          recruitment, search and strategic interim.
+          recruitment, search and Fractional.
         </p>
-        <p>
-          Manchester-led. UK-wide. <Link href="/cms">Editor login</Link>
-        </p>
+        <p>Made in Manchester. Working UK-wide.</p>
       </div>
     </footer>
   );

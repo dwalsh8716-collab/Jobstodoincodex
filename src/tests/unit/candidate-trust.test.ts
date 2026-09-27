@@ -10,17 +10,19 @@ import {
 describe("candidate trust copy", () => {
   it("keeps candidate privacy route and version explicit", () => {
     expect(candidatePrivacyPath).toBe("/candidate-privacy");
-    expect(candidatePrivacyNoticeVersion).toBe("candidate-privacy-v1");
+    expect(candidatePrivacyNoticeVersion).toBe("candidate-privacy-v2-2026-09");
   });
 
   it("explains retention and deletion in plain English", () => {
-    expect(candidateRetentionStatement).toMatch(/genuine recruitment reason/i);
+    expect(candidateRetentionStatement).toMatch(/24 months/i);
     expect(candidateRetentionStatement).toMatch(/delete your details/i);
   });
 
   it("keeps application consent separate from marketing consent", () => {
-    expect(candidateConsentCopy("job")).toMatch(/store and use my details/i);
-    expect(candidateConsentCopy("job")).toMatch(/deleted at any time/i);
+    expect(candidateConsentCopy("job")).toMatch(
+      /provide recruitment services/i,
+    );
+    expect(candidateConsentCopy("job")).toMatch(/Candidate Privacy Notice/i);
     expect(candidateConsentCopy("job")).not.toMatch(/newsletter|marketing/i);
   });
 

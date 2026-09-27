@@ -5,19 +5,17 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
+      allow: ["/", "/clients", "/clients/"],
       disallow: [
         "/studio",
         "/cms",
         "/admin",
         "/labs",
         "/recruiter-labs",
-        "/client",
         "/candidate/",
         "/api",
       ],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
-    host: siteConfig.url,
   };
 }

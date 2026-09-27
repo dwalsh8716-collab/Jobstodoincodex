@@ -26,8 +26,8 @@ Do not chase algorithms. Build useful, first-hand market insight that the right 
 
 ### Strong Foundations Already In Place
 
-- Homepage, clients page, service pages and Strategic Interim content have clear positioning.
-- Leadership Search, Strategic Interim, Agency Recruitment, Client-side Marketing Recruitment and Senior Recruitment routes exist.
+- Homepage, clients page, service pages and Fractional content have clear positioning.
+- Leadership Search, Fractional, Agency Recruitment, Client-side Marketing Recruitment and Senior Recruitment routes exist.
 - Insights hub and article detail pages support author, dates, FAQs, related services, rich media and structured data.
 - Salary snapshot content type and public routes exist, with semantic tables ready for validated data.
 - Case study structure exists, but stays draft-safe until permission and outcomes are checked.
@@ -74,7 +74,7 @@ The site should build topical authority around:
 - Marketing leadership hiring.
 - Communications and PR recruitment.
 - Agency recruitment and client services hiring.
-- Strategic Interim and interim CMO / Marketing Director support.
+- Fractional and interim CMO / Marketing Director support.
 - Retained search.
 - Manchester and North West marketing hiring.
 - Salary and market insight.
@@ -98,8 +98,8 @@ The typed version of this plan lives in `src/lib/post-launch-growth.ts`.
 | Working title | Main audience | Search / GEO purpose | Related service | PR or LinkedIn hook |
 | --- | --- | --- | --- | --- |
 | The job title is not the brief | Founders, MDs and marketing leaders | Explain how to define the real brief behind a senior hire | Leadership Search | Senior hiring failures often start with vague briefs |
-| What is Strategic Interim? | Founders and teams needing senior help now | Define Strategic Interim in plain English | Strategic Interim | Why businesses use interim leadership when permanent hiring is too slow |
-| Strategic Interim vs Consultancy | Leaders comparing support models | Explain the difference between outside advice and embedded senior help | Strategic Interim | Businesses buying operating judgement, not another deck |
+| What is Fractional? | Founders and teams needing senior help now | Define Fractional in plain English | Fractional | Why businesses use interim leadership when permanent hiring is too slow |
+| Fractional vs Consultancy | Leaders comparing support models | Explain the difference between outside advice and embedded senior help | Fractional | Businesses buying operating judgement, not another deck |
 | Why senior marketing hiring goes wrong | Teams with failed searches | Diagnose weak briefs, salary mismatch and slow process | Leadership Search | The hidden cost of senior hiring mistakes |
 | When should an agency use retained search? | Agency founders and senior leaders | Explain when retained search is justified | Agency Recruitment | Senior agency hires need sharper positioning |
 | What founders actually need from their next marketing leader | Founders and growth businesses | Clarify builder, operator or strategist needs | Client-side Marketing Recruitment | Founder bottlenecks and marketing leadership decisions |
@@ -120,7 +120,7 @@ Recommended assets:
 - Manchester Agency Hiring Snapshot.
 - PR & Communications Salary Snapshot.
 - Digital and Performance Marketing Salary Snapshot.
-- Strategic Interim Rate Guide.
+- Fractional Rate Guide.
 - Senior Marketing Leadership Hiring Report.
 - Agency Client Services Salary Snapshot.
 
@@ -165,7 +165,7 @@ Recommended campaign themes:
 | Strategic But Hands-On Is Not A Brief | Vague senior briefs put candidates off | Brief examples, candidate feedback | Marketing newsletters, recruitment press | Explain the fix, not just the complaint |
 | The Marketing Leadership Confidence Gap | Leaders are unsure whether to hire permanent, interim or fractional | Decision criteria and examples | Business and marketing press | Keep the comparison balanced |
 | Manchester Agency Hiring Snapshot | Agency hiring pressure shifts by client demand and candidate appetite | Agency briefs and candidate conversations | Manchester business press, agency press | Call it a snapshot, not a definitive report |
-| The Strategic Interim Trend Report | Interim leadership is a practical answer when permanent hiring is slow | Interim enquiries and assignment scopes | Business press, founder newsletters | Trend claims need evidence |
+| The Fractional Trend Report | Interim leadership is a practical answer when permanent hiring is slow | Interim enquiries and assignment scopes | Business press, founder newsletters | Trend claims need evidence |
 | What Marketing Leaders Actually Want From Their Next Role | Strong candidates move for scope, trust and decision rights | Candidate conversation themes | Marketing press, HR press | Use quotes only with permission |
 
 ## Founder-Led Authority Plan
@@ -178,7 +178,7 @@ Recurring pillars:
 - The job title is not the brief.
 - No CV flinging.
 - Senior marketing hiring mistakes.
-- Strategic Interim explained.
+- Fractional explained.
 - Agency hiring reality.
 - Salary reality checks.
 - Candidate market truth.
@@ -251,7 +251,7 @@ The posts should sound like David: plain, specific, human and commercially usefu
 ### Months 3-6
 
 - Build a salary hub once enough validated data exists.
-- Build a Strategic Interim resource centre.
+- Build a Fractional resource centre.
 - Publish a quarterly marketing hiring report if the evidence is strong enough.
 - Run a founder-led PR or expert comment campaign.
 - Create repeatable monthly reporting.
@@ -270,11 +270,11 @@ The posts should sound like David: plain, specific, human and commercially usefu
 | Week | Main piece | LinkedIn angles | PR angle | CTA |
 | --- | --- | --- | --- | --- |
 | 1 | The job title is not the brief | Same title, different problem; weak briefs waste time | Senior hiring failures | Sense-check a brief |
-| 2 | What is Strategic Interim? | Interim in plain English; when permanent is too slow | Flexible senior leadership | Talk through interim |
+| 2 | What is Fractional? | Interim in plain English; when permanent is too slow | Flexible senior leadership | Talk through interim |
 | 3 | Why senior marketing hiring goes wrong | Brief first; salary mismatch; process kills interest | Cost of bad senior hiring | Fix the brief |
 | 4 | When should an agency use retained search? | When retained is worth it; why advert response is not enough | Agency senior hiring pressure | Talk through an agency brief |
 | 5 | North West Senior Marketing Salary Snapshot | Scope changes the number; hybrid matters | Regional salary reality gap | Check a salary range |
-| 6 | Strategic Interim vs Consultancy | Deck or operator; when each works | Senior operating judgement | Choose the right route |
+| 6 | Fractional vs Consultancy | Deck or operator; when each works | Senior operating judgement | Choose the right route |
 | 7 | What founders actually need from their next marketing leader | Builder, operator or strategist; founder overload | Founder bottleneck | Sense-check the role |
 | 8 | Why good marketing candidates are not applying | Weak advert or weak market; context before CVs | Senior candidate behaviour | Improve candidate engagement |
 | 9 | Manchester Agency Hiring Snapshot | What agencies are hiring for; client services pressure | Regional agency market | Talk through an agency hire |
@@ -290,7 +290,7 @@ The posts should sound like David: plain, specific, human and commercially usefu
 - Organic clicks.
 - Query growth.
 - Indexed pages.
-- Strategic Interim queries.
+- Fractional queries.
 - Marketing recruitment Manchester / North West queries.
 - Pages earning links or mentions.
 - AI-search citations or surfaced answers where visible.
@@ -309,7 +309,7 @@ The posts should sound like David: plain, specific, human and commercially usefu
 - Contact form submissions.
 - Talk to David clicks.
 - Booking link clicks.
-- Strategic Interim enquiries.
+- Fractional enquiries.
 - Leadership Search enquiries.
 - Job applications.
 

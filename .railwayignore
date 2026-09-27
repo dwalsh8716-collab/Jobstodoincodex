@@ -1,0 +1,33 @@
+# Local environment and dependency folders
+/.env
+/.env.*
+!.env.example
+/.next/
+/.sanity/
+/node_modules/
+/dist/
+/build/
+/coverage/
+/playwright-report/
+/test-results/
+tsconfig.tsbuildinfo
+*.log
+/.npm-cache/
+
+# Local QA and generated artefacts
+/src/tests/
+/tests/
+/playwright.config.ts
+/vitest.config.*
+/.qa/
+qa-*.json
+qa-screenshots/
+/.nyc_output/
+/artifacts/
+/create-*.sh
+preview-*.png
+
+# Separate internal/prototype workspaces not needed for the public website build
+/bd-intelligence/
+/outreach-recorder/
+/recruiter-labs/

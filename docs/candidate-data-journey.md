@@ -2,9 +2,13 @@
 
 ## Status
 
-Partially ready.
+Live with privacy safeguards; final external legal sign-off remains advisable.
 
-The candidate journey now has clear public wording, active consent, a Candidate Privacy Notice and confirmation copy. It does not pretend that CV upload or live private storage is complete.
+The candidate journey has clear public wording, separate optional choices, a
+Candidate Privacy Notice and confirmation copy. CV upload now uses approved
+private Railway storage and Resend delivery. The current notice version and
+manual legal review are recorded in
+`docs/LEGAL-PRIVACY-REVIEW-2026-09-22.md`.
 
 ## Audit Summary
 

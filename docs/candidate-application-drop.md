@@ -1,161 +1,97 @@
 # Candidate Application Drop
 
-Audit date: 11 June 2026
+Audit date: 15 September 2026
 
 ## Status
 
-Profile-or-note applications are live through the existing contact route.
+CV upload is live when all of the following are configured on the server:
 
-CV upload is staged, not live.
+- `FEATURE_CANDIDATE_APPLICATION_DROP=true`
+- private Railway bucket credentials
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL=david@essentialresourcing.co.uk`
+- `CONTACT_FROM_EMAIL=website@mail.essentialresourcing.co.uk`
 
-The website now has a passwordless application component for candidate and job
-routes. It keeps the current simple journey:
+The public candidate and job application blocks use `/api/candidate-application-drop`.
 
-- no account creation
+## User Journey
+
+Candidates can submit:
+
 - name
 - email
-- optional phone
-- LinkedIn/profile URL or a short note
+- optional mobile
+- CV file
+- optional LinkedIn/profile URL
+- optional short note
 - preferred contact method
-- application/data-processing consent
-- explicit WhatsApp reply consent when WhatsApp is selected
+- WhatsApp reply consent where relevant
 - optional talent-pool consent
 - Candidate Privacy Notice acknowledgement
 
-The CV upload control is deliberately disabled.
+The form accepts PDF, DOC and DOCX files up to 10MB.
 
-This means applying can stay under two minutes without pretending the site has a
-safe CV storage service before it does.
+## Delivery
 
-## Audit Findings
+On a valid upload:
 
-Already in place before this pass:
+1. The file extension, MIME type and file signature are validated.
+2. When ClamAV is enabled, the CV must pass its malware scan before storage or email delivery.
+3. The CV is written to the private Railway bucket with a retention date and scan status.
+4. The CV is emailed to `david@essentialresourcing.co.uk` through Resend as an attachment.
+5. The candidate receives a confirmation email without the CV attached.
+6. The response gives the candidate a reference number.
 
-- `/candidates` route.
-- Job detail application form.
-- Name, email, optional phone, LinkedIn/profile URL, message and preferred
-  contact method.
-- Active consent checkbox.
-- Candidate Privacy Notice.
-- Candidate confirmation copy.
-- Safe analytics event names with no candidate PII.
-- Postgres schema for future candidate, application and file metadata.
-- CV storage and retention guidance in `docs/cv-storage-and-retention.md`.
+No CV is stored in Sanity, GitHub or `/public`. No public file URL is created.
 
-Missing before this pass:
+## Safety Rules
 
-- dedicated passwordless application-drop component
-- separate Candidate Privacy Notice acknowledgement
-- optional talent-pool consent
-- explicit staged CV upload route/status
-- validation rules for future CV file type and size
-- clear API response that CV upload is not yet enabled
-- private application-record write path for job applications
-- profile-or-note validation instead of forcing a long message
-
-## What Was Added
-
-- `CandidateApplicationDrop` component.
-- Disabled staged CV drop area with file type, file size and progress-state
-  copy.
-- Locked `/api/candidate-application-drop` route that returns a safe 503 while
-  storage is not approved.
-- Server-side CV validation rules for a future storage adapter:
-  - PDF
-  - DOC
-  - DOCX
-  - 10MB maximum
-- Candidate/job form validation now requires either a LinkedIn/profile URL or a
-  short note. It does not force a cover letter when a profile link is enough.
-- Separate privacy acknowledgement on candidate/job forms.
-- Optional talent-pool consent that is not treated as marketing consent.
-- Private operations metadata for LinkedIn/profile URL, job slug, privacy
-  acknowledgement, WhatsApp reply consent and talent-pool consent.
-- Private Postgres application records for job submissions when
-  `OPERATIONS_DB_ENABLED=true` and migrations have been run.
-
-## Storage Decision
-
-Do not enable CV upload yet.
-
-Required before CV upload can be live:
-
-1. Private object storage provider chosen.
-2. Private bucket configured.
-3. Storage secrets added in Railway only.
-4. Signed admin-only download route built.
-5. Virus scanning or manual review process approved.
-6. File access audit logging complete.
-7. Retention/deletion process approved.
-8. Legal/privacy wording reviewed.
-
-Until then, candidates should use LinkedIn/profile URL and a short note.
-
-## Application Storage
-
-When the operations database is enabled, job submissions create:
-
-- the existing enquiry trail
-- a private candidate record if one does not already exist for the email
-- a private application record with:
-  - candidate/application link
-  - job slug
-  - applicant name, email and optional phone
-  - profile URL
-  - note
-  - preferred contact method
-  - consent and privacy notice version
-  - source page
-
-The migration is:
-
-```txt
-database/migrations/027_candidate_application_drop.sql
-```
-
-It also stages a `candidate_files` metadata table for future private CV storage.
-That table stores metadata only. It has no public file URL field.
+- Validate extension, MIME type and file signature before accepting a CV.
+- Keep stored files private.
+- Do not send uploaded CVs to analytics.
+- Do not log candidate names, email addresses, filenames or CV content on failure.
+- David must manually review the CV before forwarding it to any client.
+- Candidates can request access, correction or deletion through `/candidate-privacy/request`.
+- A failed email delivery removes the newly stored object to avoid an orphaned CV.
 
 ## Environment Variables
 
-Feature flag:
-
 ```txt
-FEATURE_CANDIDATE_APPLICATION_DROP=false
-```
-
-Future private storage variables:
-
-```txt
-CANDIDATE_CV_STORAGE_PROVIDER=
+FEATURE_CANDIDATE_APPLICATION_DROP=true
+CANDIDATE_CV_STORAGE_PROVIDER=railway_bucket
 CANDIDATE_CV_STORAGE_BUCKET=
-CANDIDATE_CV_STORAGE_SIGNING_SECRET=
+CANDIDATE_CV_STORAGE_ENDPOINT=
+CANDIDATE_CV_STORAGE_REGION=auto
+CANDIDATE_CV_STORAGE_ACCESS_KEY_ID=
+CANDIDATE_CV_STORAGE_SECRET_ACCESS_KEY=
+CANDIDATE_CV_STORAGE_FORCE_PATH_STYLE=false
+CANDIDATE_CV_EMAIL_DELIVERY=resend_attachment
+CANDIDATE_CV_MALWARE_SCAN_ENABLED=false
+CANDIDATE_CV_MALWARE_SCAN_HOST=
+CANDIDATE_CV_MALWARE_SCAN_PORT=3310
+CANDIDATE_CV_MALWARE_SCAN_TIMEOUT_MS=12000
+RETENTION_CV_FILE_MONTHS=6
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=david@essentialresourcing.co.uk
+CONTACT_FROM_EMAIL=website@mail.essentialresourcing.co.uk
 ```
 
-These are server-side only. Do not expose storage secrets with
-`NEXT_PUBLIC_*`.
+These are server-side only. Do not expose storage credentials with `NEXT_PUBLIC_*`.
 
-## API Route
+## Malware Scanning
 
-Route:
+The application supports a private ClamAV `clamd` service over the INSTREAM protocol. When `CANDIDATE_CV_MALWARE_SCAN_ENABLED=true`, scans fail closed: an unavailable scanner, timeout, malformed response or infection prevents storage and delivery.
+
+Keep manual review even when a file scans clean. Do not send candidate CVs to public multi-engine scanning services.
+
+## Retention And Deletion
+
+Uploads carry a private `retention-until` object metadata value. Run:
 
 ```txt
-/api/candidate-application-drop
+npm run retention:cv:check
 ```
 
-Current behaviour:
+This is dry-run only and lists expired private objects. Deletion requires both `--apply` and `CV_RETENTION_DELETION_APPROVED=true`, so no scheduled job can silently delete candidate records.
 
-- returns `503`
-- does not store files
-- does not create public URLs
-- does not write CVs to Sanity
-- does not send CV data to analytics
-
-This route exists as a safe staged boundary, not as a live upload service.
-
-## Manual Blockers
-
-David must approve the storage provider, retention approach, access workflow and
-legal/privacy wording before CV upload is enabled.
-
-No public CV links. No CVs in Sanity. No CVs in GitHub. No faff.
+No public CV links. No CVs in Sanity. No faff.

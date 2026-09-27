@@ -18,7 +18,7 @@ export const dataSubjectRequestTypeOptions: Array<{
   value: DataSubjectRequestType;
   label: string;
 }> = [
-  { value: "access_export", label: "Copy or export of my data" },
+  { value: "access_export", label: "Copy or access my data" },
   { value: "deletion", label: "Delete my candidate details" },
   { value: "correction", label: "Correct or update my details" },
   { value: "consent_withdrawal", label: "Withdraw consent" },

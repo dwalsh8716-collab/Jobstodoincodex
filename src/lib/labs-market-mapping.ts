@@ -56,7 +56,7 @@ export const labsMarketMappingSegments = [
     shortlistedCount: 1,
   },
   {
-    segmentName: "Strategic Interim",
+    segmentName: "Fractional",
     segmentType: "availability",
     targetCount: 40,
     mappedCount: 20,
@@ -152,7 +152,7 @@ export function getLabsMarketMappingPreview(
     privacyRules: labsMarketMappingPrivacyRules,
     privateClientUses: [
       "retained search update",
-      "strategic interim market scan",
+      "fractional market scan",
       "salary/rate reality discussion",
       "why this role is hard explanation",
       "proof of work",

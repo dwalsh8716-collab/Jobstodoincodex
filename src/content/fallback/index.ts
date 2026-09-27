@@ -15,9 +15,9 @@ export const fallbackContent = {
   navigation: primaryNavigation,
   footerNavigation: [...primaryNavigation, ...serviceNavigation],
   homePage: {
-    heroHeadline: "Senior marketing and comms hiring, done properly.",
+    heroHeadline: "Helping Businesses Make Better Hiring Decisions.",
     heroSubheadline:
-      "Essential Resourcing helps agencies, brands and growth businesses make sharper senior hires.",
+      "Permanent, retained and fractional marketing search.",
     premiumVideo: homepageFeatureVideo,
     proofPoints,
     whyEssential,

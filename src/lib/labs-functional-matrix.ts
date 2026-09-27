@@ -99,7 +99,7 @@ export const labsFunctionalMatrixOutputs = [
 export const labsFunctionalMatrixUseCases = [
   "client briefing",
   "retained search scoping",
-  "strategic interim scoping",
+  "fractional scoping",
   "candidate evaluation by David, not automated scoring",
   "shortlist comparison",
   "salary benchmarking",

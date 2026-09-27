@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Essential Resourcing Video Outreach",
+  "description": "A local-first tab recorder with an on-page webcam bubble for Essential Resourcing outreach videos.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "offscreen",
+    "scripting",
+    "storage",
+    "tabCapture"
+  ],
+  "action": {
+    "default_title": "Essential Resourcing Video Outreach",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  }
+}

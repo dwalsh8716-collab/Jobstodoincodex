@@ -112,7 +112,7 @@ Private client version:
 - role-specific
 - access controlled
 - audit logged
-- tied to a retained search or strategic interim brief
+- tied to a retained search or fractional brief
 - can show progress and constraints
 - must not expose named candidate lists as a visual shortcut
 
@@ -143,7 +143,7 @@ Rules:
 Potential uses:
 
 - retained search update
-- strategic interim market scan
+- fractional market scan
 - salary/rate reality discussion
 - why this role is hard explanation
 - proof of work

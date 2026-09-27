@@ -13,7 +13,7 @@ export const labsSalaryGuidesAdminRoute = "/admin/labs/salary-guides";
 export const labsSalaryGuideAssetTypes = [
   "North West Senior Marketing Salary Guide",
   "Manchester Agency Salary Guide",
-  "Strategic Interim Day Rate Guide",
+  "Fractional Day Rate Guide",
   "PR & Communications Salary Snapshot",
   "Marketing Director Salary Guide",
   "Head of Marketing Salary Guide",

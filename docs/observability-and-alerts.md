@@ -1,12 +1,12 @@
 # Observability And Alerts
 
-Audit date: 11 June 2026
+Audit date: 22 September 2026
 
 ## Status
 
-Amber.
+Green for no-cost uptime checks; amber until the Sentry project credentials are connected.
 
-The website has the technical basics for health checks and safe logging. It does not yet have a live external error tracker or uptime alerting account. That part needs David/account approval because it means choosing who receives alerts and which third-party service is used.
+The website has external production probes through GitHub Actions and privacy-scrubbed Sentry integration. Sentry remains disabled until its DSN is configured, so missing credentials cannot affect production.
 
 ## What Exists Today
 
@@ -29,21 +29,29 @@ Automated checks:
 
 - `.github/workflows/quality.yml`
 - `.github/workflows/retention-review.yml`
+- `.github/workflows/production-monitor.yml` every 15 minutes
+- `npm run monitor:production`
 - `npm run verify`
 - `npm run db:status`
 - `npm run retention:check`
 
-## What Is Not Added Automatically
+The production monitor checks:
 
-No Sentry SDK has been installed.
+- homepage content and HTTP status
+- contact page content and HTTP status
+- `/api/health` response
+- canonical URLs in `/sitemap.xml`
+- `/api/contact` validation using an intentionally invalid payload that cannot send email
 
-No Better Stack, UptimeRobot, Axiom, Logtail or Osano-style account has been connected.
+## Error Tracking
+
+The Sentry SDK is installed but no account, project or DSN is created automatically.
 
 No paid monitoring service has been added.
 
 No new third-party script has been added to the public website.
 
-Reason: David should approve the monitoring provider, alert recipient and privacy terms before any live third-party monitoring is connected.
+Reason: creating the Sentry project and choosing its alert recipient and retention terms requires David's final approval.
 
 ## Recommended Monitoring Layers
 
@@ -111,7 +119,7 @@ Sentry is useful for:
 - source maps if configured carefully
 - performance traces if sampling is controlled
 
-Do not add it until David approves:
+Before enabling it, David must approve:
 
 - provider
 - alert email
@@ -142,6 +150,17 @@ SENTRY_ORG=
 SENTRY_PROJECT=
 SENTRY_AUTH_TOKEN=
 ```
+
+Privacy controls already enforced in code:
+
+- `sendDefaultPii: false`
+- request bodies, cookies, headers and query strings removed
+- user identity removed
+- common sensitive keys filtered recursively
+- session replay not enabled
+- 2% default trace sampling
+
+No PII in monitoring.
 
 Do not add real values to GitHub.
 

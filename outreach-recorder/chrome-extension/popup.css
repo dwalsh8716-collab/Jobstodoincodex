@@ -1,0 +1,154 @@
+:root {
+  color-scheme: light;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #151312;
+  background: #f7f4ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  margin: 0;
+  background: #f7f4ef;
+}
+
+.popup-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.brand {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.brand-mark {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 8px;
+  background: #151312;
+  color: #f7f4ef;
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+p {
+  margin: 4px 0 0;
+  color: #5e5550;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.warning {
+  border: 1px solid #dfd6cb;
+  border-radius: 8px;
+  background: #fffaf2;
+  padding: 10px;
+  color: #3f3833;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.field-grid,
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+label {
+  display: grid;
+  gap: 5px;
+  color: #4d4540;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid #d8cfc4;
+  border-radius: 7px;
+  background: #fffdf8;
+  color: #151312;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+  padding: 8px 10px;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  border-color: #876f49;
+  box-shadow: 0 0 0 3px rgba(135, 111, 73, 0.18);
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 28px;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.check-row input {
+  width: 16px;
+  min-height: 16px;
+  accent-color: #151312;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+button {
+  min-height: 40px;
+  border: 1px solid #151312;
+  border-radius: 7px;
+  background: #151312;
+  color: #fffaf2;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+button.secondary {
+  border-color: #d8cfc4;
+  background: #fffdf8;
+  color: #151312;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.status {
+  min-height: 34px;
+  margin: 0;
+  color: #463d38;
+  font-size: 12px;
+  line-height: 1.4;
+}

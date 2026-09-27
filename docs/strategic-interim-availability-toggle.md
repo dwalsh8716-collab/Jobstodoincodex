@@ -1,4 +1,4 @@
-# Strategic Interim Availability Toggle
+# Fractional Availability Toggle
 
 ## Status
 

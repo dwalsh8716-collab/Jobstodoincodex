@@ -14,6 +14,8 @@ const eslintConfig = [
       ".next/**",
       ".npm-cache/**",
       ".sanity/**",
+      "**/.next/**",
+      "**/node_modules/**",
       "bd-intelligence/.venv/**",
       "bd-intelligence/.pytest_cache/**",
       "bd-intelligence/exports/**",
@@ -22,7 +24,10 @@ const eslintConfig = [
       "New Website 2026/**",
       "next-env.d.ts",
       "node_modules/**",
-      "outreach-recorder/**"
+      "outreach-recorder/**",
+      "recruiter-labs/interview-coordination-agent/backend/.pytest_cache/**",
+      "recruiter-labs/interview-coordination-agent/backend/.venv/**",
+      "recruiter-labs/interview-coordination-agent/frontend/tsconfig.tsbuildinfo"
     ]
   }
 ];

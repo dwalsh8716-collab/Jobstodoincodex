@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CaseStudyCard, InsightCard, ServiceCard } from "@/components/Cards";
+import { CaseStudyCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { LinkedInRecommendations } from "@/components/LinkedInRecommendations";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
@@ -14,14 +14,13 @@ import {
   getPublicServices,
 } from "@/lib/public-content";
 import { createMetadata, serviceSchema } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
 import type { WhatsAppIntent } from "@/lib/whatsapp";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-const serviceProcessSteps = [
+const defaultServiceProcessSteps = [
   {
     title: "Work out what you are really hiring for",
     description: "Not just the job title. The problem behind it.",
@@ -45,6 +44,15 @@ const serviceProcessSteps = [
     description: "Clear feedback, honest advice and no recruitment theatre.",
   },
 ];
+
+function orderBySlug<T extends { slug: string }>(items: T[], slugs: string[]) {
+  const uniqueSlugs = Array.from(new Set(slugs));
+  const ordered = uniqueSlugs
+    .map((slug) => items.find((item) => item.slug === slug))
+    .filter((item): item is T => Boolean(item));
+  const remaining = items.filter((item) => !uniqueSlugs.includes(item.slug));
+  return [...ordered, ...remaining];
+}
 
 export async function generateStaticParams() {
   const services = await getPublicServices();
@@ -73,31 +81,37 @@ export default async function ServicePage({ params }: Props) {
     getPublicServices(),
     getPublicCaseStudies(),
   ]);
-  const relatedInsights = allInsights.filter((insight) =>
-    service.relatedInsightSlugs.includes(insight.slug),
+  const relatedInsights = orderBySlug(
+    allInsights.filter((insight) =>
+      service.relatedInsightSlugs.includes(insight.slug) ||
+      insight.relatedServiceSlugs.includes(service.slug),
+    ),
+    service.relatedInsightSlugs,
   );
-  const relatedServices = allServices.filter((item) =>
-    service.relatedServiceSlugs.includes(item.slug),
+  const relatedServices = orderBySlug(
+    allServices.filter((item) =>
+      service.relatedServiceSlugs.includes(item.slug),
+    ),
+    service.relatedServiceSlugs,
   );
-  const relatedCases = allCaseStudies.filter((caseStudy) =>
-    service.relatedCaseStudySlugs.includes(caseStudy.slug),
-  );
-  const publishedCases = relatedCases.filter(
+  const publishedCases = allCaseStudies.filter(
     (caseStudy) => caseStudy.status === "published",
   );
-  const draftCases = relatedCases.filter(
-    (caseStudy) => caseStudy.status === "draft",
+  const relatedPublishedCases = orderBySlug(
+    publishedCases.filter((caseStudy) =>
+      service.relatedCaseStudySlugs.includes(caseStudy.slug),
+    ),
+    service.relatedCaseStudySlugs,
   );
   const whatsAppIntent: WhatsAppIntent =
-    service.slug === "strategic-interim" ? "strategicInterim" : "hiring";
+    service.slug === "fractional" ? "strategicInterim" : "hiring";
   const whatsAppLabel =
-    service.slug === "strategic-interim"
-      ? "Need interim help quickly? WhatsApp David"
+    service.slug === "fractional"
+      ? "Need fractional help quickly? WhatsApp David"
       : "Message David on WhatsApp";
-  const bookingLabel =
-    service.slug === "strategic-interim"
-      ? "Need interim help quickly? Book 15 minutes"
-      : "Sense-check the brief";
+  const processSteps = service.processSteps?.length
+    ? service.processSteps
+    : defaultServiceProcessSteps;
 
   return (
     <>
@@ -123,18 +137,6 @@ export default async function ServicePage({ params }: Props) {
               service={service.title}
               variant="secondary"
             />
-            <BookingButton
-              label={bookingLabel}
-              location={`${service.slug}_hero`}
-              intent="hiring"
-              service={service.title}
-              variant="secondary"
-            />
-            {siteConfig.booking.enabled ? null : (
-              <Link className="button button-secondary" href="/case-studies">
-                View proof standards
-              </Link>
-            )}
           </div>
         </div>
       </section>
@@ -175,8 +177,12 @@ export default async function ServicePage({ params }: Props) {
         <section className="section muted">
           <div className="container split split-start">
             <div>
-              <p className="eyebrow">Market fit</p>
-              <h2>Where this service fits.</h2>
+              <p className="eyebrow">
+                {service.marketFitEyebrow || "Where this service fits"}
+              </p>
+              {service.marketFitHeading ? (
+                <h2>{service.marketFitHeading}</h2>
+              ) : null}
             </div>
             <div className="statement-list">
               <p>{service.searchSummary}</p>
@@ -188,38 +194,50 @@ export default async function ServicePage({ params }: Props) {
       <section className="section">
         <div className="container split split-start">
           <div>
-            <p className="eyebrow">Process</p>
-            <h2>How Essential works.</h2>
-            <p className="lede">
-              The process is deliberately tight because weak briefs and slow
-              decisions cost you the strongest people.
-            </p>
+            <p className="eyebrow">{service.processEyebrow || "Process"}</p>
+            {service.processHeading ? <h2>{service.processHeading}</h2> : null}
+            {service.processIntro ? (
+              <p className="lede">{service.processIntro}</p>
+            ) : null}
+            <Link className="text-link" href="/how-essential-resourcing-works">
+              See exactly how I recruit
+            </Link>
           </div>
           <div className="grid grid-2">
-            {serviceProcessSteps.map((step) => (
+            {processSteps.map((step, index) => (
               <article className="card" key={step.title}>
-                <span className="tag">Process</span>
+                <span className="tag">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <h3>{step.title}</h3>
-                <p>{step.description}</p>
+                {step.description ? <p>{step.description}</p> : null}
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section surface">
-        <div className="container split split-start">
-          <div>
-            <p className="eyebrow">Service judgement</p>
-            <h2>What changes on this kind of brief.</h2>
+      {service.howEssentialWorks.length ? (
+        <section className="section surface">
+          <div className="container split split-start">
+            <div>
+              <p className="eyebrow">
+                {service.judgementEyebrow || "Service judgement"}
+              </p>
+              {service.judgementHeading ? (
+                <h2>{service.judgementHeading}</h2>
+              ) : null}
+            </div>
+            <div className="statement-list">
+              {service.howEssentialWorks.map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </div>
           </div>
-          <div className="statement-list">
-            {service.howEssentialWorks.map((item) => (
-              <p key={item}>{item}</p>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
+
+      <LinkedInRecommendations variant="service" serviceSlug={service.slug} />
 
       <section className="section muted">
         <div className="container split split-start">
@@ -237,48 +255,19 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="section surface">
-        <div className="container section-heading">
-          <p className="eyebrow">Related proof</p>
-          <h2>Proof only works when it is specific.</h2>
-          <p className="lede">
-            Case studies stay unpublished until the outcome and permission are
-            clear. Until then, the useful proof is the shape of the brief, the
-            pressure behind it and the standard David would hold it to.
-          </p>
-        </div>
-        <div className="container grid grid-3">
-          {publishedCases.map((caseStudy) => (
-            <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
-          ))}
-          {draftCases.map((caseStudy) => (
-            <article className="card lift-card" key={caseStudy.slug}>
-              <span className="tag">Proof being checked</span>
-              <h3>{caseStudy.title}</h3>
-              <p>
-                <strong>Role:</strong> {caseStudy.roleHired}
-              </p>
-              <p>{caseStudy.challengeSummary}</p>
-              <p className="meta">
-                Full case study held back until the detail is verified.
-              </p>
-            </article>
-          ))}
-          {!relatedCases.length ? (
-            <article className="card lift-card">
-              <span className="tag">Proof standard</span>
-              <h3>No recycled logos.</h3>
-              <p>
-                David will talk through relevant context directly rather than
-                publishing loose claims that have not been checked.
-              </p>
-              <Link className="text-link" href="/case-studies">
-                View proof standards
-              </Link>
-            </article>
-          ) : null}
-        </div>
-      </section>
+      {relatedPublishedCases.length ? (
+        <section className="section surface">
+          <div className="container section-heading">
+            <p className="eyebrow">Related proof</p>
+            <h2>Proof only works when it is specific.</h2>
+          </div>
+          <div className="container grid grid-3">
+            {relatedPublishedCases.map((caseStudy) => (
+              <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {relatedServices.length ? (
         <section className="section muted">
@@ -288,7 +277,12 @@ export default async function ServicePage({ params }: Props) {
           </div>
           <div className="container grid grid-3">
             {relatedServices.map((item) => (
-              <ServiceCard key={item.slug} service={item} />
+              <article className="card" key={item.slug}>
+                <h3>{item.title}</h3>
+                <Link className="text-link" href={`/services/${item.slug}`}>
+                  {item.title}
+                </Link>
+              </article>
             ))}
           </div>
         </section>
@@ -302,7 +296,12 @@ export default async function ServicePage({ params }: Props) {
           </div>
           <div className="container grid grid-3">
             {relatedInsights.map((insight) => (
-              <InsightCard key={insight.slug} insight={insight} />
+              <article className="card" key={insight.slug}>
+                <h3>{insight.title}</h3>
+                <Link className="text-link" href={`/insights/${insight.slug}`}>
+                  {insight.title}
+                </Link>
+              </article>
             ))}
           </div>
         </section>
@@ -310,7 +309,8 @@ export default async function ServicePage({ params }: Props) {
 
       <FAQAccordion faqs={service.faqs} />
       <CTASection
-        title={service.cta.label}
+        title={service.ctaHeading || `${service.cta.label}.`}
+        text={service.ctaText}
         ctaLabel={service.cta.label}
         whatsAppIntent={whatsAppIntent}
         whatsAppLabel={whatsAppLabel}

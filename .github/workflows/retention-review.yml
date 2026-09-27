@@ -80,3 +80,42 @@ jobs:
             cat retention-output.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  cv-bucket-review:
+    name: Private CV bucket review
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CANDIDATE_CV_STORAGE_BUCKET: ${{ secrets.CANDIDATE_CV_STORAGE_BUCKET }}
+      CANDIDATE_CV_STORAGE_ENDPOINT: ${{ secrets.CANDIDATE_CV_STORAGE_ENDPOINT }}
+      CANDIDATE_CV_STORAGE_REGION: ${{ secrets.CANDIDATE_CV_STORAGE_REGION }}
+      CANDIDATE_CV_STORAGE_ACCESS_KEY_ID: ${{ secrets.CANDIDATE_CV_STORAGE_ACCESS_KEY_ID }}
+      CANDIDATE_CV_STORAGE_SECRET_ACCESS_KEY: ${{ secrets.CANDIDATE_CV_STORAGE_SECRET_ACCESS_KEY }}
+      CANDIDATE_CV_STORAGE_FORCE_PATH_STYLE: ${{ secrets.CANDIDATE_CV_STORAGE_FORCE_PATH_STYLE }}
+      CV_RETENTION_OUTPUT_MODE: summary
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Review expired CV objects without deleting
+        run: |
+          set -o pipefail
+          npm run retention:cv:check | tee cv-retention-output.txt
+          {
+            echo "## Private CV bucket retention review"
+            echo
+            echo "Dry-run only. No candidate files were deleted."
+            echo
+            echo '```json'
+            cat cv-retention-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -42,8 +42,8 @@
   --space-page: clamp(24px, 4vw, 56px);
   --max-site: 1180px;
   --font-fraunces: Georgia;
-  --font-inter: Arial;
-  --font-heading: var(--font-fraunces), Georgia, serif;
+  --font-inter: var(--font-site-sans), Arial, sans-serif;
+  --font-heading: var(--font-inter);
   --font-body: var(--font-inter), Arial, sans-serif;
   --shadow-soft: 0 24px 70px rgba(16, 17, 20, 0.12);
   --shadow-card: 0 18px 46px rgba(16, 17, 20, 0.08);

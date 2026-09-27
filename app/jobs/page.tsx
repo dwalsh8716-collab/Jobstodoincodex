@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JobCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
@@ -11,7 +12,7 @@ import { createMetadata, itemListSchema } from "@/lib/seo";
 export const metadata = createMetadata({
   title: "Marketing, PR & Digital Jobs | Essential Resourcing",
   description:
-    "Live marketing, PR, communications and digital roles handled by Essential Resourcing.",
+    "Current marketing, PR, communications, digital and agency jobs handled by specialist recruiter Essential Resourcing.",
   path: "/jobs",
 });
 
@@ -25,12 +26,14 @@ export default async function JobsPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Jobs</p>
-          <h1>
-            Marketing, PR and digital roles without the recruitment nonsense.
-          </h1>
+          <h1>Marketing, PR and digital jobs. Without the mystery.</h1>
           <p className="lede">
-            Live roles will appear here. If there is nothing public, senior
-            candidates can still start a confidential conversation.
+            Live roles handled by Essential appear here.
+          </p>
+          <p className="lede">
+            Wherever possible, you&apos;ll see the useful stuff upfront: salary,
+            location, hybrid setup, what the role actually involves and what the
+            process looks like.
           </p>
         </div>
       </section>
@@ -43,8 +46,12 @@ export default async function JobsPage() {
               : "No live roles published right now."}
           </h2>
           <p className="lede">
-            If you are senior and want a confidential conversation, use the
-            candidate route rather than waiting for the perfect role to appear.
+            If you&apos;re open to something senior or specialist, don&apos;t wait
+            for the perfect advert to appear.
+          </p>
+          <p className="lede">
+            Some searches are confidential and some conversations start before a
+            role ever reaches a job board.
           </p>
           <div className="button-row hero-actions">
             <WhatsAppButton
@@ -64,39 +71,41 @@ export default async function JobsPage() {
         ) : (
           <div className="container empty-state">
             <p className="eyebrow">Confidential route</p>
-            <h2>No live roles are published today.</h2>
+            <h2>Open to the right thing?</h2>
             <p className="lede">
-              Good senior roles are not always public. Send a short note or
-              LinkedIn URL and David can tell you whether there is a sensible
-              conversation to have.
+              Send David your LinkedIn profile and a few lines about what
+              you&apos;d consider next.
             </p>
+            <div className="button-row hero-actions">
+              <Link
+                className="button button-primary"
+                href="/candidates#candidate-contact"
+              >
+                Send a confidential note
+              </Link>
+              <WhatsAppButton
+                intent="candidates"
+                label="Quick WhatsApp to David"
+                location="jobs_empty_state"
+                variant="secondary"
+              />
+            </div>
           </div>
         )}
       </section>
       <section className="section muted">
         <div className="container grid grid-3">
           <article className="card">
-            <span className="tag">Live roles</span>
+            <span className="tag">Live role standard</span>
             <h2>Only real roles go live.</h2>
             <p>
-              Drafts stay hidden until the salary, brief, location and process
-              are ready to show properly.
+              No fake evergreen vacancies designed to collect CVs.
             </p>
-          </article>
-          <article className="card">
-            <span className="tag">Closed roles</span>
-            <h2>Closed means closed.</h2>
             <p>
-              Closed or expired roles are not marked up as active jobs, and they
-              do not ask candidates to apply.
+              No closed roles pretending they&apos;re still available.
             </p>
-          </article>
-          <article className="card">
-            <span className="tag">Confidential route</span>
-            <h2>Not everything is public.</h2>
             <p>
-              Senior conversations often start before a role is advertised,
-              especially when the brief is sensitive.
+              No &quot;competitive salary&quot; when a proper range can be shared.
             </p>
           </article>
         </div>
@@ -104,14 +113,10 @@ export default async function JobsPage() {
       <section className="section surface">
         <div className="container section-heading">
           <p className="eyebrow">Candidate standards</p>
-          <h2>What a live role should tell you.</h2>
-          <p className="lede">
-            A job advert should not make you guess the salary, office rhythm or
-            process before you decide whether it is worth a conversation.
-          </p>
+          <h2>What a good job ad should tell you.</h2>
         </div>
         <div className="container grid grid-3">
-          {candidateJobPageStandards.slice(0, 6).map((standard) => (
+          {candidateJobPageStandards.map((standard) => (
             <article className="card" key={standard}>
               <p>{standard}</p>
             </article>
@@ -120,9 +125,9 @@ export default async function JobsPage() {
       </section>
       <CTASection
         title="Looking for your next move?"
-        text="Send a note or LinkedIn URL and David can come back to you properly."
+        text="Send David a note or LinkedIn URL."
         ctaLabel="Send a confidential note"
-        ctaHref="/candidates"
+        ctaHref="/candidates#candidate-contact"
         whatsAppIntent="candidates"
         whatsAppLabel="Quick WhatsApp to David"
       />

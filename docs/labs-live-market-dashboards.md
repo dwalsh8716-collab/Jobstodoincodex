@@ -73,7 +73,7 @@ methodology checks and privacy rules. It does not render fake chart data.
 
 - North West Marketing Salary Dashboard
 - Manchester Agency Hiring Dashboard
-- Strategic Interim Rate Dashboard
+- Fractional Rate Dashboard
 - Senior Marketing Leadership Market Snapshot
 - PR & Communications Salary Dashboard
 

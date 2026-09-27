@@ -11,7 +11,8 @@ export const allowedCvMimeTypes = [
 
 const allowedCvExtensions = [".pdf", ".doc", ".docx"] as const;
 
-const emptyToUndefined = (value: unknown) => (value === "" ? undefined : value);
+const emptyToUndefined = (value: unknown) =>
+  value === "" || value === null ? undefined : value;
 
 const safeText = (max: number) =>
   z
@@ -24,6 +25,7 @@ const safeText = (max: number) =>
 
 export const candidateApplicationDropSchema = z
   .object({
+    type: z.enum(["candidate", "job"]).default("candidate"),
     name: safeText(80).pipe(z.string().min(2, "Please add your name.")),
     email: z
       .string()
@@ -55,18 +57,28 @@ export const candidateApplicationDropSchema = z
     }),
     whatsappContactConsent: z.literal("yes").optional(),
     talentPoolConsent: z.literal("yes").optional(),
+    hasCvFile: z.literal("yes").optional(),
+    website: z.preprocess(
+      emptyToUndefined,
+      z.string().max(0, "Spam check failed.").optional().default(""),
+    ),
+    startedAt: z.coerce
+      .number()
+      .int()
+      .positive("Please reload the form and try again."),
+    sourcePage: z.preprocess(emptyToUndefined, safeText(240).optional()),
     jobTitle: z.preprocess(emptyToUndefined, safeText(160).optional()),
     jobSlug: z.preprocess(emptyToUndefined, safeText(160).optional()),
   })
   .superRefine((payload, ctx) => {
     const noteLength = payload.note?.length || 0;
 
-    if (!payload.linkedin && noteLength < 10) {
+    if (!payload.linkedin && noteLength < 10 && payload.hasCvFile !== "yes") {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["linkedin"],
         message:
-          "Please add either a LinkedIn/profile URL or a short note.",
+          "Please add a CV, LinkedIn/profile URL or short note.",
       });
     }
 
@@ -75,6 +87,18 @@ export const candidateApplicationDropSchema = z
         code: z.ZodIssueCode.custom,
         path: ["note"],
         message: "Please add a little more detail, or leave the note blank.",
+      });
+    }
+
+    if (
+      payload.preferredContactMethod === "whatsapp" &&
+      !payload.phone
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["phone"],
+        message:
+          "Please add a phone number if you prefer WhatsApp contact.",
       });
     }
 
@@ -120,12 +144,13 @@ export function validateCvFile(
     };
   }
 
-  if (
-    !allowedCvMimeTypes.includes(
-      value.type as (typeof allowedCvMimeTypes)[number],
-    ) &&
-    !hasAllowedExtension(value.name)
-  ) {
+  const hasValidExtension = hasAllowedExtension(value.name);
+  const hasKnownSafeMime =
+    value.type === "" ||
+    value.type === "application/octet-stream" ||
+    allowedCvMimeTypes.includes(value.type as (typeof allowedCvMimeTypes)[number]);
+
+  if (!hasValidExtension || !hasKnownSafeMime) {
     return {
       ok: false,
       message: "CV file must be a PDF, DOC or DOCX.",
@@ -143,7 +168,10 @@ export function validateCvFile(
 }
 
 export function formDataToCandidateApplicationDropInput(formData: FormData) {
+  const cvFile = formData.get("cvFile");
+
   return {
+    type: formData.get("type"),
     name: formData.get("name"),
     email: formData.get("email"),
     phone: formData.get("phone"),
@@ -154,6 +182,13 @@ export function formDataToCandidateApplicationDropInput(formData: FormData) {
     privacyNoticeAcknowledgement: formData.get("privacyNoticeAcknowledgement"),
     whatsappContactConsent: formData.get("whatsappContactConsent") || undefined,
     talentPoolConsent: formData.get("talentPoolConsent") || undefined,
+    hasCvFile:
+      cvFile && typeof cvFile !== "string" && cvFile.size > 0
+        ? "yes"
+        : undefined,
+    website: formData.get("website"),
+    startedAt: formData.get("startedAt"),
+    sourcePage: formData.get("sourcePage"),
     jobTitle: formData.get("jobTitle"),
     jobSlug: formData.get("jobSlug"),
   };

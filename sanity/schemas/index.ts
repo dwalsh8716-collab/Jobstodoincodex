@@ -1,27 +1,28 @@
-import {
-  BlockContentIcon,
-  CaseIcon,
-  CogIcon,
-  ComposeIcon,
-  DocumentsIcon,
-  EarthGlobeIcon,
-  HelpCircleIcon,
-  HomeIcon,
-  ImageIcon,
-  InfoOutlineIcon,
-  LinkIcon,
-  PlayIcon,
-  RocketIcon,
-  SearchIcon,
-  StarIcon,
-  ThListIcon,
-  TiersIcon,
-  UserIcon,
-} from "@sanity/icons";
+import { icons } from "@sanity/icons";
+import type { ComponentType } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 // Sanity is the public website CMS. Do not add private candidate records,
 // client contact records, CV files, DSAR requests, audit logs or internal notes here.
+
+const BlockContentIcon = icons["block-content"] as ComponentType;
+const CaseIcon = icons.case as ComponentType;
+const CogIcon = icons.cog as ComponentType;
+const ComposeIcon = icons.compose as ComponentType;
+const DocumentsIcon = icons.documents as ComponentType;
+const EarthGlobeIcon = icons["earth-globe"] as ComponentType;
+const HelpCircleIcon = icons["help-circle"] as ComponentType;
+const HomeIcon = icons.home as ComponentType;
+const ImageIcon = icons.image as ComponentType;
+const InfoOutlineIcon = icons["info-outline"] as ComponentType;
+const LinkIcon = icons.link as ComponentType;
+const PlayIcon = icons.play as ComponentType;
+const RocketIcon = icons.rocket as ComponentType;
+const SearchIcon = icons.search as ComponentType;
+const StarIcon = icons.star as ComponentType;
+const ThListIcon = icons.list as ComponentType;
+const TiersIcon = icons.tiers as ComponentType;
+const UserIcon = icons.user as ComponentType;
 
 type RequiredRule = {
   required: () => {
@@ -238,7 +239,14 @@ const videoFields = [
       ],
       layout: "radio",
     },
-    validation: requiredText("Choose where the video comes from."),
+    validation: (rule) =>
+      rule.custom((value, context) => {
+        const parent = context.parent as
+          | { stillImage?: { asset?: unknown } }
+          | undefined;
+        if (parent?.stillImage?.asset || value) return true;
+        return "Choose where the video comes from, or add a still image/photo.";
+      }),
   }),
   defineField({
     name: "url",
@@ -249,7 +257,10 @@ const videoFields = [
     hidden: ({ parent }) => parent?.provider === "upload",
     validation: (rule) =>
       rule.custom((value, context) => {
-        const parent = context.parent as { provider?: string } | undefined;
+        const parent = context.parent as
+          | { provider?: string; stillImage?: { asset?: unknown } }
+          | undefined;
+        if (parent?.stillImage?.asset) return true;
         if (parent?.provider !== "upload" && !value)
           return "Add a YouTube or Vimeo URL.";
         return true;
@@ -264,7 +275,10 @@ const videoFields = [
     hidden: ({ parent }) => parent?.provider !== "upload",
     validation: (rule) =>
       rule.custom((value, context) => {
-        const parent = context.parent as { provider?: string } | undefined;
+        const parent = context.parent as
+          | { provider?: string; stillImage?: { asset?: unknown } }
+          | undefined;
+        if (parent?.stillImage?.asset) return true;
         if (parent?.provider === "upload" && !value)
           return "Upload a video file or switch video source.";
         return true;
@@ -276,6 +290,7 @@ const videoFields = [
     type: "text",
     rows: 3,
   }),
+  imageWithAltField("stillImage", "Still image / photo"),
   imageWithAltField("posterImage", "Poster image"),
   defineField({
     name: "transcript",
@@ -293,6 +308,207 @@ const videoFields = [
       "Use a WebVTT captions file for uploaded video where possible.",
   }),
 ];
+
+const homepageCtaField = (name: string, title: string) =>
+  defineField({
+    name,
+    title,
+    type: "object",
+    fields: [
+      defineField({
+        name: "label",
+        title: "Label",
+        type: "string",
+        validation: (rule) => rule.max(42),
+      }),
+      defineField({
+        name: "href",
+        title: "Link",
+        type: "string",
+        description: "Use a clean internal path such as /contact.",
+      }),
+      defineField({
+        name: "variant",
+        title: "Button style",
+        type: "string",
+        options: {
+          list: [
+            { title: "Primary", value: "primary" },
+            { title: "Secondary", value: "secondary" },
+            { title: "Dark", value: "dark" },
+            { title: "Text link", value: "text" },
+          ],
+          layout: "radio",
+        },
+      }),
+    ],
+    preview: {
+      select: { title: "label", subtitle: "href" },
+    },
+  });
+
+const homepageDefinitionsField = () =>
+  defineField({
+    name: "definitions",
+    title: "Definition cards",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({ name: "number", title: "Number", type: "string" }),
+          defineField({ name: "phrase", title: "Heading", type: "string" }),
+          defineField({ name: "copy", title: "Copy", type: "text", rows: 3 }),
+        ],
+        preview: { select: { title: "phrase", subtitle: "number" } },
+      }),
+    ],
+  });
+
+const homepageComparisonRowsField = () =>
+  defineField({
+    name: "rows",
+    title: "Comparison rows",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({
+            name: "usual",
+            title: "Industry default",
+            type: "text",
+            rows: 2,
+          }),
+          defineField({
+            name: "essential",
+            title: "Essential Resourcing",
+            type: "text",
+            rows: 2,
+          }),
+        ],
+        preview: { select: { title: "usual", subtitle: "essential" } },
+      }),
+    ],
+  });
+
+const homepageServiceCardsField = () =>
+  defineField({
+    name: "serviceCards",
+    title: "Homepage service cards",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({ name: "slug", title: "Slug", type: "string" }),
+          defineField({ name: "title", title: "Title", type: "string" }),
+          defineField({
+            name: "proposition",
+            title: "Short proposition",
+            type: "string",
+          }),
+          defineField({
+            name: "description",
+            title: "Description",
+            type: "text",
+            rows: 3,
+          }),
+          defineField({
+            name: "linkLabel",
+            title: "Link label",
+            type: "string",
+          }),
+          defineField({ name: "href", title: "Link", type: "string" }),
+        ],
+        preview: { select: { title: "title", subtitle: "proposition" } },
+      }),
+    ],
+  });
+
+const homepageProofItemsField = () =>
+  defineField({
+    name: "framework",
+    title: "Proof framework",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({ name: "title", title: "Title", type: "string" }),
+          defineField({ name: "copy", title: "Copy", type: "text", rows: 3 }),
+        ],
+        preview: { select: { title: "title", subtitle: "copy" } },
+      }),
+    ],
+  });
+
+const homepageRecommendationsField = () =>
+  defineField({
+    name: "recommendations",
+    title: "LinkedIn recommendations shown on homepage",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({
+            name: "proofPoint",
+            title: "Small proof point",
+            type: "string",
+          }),
+          defineField({ name: "name", title: "Name", type: "string" }),
+          defineField({ name: "role", title: "Role", type: "string" }),
+          defineField({ name: "date", title: "Date", type: "string" }),
+          defineField({ name: "quote", title: "Quote", type: "text", rows: 4 }),
+        ],
+        preview: { select: { title: "name", subtitle: "proofPoint" } },
+      }),
+    ],
+  });
+
+const homepageSpecialismCardsField = () =>
+  defineField({
+    name: "cards",
+    title: "Specialism cards",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({ name: "slug", title: "Slug", type: "string" }),
+          defineField({ name: "title", title: "Title", type: "string" }),
+          defineField({
+            name: "description",
+            title: "Description",
+            type: "text",
+            rows: 3,
+          }),
+          defineField({
+            name: "linkLabel",
+            title: "Link label",
+            type: "string",
+          }),
+          defineField({ name: "href", title: "Link", type: "string" }),
+        ],
+        preview: { select: { title: "title", subtitle: "href" } },
+      }),
+    ],
+  });
+
+const homepageAudiencePanelField = (name: string, title: string) =>
+  defineField({
+    name,
+    title,
+    type: "object",
+    fields: [
+      defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+      defineField({ name: "heading", title: "Heading", type: "string" }),
+      stringListField("items", "Bullet points"),
+      defineField({ name: "ctaLabel", title: "CTA label", type: "string" }),
+      defineField({ name: "ctaHref", title: "CTA link", type: "string" }),
+    ],
+  });
 
 const videoBlockMember = defineArrayMember({
   name: "videoBlock",
@@ -844,11 +1060,11 @@ const siteSettings = defineType({
     }),
     defineField({
       name: "whatsAppStrategicInterimMessage",
-      title: "WhatsApp strategic interim message",
+      title: "WhatsApp fractional message",
       type: "text",
       rows: 3,
       description:
-        "Used where the need may be urgent, especially Strategic Interim pages.",
+        "Used where the need may be urgent, especially Fractional pages.",
     }),
     defineField({
       name: "showWhatsAppInHeader",
@@ -874,7 +1090,7 @@ const siteSettings = defineType({
       type: "url",
       description:
         "Use David's public LinkedIn profile URL. This is shown in selected founder/contact areas and may be used for SEO/entity trust.",
-      initialValue: "https://www.linkedin.com/in/davidwalshrecruiter/",
+      initialValue: "https://www.linkedin.com/in/davidwalshmarketingsearch/",
     }),
     defineField({
       name: "linkedInButtonLabel",
@@ -989,14 +1205,197 @@ const homePage = defineType({
       rows: 3,
     }),
     defineField({
+      name: "heroLede",
+      title: "Hero supporting line",
+      type: "text",
+      rows: 2,
+    }),
+    homepageCtaField("heroPrimaryCta", "Hero primary button"),
+    homepageCtaField("heroSecondaryCta", "Hero secondary button"),
+    defineField({
       name: "premiumVideo",
-      title: "Homepage premium video",
+      title: "Homepage founder media",
       type: "object",
+      description:
+        "Upload a still image/photo for launch, or use an uploaded/embedded video when ready.",
       icon: PlayIcon,
       fields: videoFields,
     }),
     stringListField("proofPoints", "Proof strip points"),
-    stringListField("whyEssentialPoints", "Why Essential points"),
+    stringListField("disciplines", "Ticker disciplines"),
+    defineField({
+      name: "filterSection",
+      title: "Filter section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "text", rows: 2 }),
+        textListField("paragraphs", "Paragraphs"),
+        homepageDefinitionsField(),
+      ],
+    }),
+    defineField({
+      name: "differenceSection",
+      title: "Why it is different section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        textListField("paragraphs", "Paragraphs"),
+        defineField({
+          name: "comparisonLabelLeft",
+          title: "Left comparison label",
+          type: "string",
+        }),
+        defineField({
+          name: "comparisonLabelRight",
+          title: "Right comparison label",
+          type: "string",
+        }),
+        homepageComparisonRowsField(),
+      ],
+    }),
+    defineField({
+      name: "servicesSection",
+      title: "Services section intro",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
+      ],
+    }),
+    homepageServiceCardsField(),
+    defineField({
+      name: "founderSection",
+      title: "Founder section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        textListField("paragraphs", "Paragraphs"),
+        defineField({
+          name: "straightTalkHeading",
+          title: "Straight-talk card heading",
+          type: "string",
+        }),
+        stringListField("straightTalkPoints", "Straight-talk bullet points"),
+      ],
+    }),
+    defineField({
+      name: "audienceSection",
+      title: "Clients and candidates split section",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Accessible heading", type: "string" }),
+        homepageAudiencePanelField("client", "Client panel"),
+        homepageAudiencePanelField("candidate", "Candidate panel"),
+      ],
+    }),
+    defineField({
+      name: "proofSection",
+      title: "Proof section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
+        homepageProofItemsField(),
+        defineField({
+          name: "caseStudyEyebrow",
+          title: "Case study small heading",
+          type: "string",
+        }),
+        defineField({
+          name: "caseStudyPrimaryLinkLabel",
+          title: "Primary case-study link label",
+          type: "string",
+        }),
+        defineField({
+          name: "caseStudySecondaryLinkLabel",
+          title: "Secondary case-study link label",
+          type: "string",
+        }),
+        defineField({ name: "caveat", title: "Caveat line", type: "string" }),
+      ],
+    }),
+    defineField({
+      name: "linkedInSection",
+      title: "LinkedIn recommendations section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
+        defineField({
+          name: "linkLabel",
+          title: "LinkedIn button label",
+          type: "string",
+        }),
+        homepageRecommendationsField(),
+      ],
+    }),
+    defineField({
+      name: "liveProofSection",
+      title: "Case studies and insight section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
+      ],
+    }),
+    defineField({
+      name: "specialismsSection",
+      title: "Specialisms section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        homepageSpecialismCardsField(),
+      ],
+    }),
+    defineField({
+      name: "manifestoSection",
+      title: "Manifesto section",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({ name: "heading", title: "Accessible heading", type: "string" }),
+        stringListField("lines", "Manifesto lines"),
+        defineField({ name: "signature", title: "Signature", type: "string" }),
+      ],
+    }),
+    defineField({
+      name: "citySection",
+      title: "Manchester image band",
+      type: "object",
+      fields: [
+        defineField({
+          name: "ariaLabel",
+          title: "Accessible label",
+          type: "string",
+        }),
+        imageWithAltField("image", "Image"),
+        defineField({ name: "label", title: "Caption first line", type: "string" }),
+        defineField({ name: "emphasis", title: "Caption emphasis", type: "string" }),
+      ],
+    }),
+    defineField({
+      name: "finalCtaSection",
+      title: "Final CTA section",
+      type: "object",
+      fields: [
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "body", title: "Body", type: "text", rows: 2 }),
+        homepageCtaField("primaryCta", "Primary button"),
+        defineField({
+          name: "emailCtaLabel",
+          title: "Email link label",
+          type: "string",
+        }),
+      ],
+    }),
     referenceListField("featuredServices", "Featured services", ["service"]),
     referenceListField("featuredInsights", "Featured insights", ["insight"]),
     referenceListField("featuredCaseStudies", "Featured case studies", [
@@ -2024,6 +2423,18 @@ const caseStudy = defineType({
       rows: 3,
     }),
     defineField({
+      name: "clientContext",
+      title: "Client context",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "hiringChallenge",
+      title: "Hiring challenge",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
       name: "businessProblem",
       title: "The business problem",
       type: "text",
@@ -2041,7 +2452,25 @@ const caseStudy = defineType({
       type: "text",
       rows: 4,
     }),
-    stringListField("howWeDeriskedIt", "How we de-risked it"),
+    defineField({
+      name: "whyHard",
+      title: "Why it was hard",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "whatKindOfPerson",
+      title: "The kind of person needed",
+      type: "text",
+      rows: 4,
+    }),
+    stringListField("howWeDeriskedIt", "Approach"),
+    defineField({
+      name: "process",
+      title: "Shortlist / process",
+      type: "text",
+      rows: 4,
+    }),
     defineField({ name: "outcome", title: "Outcome", type: "text", rows: 4 }),
     defineField({
       name: "whatChanged",
@@ -2050,16 +2479,75 @@ const caseStudy = defineType({
       rows: 4,
     }),
     defineField({
+      name: "whatChangedHeading",
+      title: "What changed section heading",
+      type: "string",
+    }),
+    defineField({
       name: "commercialImpact",
       title: "Commercial impact",
       type: "text",
       rows: 4,
     }),
     defineField({
+      name: "impactHeading",
+      title: "Impact section heading",
+      type: "string",
+    }),
+    defineField({
       name: "testimonialQuote",
       title: "Testimonial quote",
       type: "text",
       rows: 3,
+    }),
+    stringListField("essentialView", "The Essential view"),
+    defineField({
+      name: "ctaHeading",
+      title: "CTA heading",
+      type: "string",
+    }),
+    defineField({
+      name: "ctaText",
+      title: "CTA text",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "ctaLabel",
+      title: "CTA label",
+      type: "string",
+    }),
+    defineField({
+      name: "proofLogoPath",
+      title: "Proof logo path",
+      type: "string",
+      description:
+        "Public asset path, for example /assets/images/proof/havas-media-network-logo.png.",
+    }),
+    defineField({
+      name: "proofLogoAlt",
+      title: "Proof logo alt text",
+      type: "string",
+    }),
+    defineField({
+      name: "proofLinkedInUrl",
+      title: "Proof LinkedIn URL",
+      type: "url",
+    }),
+    defineField({
+      name: "proofLinkedInLabel",
+      title: "Proof LinkedIn label",
+      type: "string",
+    }),
+    defineField({
+      name: "externalSourceUrl",
+      title: "External verification URL",
+      type: "url",
+    }),
+    defineField({
+      name: "externalSourceLabel",
+      title: "External verification label",
+      type: "string",
     }),
     defineField({
       name: "featured",
@@ -2360,7 +2848,7 @@ const redirect = defineType({
       name: "destinationPath",
       title: "New path",
       type: "string",
-      description: "Example: /services/leadership-search.",
+      description: "Example: /services/retained-search.",
       validation: requiredText("Add the new path."),
     }),
     defineField({
@@ -2445,7 +2933,7 @@ const labsIdea = defineType({
           { title: "Lead generation", value: "lead_generation" },
           { title: "AI support", value: "ai_support" },
           { title: "Market intelligence", value: "market_intelligence" },
-          { title: "Strategic Interim", value: "strategic_interim" },
+          { title: "Fractional", value: "fractional" },
           { title: "Digital PR data product", value: "digital_pr" },
         ],
       },

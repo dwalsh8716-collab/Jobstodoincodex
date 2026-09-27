@@ -30,6 +30,7 @@ export type SanityVideo = {
     };
   };
   description?: string;
+  stillImage?: SanityImage;
   posterImage?: SanityImage;
   transcript?: string;
   captionsUrl?: string;
@@ -142,9 +143,133 @@ export type SanityHomePage = SanitySeo & {
   heroEyebrow?: string;
   heroHeadline?: string;
   heroSubheadline?: string;
+  heroLede?: string;
+  heroPrimaryCta?: CTA;
+  heroSecondaryCta?: CTA;
   premiumVideo?: SanityVideo;
   proofPoints?: string[];
+  disciplines?: string[];
   whyEssentialPoints?: string[];
+  filterSection?: {
+    eyebrow?: string;
+    heading?: string;
+    paragraphs?: string[];
+    definitions?: Array<{
+      _key?: string;
+      number?: string;
+      phrase?: string;
+      copy?: string;
+    }>;
+  };
+  differenceSection?: {
+    eyebrow?: string;
+    heading?: string;
+    paragraphs?: string[];
+    comparisonLabelLeft?: string;
+    comparisonLabelRight?: string;
+    rows?: Array<{
+      _key?: string;
+      usual?: string;
+      essential?: string;
+    }>;
+  };
+  servicesSection?: {
+    eyebrow?: string;
+    heading?: string;
+    intro?: string;
+  };
+  serviceCards?: Array<{
+    _key?: string;
+    slug?: string;
+    title?: string;
+    proposition?: string;
+    description?: string;
+    linkLabel?: string;
+    href?: string;
+  }>;
+  founderSection?: {
+    eyebrow?: string;
+    heading?: string;
+    paragraphs?: string[];
+    straightTalkHeading?: string;
+    straightTalkPoints?: string[];
+  };
+  audienceSection?: {
+    heading?: string;
+    client?: {
+      eyebrow?: string;
+      heading?: string;
+      items?: string[];
+      ctaLabel?: string;
+      ctaHref?: string;
+    };
+    candidate?: {
+      eyebrow?: string;
+      heading?: string;
+      items?: string[];
+      ctaLabel?: string;
+      ctaHref?: string;
+    };
+  };
+  proofSection?: {
+    eyebrow?: string;
+    heading?: string;
+    intro?: string;
+    framework?: Array<{ _key?: string; title?: string; copy?: string }>;
+    caseStudyEyebrow?: string;
+    caseStudyPrimaryLinkLabel?: string;
+    caseStudySecondaryLinkLabel?: string;
+    caveat?: string;
+  };
+  linkedInSection?: {
+    eyebrow?: string;
+    heading?: string;
+    intro?: string;
+    linkLabel?: string;
+    recommendations?: Array<{
+      _key?: string;
+      proofPoint?: string;
+      name?: string;
+      role?: string;
+      date?: string;
+      quote?: string;
+    }>;
+  };
+  liveProofSection?: {
+    eyebrow?: string;
+    heading?: string;
+    intro?: string;
+  };
+  specialismsSection?: {
+    eyebrow?: string;
+    heading?: string;
+    cards?: Array<{
+      _key?: string;
+      slug?: string;
+      title?: string;
+      description?: string;
+      linkLabel?: string;
+      href?: string;
+    }>;
+  };
+  manifestoSection?: {
+    eyebrow?: string;
+    heading?: string;
+    lines?: string[];
+    signature?: string;
+  };
+  citySection?: {
+    ariaLabel?: string;
+    image?: SanityImage;
+    label?: string;
+    emphasis?: string;
+  };
+  finalCtaSection?: {
+    heading?: string;
+    body?: string;
+    primaryCta?: CTA;
+    emailCtaLabel?: string;
+  };
   featuredServices?: SanityCardReference[];
   featuredInsights?: SanityCardReference[];
   featuredCaseStudies?: SanityCardReference[];
@@ -193,19 +318,11 @@ export type SanityJob = SanitySeo & {
   salaryCurrency?: string;
   salaryPeriod?: "annual" | "daily" | "hourly" | "fixed" | "to_be_confirmed";
   salaryVisibility?:
-    | "public_range"
-    | "indicative_range"
-    | "confidential"
-    | "to_be_confirmed";
+    "public_range" | "indicative_range" | "confidential" | "to_be_confirmed";
   rateMin?: number;
   rateMax?: number;
   ratePeriod?:
-    | "daily"
-    | "hourly"
-    | "weekly"
-    | "monthly"
-    | "fixed"
-    | "to_be_confirmed";
+    "daily" | "hourly" | "weekly" | "monthly" | "fixed" | "to_be_confirmed";
   salary?: string;
   salaryStatus?: "verified" | "indicative" | "unverified";
   salaryTransparencyNote?: string;
@@ -299,14 +416,31 @@ export type SanityCaseStudy = SanitySeo & {
   roleHired?: string;
   serviceUsed?: SanityCardReference;
   challengeSummary?: string;
+  clientContext?: string;
+  hiringChallenge?: string;
   businessProblem?: string;
   whyHireMattered?: string;
   whatMadeItTricky?: string;
+  whyHard?: string;
+  whatKindOfPerson?: string;
   howWeDeriskedIt?: string[];
+  process?: string;
   outcome?: string;
   whatChanged?: string;
+  whatChangedHeading?: string;
   commercialImpact?: string;
+  impactHeading?: string;
   testimonialQuote?: string;
+  essentialView?: string[];
+  ctaHeading?: string;
+  ctaText?: string;
+  ctaLabel?: string;
+  proofLogoPath?: string;
+  proofLogoAlt?: string;
+  proofLinkedInUrl?: string;
+  proofLinkedInLabel?: string;
+  externalSourceUrl?: string;
+  externalSourceLabel?: string;
   featured?: boolean;
   status?: "draft" | "published";
 };

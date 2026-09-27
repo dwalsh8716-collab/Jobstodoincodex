@@ -22,7 +22,11 @@ const normaliseExternalUrl = (value: string | undefined) => {
 };
 export const defaultSiteUrl = "https://essentialresourcing.co.uk";
 export const defaultLinkedInProfileUrl =
-  "https://www.linkedin.com/in/davidwalshrecruiter/";
+  "https://www.linkedin.com/in/davidwalshmarketingsearch/";
+export const defaultLinkedInCompanyUrl =
+  "https://www.linkedin.com/company/essentialresourcing/";
+export const defaultLinkedInRecommendationsUrl =
+  "https://www.linkedin.com/in/davidwalshmarketingsearch/details/recommendations/";
 
 export const normaliseSiteUrl = (value: string | undefined) => {
   if (!value) return defaultSiteUrl;
@@ -44,6 +48,9 @@ const googleBookingUrl = normaliseExternalUrl(
 const linkedInProfileUrl =
   normaliseExternalUrl(process.env.NEXT_PUBLIC_LINKEDIN_URL) ||
   defaultLinkedInProfileUrl;
+const linkedInRecommendationsUrl =
+  normaliseExternalUrl(process.env.NEXT_PUBLIC_LINKEDIN_RECOMMENDATIONS_URL) ||
+  defaultLinkedInRecommendationsUrl;
 
 export const siteConfig = {
   name: "Essential Resourcing",
@@ -52,7 +59,10 @@ export const siteConfig = {
   email: "david@essentialresourcing.co.uk",
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   linkedIn: linkedInProfileUrl,
+  companyLinkedIn: defaultLinkedInCompanyUrl,
   linkedInLabel: "Connect with David on LinkedIn",
+  linkedInRecommendations: linkedInRecommendationsUrl,
+  linkedInRecommendationsLabel: "Read LinkedIn recommendations",
   bookingUrl: googleBookingUrl || "/contact",
   booking: {
     enabled: Boolean(googleBookingUrl),
@@ -60,9 +70,9 @@ export const siteConfig = {
     pagePath: "/book-a-call",
     label: "Book a 15-minute call",
     shortLabel: "Book 15 minutes",
-    heading: "Book a 15-minute call with David",
+    heading: "Book 15 minutes with David",
     intro:
-      "Got a hiring challenge, interim gap or quick question? Book 15 minutes and we will sense-check it properly.",
+      "Got a hiring problem, fractional leadership gap or just want a straight view on something? Grab 15 minutes.",
   },
   whatsApp: {
     enabled: Boolean(buildWhatsAppUrl({ number: whatsAppNumber })),
@@ -76,9 +86,9 @@ export const siteConfig = {
   },
   region: "Manchester, North West and UK-wide",
   defaultTitle:
-    "Specialist Marketing, Digital & Agency Recruitment | Essential Resourcing",
+    "Marketing Recruitment Agency Manchester & North West | Essential Resourcing",
   defaultDescription:
-    "AI-powered search and human judgement for specialist marketing, digital and agency recruitment. Permanent, retained and fractional hires for brands and agencies.",
+    "Specialist marketing, digital, PR and agency recruitment across Manchester, the North West and UK. Permanent, retained, fractional and advisory support.",
   ogImage: "/assets/og-image.png",
   logoDark: "/assets/logo-dark.svg",
   logoLight: "/assets/logo-light.svg",
@@ -88,21 +98,21 @@ export const siteConfig = {
 
 export const primaryNavigation = [
   { label: "Clients", href: "/clients" },
+  { label: "Candidates", href: "/candidates" },
   { label: "Services", href: "/services" },
-  { label: "Strategic Interim", href: "/services/strategic-interim" },
   { label: "Jobs", href: "/jobs" },
-  { label: "Insights", href: "/insights" },
+  { label: "Insight", href: "/insights" },
   { label: "About", href: "/about-essential" },
-  { label: "Contact", href: "/contact", cta: true },
 ] as const;
 
 export const serviceNavigation = [
-  { label: "Leadership Search", href: "/services/leadership-search" },
-  { label: "Strategic Interim", href: "/services/strategic-interim" },
-  { label: "Agency Recruitment", href: "/services/agency-recruitment" },
+  { label: "View all Services", href: "/services" },
+  { label: "Permanent Recruitment", href: "/services/permanent-recruitment" },
+  { label: "Retained Search", href: "/services/retained-search" },
+  { label: "Fractional", href: "/services/fractional" },
   {
-    label: "Client-side Marketing Recruitment",
-    href: "/services/client-side-marketing-recruitment",
+    label: "Market Intelligence & Advisory",
+    href: "/services/market-intelligence-advisory",
   },
 ] as const;
 
@@ -113,15 +123,18 @@ export const launchPages = [
   "/clients",
   "/candidates",
   "/services",
-  "/services/leadership-search",
-  "/services/strategic-interim",
-  "/services/agency-recruitment",
-  "/services/client-side-marketing-recruitment",
-  "/services/senior-recruitment",
+  "/how-essential-resourcing-works",
+  "/services/permanent-recruitment",
+  "/services/retained-search",
+  "/services/fractional",
+  "/services/market-intelligence-advisory",
   "/specialisms",
-  "/case-studies",
+  "/specialisms/marketing-and-leadership",
+  "/specialisms/digital-performance-ecommerce",
+  "/specialisms/pr-communications-content",
+  "/specialisms/agency-client-services-leadership",
   "/insights",
-  "/salary-snapshots",
+  "/case-studies",
   "/contact",
   "/jobs",
   "/candidate-privacy",

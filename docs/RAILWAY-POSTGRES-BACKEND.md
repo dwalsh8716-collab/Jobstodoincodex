@@ -364,7 +364,7 @@ docs/recruiter-labs-ai-brief-diagnostic.md
 docs/recruiter-labs-ai-interview-notes.md
 ```
 
-Strategic Interim availability follow-up:
+Fractional availability follow-up:
 
 ```txt
 database/migrations/018_interim_availability_toggle.sql

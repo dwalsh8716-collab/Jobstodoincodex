@@ -4,6 +4,16 @@
 
 Prepared, not fully live.
 
+Production check on 2026-09-13:
+
+- Public WhatsApp click-to-chat number is configured as `447824514296`.
+- Railway production is missing the live WhatsApp Business API credentials.
+- Resend email delivery is separate from WhatsApp and is configured separately.
+- Current launch decision is manual/free WhatsApp only.
+- Do not turn on `WHATSAPP_BUSINESS_ENABLED=true` until the Meta phone number
+  ID, access token, verify token, app secret and approved templates are all in
+  Railway.
+
 The site now has two levels of WhatsApp support.
 
 Level 1:
@@ -33,7 +43,7 @@ No chatbot, widget, broadcast list or WhatsApp inbox has been added.
 ## What Was Added
 
 - Server-side WhatsApp Business client.
-- Template selection for candidate, application, client and strategic interim submissions.
+- Template selection for candidate, application, client and fractional submissions.
 - Preferred contact method field on forms.
 - Consent wording that covers WhatsApp only when selected.
 - Disabled-by-default send attempt after successful form handling.
@@ -287,6 +297,32 @@ David must do this before live Cloud API use:
 11. Keep `FEATURE_WHATSAPP_CRM_SYNC=false` until David approves live sync.
 12. Test with a real opted-in mobile number.
 13. Use Meta webhook tooling to confirm delivery, status updates and retries.
+
+## Verification Command
+
+Use this after adding the Meta values:
+
+```bash
+npm run whatsapp:verify
+```
+
+That checks whether the app is enabled, whether the required values exist, and
+whether Meta accepts the phone number ID/access token pair.
+
+To require a live setup in a release gate:
+
+```bash
+npm run whatsapp:verify -- --require-live
+```
+
+To send an explicit template test after the Meta setup is complete:
+
+```bash
+npm run whatsapp:verify -- --send-test-to=447824514296 --template=hello_world
+```
+
+Only run a real send to a phone number that has opted in or is part of the Meta
+test setup. Template name and language must match what is approved in Meta.
 
 ## Privacy Notes
 

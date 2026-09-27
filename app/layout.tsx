@@ -11,7 +11,6 @@ import { defaultConsentModeState } from "@/lib/analytics";
 import {
   createMetadata,
   organisationSchema,
-  personSchema,
   websiteSchema,
 } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -26,7 +25,7 @@ const fraunces = Fraunces({
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-site-sans",
   display: "swap",
 });
 
@@ -67,22 +66,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <Script id="html-js-class" strategy="beforeInteractive">
-        {`document.documentElement.classList.add('js');`}
-      </Script>
-      {hasGoogleTag ? (
-        <Script id="google-consent-mode-default" strategy="beforeInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
-            window.gtag('consent', 'default', ${JSON.stringify({
-              ...defaultConsentModeState,
-              wait_for_update: 500,
-            })});
-          `}
-        </Script>
-      ) : null}
       <body>
+        <Script id="html-js-class" strategy="beforeInteractive">
+          {`document.documentElement.classList.add('js');`}
+        </Script>
+        {hasGoogleTag ? (
+          <Script id="google-consent-mode-default" strategy="beforeInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+              window.gtag('consent', 'default', ${JSON.stringify({
+                ...defaultConsentModeState,
+                wait_for_update: 500,
+              })});
+            `}
+          </Script>
+        ) : null}
         <div aria-hidden="true" className="scroll-progress" />
         <a className="skip-link" href="#main">
           Skip to content
@@ -94,7 +93,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <StickyMobileCTA />
         </div>
         <SchemaScript data={organisationSchema()} />
-        <SchemaScript data={personSchema()} />
         <SchemaScript data={websiteSchema()} />
         <Analytics />
       </body>

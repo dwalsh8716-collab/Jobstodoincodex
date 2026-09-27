@@ -63,7 +63,7 @@ export default async function InterimAvailabilityPage({
     <section className="section surface">
       <div className="container split split-start">
         <div>
-          <p className="eyebrow">Strategic Interim</p>
+          <p className="eyebrow">Fractional</p>
           <h1>
             {view.state === "ready"
               ? "Update your interim availability."

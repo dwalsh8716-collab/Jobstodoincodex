@@ -300,7 +300,7 @@ Fields:
 - Default WhatsApp message.
 - WhatsApp hiring message.
 - WhatsApp candidate message.
-- WhatsApp strategic interim message.
+- WhatsApp fractional message.
 - Show WhatsApp buttons on the website?
 - Show WhatsApp in the mobile menu?
 - Show WhatsApp in the footer?
@@ -337,7 +337,7 @@ Where WhatsApp appears:
 - Homepage hero and final CTA.
 - Contact page.
 - Service pages.
-- Strategic Interim page.
+- Fractional page.
 - Candidate and jobs routes.
 - Footer contact links.
 
@@ -364,7 +364,7 @@ Fields:
 Use David's public profile URL:
 
 ```txt
-https://www.linkedin.com/in/davidwalshrecruiter/
+https://www.linkedin.com/in/davidwalshmarketingsearch/
 ```
 
 Do not paste private, admin-only or campaign URLs. LinkedIn is shown only where

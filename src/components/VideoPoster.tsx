@@ -16,7 +16,6 @@ export function VideoPoster({ media }: { media: VideoMedia }) {
           sizes={imageSizes.poster}
         />
       ) : null}
-      <span>Founder video</span>
       <strong>{media.title}</strong>
     </div>
   );

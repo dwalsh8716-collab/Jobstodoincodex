@@ -49,6 +49,18 @@ const publicEnvSchema = z.object({
   ),
   NEXT_PUBLIC_CLARITY_ID: z.preprocess(emptyToUndefined, z.string().optional()),
   NEXT_PUBLIC_HOTJAR_ID: z.preprocess(emptyToUndefined, z.string().optional()),
+  NEXT_PUBLIC_SENTRY_DSN: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
+  NEXT_PUBLIC_SENTRY_ENVIRONMENT: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  NEXT_PUBLIC_SENTRY_TRACES_SAMPLE_RATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
   NEXT_PUBLIC_SANITY_PROJECT_ID: z.preprocess(
     emptyToUndefined,
     z.string().optional(),
@@ -68,6 +80,15 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  SENTRY_DSN: z.preprocess(emptyToUndefined, z.string().url().optional()),
+  SENTRY_ENVIRONMENT: z.preprocess(emptyToUndefined, z.string().optional()),
+  SENTRY_TRACES_SAMPLE_RATE: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  SENTRY_ORG: z.preprocess(emptyToUndefined, z.string().optional()),
+  SENTRY_PROJECT: z.preprocess(emptyToUndefined, z.string().optional()),
+  SENTRY_AUTH_TOKEN: z.preprocess(emptyToUndefined, z.string().optional()),
   FEATURE_LABS_ENABLED: optionalBooleanFlag,
   FEATURE_SALARY_GUIDE_GATE: optionalBooleanFlag,
   FEATURE_SALARY_BENCHMARK_ASSET: optionalBooleanFlag,
@@ -168,10 +189,45 @@ const serverEnvSchema = publicEnvSchema.extend({
     emptyToUndefined,
     z.string().optional(),
   ),
+  CANDIDATE_CV_STORAGE_ENDPOINT: z.preprocess(
+    emptyToUndefined,
+    z.string().url().optional(),
+  ),
+  CANDIDATE_CV_STORAGE_REGION: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_STORAGE_ACCESS_KEY_ID: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_STORAGE_SECRET_ACCESS_KEY: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_STORAGE_FORCE_PATH_STYLE: optionalBooleanFlag,
+  CANDIDATE_CV_EMAIL_DELIVERY: z.preprocess(
+    emptyToUndefined,
+    z.enum(["resend_attachment"]).optional(),
+  ),
   CANDIDATE_CV_STORAGE_SIGNING_SECRET: z.preprocess(
     emptyToUndefined,
     z.string().optional(),
   ),
+  CANDIDATE_CV_MALWARE_SCAN_ENABLED: optionalBooleanFlag,
+  CANDIDATE_CV_MALWARE_SCAN_HOST: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_MALWARE_SCAN_PORT: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CANDIDATE_CV_MALWARE_SCAN_TIMEOUT_MS: z.preprocess(
+    emptyToUndefined,
+    z.string().optional(),
+  ),
+  CV_RETENTION_DELETION_APPROVED: optionalBooleanFlag,
   DAVIDS_AUDIO_NOTE_STORAGE_PROVIDER: z.preprocess(
     emptyToUndefined,
     z.string().optional(),

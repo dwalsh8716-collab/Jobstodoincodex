@@ -199,7 +199,7 @@ Recommended CTA set:
 - Send a confidential note
 - Message David on WhatsApp
 - Book 15 minutes
-- Discuss Strategic Interim
+- Discuss Fractional
 
 Final rule: sharpen the voice, do not sand it down. The edge is part of the
 brand, but the buyer still needs to feel in safe hands.

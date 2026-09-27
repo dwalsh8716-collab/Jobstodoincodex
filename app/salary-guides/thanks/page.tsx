@@ -23,11 +23,16 @@ export default function SalaryGuideThanksPage() {
       <section className="section dark">
         <div className="container narrow">
           <p className="eyebrow">Request received</p>
-          <h1>Thanks. David will pick this up properly.</h1>
+          <h1>Got it. David will pick this up.</h1>
           <p className="lede">
-            If guide delivery is already configured, the link will be sent to
-            your inbox. If not, David will follow up directly. No spam. No
-            guessing game.
+            If automatic delivery is live, the guide will land in your inbox.
+          </p>
+          <p className="lede">
+            If not, David will come back to you directly.
+          </p>
+          <p className="lede">
+            No spam. No suddenly finding yourself in a 14-email nurture sequence
+            😂
           </p>
           <div className="button-row hero-actions">
             <Link className="button button-primary" href="/contact">

@@ -61,7 +61,7 @@ describe("Labs gated salary guides", () => {
       "North West Senior Marketing Salary Guide",
     );
     expect(labsSalaryGuideAssetTypes).toContain(
-      "Strategic Interim Day Rate Guide",
+      "Fractional Day Rate Guide",
     );
     expect(labsSalaryGuideRequestFields).toEqual(
       expect.arrayContaining([

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { CaseStudy, Insight, Job, Service } from "@/lib/types";
 
@@ -17,11 +18,11 @@ export function ServiceCard({ service }: { service: Service }) {
 export function InsightCard({ insight }: { insight: Insight }) {
   return (
     <article className="card lift-card">
-      <span className="tag">{insight.category}</span>
+      <span className="tag">{insight.cardCategory || insight.category}</span>
       <h3>{insight.title}</h3>
-      <p>{insight.excerpt}</p>
+      <p>{insight.cardExcerpt || insight.excerpt}</p>
       <p className="meta">
-        {insight.author} · {insight.updatedDate} · {insight.readingTime}
+        {insight.author} · {insight.publishedDate} · {insight.readingTime}
       </p>
       <Link className="text-link" href={`/insights/${insight.slug}`}>
         Read insight
@@ -36,6 +37,17 @@ export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
       <span className="tag">
         {caseStudy.status === "draft" ? "Proof being checked" : "Case study"}
       </span>
+      {caseStudy.proofLogo ? (
+        <div className="case-study-card-logo-wrap">
+          <Image
+            alt={caseStudy.proofLogoAlt || `${caseStudy.clientType} logo`}
+            className="case-study-card-logo"
+            height={82}
+            src={caseStudy.proofLogo}
+            width={220}
+          />
+        </div>
+      ) : null}
       <h3>{caseStudy.title}</h3>
       <p>
         <strong>Role:</strong> {caseStudy.roleHired}

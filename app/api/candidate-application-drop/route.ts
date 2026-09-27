@@ -1,7 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getCandidateApplicationDropStatus } from "@/lib/candidate-application-drop";
 import {
-  candidateApplicationDropSchema,
+  getCandidateApplicationDropStatus,
+  submitCandidateApplicationDrop,
+} from "@/lib/candidate-application-drop";
+import {
   formDataToCandidateApplicationDropInput,
   validateCvFile,
 } from "@/validations/candidate-application-drop";
@@ -9,7 +11,7 @@ import {
 export async function POST(request: NextRequest) {
   const status = getCandidateApplicationDropStatus();
 
-  if (!status.canAcceptCvUploads) {
+  if (!status.canSubmitCandidateNote) {
     return NextResponse.json(
       {
         ok: false,
@@ -31,20 +33,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const parsed = candidateApplicationDropSchema.safeParse(
-    formDataToCandidateApplicationDropInput(formData),
-  );
   const cvFile = validateCvFile(formData.get("cvFile"));
-
-  if (!parsed.success) {
-    return NextResponse.json(
-      {
-        ok: false,
-        message: parsed.error.errors[0]?.message || "Please check the form.",
-      },
-      { status: 400 },
-    );
-  }
 
   if (!cvFile.ok) {
     return NextResponse.json(
@@ -53,12 +42,32 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  return NextResponse.json(
-    {
-      ok: false,
-      message:
-        "Private CV storage is not connected yet. Use the note or LinkedIn route for now.",
+  if (cvFile.file && !status.canAcceptCvUploads) {
+    return NextResponse.json(
+      {
+        ok: false,
+        message: "CV upload is not available right now.",
+        status: status.status,
+      },
+      { status: 503 },
+    );
+  }
+
+  const cvEntry = formData.get("cvFile");
+  const result = await submitCandidateApplicationDrop({
+    input: formDataToCandidateApplicationDropInput(formData),
+    cvFile:
+      cvEntry && typeof cvEntry !== "string" && cvEntry.size > 0
+        ? cvEntry
+        : null,
+    meta: {
+      ip:
+        request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        request.headers.get("x-real-ip") ||
+        undefined,
+      userAgent: request.headers.get("user-agent") || undefined,
     },
-    { status: 501 },
-  );
+  });
+
+  return NextResponse.json(result, { status: result.statusCode });
 }

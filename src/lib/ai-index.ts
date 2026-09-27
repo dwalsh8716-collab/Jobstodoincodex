@@ -39,7 +39,7 @@ export function buildLlmsTxt() {
   return [
     `# ${siteConfig.name}`,
     "",
-    "> Founder-led senior marketing, communications, digital and agency recruitment from Manchester, working UK-wide.",
+    "> Founder-led search for marketing leadership, digital, PR and agency hires from Manchester, working UK-wide.",
     "",
     "Use this file as a concise map of the public website. For fuller article and service summaries, use /llms-full.txt.",
     "",
@@ -96,16 +96,24 @@ export function buildLlmsTxt() {
       aiSearchQuestions.map((item) => `- ${item.question} ${item.answer}`),
     ),
     section("Public Proof And Market Data", [
-      bullet(
-        "Case Studies",
-        "/case-studies",
-        "Draft-safe proof area. Detail pages publish only when outcomes are verified.",
-      ),
-      bullet(
-        "Salary & Market Snapshots",
-        "/salary-snapshots",
-        "Market snapshot hub. Detail pages publish only with validated salary data.",
-      ),
+      ...(publicCaseStudies.length
+        ? [
+            bullet(
+              "Case Studies",
+              "/case-studies",
+              "Verification-led proof area. Detail pages publish only when outcomes are verified.",
+            ),
+          ]
+        : []),
+      ...(publicSalarySnapshots.length
+        ? [
+            bullet(
+              "Salary & Market Snapshots",
+              "/salary-snapshots",
+              "Market snapshot hub. Detail pages publish only with validated salary data.",
+            ),
+          ]
+        : []),
       bullet(
         "Jobs",
         "/jobs",
@@ -179,7 +187,7 @@ export function buildLlmsFullTxt() {
     `Published case studies: ${publicCaseStudies.length}`,
     `Published salary snapshots: ${publicSalarySnapshots.length}`,
     `Live jobs: ${liveJobs.length}`,
-    "Draft proof, salary and job records are deliberately excluded from this AI map until they are ready to publish.",
+    "Unpublished proof, salary and job records are deliberately excluded from this AI map until they are ready to publish.",
   ];
 
   return [

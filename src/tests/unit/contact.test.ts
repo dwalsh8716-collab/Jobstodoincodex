@@ -21,7 +21,7 @@ const basePayload = {
   email: "david@example.com",
   phone: "+44 161 000 0000",
   company: "Essential Resourcing",
-  briefType: "Leadership Search",
+  briefType: "Retained Search",
   message: "I need help with a senior marketing leadership brief.",
   consent: "yes",
   website: "",

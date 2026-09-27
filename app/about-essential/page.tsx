@@ -1,12 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "About Essential Resourcing | Senior Marketing & Comms Recruitment",
+  title: "About Essential Resourcing | Marketing Recruitment Manchester",
   description:
-    "Founder-led marketing, communications, digital and agency recruitment from Manchester, built around straight advice and sharper senior hiring.",
+    "Essential Resourcing is a founder-led marketing recruitment and leadership search specialist based in Manchester, working across the North West and UK.",
   path: "/about-essential",
 });
 
@@ -20,11 +21,22 @@ export default function AboutEssentialPage() {
         <div className="container section-heading">
           <p className="eyebrow">About Essential</p>
           <h1>
-            Senior marketing and comms recruitment, without the usual noise.
+            {
+              "Specialist marketing recruitment. Without the usual recruitment noise."
+            }
           </h1>
           <p className="lede">
-            Founder-led, Manchester-rooted and UK-wide. Built for clients who
-            want proper judgement, sharper briefs and fewer wasted weeks.
+            Essential Resourcing is a founder-led marketing recruitment and
+            search business based in Manchester, working across the North West
+            and UK.
+          </p>
+          <p className="lede">It was built around a fairly simple idea:</p>
+          <p className="lede">
+            <strong>Helping Businesses Make Better Hiring Decisions.</strong>
+          </p>
+          <p className="lede">
+            That means getting clearer on what you actually need, reaching the
+            right people and doing more than matching keywords on a CV.
           </p>
         </div>
       </section>
@@ -33,17 +45,18 @@ export default function AboutEssentialPage() {
           <div>
             <p className="eyebrow">Positioning</p>
             <h2>
-              Senior enough for the boardroom. Human enough for a real
-              conversation.
+              Specialist enough to know the market. Human enough to have a
+              proper conversation.
             </h2>
           </div>
           <div className="grid">
             {[
-              "Founder-led judgement without turning the business into a personality act",
-              "Genuine agency and communications credibility",
-              "Client-side marketing recruitment with commercial context",
-              "Straight-talking advice on salary, brief, market and process",
-              "No CV flinging. No recruitment theatre.",
+              "Founder-led from brief to hire",
+              "Specialist experience across marketing, PR, communications, digital and agencies",
+              "Agency-side and client-side market knowledge",
+              "Permanent, retained and Fractional hiring",
+              "Straight advice on the brief, salary, market and process",
+              "Fewer CVs. Better conversations. Better hiring decisions.",
             ].map((item) => (
               <article className="card" key={item}>
                 <h3>{item}</h3>
@@ -54,17 +67,29 @@ export default function AboutEssentialPage() {
       </section>
       <section className="section">
         <div className="container split">
-          <div className="founder-photo-slot">
-            <span>Brand principle</span>
-            <strong>Robust company. Human judgement.</strong>
+          <div className="founder-photo-slot founder-photo-image-card">
+            <Image
+              src="/assets/images/david-walsh-founder.jpg"
+              alt="David Walsh, founder of Essential Resourcing and marketing recruitment specialist in Manchester"
+              fill
+              sizes="(max-width: 980px) 100vw, 48vw"
+            />
           </div>
           <div>
             <p className="eyebrow">How it works</p>
-            <h2>Essential is built around fewer roles, deeper work.</h2>
+            <h2>Fewer roles. Deeper work. More accountability.</h2>
             <p className="lede">
-              The business is not trying to look like a general recruiter. It is
-              built as a serious, founder-led specialist for senior marketing,
-              comms and agency leadership hiring.
+              Essential isn&apos;t trying to be everything to everyone.
+            </p>
+            <p className="lede">
+              It&apos;s a specialist recruitment business built around marketing
+              and the disciplines around it, with David directly involved in the
+              work.
+            </p>
+            <p className="lede">
+              That means properly understanding the problem behind the hire,
+              challenging the bits that don&apos;t stack up and getting behind
+              the CV before somebody reaches your interview room.
             </p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="/clients">
@@ -80,7 +105,10 @@ export default function AboutEssentialPage() {
           </div>
         </div>
       </section>
-      <CTASection />
+      <CTASection
+        title="Need good people?"
+        text="Tell David what you're trying to hire. He'll tell you honestly whether Essential can help."
+      />
     </>
   );
 }

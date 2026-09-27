@@ -35,12 +35,20 @@ describe("observability and alerts", () => {
     expect(audit).toContain(docPath);
   });
 
-  it("does not pretend a monitoring provider has been installed", () => {
+  it("keeps monitoring privacy-safe and includes production probes", () => {
     const doc = readFileSync("docs/observability-and-alerts.md", "utf8");
+    const monitor = readFileSync("scripts/production-monitor.mjs", "utf8");
+    const workflow = readFileSync(
+      ".github/workflows/production-monitor.yml",
+      "utf8",
+    );
 
-    expect(doc).toContain("No Sentry SDK has been installed");
-    expect(doc).toContain("No paid monitoring service has been added");
+    expect(doc).toContain("Sentry SDK is installed");
     expect(doc).toContain("No PII in monitoring");
+    expect(monitor).toContain("/api/health");
+    expect(monitor).toContain("/api/contact");
+    expect(monitor).toContain("/sitemap.xml");
+    expect(workflow).toContain("*/15 * * * *");
   });
 
   it("keeps the monthly health report practical and non-technical", () => {
@@ -55,7 +63,9 @@ describe("observability and alerts", () => {
     expect(readme).toContain(docPath);
     expect(report).toContain("Green: safe");
     expect(report).toContain("No fake compliance");
-    expect(report).toContain("Do not put real candidate/client private details");
+    expect(report).toContain(
+      "Do not put real candidate/client private details",
+    );
     expect(script).toContain("Manual checks still needed");
     expect(script).not.toMatch(
       /DATABASE_URL|RESEND_API_KEY|CRON_SECRET|CMS_GATE_PASSWORD/i,

@@ -20,7 +20,7 @@ describe("brand copy and tone", () => {
     expect(audit).toContain("sharpen the voice, do not sand it down");
 
     expect(source).toContain(
-      "Senior marketing and comms recruitment, without the usual noise.",
+      "Specialist marketing recruitment. Without the usual recruitment noise.",
     );
     expect(source).toContain("Explore the service");
     expect(source).toContain("View proof standard");

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
@@ -9,9 +8,9 @@ import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
-  title: "Contact David | Essential Resourcing",
+  title: "Contact David Walsh | Essential Resourcing",
   description:
-    "Tell David Walsh what you are trying to hire and he will tell you honestly whether Essential Resourcing can help.",
+    "Talk directly to David Walsh about permanent recruitment, retained search, fractional leadership or hiring advisory support across Manchester and the UK.",
   path: "/contact",
 });
 
@@ -29,28 +28,23 @@ export default function ContactPage() {
             <p className="eyebrow">Contact</p>
             <h1>Need good people?</h1>
             <p className="lede">
-              Tell me what you’re trying to hire and I’ll tell you honestly
-              whether I can help.
+              Tell me what you&apos;re trying to hire and I&apos;ll tell you
+              honestly whether I can help.
             </p>
-            <div className="statement-list hero-actions">
-              <p>Confidential briefs handled directly</p>
-              <p>Candidate conversations without pressure</p>
-              <p>
-                A straight answer if the role, salary or process needs fixing
-              </p>
-            </div>
+            <p className="lede">No sales sequence.</p>
+            <p className="lede">
+              No pretending every vacancy needs retained search.
+            </p>
+            <p className="lede">
+              And if I think the brief, salary or process needs fixing before
+              you recruit anybody, I&apos;ll tell you that too.
+            </p>
             <div className="button-row hero-actions">
               <WhatsAppButton
                 intent="hiring"
-                label="Fastest way to reach me? Message me on WhatsApp"
+                label="Fastest way to reach me? WhatsApp."
                 location="contact_page"
                 variant="primary"
-              />
-              <BookingButton
-                label="Book a 15-minute call"
-                location="contact_hero"
-                intent="hiring"
-                variant="secondary"
               />
               <Link
                 className="button button-secondary"
@@ -67,9 +61,9 @@ export default function ContactPage() {
             <div className="trust-callout hero-actions">
               <h2>What happens next?</h2>
               <p>
-                David reviews the note personally. If Essential can help, you
-                will get a practical next step. If it is not the right fit, you
-                will get that answer quickly too.
+                I read it. If I can help, I&apos;ll suggest the most sensible
+                next step. If I don&apos;t think I&apos;m the right recruiter
+                for it, I&apos;ll tell you that too.
               </p>
             </div>
           </div>
@@ -78,8 +72,8 @@ export default function ContactPage() {
               <p className="eyebrow">Fast route</p>
               <h2>Message David directly.</h2>
               <p>
-                Fastest way to reach me? Message me on WhatsApp. Forms and email
-                still work if you prefer to send more detail.
+                WhatsApp is normally quickest. If you&apos;ve got more context
+                to share, use the form or email.
               </p>
               <WhatsAppButton
                 intent="hiring"
@@ -87,16 +81,6 @@ export default function ContactPage() {
                 location="contact_options"
                 variant="primary"
               />
-              <BookingButton
-                label="Book a 15-minute call"
-                location="contact_options"
-                intent="hiring"
-                variant="secondary"
-              />
-              <p className="meta">
-                WhatsApp opens in WhatsApp. Booking opens the Google Calendar
-                route when David has connected it.
-              </p>
               <div className="contact-secondary-routes">
                 <h3>Other useful routes</h3>
                 <div className="button-row">

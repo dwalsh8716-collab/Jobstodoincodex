@@ -1,8 +1,14 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { linkedInRecommendations } from "@/lib/content";
 import { organisationSchema, personSchema } from "@/lib/seo";
-import { defaultLinkedInProfileUrl, siteConfig } from "@/lib/site";
+import {
+  defaultLinkedInCompanyUrl,
+  defaultLinkedInProfileUrl,
+  defaultLinkedInRecommendationsUrl,
+  siteConfig,
+} from "@/lib/site";
 
 const readProjectFile = (path: string) =>
   readFileSync(join(process.cwd(), path), "utf8");
@@ -10,18 +16,24 @@ const readProjectFile = (path: string) =>
 describe("David Walsh LinkedIn profile integration", () => {
   it("uses one central public LinkedIn profile URL", () => {
     expect(defaultLinkedInProfileUrl).toBe(
-      "https://www.linkedin.com/in/davidwalshrecruiter/",
+      "https://www.linkedin.com/in/davidwalshmarketingsearch/",
     );
     expect(siteConfig.linkedIn).toBe(defaultLinkedInProfileUrl);
     expect(siteConfig.linkedInLabel).toBe("Connect with David on LinkedIn");
+    expect(siteConfig.linkedInRecommendations).toBe(
+      defaultLinkedInRecommendationsUrl,
+    );
+    expect(siteConfig.linkedInRecommendationsLabel).toBe(
+      "Read LinkedIn recommendations",
+    );
   });
 
-  it("adds the LinkedIn profile to person and organisation sameAs data", () => {
+  it("keeps David's LinkedIn on his Person entity, not the company", () => {
     expect(personSchema()).toMatchObject({
       sameAs: [defaultLinkedInProfileUrl],
     });
     expect(organisationSchema()).toMatchObject({
-      sameAs: [defaultLinkedInProfileUrl],
+      sameAs: [defaultLinkedInCompanyUrl],
     });
   });
 
@@ -42,7 +54,7 @@ describe("David Walsh LinkedIn profile integration", () => {
       'location="author_bio"',
     );
     expect(readProjectFile("app/insights/[slug]/page.tsx")).toContain(
-      ".includes(siteConfig.founder.toLowerCase())",
+      "=== siteConfig.founder.toLowerCase()",
     );
 
     expect(readProjectFile("app/services/[slug]/page.tsx")).not.toContain(
@@ -61,6 +73,23 @@ describe("David Walsh LinkedIn profile integration", () => {
     expect(profileLink).toContain('"linkedin_click"');
     expect(profileLink).not.toContain("linkedin-insight");
     expect(profileLink).not.toContain("lintrk(");
+  });
+
+  it("uses public recommendations as proof without review schema shortcuts", () => {
+    const recommendationsComponent = readProjectFile(
+      "src/components/LinkedInRecommendations.tsx",
+    );
+
+    expect(linkedInRecommendations.length).toBeGreaterThanOrEqual(6);
+    expect(linkedInRecommendations.every((item) => item.serviceSlugs.length)).toBe(
+      true,
+    );
+    expect(recommendationsComponent).toContain(
+      "siteConfig.linkedInRecommendations",
+    );
+    expect(recommendationsComponent).toContain("destination: \"linkedin_recommendations\"");
+    expect(recommendationsComponent).not.toContain("AggregateRating");
+    expect(recommendationsComponent).not.toContain("@type: \"Review\"");
   });
 
   it("adds editor-facing Sanity settings for the public profile link", () => {

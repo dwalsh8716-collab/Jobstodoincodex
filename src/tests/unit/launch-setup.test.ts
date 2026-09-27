@@ -1,7 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import robots from "../../../app/robots";
 import sitemap from "../../../app/sitemap";
-import { isJobLive, jobs } from "@/lib/content";
+import {
+  caseStudies,
+  insightCategories,
+  insights,
+  isJobLive,
+  jobs,
+} from "@/lib/content";
 import { launchPages, siteConfig } from "@/lib/site";
 
 vi.mock("server-only", () => ({}));
@@ -13,6 +19,56 @@ describe("launch search setup", () => {
     for (const path of launchPages) {
       expect(urls).toContain(`${siteConfig.url}${path}`);
     }
+  });
+
+  it("includes approved insight articles and keeps launch categories populated", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    const approvedArticleSlugs = [
+      "marketing-recruitment-manchester-north-west-guide",
+      "retained-search-vs-contingent-recruitment",
+      "how-much-does-senior-marketing-recruitment-cost",
+      "the-job-title-isnt-the-brief-senior-marketing-hire",
+      "marketing-recruitment-market-isnt-dead-businesses-hiring-differently",
+      "what-should-you-pay-a-senior-marketing-hire-in-2026",
+      "do-you-actually-need-a-full-time-marketing-director",
+      "your-cv-tells-me-where-youve-worked-what-you-actually-did",
+      "why-hiring-senior-agency-people-is-harder-than-matching-clients-and-job-titles",
+      "your-first-marketing-director-what-should-you-actually-be-hiring-for",
+    ];
+
+    for (const slug of approvedArticleSlugs) {
+      expect(urls).toContain(`${siteConfig.url}/insights/${slug}`);
+    }
+
+    const liveCategories = new Set(
+      insights
+        .filter((insight) => insight.status === "published")
+        .map((insight) => insight.category),
+    );
+
+    for (const category of insightCategories.filter(
+      (item) => item !== "Case studies",
+    )) {
+      expect(liveCategories).toContain(category);
+    }
+  });
+
+  it("includes approved case studies and keeps the case study category populated", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    const approvedCaseStudySlug =
+      "havas-media-manchester-managing-partner-james-reddington";
+
+    expect(urls).toContain(
+      `${siteConfig.url}/case-studies/${approvedCaseStudySlug}`,
+    );
+    expect(
+      caseStudies.some(
+        (caseStudy) =>
+          caseStudy.slug === approvedCaseStudySlug &&
+          caseStudy.status === "published" &&
+          !caseStudy.noIndex,
+      ),
+    ).toBe(true);
   });
 
   it("keeps draft jobs out of the sitemap", async () => {
@@ -50,14 +106,13 @@ describe("launch search setup", () => {
     expect(rules.sitemap).toBe(`${siteConfig.url}/sitemap.xml`);
     expect(rules.rules).toMatchObject({
       userAgent: "*",
-      allow: "/",
+      allow: ["/", "/clients", "/clients/"],
       disallow: [
         "/studio",
         "/cms",
         "/admin",
         "/labs",
         "/recruiter-labs",
-        "/client",
         "/candidate/",
         "/api",
       ],
@@ -71,6 +126,9 @@ describe("launch search setup", () => {
       : rules.rules.disallow || [];
 
     expect(disallow).toContain("/candidate/");
+    expect(disallow).not.toContain("/client");
+    expect(disallow).not.toContain("/client/");
+    expect(disallow).not.toContain("/clients");
     expect(disallow).not.toContain("/candidate");
     expect(disallow).not.toContain("/candidates");
     expect(disallow).not.toContain("/candidate-privacy");

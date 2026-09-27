@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: interview_agent
+      POSTGRES_USER: interview_agent
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "5435:5432"
+    volumes:
+      - interview_agent_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U interview_agent -d interview_agent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6385:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      APP_ENV: development
+      APP_BASE_URL: http://localhost:3005
+      API_BASE_URL: http://localhost:8005
+      DATABASE_URL: postgresql+psycopg://interview_agent:${POSTGRES_PASSWORD}@postgres:5432/interview_agent
+      REDIS_URL: redis://redis:6379/0
+      APP_LOGIN_EMAIL: ${APP_LOGIN_EMAIL:?Set APP_LOGIN_EMAIL in .env}
+      APP_LOGIN_PASSWORD: ${APP_LOGIN_PASSWORD:?Set APP_LOGIN_PASSWORD in .env}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?Set ENCRYPTION_KEY in .env}
+      DEFAULT_TIMEZONE: Europe/London
+      EMAIL_PROVIDER: mock
+      CALENDAR_PROVIDER: mock
+      CRM_CONNECTOR: manual
+    ports:
+      - "8005:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8005
+    ports:
+      - "3005:3005"
+    depends_on:
+      - backend
+
+volumes:
+  interview_agent_postgres:
+

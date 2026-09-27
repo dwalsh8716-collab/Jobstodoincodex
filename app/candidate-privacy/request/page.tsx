@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata = createMetadata({
   title: "Candidate Data Request | Essential Resourcing",
   description:
-    "Ask Essential Resourcing for a copy, correction, deletion or review of candidate data. Identity checks may be required.",
+    "Request access to, correction of or deletion of candidate information held by Essential Resourcing.",
   path: dataSubjectRequestPath,
 });
 
@@ -25,11 +25,14 @@ export default function CandidatePrivacyRequestPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Candidate data request</p>
-          <h1>Ask for a copy, correction or deletion.</h1>
+          <h1>Ask to access, correct or delete your information.</h1>
           <p className="lede">
-            Use this route if you want David to review personal data Essential
-            Resourcing may hold about you. It is deliberately careful: no public
-            lookup, no automatic export, no one-click deletion.
+            Use this form if you want Essential Resourcing to review personal
+            information it may hold about you.
+          </p>
+          <p className="lede">
+            Requests are reviewed by a human. Information isn&apos;t automatically
+            displayed, exported or deleted through the public website.
           </p>
         </div>
       </section>
@@ -38,33 +41,37 @@ export default function CandidatePrivacyRequestPage() {
         <div className="container split split-start">
           <div>
             <p className="eyebrow">What happens next</p>
-            <h2>Clear, private and reviewed by a human.</h2>
+            <h2>Private and properly checked.</h2>
             <p className="lede">
-              If the details match records held by Essential Resourcing, David
-              will review the request and respond using the contact details you
-              provide.
+              David will review the request and respond using the contact
+              details you provide.
+            </p>
+            <p className="lede">
+              Identity may need to be verified before information is released,
+              changed or deleted.
             </p>
             <div className="mini-process">
               <h3>Important safeguards</h3>
               <ol>
                 <li>
-                  If email confirmation is available, you will be asked to
-                  confirm the request from your inbox.
+                  The form won&apos;t confirm publicly whether your email address
+                  exists in Essential&apos;s records.
                 </li>
                 <li>
-                  Identity may need to be verified before data is released.
+                  Private information won&apos;t be released without appropriate
+                  identity checks.
                 </li>
                 <li>
                   Deletion requests are reviewed before records are changed.
                 </li>
                 <li>
-                  Some records may need to be retained where there is a lawful
-                  reason. This is not legal advice.
+                  Some information may need to be retained where there is a
+                  lawful reason to do so.
                 </li>
               </ol>
             </div>
             <p className="form-note">
-              If the form cannot be used, email{" "}
+              If you can&apos;t use the form, email{" "}
               <Link className="text-link" href={`mailto:${siteConfig.email}`}>
                 {siteConfig.email}
               </Link>

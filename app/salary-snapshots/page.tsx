@@ -6,19 +6,38 @@ import { getPublicSalarySnapshots } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "Salary & Market Snapshots | Essential Resourcing",
+  title: "Marketing Salary Guides Manchester & North West | Essential Resourcing",
   description:
-    "Practical salary and market snapshots for marketing, PR, communications and digital hiring across the North West.",
+    "Current marketing, PR, communications, digital and agency salary insight for Manchester and the North West from Essential Resourcing.",
   path: "/salary-snapshots",
+  noIndex: true,
 });
+
+const salarySnapshotOrder = [
+  "agency-hiring-market-snapshot",
+  "digital-performance-marketing-salary-snapshot",
+  "north-west-marketing-salary-snapshot",
+  "pr-communications-salary-snapshot",
+  "senior-marketing-leadership-salary-snapshot",
+];
+
+function orderSalarySnapshots<T extends { slug: string }>(items: T[]) {
+  const ordered = salarySnapshotOrder
+    .map((slug) => items.find((item) => item.slug === slug))
+    .filter((item): item is T => Boolean(item));
+  const remaining = items.filter(
+    (item) => !salarySnapshotOrder.includes(item.slug),
+  );
+  return [...ordered, ...remaining];
+}
 
 export default async function SalarySnapshotsPage() {
   const salarySnapshots = await getPublicSalarySnapshots();
-  const publishedSnapshots = salarySnapshots.filter(
-    (snapshot) => snapshot.status === "published",
+  const publishedSnapshots = orderSalarySnapshots(
+    salarySnapshots.filter((snapshot) => snapshot.status === "published"),
   );
-  const draftSnapshots = salarySnapshots.filter(
-    (snapshot) => snapshot.status === "draft",
+  const draftSnapshots = orderSalarySnapshots(
+    salarySnapshots.filter((snapshot) => snapshot.status === "draft"),
   );
 
   return (
@@ -29,10 +48,17 @@ export default async function SalarySnapshotsPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Salary snapshots</p>
-          <h1>Salary and market insight that can be updated properly.</h1>
+          <h1>Marketing salary insight without the false precision.</h1>
           <p className="lede">
-            Salary pages are published only when the ranges and commentary have
-            been validated against current briefs and market conversations.
+            A job title on its own doesn&apos;t tell you what somebody should earn.
+          </p>
+          <p className="lede">
+            Scope, team size, budget, commercial responsibility, sector,
+            location, hybrid expectations and business stage all matter.
+          </p>
+          <p className="lede">
+            So Essential only publishes salary ranges when they&apos;re backed by
+            current market conversations and live hiring evidence.
           </p>
         </div>
       </section>
@@ -59,11 +85,11 @@ export default async function SalarySnapshotsPage() {
         ) : (
           <div className="container empty-state">
             <p className="eyebrow">Validation first</p>
-            <h2>No public salary snapshots are published yet.</h2>
+            <h2>No public salary snapshots are live yet.</h2>
             <p className="lede">
-              For now, salary advice is handled directly so the numbers reflect
-              the role, seniority, team context and current market rather than a
-              generic table.
+              For now, David handles salary questions directly so the advice
+              reflects the actual role rather than giving you a generic number
+              from a spreadsheet.
             </p>
           </div>
         )}
@@ -72,20 +98,11 @@ export default async function SalarySnapshotsPage() {
         <section className="section muted">
           <div className="container section-heading">
             <p className="eyebrow">Planned snapshots</p>
-            <h2>Draft tables stay draft until the numbers are checked.</h2>
-            <p className="lede">
-              These are the market pages prepared in the CMS. They should only
-              become public when the salary ranges, notes and commentary have
-              been validated against current conversations.
-            </p>
           </div>
           <div className="container grid grid-3">
             {draftSnapshots.map((snapshot) => (
               <article className="card" key={snapshot.slug}>
-                <span className="tag">Draft snapshot</span>
                 <h3>{snapshot.title}</h3>
-                <p>{snapshot.market}</p>
-                <p className="meta">{snapshot.quarter}</p>
               </article>
             ))}
           </div>
@@ -94,32 +111,36 @@ export default async function SalarySnapshotsPage() {
       <section className="section">
         <div className="container grid grid-3">
           <article className="card">
-            <span className="tag">Format</span>
-            <h2>Real tables, not flat images.</h2>
+            <span className="tag">Why context matters</span>
+            <h2>Titles aren&apos;t enough.</h2>
             <p>
-              Published snapshots use semantic HTML tables so people, screen
-              readers and search systems can read them.
+              Two Heads of Marketing can have wildly different jobs. One might
+              manage a £5m budget and a team of 15. Another might be the entire
+              marketing department.
             </p>
           </article>
           <article className="card">
             <span className="tag">Context</span>
-            <h2>Titles are not enough.</h2>
+            <h2>A useful benchmark needs the detail.</h2>
             <p>
-              Salary ranges need role scope, seniority, location, hybrid
-              expectations and decision rights.
+              A useful salary benchmark needs to understand the difference
+              between title, scope, budget, sector, location and business stage.
             </p>
           </article>
           <article className="card">
-            <span className="tag">Review</span>
-            <h2>Market data dates quickly.</h2>
+            <span className="tag">Keeping it current</span>
+            <h2>Marketing salaries move.</h2>
             <p>
-              Snapshots should be reviewed before they are used in a live brief
-              or public salary discussion.
+              Every published snapshot will carry a clear review date and should
+              be treated as market context, not gospel.
             </p>
           </article>
         </div>
       </section>
-      <CTASection title="Need salary advice for a real brief?" />
+      <CTASection
+        title="Got a live role and need a salary sense-check?"
+        text="Ask David."
+      />
       {publishedSnapshots.length ? (
         <SchemaScript
           data={itemListSchema({

@@ -57,7 +57,7 @@ The current staged defaults are editable before launch:
 | Agency/client impact rate | 6% of salary |
 
 These are deliberately conservative working assumptions for senior marketing,
-communications, agency leadership and Strategic Interim conversations. They must
+communications, agency leadership and Fractional conversations. They must
 be reviewed before public use.
 
 ## Source Context
@@ -109,7 +109,7 @@ Two roles with the same salary can carry very different risk:
 - a retained search for a marketing director
 - a client-side performance role with weak data
 - an agency leadership role with staff retention risk
-- a Strategic Interim gap during a major commercial reset
+- a Fractional gap during a major commercial reset
 
 The calculator should surface the conversation, not pretend to settle it.
 

@@ -1,13 +1,13 @@
-# Labs Strategic Interim Bench
+# Labs Fractional Bench
 
-This stages the future private Strategic Interim bench for Essential
+This stages the future private Fractional bench for Essential
 Resourcing.
 
 Status: hidden foundation. Not public. Not a candidate portal launch.
 
 ## Principle
 
-Build a strategic interim bench that is private, useful and consent-aware.
+Build a fractional bench that is private, useful and consent-aware.
 
 No public talent database. No exposed profiles. No faff.
 

@@ -1,20 +1,20 @@
-import {
-  CaseIcon,
-  CogIcon,
-  ComposeIcon,
-  DocumentsIcon,
-  EarthGlobeIcon,
-  HelpCircleIcon,
-  HomeIcon,
-  LinkIcon,
-  RocketIcon,
-  SearchIcon,
-  StarIcon,
-  TiersIcon,
-  UserIcon,
-} from "@sanity/icons";
+import { icons } from "@sanity/icons";
 import type { ComponentType } from "react";
 import type { StructureBuilder, StructureResolver } from "sanity/structure";
+
+const CaseIcon = icons.case as ComponentType;
+const CogIcon = icons.cog as ComponentType;
+const ComposeIcon = icons.compose as ComponentType;
+const DocumentsIcon = icons.documents as ComponentType;
+const EarthGlobeIcon = icons["earth-globe"] as ComponentType;
+const HelpCircleIcon = icons["help-circle"] as ComponentType;
+const HomeIcon = icons.home as ComponentType;
+const LinkIcon = icons.link as ComponentType;
+const RocketIcon = icons.rocket as ComponentType;
+const SearchIcon = icons.search as ComponentType;
+const StarIcon = icons.star as ComponentType;
+const TiersIcon = icons.tiers as ComponentType;
+const UserIcon = icons.user as ComponentType;
 
 const singletonListItem = (
   S: StructureBuilder,

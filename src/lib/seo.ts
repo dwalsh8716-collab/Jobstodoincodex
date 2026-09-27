@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "./site";
-import type { FAQ, Insight, Job, Service } from "./types";
+import type { CaseStudy, FAQ, Insight, Job, Service } from "./types";
 
 export function absoluteUrl(path = "/") {
   if (path.startsWith("http")) return path;
@@ -58,11 +58,18 @@ export function organisationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": absoluteUrl("/#organization"),
     name: siteConfig.name,
     url: siteConfig.url,
     logo: absoluteUrl(siteConfig.logoDark),
+    sameAs: [siteConfig.companyLinkedIn],
     areaServed: ["Manchester", "North West England", "United Kingdom"],
-    founder: { "@type": "Person", name: siteConfig.founder },
+    founder: {
+      "@type": "Person",
+      "@id": absoluteUrl("/about-david-walsh#person"),
+      name: siteConfig.founder,
+      url: absoluteUrl("/about-david-walsh"),
+    },
     description: siteConfig.defaultDescription,
     keywords: [
       "marketing recruitment Manchester",
@@ -70,10 +77,9 @@ export function organisationSchema() {
       "digital recruitment North West",
       "media recruitment North West",
       "retained marketing recruitment",
-      "strategic interim marketing leader",
+      "fractional marketing leader",
     ],
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
-    ...(siteConfig.linkedIn ? { sameAs: [siteConfig.linkedIn] } : {}),
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Recruitment enquiries",
@@ -88,14 +94,16 @@ export function personSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": absoluteUrl("/about-david-walsh#person"),
     name: siteConfig.founder,
     jobTitle: "Founder",
     worksFor: {
       "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
       name: siteConfig.name,
-      url: siteConfig.url,
     },
     url: absoluteUrl("/about-david-walsh"),
+    image: absoluteUrl("/assets/images/david-walsh-founder.jpg"),
     ...(siteConfig.linkedIn ? { sameAs: [siteConfig.linkedIn] } : {}),
     knowsAbout: [
       "Marketing recruitment",
@@ -103,8 +111,18 @@ export function personSchema() {
       "Communications recruitment",
       "Digital recruitment",
       "Leadership search",
-      "Strategic interim",
+      "Fractional marketing leadership",
     ],
+  };
+}
+
+export function profilePageSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": absoluteUrl("/about-david-walsh#profilepage"),
+    url: absoluteUrl("/about-david-walsh"),
+    mainEntity: personSchema(),
   };
 }
 
@@ -114,7 +132,7 @@ export function websiteSchema() {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteConfig.url,
-    publisher: { "@type": "Organization", name: siteConfig.name },
+    publisher: { "@id": absoluteUrl("/#organization") },
   };
 }
 
@@ -166,9 +184,7 @@ export function serviceSchema(service: Service) {
       : {}),
     ...(service.searchSummary ? { serviceOutput: service.searchSummary } : {}),
     provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
+      "@id": absoluteUrl("/#organization"),
     },
     areaServed: ["Manchester", "North West England", "United Kingdom"],
     audience: service.audience.map((audience) => ({
@@ -195,14 +211,24 @@ export function faqSchema(faqs: FAQ[]) {
 }
 
 export function articleSchema(insight: Insight) {
+  const isDavidAuthored =
+    insight.author.trim().toLowerCase() === siteConfig.founder.toLowerCase();
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: insight.title,
     description: insight.excerpt,
-    author: { "@type": "Person", name: siteConfig.founder },
+    author: isDavidAuthored
+      ? {
+          "@type": "Person",
+          "@id": absoluteUrl("/about-david-walsh#person"),
+          name: siteConfig.founder,
+          url: absoluteUrl("/about-david-walsh"),
+        }
+      : { "@type": "Person", name: insight.author },
     publisher: {
       "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
       name: siteConfig.name,
       logo: { "@type": "ImageObject", url: absoluteUrl(siteConfig.logoDark) },
     },
@@ -210,6 +236,32 @@ export function articleSchema(insight: Insight) {
     dateModified: insight.updatedDate,
     image: absoluteUrl(siteConfig.ogImage),
     mainEntityOfPage: absoluteUrl(`/insights/${insight.slug}`),
+  };
+}
+
+export function caseStudySchema(caseStudy: CaseStudy) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: caseStudy.title,
+    description: caseStudy.challengeSummary,
+    publisher: {
+      "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
+      name: siteConfig.name,
+      logo: { "@type": "ImageObject", url: absoluteUrl(siteConfig.logoDark) },
+    },
+    image: absoluteUrl(caseStudy.proofLogo || siteConfig.ogImage),
+    mainEntityOfPage: absoluteUrl(`/case-studies/${caseStudy.slug}`),
+    about: [caseStudy.roleHired, caseStudy.sector, caseStudy.clientType].filter(
+      Boolean,
+    ),
+    ...(caseStudy.externalSourceUrl
+      ? { citation: absoluteUrl(caseStudy.externalSourceUrl) }
+      : {}),
+    ...(caseStudy.proofLinkedInUrl
+      ? { mentions: absoluteUrl(caseStudy.proofLinkedInUrl) }
+      : {}),
   };
 }
 

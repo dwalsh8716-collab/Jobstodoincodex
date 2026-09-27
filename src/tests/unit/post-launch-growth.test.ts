@@ -15,7 +15,7 @@ describe("post-launch growth roadmap", () => {
     expect(cornerstoneContentPlan.map((item) => item.workingTitle)).toEqual(
       expect.arrayContaining([
         "The job title is not the brief",
-        "What is Strategic Interim?",
+        "What is Fractional?",
         "Retained search vs contingency recruitment",
       ]),
     );

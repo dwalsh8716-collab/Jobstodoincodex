@@ -1,24 +1,24 @@
+import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CaseStudyCard } from "@/components/Cards";
-import { CTASection } from "@/components/CTASection";
+import { ClientProofCards } from "@/components/ClientProofCards";
+import { LinkedInRecommendations } from "@/components/LinkedInRecommendations";
 import { SchemaScript } from "@/components/SchemaScript";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { getPublicCaseStudies } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
   title: "Marketing Recruitment Case Studies | Essential Resourcing",
   description:
-    "Permissioned marketing recruitment case studies for agency, client-side and strategic interim hiring.",
+    "Real marketing recruitment, leadership search and fractional case studies from Essential Resourcing, published with permission.",
   path: "/case-studies",
 });
 
 export default async function CaseStudiesPage() {
   const caseStudies = await getPublicCaseStudies();
   const publishedCaseStudies = caseStudies.filter(
-    (caseStudy) => caseStudy.status === "published",
-  );
-  const draftCaseStudies = caseStudies.filter(
-    (caseStudy) => caseStudy.status === "draft",
+    (caseStudy) => caseStudy.status === "published" && !caseStudy.noIndex,
   );
 
   return (
@@ -27,10 +27,10 @@ export default async function CaseStudiesPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Case studies</p>
-          <h1>Specific proof beats anonymous waffle.</h1>
+          <h1>Proper proof. Not a page full of logos.</h1>
           <p className="lede">
-            Permissioned case studies will only appear here when the context,
-            process, outcome and quote are verified.
+            Real marketing recruitment, leadership search and fractional
+            case studies, published when the facts and permission are clear.
           </p>
         </div>
       </section>
@@ -44,42 +44,32 @@ export default async function CaseStudiesPage() {
         ) : (
           <div className="container empty-state">
             <p className="eyebrow">Proof in progress</p>
-            <h2>No permissioned case studies are published yet.</h2>
+            <h2>The first case studies are currently being verified.</h2>
             <p className="lede">
-              That is intentional. Essential only publishes proof when the
-              outcome and permission are both clear. If you want to understand
-              how David would handle a live brief, start with a direct
-              conversation.
+              Rather than publishing anonymous success stories with suspiciously
+              perfect outcomes, Essential only publishes case studies when the
+              facts and permission are clear.
             </p>
+            <p className="lede">
+              If you want to understand how David would approach a live brief in
+              the meantime, have a conversation with him.
+            </p>
+            <div className="button-row hero-actions">
+              <Link className="button button-primary" href="/contact">
+                Talk to David
+              </Link>
+              <WhatsAppButton
+                intent="hiring"
+                label="Message David on WhatsApp"
+                location="case_studies_empty_state"
+                variant="secondary"
+              />
+            </div>
           </div>
         )}
       </section>
-      {draftCaseStudies.length ? (
-        <section className="section muted">
-          <div className="container section-heading">
-            <p className="eyebrow">Proof being checked</p>
-            <h2>
-              Draft case-study structures are ready, but not published as proof.
-            </h2>
-            <p className="lede">
-              These are anonymised working structures. They should only become
-              public case studies when the outcome, quote and permission are
-              clear.
-            </p>
-          </div>
-          <div className="container grid grid-3">
-            {draftCaseStudies.map((caseStudy) => (
-              <article className="card" key={caseStudy.slug}>
-                <span className="tag">Draft case study</span>
-                <h3>{caseStudy.title}</h3>
-                <p>{caseStudy.challengeSummary}</p>
-                <p className="meta">{caseStudy.roleHired}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-      ) : null}
-      <CTASection title="Have a brief that needs this level of focus?" />
+      <ClientProofCards location="case_studies_page" variant="section" />
+      <LinkedInRecommendations variant="caseStudies" />
       {publishedCaseStudies.length ? (
         <SchemaScript
           data={itemListSchema({

@@ -6,10 +6,7 @@ import {
   dataSubjectRequestNeutralSuccess,
   dataSubjectRequestTypeOptions,
 } from "@/lib/dsar";
-import {
-  candidatePrivacyPath,
-  candidateRetentionStatement,
-} from "@/lib/candidate-trust";
+import { candidatePrivacyPath } from "@/lib/candidate-trust";
 
 export function DataSubjectRequestForm() {
   const [status, setStatus] = useState<
@@ -75,22 +72,6 @@ export function DataSubjectRequestForm() {
 
       <div className="form-assurance">
         <strong>Privacy request.</strong>
-        <span>
-          This does not look up your record on the public website. David reviews
-          the request first and may need to verify identity.
-        </span>
-      </div>
-
-      <div className="form-trust-panel">
-        <h3>What this form will not do</h3>
-        <ol>
-          <li>
-            It will not confirm whether your email exists in the database.
-          </li>
-          <li>It will not export private data without identity checks.</li>
-          <li>It will not delete records without admin review.</li>
-        </ol>
-        <p>{candidateRetentionStatement}</p>
       </div>
 
       <div className="form-row">
@@ -159,8 +140,8 @@ export function DataSubjectRequestForm() {
           required
         />
         <p className="form-note">
-          Add enough context for David to understand the request. Do not upload
-          documents or include passwords.
+          Add enough context for David to understand the request. Don&apos;t
+          include passwords or unnecessary sensitive information.
         </p>
       </div>
 
@@ -173,9 +154,9 @@ export function DataSubjectRequestForm() {
           required
         />
         <span>
-          I confirm this request is about me, or I have authority to make it. I
-          understand identity checks may be needed before any data is released,
-          changed or deleted.
+          I confirm this request relates to me, or that I have authority to make
+          it. I understand identity checks may be required before information is
+          released, changed or deleted.
         </span>
       </label>
 

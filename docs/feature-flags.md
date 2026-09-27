@@ -76,7 +76,7 @@ notes in feature flag values.
 | `FEATURE_FUNCTIONAL_MATRIX`                | `false` | No                   | Future role and search-shape mapping.                             |
 | `FEATURE_CLIENT_SHORTLIST_PORTAL`          | `false` | No                   | Future protected client shortlist portal.                         |
 | `FEATURE_AI_BRIEF_BUILDER`                 | `false` | No                   | Future AI-assisted brief drafting and client diagnostic.          |
-| `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Strategic Interim bench workflow.                          |
+| `FEATURE_INTERIM_BENCH_PORTAL`             | `false` | No                   | Future Fractional bench workflow.                          |
 | `FEATURE_INTERIM_AVAILABILITY_TOGGLE`      | `false` | No                   | Future private interim availability magic-link updates.           |
 | `FEATURE_LIVE_MARKET_DASHBOARDS`           | `false` | No                   | Future live market intelligence dashboards.                       |
 | `FEATURE_RECRUITER_LABS_ENABLED`           | `false` | No                   | Protected Recruiter Labs client-pipeline foundation.              |
@@ -95,7 +95,7 @@ notes in feature flag values.
 | `FEATURE_DAVIDS_AUDIO_NOTES`               | `false` | No                   | Future David-approved private audio notes for client profiles.    |
 | `FEATURE_CANDIDATE_TRANSPARENCY_LABS`      | `false` | No                   | Candidate transparency planning stream.                           |
 | `FEATURE_FLUFF_FREE_JOB_PAGES`             | `false` | No                   | Future stricter job page publishing gate. Public clarity fields are safe now. |
-| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Future live CV upload route. Profile-or-note applications are safe without it. |
+| `FEATURE_CANDIDATE_APPLICATION_DROP`       | `false` | No                   | Live private CV upload route when Railway bucket and Resend delivery are configured. |
 | `FEATURE_LINKEDIN_PROFILE_APPLICATION`     | `false` | No                   | Future richer LinkedIn/profile parsing. Candidate-supplied profile links are allowed. |
 | `FEATURE_CANDIDATE_STATUS_JOURNEY`         | `false` | No                   | Future private candidate status updates.                          |
 | `FEATURE_CANDIDATE_WHATSAPP_QUESTIONS`     | `false` | No                   | Candidate WhatsApp quick questions and preference workflow.       |
@@ -141,7 +141,7 @@ approved. The protected preview lives at `/admin/labs/salary-benchmark`; the
 implementation note lives in `docs/labs-salary-benchmark-asset.md`. No final
 benchmark should be sent without David review.
 
-`INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Strategic Interim
+`INTERIM_AVAILABILITY_TOKEN_EXPIRY_DAYS` controls future Fractional
 availability magic links. It defaults to 14 days and is capped in code at 45
 days. It is not a secret and must not contain a token.
 
@@ -239,12 +239,12 @@ wording. Future private candidate status tracking still needs backend, access
 and privacy review. The implementation note lives in
 `docs/recruiter-labs-candidate-process-transparency.md`.
 
-`FEATURE_CANDIDATE_APPLICATION_DROP` remains `false` because real CV upload is
-not live. The public application journey can still accept a candidate-supplied
-profile URL or short note through the existing contact route. When operations
-Postgres is enabled, job submissions create private application metadata. No CV
-files are stored, no public file URLs are created and no LinkedIn scraping or
-automatic parsing is implied. The implementation note lives in
+`FEATURE_CANDIDATE_APPLICATION_DROP` may be enabled only when private Railway
+bucket credentials and Resend delivery are configured. The public application
+journey accepts a CV, optional candidate-supplied profile URL and optional short
+note. CV files are stored privately, emailed to David through Resend, never
+given public URLs and never stored in Sanity. No LinkedIn scraping or automatic
+candidate parsing is implied. The implementation note lives in
 `docs/candidate-application-drop.md`.
 
 `FEATURE_LINKEDIN_PROFILE_APPLICATION` remains `false` for any richer

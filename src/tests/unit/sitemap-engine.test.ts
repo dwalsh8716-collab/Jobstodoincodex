@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { caseStudies, insights, jobs, salarySnapshots, services } from "@/lib/content";
+import {
+  caseStudies,
+  insights,
+  jobs,
+  salarySnapshots,
+  services,
+} from "@/lib/content";
 import {
   buildPublicSitemap,
   isPublicSitemapPath,
@@ -67,7 +73,10 @@ const liveJob: Job = {
   benefits: ["Strong leadership access"],
   interviewSteps: ["First conversation with David", "Client leadership stage"],
   interviewProcessConfirmed: "confirmed",
-  interviewProcess: ["First conversation with David", "Client leadership stage"],
+  interviewProcess: [
+    "First conversation with David",
+    "Client leadership stage",
+  ],
   applicationProcess: [
     "David reviews the application directly.",
     "Nothing goes to the client without permission.",
@@ -119,7 +128,7 @@ describe("dynamic sitemap engine", () => {
       launchPages: [
         "/",
         "/services",
-        "/services/leadership-search",
+        "/services/retained-search",
         "/admin",
         "/recruiter-labs",
         "/client/shortlist/example",
@@ -157,7 +166,7 @@ describe("dynamic sitemap engine", () => {
 
     expect(builtUrls).toContain("https://www.essentialresourcing.co.uk/");
     expect(builtUrls).toContain(
-      "https://www.essentialresourcing.co.uk/services/leadership-search",
+      "https://www.essentialresourcing.co.uk/services/retained-search",
     );
     expect(builtUrls).toContain(
       `https://www.essentialresourcing.co.uk/insights/${publicInsight.slug}`,

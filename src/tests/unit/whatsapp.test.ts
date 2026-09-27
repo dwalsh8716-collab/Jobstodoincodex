@@ -5,6 +5,7 @@ import {
   normaliseWhatsAppNumber,
   whatsAppMessageForIntent,
 } from "@/lib/whatsapp";
+import { siteConfig } from "@/lib/site";
 
 describe("whatsapp utilities", () => {
   it("normalises an international WhatsApp number to digits only", () => {
@@ -20,6 +21,12 @@ describe("whatsapp utilities", () => {
     ).toBe("https://wa.me/447824514296?text=Hi%20David%2C%20I'm%20hiring.");
   });
 
+  it("keeps the public site on the free click-to-WhatsApp route", () => {
+    expect(siteConfig.whatsApp.enabled).toBe(true);
+    expect(siteConfig.whatsApp.number).toBe("447824514296");
+    expect(siteConfig.whatsApp.url).toContain("https://wa.me/447824514296");
+  });
+
   it("returns an empty URL when no valid number is configured", () => {
     expect(buildWhatsAppUrl({ number: "", message: "Hi" })).toBe("");
     expect(buildWhatsAppUrl({ number: "abc", message: "Hi" })).toBe("");
@@ -27,7 +34,7 @@ describe("whatsapp utilities", () => {
 
   it("uses context-specific messages", () => {
     expect(whatsAppMessageForIntent("strategicInterim")).toContain(
-      "strategic interim",
+      "fractional or interim",
     );
   });
 

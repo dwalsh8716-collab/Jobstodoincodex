@@ -1,31 +1,68 @@
+import Link from "next/link";
 import { InsightCard } from "@/components/Cards";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
-import {
-  aiSearchQuestions,
-  insightCategories,
-  insightSeeds,
-} from "@/lib/content";
-import { getPublicInsights } from "@/lib/public-content";
+import { aiSearchQuestions, insightCategories } from "@/lib/content";
+import { getPublicCaseStudies, getPublicInsights } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "Marketing Recruitment Insights | Essential Resourcing",
+  title: "Marketing Recruitment & Hiring Insights | David Walsh",
   description:
-    "Hiring advice, market commentary, strategic interim explainers and senior marketing recruitment insight from David Walsh.",
+    "Practical marketing recruitment advice, market commentary, salary insight and fractional guidance from recruiter David Walsh.",
   path: "/insights",
 });
 
+const insightOrder = [
+  "manchester-north-west-marketing-salary-guide-2026",
+  "marketing-recruitment-manchester-north-west-guide",
+  "retained-search-vs-contingent-recruitment",
+  "how-much-does-senior-marketing-recruitment-cost",
+  "the-job-title-isnt-the-brief-senior-marketing-hire",
+  "marketing-recruitment-market-isnt-dead-businesses-hiring-differently",
+  "what-should-you-pay-a-senior-marketing-hire-in-2026",
+  "do-you-actually-need-a-full-time-marketing-director",
+  "your-first-marketing-director-what-should-you-actually-be-hiring-for",
+  "why-hiring-senior-agency-people-is-harder-than-matching-clients-and-job-titles",
+  "your-cv-tells-me-where-youve-worked-what-you-actually-did",
+  "how-to-hire-a-marketing-director-without-wasting-six-weeks",
+  "what-is-a-fractional-marketing-leader",
+  "when-should-an-agency-use-retained-search",
+  "why-senior-marketing-hiring-goes-wrong",
+];
+
+function orderBySlug<T extends { slug: string }>(items: T[], slugs: string[]) {
+  const ordered = slugs
+    .map((slug) => items.find((item) => item.slug === slug))
+    .filter((item): item is T => Boolean(item));
+  const remaining = items.filter((item) => !slugs.includes(item.slug));
+  return [...ordered, ...remaining];
+}
+
+function insightMatchesCategory(
+  insight: { category: string; cardCategory?: string },
+  category: string,
+) {
+  const labels = [insight.category, insight.cardCategory]
+    .filter((value): value is string => Boolean(value))
+    .flatMap((value) => value.split("/").map((item) => item.trim()));
+
+  return labels.includes(category);
+}
+
 export default async function InsightsPage() {
-  const insights = await getPublicInsights();
-  const published = insights.filter(
-    (insight) => insight.status === "published",
+  const [insights, caseStudies] = await Promise.all([
+    getPublicInsights(),
+    getPublicCaseStudies(),
+  ]);
+  const published = orderBySlug(
+    insights.filter((insight) => insight.status === "published"),
+    insightOrder,
   );
-  const categories = insightCategories.map((category) => ({
-    category,
-    count: published.filter((insight) => insight.category === category).length,
-  }));
+  const publishedCaseStudies = caseStudies.filter(
+    (caseStudy) => caseStudy.status === "published" && !caseStudy.noIndex,
+  );
 
   return (
     <>
@@ -33,10 +70,15 @@ export default async function InsightsPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Insights</p>
-          <h1>Marketing recruitment insight without vague brochure copy.</h1>
+          <h1>Useful thinking on marketing hiring. No SEO sludge.</h1>
           <p className="lede">
-            Clear, structured answers to real hiring questions, written for
-            clients, candidates and AI-search visibility.
+            Nearly 13 years of conversations with candidates, clients, agencies
+            and marketing teams creates a fair few opinions.
+          </p>
+          <p className="lede">This is where David puts the useful ones.</p>
+          <p className="lede">
+            Hiring advice, market observations and straight answers to the
+            questions businesses and candidates are actually asking.
           </p>
         </div>
       </section>
@@ -51,78 +93,55 @@ export default async function InsightsPage() {
         <div className="container split split-start">
           <div>
             <p className="eyebrow">Categories</p>
-            <h2>Grouped by the question behind the search.</h2>
-            <p className="lede">
-              The point is not to produce more articles. It is to answer the
-              questions clients and candidates are already asking.
-            </p>
+            <h2>Find the useful stuff.</h2>
           </div>
           <div className="grid">
-            {categories.map((item) => (
-              <article className="card" key={item.category}>
-                <span className="tag">{item.count} published</span>
-                <h3>{item.category}</h3>
-              </article>
-            ))}
+            {insightCategories.map((category) => {
+              const categoryInsights = published.filter((insight) =>
+                insightMatchesCategory(insight, category),
+              );
+              const categoryLinks =
+                category === "Case studies"
+                  ? publishedCaseStudies.map((caseStudy) => ({
+                      href: `/case-studies/${caseStudy.slug}`,
+                      title: caseStudy.title,
+                    }))
+                  : categoryInsights.map((insight) => ({
+                      href: `/insights/${insight.slug}`,
+                      title: insight.title,
+                    }));
+
+              return (
+                <article className="card insight-category-card" key={category}>
+                  <h3>{category}</h3>
+                  {categoryLinks.length ? (
+                    <div className="insight-category-links">
+                      {categoryLinks.map((item) => (
+                        <Link
+                          className="text-link"
+                          href={item.href}
+                          key={item.href}
+                        >
+                          {item.title}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="meta">
+                      Case studies and proof-led articles will sit here once the
+                      facts and permissions are ready.
+                    </p>
+                  )}
+                </article>
+              );
+            })}
           </div>
-        </div>
-      </section>
-      <section className="section muted">
-        <div className="container split split-start">
-          <div>
-            <p className="eyebrow">Article ideas</p>
-            <h2>Useful topics, not SEO sludge.</h2>
-            <p className="lede">
-              These only become articles when they have a clear point of view
-              and something useful to say.
-            </p>
-          </div>
-          <div className="grid">
-            {insightSeeds.map((seed) => (
-              <article className="card" key={seed}>
-                <span className="tag">Article idea</span>
-                <h3>{seed}</h3>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="section surface">
-        <div className="container grid grid-3">
-          <article className="card">
-            <span className="tag">Author</span>
-            <h2>Every article has a visible point of view.</h2>
-            <p>
-              Byline, dates, related services and FAQs are part of the
-              publishing standard.
-            </p>
-          </article>
-          <article className="card">
-            <span className="tag">Structure</span>
-            <h2>Answers first. Detail after.</h2>
-            <p>
-              Articles should answer a buyer question clearly before drifting
-              into background detail.
-            </p>
-          </article>
-          <article className="card">
-            <span className="tag">Usefulness</span>
-            <h2>No content for the sake of it.</h2>
-            <p>
-              Draft ideas stay draft until they are worth publishing under
-              David&apos;s name.
-            </p>
-          </article>
         </div>
       </section>
       <section className="section">
         <div className="container section-heading">
           <p className="eyebrow">Quick answers</p>
-          <h2>Clear answers to the hiring questions people actually ask.</h2>
-          <p className="lede">
-            Useful search visibility starts with first-party answers, not
-            keyword padding.
-          </p>
+          <h2>Straight answers to common marketing recruitment questions.</h2>
         </div>
         <div className="container grid grid-3">
           {aiSearchQuestions.map((item) => (
@@ -133,7 +152,10 @@ export default async function InsightsPage() {
           ))}
         </div>
       </section>
-      <CTASection title="Want a market view before you hire?" />
+      <CTASection
+        title="Want a market view before you hire?"
+        text="Tell David what you're trying to hire."
+      />
       {published.length ? (
         <SchemaScript
           data={itemListSchema({

@@ -50,7 +50,7 @@ The site is in strong shape technically. The remaining risk is not code polish. 
 
 - More salary snapshot markets once data is current.
 - More case studies after permission and outcome checks.
-- Deeper editorial programme for retained search, strategic interim and senior marketing hiring.
+- Deeper editorial programme for retained search, fractional and senior marketing hiring.
 - Digital PR and authority building.
 - Ongoing A/B testing once there is enough traffic to make it meaningful.
 
@@ -91,7 +91,7 @@ The site is now structured around useful, crawlable answers rather than search p
 
 ### Three Months
 
-- Build a small content cluster around senior marketing hiring failure, retained search, strategic interim and agency leadership hires.
+- Build a small content cluster around senior marketing hiring failure, retained search, fractional and agency leadership hires.
 - Add validated salary snapshots only where the numbers are current and defensible.
 - Start light digital PR around genuinely useful commentary, not generic recruitment noise.
 - Review Core Web Vitals from field data, not just lab tests.

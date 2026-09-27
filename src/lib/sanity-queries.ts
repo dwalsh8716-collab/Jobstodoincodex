@@ -6,12 +6,14 @@ const imageFields = /* groq */ `
   caption
 `;
 
+const buttonFields = /* groq */ `
+  label,
+  href,
+  variant
+`;
+
 const ctaFields = /* groq */ `
-  cta{
-    label,
-    href,
-    variant
-  }
+  cta{${buttonFields}}
 `;
 
 const seoFields = /* groq */ `
@@ -37,6 +39,7 @@ const videoFields = /* groq */ `
   url,
   uploadedVideo{asset->{_id, url, mimeType, size}},
   description,
+  stillImage{${imageFields}},
   posterImage{${imageFields}},
   transcript,
   captionsUrl
@@ -71,6 +74,12 @@ const caseStudyCardFields = /* groq */ `
   sector,
   roleHired,
   challengeSummary,
+  proofLogoPath,
+  proofLogoAlt,
+  proofLinkedInUrl,
+  proofLinkedInLabel,
+  externalSourceUrl,
+  externalSourceLabel,
   featured,
   status
 `;
@@ -238,14 +247,31 @@ const caseStudyFields = /* groq */ `
   roleHired,
   serviceUsed->{${serviceCardFields}},
   challengeSummary,
+  clientContext,
+  hiringChallenge,
   businessProblem,
   whyHireMattered,
   whatMadeItTricky,
+  whyHard,
+  whatKindOfPerson,
   howWeDeriskedIt,
+  process,
   outcome,
   whatChanged,
+  whatChangedHeading,
   commercialImpact,
+  impactHeading,
   testimonialQuote,
+  essentialView,
+  ctaHeading,
+  ctaText,
+  ctaLabel,
+  proofLogoPath,
+  proofLogoAlt,
+  proofLinkedInUrl,
+  proofLinkedInLabel,
+  externalSourceUrl,
+  externalSourceLabel,
   featured,
   ${seoFields},
   status
@@ -325,9 +351,90 @@ export const HOME_PAGE_QUERY = defineQuery(/* groq */ `
     heroEyebrow,
     heroHeadline,
     heroSubheadline,
+    heroLede,
+    heroPrimaryCta{${buttonFields}},
+    heroSecondaryCta{${buttonFields}},
     premiumVideo{${videoFields}},
     proofPoints,
+    disciplines,
     whyEssentialPoints,
+    filterSection{
+      eyebrow,
+      heading,
+      paragraphs,
+      definitions[]{_key, number, phrase, copy}
+    },
+    differenceSection{
+      eyebrow,
+      heading,
+      paragraphs,
+      comparisonLabelLeft,
+      comparisonLabelRight,
+      rows[]{_key, usual, essential}
+    },
+    servicesSection{
+      eyebrow,
+      heading,
+      intro
+    },
+    serviceCards[]{_key, slug, title, proposition, description, linkLabel, href},
+    founderSection{
+      eyebrow,
+      heading,
+      paragraphs,
+      straightTalkHeading,
+      straightTalkPoints
+    },
+    audienceSection{
+      heading,
+      client{eyebrow, heading, items, ctaLabel, ctaHref},
+      candidate{eyebrow, heading, items, ctaLabel, ctaHref}
+    },
+    proofSection{
+      eyebrow,
+      heading,
+      intro,
+      framework[]{_key, title, copy},
+      caseStudyEyebrow,
+      caseStudyPrimaryLinkLabel,
+      caseStudySecondaryLinkLabel,
+      caveat
+    },
+    linkedInSection{
+      eyebrow,
+      heading,
+      intro,
+      linkLabel,
+      recommendations[]{_key, proofPoint, name, role, date, quote}
+    },
+    liveProofSection{
+      eyebrow,
+      heading,
+      intro
+    },
+    specialismsSection{
+      eyebrow,
+      heading,
+      cards[]{_key, slug, title, description, linkLabel, href}
+    },
+    manifestoSection{
+      eyebrow,
+      heading,
+      lines,
+      signature
+    },
+    citySection{
+      ariaLabel,
+      image{${imageFields}},
+      label,
+      emphasis
+    },
+    finalCtaSection{
+      heading,
+      body,
+      primaryCta{${buttonFields}},
+      emailCtaLabel
+    },
     featuredServices[]->{${serviceCardFields}},
     featuredInsights[]->{${insightCardFields}},
     featuredCaseStudies[]->{${caseStudyCardFields}},

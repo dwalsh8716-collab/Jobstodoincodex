@@ -99,6 +99,22 @@ export function ContactForm({
   }
 
   const candidateMode = type !== "client";
+  const briefOptions = candidateMode
+    ? ["Candidate conversation", "Job application", "Fractional opportunity"]
+    : [
+        "Permanent Recruitment",
+        "Retained Search",
+        "Fractional",
+        "Market Intelligence & Advisory",
+        "Candidate conversation",
+        "Something else",
+      ];
+  const defaultBriefType =
+    type === "client"
+      ? "Permanent Recruitment"
+      : type === "job"
+        ? "Job application"
+        : "Candidate conversation";
 
   return (
     <form
@@ -126,8 +142,8 @@ export function ContactForm({
         </strong>
         <span>
           {candidateMode
-            ? "Use a profile link or a short note. CV upload stays off until private storage is ready."
-            : "Share the useful context. You will get a straight reply, not a sales sequence."}
+            ? "No account needed. Add your details and either a LinkedIn/profile URL, short note or both."
+            : "Share the useful context. You'll get a straight reply, not a sales sequence."}
         </span>
       </div>
       {candidateMode ? (
@@ -203,8 +219,8 @@ export function ContactForm({
             maxLength={240}
           />
           <p className="form-note">
-            This can be LinkedIn, a portfolio, a personal site or another
-            relevant profile. No scraping, no automatic parsing.
+            This can be LinkedIn, a portfolio, personal site or another useful
+            profile.
           </p>
         </div>
       ) : null}
@@ -215,19 +231,11 @@ export function ContactForm({
         <select
           id={`${type}-brief`}
           name="briefType"
-          defaultValue={
-            type === "candidate"
-              ? "Candidate conversation"
-              : "Leadership Search"
-          }
+          defaultValue={defaultBriefType}
         >
-          <option>Leadership Search</option>
-          <option>Strategic Interim</option>
-          <option>Agency Recruitment</option>
-          <option>Client-side Marketing Recruitment</option>
-          <option>Senior Recruitment</option>
-          <option>Candidate conversation</option>
-          <option>Job application</option>
+          {briefOptions.map((option) => (
+            <option key={option}>{option}</option>
+          ))}
         </select>
       </div>
       <div className="form-row">
@@ -249,15 +257,15 @@ export function ContactForm({
             type === "job"
               ? "Optional if you have added a profile link. A few useful lines is plenty."
               : type === "candidate"
-                ? "Optional if you have added a profile link. Tell David what you are looking for if it helps."
-                : "Share the useful context behind the hire."
+                ? "No cover-letter theatre. Just tell David what you're doing now and what you might be interested in next."
+                : "Share whatever's useful: the role, why you're hiring, salary, timing and where you're getting stuck."
           }
           required={type === "client"}
         />
         {candidateMode ? (
           <p className="form-note">
-            Applying should not mean a cover-letter chore. Add a profile link, a
-            short note, or both.
+            No cover-letter theatre. Just tell David what you&apos;re doing now
+            and what you might be interested in next.
           </p>
         ) : null}
       </div>
@@ -280,8 +288,7 @@ export function ContactForm({
           <option value="whatsapp">WhatsApp</option>
         </select>
         <p className="form-note">
-          If you choose WhatsApp or phone, add a mobile number above. This is
-          for this enquiry only, not marketing broadcasts.
+          If you choose WhatsApp or phone, add a mobile number above.
         </p>
       </div>
       {candidateMode ? (
@@ -294,7 +301,7 @@ export function ContactForm({
           />
           <span>
             If I choose WhatsApp above, David can reply by WhatsApp about this
-            application or note. No broadcasts.
+            enquiry. No broadcasts.
           </span>
         </label>
       ) : null}
@@ -307,8 +314,8 @@ export function ContactForm({
             value="yes"
           />
           <span>
-            Keep me in mind for relevant future roles. This is optional and not
-            a marketing list.
+            Keep me in mind for relevant future roles. This is optional and
+            isn&apos;t a marketing list.
           </span>
         </label>
       ) : null}
@@ -323,7 +330,7 @@ export function ContactForm({
         <span>
           {candidateMode
             ? candidateConsentCopy(type)
-            : "I agree to be contacted about this enquiry using the details I've provided, including WhatsApp if I select it as my preferred contact method. Nothing is shared without permission."}
+            : "I understand Essential Resourcing will use the details I've provided to respond to this enquiry, including WhatsApp if I select it as my preferred contact method."}
         </span>
       </label>
       {candidateMode ? (
@@ -344,15 +351,6 @@ export function ContactForm({
           </span>
         </label>
       ) : null}
-      {type !== "client" ? (
-        <p className="form-note">
-          CV upload is intentionally not enabled until secure storage is
-          configured. Add a LinkedIn URL or note and David can request the CV
-          safely.{" "}
-          <Link href={candidatePrivacyPath}>How candidate data is handled</Link>
-          .
-        </p>
-      ) : null}
       <button
         className="button button-primary"
         type="submit"
@@ -363,7 +361,9 @@ export function ContactForm({
           ? "Sending..."
           : type === "job"
             ? "Start application"
-            : "Send enquiry"}
+            : candidateMode
+              ? "Send details"
+              : "Send enquiry"}
       </button>
       <p
         id={statusId}

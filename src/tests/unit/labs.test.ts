@@ -110,7 +110,7 @@ describe("Essential Resourcing Labs", () => {
       "Bad hire calculator",
       "Functional matrix mapping",
       "Passwordless client shortlists",
-      "Strategic Interim bench",
+      "Fractional bench",
       "Live market dashboards",
     ]) {
       expect(roadmap).toContain(feature);

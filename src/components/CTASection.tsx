@@ -4,6 +4,13 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import type { WhatsAppIntent } from "@/lib/whatsapp";
 
+function paragraphs(value: string) {
+  return value
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
+
 export function CTASection({
   eyebrow = "Next step",
   title = "Need good people?",
@@ -35,7 +42,9 @@ export function CTASection({
         <div>
           <p className="eyebrow">{eyebrow}</p>
           <h2>{title}</h2>
-          <p>{text}</p>
+          {paragraphs(text).map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
         </div>
         <div className="cta-actions">
           <Link

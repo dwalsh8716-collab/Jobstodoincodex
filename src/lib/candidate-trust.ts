@@ -1,21 +1,21 @@
 export const candidatePrivacyPath = "/candidate-privacy";
 
-export const candidatePrivacyNoticeVersion = "candidate-privacy-v1";
+export const candidatePrivacyNoticeVersion = "candidate-privacy-v2-2026-09";
 
 export const candidateRetentionStatement =
-  "We'll only keep your details for as long as there is a genuine recruitment reason to do so. If you apply for a role or send us your CV, we may keep your details so David can contact you about relevant opportunities. You can ask us to delete your details at any time.";
+  "Candidate records are reviewed no later than 24 months after the last meaningful contact. They may be kept longer where the recruitment relationship remains active, you have asked David to keep you in mind, or a legal or regulatory reason requires it. You can ask David to delete your details at any time, subject to those obligations.";
 
 export const candidateNextSteps = [
-  "David reviews your note or application directly.",
-  "If it looks like a possible fit, he will contact you without turning it into a sales sequence.",
-  "Your details are handled privately and only used for recruitment purposes.",
-  "You can ask for your details to be deleted or exported at any time.",
+  "David reviews your note directly.",
+  "If there's a sensible fit or conversation, he'll contact you.",
+  "Your information is handled privately and used for recruitment purposes.",
+  "You can ask for your information to be deleted or exported at any time.",
 ] as const;
 
 export function candidateConsentCopy(type: "candidate" | "job") {
   return type === "job"
-    ? "I'm happy for Essential Resourcing to store and use my details to contact me about this role and relevant opportunities. I understand I can ask for my details to be deleted at any time."
-    : "I'm happy for Essential Resourcing to store and use my details to contact me about relevant opportunities. I understand I can ask for my details to be deleted at any time.";
+    ? "I understand Essential Resourcing will use my details to respond to this application and provide recruitment services as explained in the Candidate Privacy Notice."
+    : "I understand Essential Resourcing will use my details to respond and provide recruitment services as explained in the Candidate Privacy Notice.";
 }
 
 export function candidateConfirmationSubject(type: "candidate" | "job") {

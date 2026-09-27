@@ -20,7 +20,7 @@ Safe quick wins implemented:
 
 - homepage metadata now leads with `Marketing Recruitment Manchester`
 - services index metadata now covers marketing, PR, digital, agency, retained
-  search and strategic interim
+  search and fractional
 - service pages now include a buyer-useful market-fit block
 - service content now carries targeted search summaries and search phrases
 - service JSON-LD now includes service-specific keywords and service output
@@ -58,7 +58,7 @@ Implemented:
 
 - Home title: `Marketing Recruitment Manchester | Essential Resourcing`
 - Home description now names marketing, PR, digital, agency, Manchester, North
-  West, UK, retained search and strategic interim.
+  West, UK, retained search and fractional.
 - Services index title now covers marketing, PR and digital recruitment.
 - Service detail metadata now targets:
   - retained marketing recruitment
@@ -66,7 +66,7 @@ Implemented:
   - marketing recruitment Manchester
   - digital recruitment North West
   - media recruitment North West
-  - strategic interim marketing leadership
+  - fractional marketing leadership
 
 Keep metadata honest:
 
@@ -81,9 +81,9 @@ Current content covers:
 
 - senior marketing hiring failure
 - retained search for agencies
-- Strategic Interim
+- Fractional
 - Marketing Director hiring process
-- service pages for leadership search, strategic interim, agency recruitment,
+- service pages for leadership search, fractional, agency recruitment,
   client-side marketing recruitment and senior recruitment
 
 Priority gaps:
@@ -115,7 +115,7 @@ Entities already clear:
 - digital recruitment
 - agency recruitment
 - retained search
-- Strategic Interim
+- Fractional
 
 Implemented:
 
@@ -160,7 +160,7 @@ Next:
 Current internal links are solid:
 
 - homepage links to services, clients, candidates, insights, case studies,
-  Strategic Interim, David and contact
+  Fractional, David and contact
 - service pages link to related services, related insight and proof standards
 - insight pages link back to related services
 - breadcrumbs exist
@@ -246,13 +246,13 @@ Home title:
 Marketing Recruitment Manchester | Essential Resourcing
 
 Home description:
-Founder-led marketing, PR, digital and agency recruitment across Manchester, the North West and UK. Senior hires, retained search and strategic interim.
+Founder-led marketing, PR, digital and agency recruitment across Manchester, the North West and UK. Senior hires, retained search and fractional.
 
 Services title:
 Marketing, PR & Digital Recruitment Services | Essential Resourcing
 
 Services description:
-Marketing, PR, digital, agency, retained search and strategic interim recruitment services across Manchester, the North West and UK.
+Marketing, PR, digital, agency, retained search and fractional recruitment services across Manchester, the North West and UK.
 ```
 
 Implemented service targeting:

@@ -1,21 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookingButton } from "@/components/BookingButton";
-import { CaseStudyCard, InsightCard } from "@/components/Cards";
+import { InsightCard } from "@/components/Cards";
+import { HomeHeroVideo } from "@/components/HomeHeroVideo";
 import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
+import { LinkedInRecommendations } from "@/components/LinkedInRecommendations";
 import { Reveal } from "@/components/Reveal";
 import { RichMediaBlock } from "@/components/RichMedia";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { analyticsAttributes } from "@/lib/analytics";
 import {
-  homepageFeatureVideo,
-  richMediaExamples,
-  specialisms,
-} from "@/lib/content";
-import {
   getPublicCaseStudies,
+  getPublicHomePage,
   getPublicInsights,
-  getPublicServices,
 } from "@/lib/public-content";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -25,161 +22,50 @@ export const metadata = createMetadata({
   description: siteConfig.defaultDescription,
 });
 
-const disciplines = [
-  "Marketing",
-  "Comms",
-  "PR",
-  "Digital",
-  "Agency-side",
-  "Client-side",
-  "Leadership",
-  "Strategic Interim",
-];
+function orderBySlug<T extends { slug: string }>(items: T[], slugs: string[]) {
+  const ordered = slugs
+    .map((slug) => items.find((item) => item.slug === slug))
+    .filter((item): item is T => Boolean(item));
+  const remaining = items.filter((item) => !slugs.includes(item.slug));
+  return [...ordered, ...remaining];
+}
 
-const filterDefinitions = [
-  {
-    number: "01",
-    phrase: "AI-powered search.",
-    copy: "Useful technology helps widen the map, spot signals and remove busywork. It does not replace judgement, relationship feel or a proper conversation.",
-  },
-  {
-    number: "02",
-    phrase: "Human judgement.",
-    copy: "David still sense-checks the brief, the salary, the market and the person. The point is better decisions, not a bigger spreadsheet.",
-  },
-  {
-    number: "03",
-    phrase: "No recruiter nonsense.",
-    copy: "No padded shortlists, no invented urgency, no copy-paste outreach. Fewer, better candidates with honest notes on each.",
-  },
-];
+function firstParagraph(value: string) {
+  return value.split(/\n{2,}/)[0]?.trim() || value;
+}
 
-const hiringLedger = [
-  {
-    usual: "A vague brief, taken at face value",
-    essential: "The brief gets sense-checked before anything moves",
-  },
-  {
-    usual: "The same recycled CVs within the hour",
-    essential: "A market mapped properly, approached personally",
-  },
-  {
-    usual: "Salary advice that flatters, not informs",
-    essential: "Honest numbers, even when they're unwelcome",
-  },
-  {
-    usual: "Fifteen CVs to make the pile look busy",
-    essential: "Fewer, better candidates, with honest notes on each",
-  },
-  {
-    usual: "Six weeks gone. Role back to square one.",
-    essential: "Direct feedback at every stage. Judgement, not volume.",
-  },
-];
+function splitHeroHeadline(headline: string) {
+  const trimmed = headline.trim();
 
-const serviceDetails: Record<string, { meta: string; problem: string }> = {
-  "leadership-search": {
-    meta: "Heads of, directors and board-visible leaders",
-    problem:
-      "Senior hires fail on fit and mandate, not skills. The search starts with the real mandate.",
-  },
-  "strategic-interim": {
-    meta: "Senior cover and momentum, fast",
-    problem:
-      "Change, growth, gaps and cover, with senior capability while the permanent answer is scoped.",
-  },
-  "agency-recruitment": {
-    meta: "Creative, digital, PR and integrated agencies",
-    problem:
-      "Agency hiring moves fast and mis-hires cost clients. David knows both sides of the pitch table.",
-  },
-  "client-side-marketing-recruitment": {
-    meta: "Client-side teams, manager to director",
-    problem:
-      "Proper marketing capability, not a job spec copied from the last hire.",
-  },
-  "senior-recruitment": {
-    meta: "Senior specialist roles with commercial consequence",
-    problem:
-      "A smaller, sharper shortlist beats a busy pile of almost-right CVs.",
-  },
-};
+  if (trimmed === "Helping Businesses Make Better Hiring Decisions.") {
+    return ["Helping Businesses", "Make Better Hiring Decisions."];
+  }
 
-const processSteps = [
-  {
-    title: "Sense-check the brief",
-    copy: "Before anything goes near the market. If the brief is really two jobs, or the salary won't land it, you'll hear that on day one.",
-  },
-  {
-    title: "Clarify the real problem",
-    copy: "The job title is not the brief. What does the business actually need this person to fix, grow or change?",
-  },
-  {
-    title: "Map the market",
-    copy: "AI-assisted search helps widen the map and spot useful signals. Human judgement decides who's genuinely good, genuinely available and worth a proper conversation.",
-  },
-  {
-    title: "Approach properly",
-    copy: "Direct, considered conversations with the right people. No scattergun job ads, no copy-paste outreach.",
-  },
-  {
-    title: "Present a considered shortlist",
-    copy: "A handful of people who fit the actual problem, with honest notes on each. Not fifteen CVs to make the pile look busy.",
-  },
-  {
-    title: "Keep the process moving",
-    copy: "Fast feedback both ways, sensible scheduling and straight answers on offers. Good candidates are lost to slow processes.",
-  },
-];
+  const words = trimmed.split(/\s+/);
+  if (words.length < 5) return [trimmed];
 
-const clientItems = [
-  "Get a brief sense-checked before it goes anywhere near the market",
-  "Hire senior marketing, comms, PR or digital talent",
-  "Bring in strategic interim support at short notice",
-  "Get honest market and salary advice, no flattery",
-];
+  const midpoint = Math.ceil(words.length / 2);
+  return [
+    words.slice(0, midpoint).join(" "),
+    words.slice(midpoint).join(" "),
+  ];
+}
 
-const candidateItems = [
-  "See roles that are actually relevant to your specialism",
-  "Get honest advice on your market, salary and next move",
-  "No vague job ads. No competitive salary mysteries.",
-  "Clear process and straight feedback, wherever possible",
-];
+function emphasiseTrailingPhrase(text: string, phrase: string) {
+  if (!text.toLowerCase().endsWith(phrase.toLowerCase())) return text;
 
-const interimSituations = [
-  "A marketing director resigns mid-campaign",
-  "Growth is outpacing the team's seniority",
-  "Transformation needs leading, not just surviving",
-  "Maternity or long-term cover at senior level",
-  "A restructure leaves a gap the business can't carry",
-  "The permanent search is right, but slow",
-];
+  const prefix = text.slice(0, text.length - phrase.length);
+  const suffix = text.slice(text.length - phrase.length);
 
-const commercialProofFramework = [
-  {
-    title: "The role",
-    copy: "What was hard about the brief, market or mandate.",
-  },
-  {
-    title: "The search",
-    copy: "How the market was mapped, approached and shortlisted.",
-  },
-  {
-    title: "The outcome",
-    copy: "What changed: hire made, time saved, risk reduced, team strengthened or leadership gap covered.",
-  },
-];
+  return (
+    <>
+      {prefix}
+      <em>{suffix}</em>
+    </>
+  );
+}
 
-const manifestoLines = [
-  "The job title is not the brief.",
-  "Salary advice should be honest, not flattering.",
-  "Feedback is basic respect, not a favour.",
-  "AI can sharpen the search. Human judgement makes the hire.",
-  "Fewer, better candidates.",
-  "Hiring done properly.",
-];
-
-function TickerRow() {
+function TickerRow({ disciplines }: { disciplines: string[] }) {
   return (
     <ul className="home-ticker-row">
       {disciplines.map((discipline) => (
@@ -195,31 +81,53 @@ function TickerRow() {
 }
 
 export default async function HomePage() {
-  const [services, insights, caseStudies] = await Promise.all([
-    getPublicServices(),
+  const [homePage, insights, caseStudies] = await Promise.all([
+    getPublicHomePage(),
     getPublicInsights(),
     getPublicCaseStudies(),
   ]);
-  const featuredInsights = insights.slice(0, 3);
-  const featuredCases = caseStudies
+  const [heroHeadlineFirstLine, heroHeadlineSecondLine] = splitHeroHeadline(
+    homePage.heroHeadline,
+  );
+  const heroHeadlineSecondLineHasPeriod =
+    heroHeadlineSecondLine?.endsWith(".");
+  const heroHeadlineSecondLineText = heroHeadlineSecondLineHasPeriod
+    ? heroHeadlineSecondLine.slice(0, -1)
+    : heroHeadlineSecondLine;
+  const featuredInsights = orderBySlug(
+    insights,
+    homePage.featuredInsightSlugs,
+  ).slice(0, 3);
+  const publishedCaseStudies = caseStudies.filter(
+    (caseStudy) => caseStudy.status === "published",
+  );
+  const featuredCases = orderBySlug(
+    publishedCaseStudies,
+    homePage.featuredCaseStudySlugs,
+  )
     .filter(
-      (caseStudy) => caseStudy.status === "published" && caseStudy.featured,
+      (caseStudy) =>
+        homePage.featuredCaseStudySlugs.includes(caseStudy.slug) ||
+        caseStudy.featured,
     )
     .slice(0, 3);
+  const homeProofCase = featuredCases[0];
 
   return (
     <>
       <link
         rel="preload"
         as="image"
-        href="/assets/video/homepage-hero-mobile-poster.jpg"
+        href="/assets/video/homepage-hero-mobile-poster-v3.webp"
+        type="image/webp"
         media="(max-width: 640px)"
         fetchPriority="high"
       />
       <link
         rel="preload"
         as="image"
-        href="/assets/video/homepage-hero-poster.jpg"
+        href="/assets/video/homepage-hero-poster-v3.webp"
+        type="image/webp"
         media="(min-width: 641px)"
         fetchPriority="high"
       />
@@ -227,82 +135,76 @@ export default async function HomePage() {
         className="home-hero home-hero-video grain dark"
         aria-labelledby="hero-heading"
       >
-        <video
-          className="home-hero-video-media"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        >
+        <picture className="home-hero-picture">
           <source
-            src="/assets/video/homepage-hero-mobile-muted.mp4"
-            type="video/mp4"
             media="(max-width: 640px)"
+            srcSet="/assets/video/homepage-hero-mobile-poster-v3.webp"
+            type="image/webp"
+            width="828"
+            height="466"
           />
-          <source
-            src="/assets/video/homepage-hero-muted.mp4"
-            type="video/mp4"
-            media="(min-width: 641px)"
+          <img
+            className="home-hero-poster"
+            src="/assets/video/homepage-hero-poster-v3.webp"
+            alt=""
+            width="1920"
+            height="1080"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
-          <source
-            src="/assets/video/homepage-hero-muted.webm"
-            type="video/webm"
-            media="(min-width: 641px)"
-          />
-        </video>
+        </picture>
+        <HomeHeroVideo />
         <div className="home-hero-ambient" aria-hidden="true" />
         <div className="container home-hero-grid">
           <div className="home-hero-copy">
             <p className="eyebrow home-eyebrow home-eyebrow-light">
-              Founder-led search · Marketing · Comms · PR · Digital · Agency
+              {homePage.heroEyebrow}
             </p>
             <h1
               id="hero-heading"
-              aria-label="Specialist marketing, digital and agency recruitment."
+              aria-label={homePage.heroHeadline}
             >
-              <span>
-                Specialist marketing<span className="home-punctuation">,</span>
-              </span>
-              <span>
-                <em>digital and agency</em>
-              </span>
-              <span>
-                recruitment<span className="home-punctuation">.</span>
-              </span>
+              <span>{heroHeadlineFirstLine}</span>{" "}
+              {heroHeadlineSecondLineText ? (
+                <span>
+                  {heroHeadlineSecondLineText}
+                  {heroHeadlineSecondLineHasPeriod ? (
+                    <span className="home-punctuation">.</span>
+                  ) : null}
+                </span>
+              ) : null}
             </h1>
             <h2 className="home-hero-subhead">
-              AI-powered search. Human judgement. No recruiter nonsense.
+              {homePage.heroSubheadline}
             </h2>
             <p className="home-hero-lede">
-              Permanent, retained and fractional hires for brands and agencies
-              that need better people, not bigger shortlists.
+              <em>{homePage.heroLede}</em>
             </p>
             <div className="button-row home-actions">
               <Link
-                className="button button-primary"
-                href="/contact"
+                className={`button button-${homePage.heroPrimaryCta.variant || "primary"}`}
+                href={homePage.heroPrimaryCta.href}
                 prefetch={false}
                 {...analyticsAttributes("cta_click", {
-                  label: "Sense-check a brief",
-                  href: "/contact",
+                  label: homePage.heroPrimaryCta.label,
+                  href: homePage.heroPrimaryCta.href,
                   location: "home hero",
                 })}
               >
-                Sense-check a brief
+                {homePage.heroPrimaryCta.label}
               </Link>
               <Link
-                className="button button-secondary"
-                href="/about-david-walsh"
+                className={`button button-${homePage.heroSecondaryCta.variant || "secondary"}`}
+                href={homePage.heroSecondaryCta.href}
                 prefetch={false}
                 {...analyticsAttributes("cta_click", {
-                  label: "Talk to David",
-                  href: "/about-david-walsh",
+                  label: homePage.heroSecondaryCta.label,
+                  href: homePage.heroSecondaryCta.href,
                   location: "home hero",
                 })}
               >
-                Talk to David
+                {homePage.heroSecondaryCta.label}
               </Link>
               <WhatsAppButton
                 intent="hiring"
@@ -312,36 +214,34 @@ export default async function HomePage() {
               />
             </div>
           </div>
-
-          <div className="home-hero-video-mark" aria-hidden="true">
-            <span>Manchester-led</span>
-            <span>UK-wide search</span>
-          </div>
         </div>
 
         <Reveal delay={640}>
           <ul className="container home-hero-proof" aria-label="Credibility">
-            <li>
-              <span aria-hidden="true" className="home-dot home-dot-red" />
-              Manchester-based, UK-wide
-            </li>
-            <li>
-              <span aria-hidden="true" className="home-dot home-dot-yellow" />
-              Senior hires, specialist roles and strategic interim
-            </li>
-            <li>
-              <span aria-hidden="true" className="home-dot home-dot-stone" />
-              Agency-side and client-side
-            </li>
+            {homePage.proofPoints.slice(0, 3).map((point, index) => (
+              <li key={point}>
+                <span
+                  aria-hidden="true"
+                  className={`home-dot ${
+                    ["home-dot-red", "home-dot-yellow", "home-dot-stone"][
+                      index
+                    ] || "home-dot-stone"
+                  }`}
+                />
+                {point}
+              </li>
+            ))}
           </ul>
         </Reveal>
       </section>
 
       <section className="home-ticker" aria-label="Disciplines">
-        <p className="sr-only">Disciplines: {disciplines.join(", ")}.</p>
+        <p className="sr-only">
+          Disciplines: {homePage.disciplines.join(", ")}.
+        </p>
         <div className="home-ticker-track" aria-hidden="true">
-          <TickerRow />
-          <TickerRow />
+          <TickerRow disciplines={homePage.disciplines} />
+          <TickerRow disciplines={homePage.disciplines} />
         </div>
       </section>
 
@@ -350,24 +250,25 @@ export default async function HomePage() {
           <div className="home-intro-grid">
             <Reveal>
               <div>
-                <p className="eyebrow home-eyebrow">The filter</p>
+                <p className="eyebrow home-eyebrow">
+                  {homePage.filterSection.eyebrow}
+                </p>
                 <h2 id="filter-heading">
-                  Better search, <em>sharper</em> judgement.
+                  {homePage.filterSection.heading}
                 </h2>
               </div>
             </Reveal>
             <Reveal delay={120}>
-              <p className="lede home-large-copy">
-                Recruitment has a reputation problem, and it earned it.
-                Essential Resourcing uses technology where it helps and human
-                judgement where it matters: clearer briefs, better market
-                mapping and fewer pointless shortlists.
-              </p>
+              <div className="lede home-large-copy">
+                {homePage.filterSection.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             </Reveal>
           </div>
 
           <dl className="home-definition-list">
-            {filterDefinitions.map((definition, index) => (
+            {homePage.filterSection.definitions.map((definition, index) => (
               <Reveal key={definition.number} delay={index * 100}>
                 <dt>
                   <span>{definition.number}</span>
@@ -388,26 +289,28 @@ export default async function HomePage() {
           <div>
             <div className="home-sticky-copy">
               <Reveal>
-                <p className="eyebrow home-eyebrow">Why it&rsquo;s different</p>
-                <h2 id="difference-heading">
-                  Most hiring goes wrong <em>before</em> the search starts.
-                </h2>
-                <p className="lede">
-                  Not because the candidates aren&rsquo;t out there. Because the
-                  brief was never really interrogated. That&rsquo;s the bit most
-                  recruiters skip. It&rsquo;s the bit David starts with.
+                <p className="eyebrow home-eyebrow">
+                  {homePage.differenceSection.eyebrow}
                 </p>
+                <h2 id="difference-heading">
+                  {homePage.differenceSection.heading}
+                </h2>
+                {homePage.differenceSection.paragraphs.map((paragraph) => (
+                  <p className="lede" key={paragraph}>
+                    {paragraph}
+                  </p>
+                ))}
               </Reveal>
             </div>
           </div>
 
           <Reveal delay={200} className="home-ledger">
             <div className="home-ledger-head" aria-hidden="true">
-              <span>The industry default</span>
-              <span>Essential Resourcing</span>
+              <span>{homePage.differenceSection.comparisonLabelLeft}</span>
+              <span>{homePage.differenceSection.comparisonLabelRight}</span>
             </div>
             <ul>
-              {hiringLedger.map((row) => (
+              {homePage.differenceSection.rows.map((row) => (
                 <li key={row.usual}>
                   <div className="home-ledger-old">
                     <span aria-hidden="true">x</span>
@@ -433,67 +336,32 @@ export default async function HomePage() {
           <Reveal>
             <div className="home-section-header">
               <div>
-                <p className="eyebrow home-eyebrow">What David recruits</p>
+                <p className="eyebrow home-eyebrow">
+                  {homePage.servicesSection.eyebrow}
+                </p>
                 <h2 id="services-heading">
-                  Specialist, not generalist. <em>That&rsquo;s the point.</em>
+                  {homePage.servicesSection.heading}
                 </h2>
               </div>
-              <p>
-                Senior hires, specialist roles and strategic interim support
-                across marketing, comms, PR, digital and agency.
-              </p>
+              <p>{homePage.servicesSection.intro}</p>
             </div>
           </Reveal>
 
           <ul className="home-service-list">
-            {services.map((service, index) => {
-              const details = serviceDetails[service.slug];
-              return (
-                <li key={service.slug}>
-                  <Reveal delay={Math.min(index * 80, 400)}>
-                    <Link href={`/services/${service.slug}`}>
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      <h3>{service.title}</h3>
-                      <p>{details?.meta || service.shortDescription}</p>
-                      <p>{details?.problem || service.shortDescription}</p>
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </Reveal>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
-
-      <section
-        className="section home-process"
-        aria-labelledby="process-heading"
-      >
-        <div className="container">
-          <Reveal>
-            <div className="home-section-header home-section-header-simple">
-              <div>
-                <p className="eyebrow home-eyebrow">How David works</p>
-                <h2 id="process-heading">
-                  Methodical. Direct. <em>Built to save you weeks.</em>
-                </h2>
-              </div>
-            </div>
-          </Reveal>
-          <ol className="home-process-list">
-            {processSteps.map((step, index) => (
-              <li key={step.title}>
-                <Reveal delay={(index % 2) * 150}>
-                  <span aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3>{step.title}</h3>
-                  <p>{step.copy}</p>
+            {homePage.servicesSection.cards.map((service, index) => (
+              <li key={service.slug}>
+                <Reveal delay={Math.min(index * 80, 400)}>
+                  <Link href={service.href}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <h3>{service.title}</h3>
+                    <p>{service.proposition}</p>
+                    <p>{service.description}</p>
+                    <span aria-hidden="true">→</span>
+                  </Link>
                 </Reveal>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
@@ -505,40 +373,32 @@ export default async function HomePage() {
         <div className="container home-founder-grid">
           <Reveal variant="mask" className="home-founder-media">
             <div className="home-media-plate">
-              <RichMediaBlock media={homepageFeatureVideo} />
+              <RichMediaBlock media={homePage.premiumMedia} />
             </div>
           </Reveal>
 
           <div>
             <Reveal>
               <p className="eyebrow home-eyebrow home-eyebrow-light">
-                Founder-led search
+                {homePage.founderSection.eyebrow}
               </p>
               <h2 id="founder-heading">
-                A name on the door, <em>not a logo on a lanyard.</em>
+                {homePage.founderSection.heading}
               </h2>
             </Reveal>
             <Reveal delay={120}>
-              <p className="home-founder-copy">
-                Essential Resourcing is David Walsh. A specialist recruiter in
-                marketing, comms, PR, digital and agency hiring. Manchester
-                roots, North West market knowledge, UK-wide reach. When you work
-                with Essential Resourcing, you work with David.
-              </p>
+              {homePage.founderSection.paragraphs.map((paragraph) => (
+                <p className="home-founder-copy" key={paragraph}>
+                  {paragraph}
+                </p>
+              ))}
+              <p className="home-founder-copy"><Link href="/about-david-walsh">Meet David Walsh, Essential&apos;s founder</Link></p>
             </Reveal>
             <Reveal delay={240}>
               <div className="home-straight-talk">
-                <h3>
-                  Things David will tell you straight
-                  <span className="home-punctuation">.</span>
-                </h3>
+                <h3>{homePage.founderSection.straightTalkHeading}</h3>
                 <ul>
-                  {[
-                    "If the salary will not get you the person you are describing",
-                    "If the brief is actually two different jobs in a trench coat",
-                    "If your process will lose the best people before second stage",
-                    "If, honestly, you do not need a recruiter for this one",
-                  ].map((item) => (
+                  {homePage.founderSection.straightTalkPoints.map((item) => (
                     <li key={item}>
                       <span aria-hidden="true" />
                       {item}
@@ -573,109 +433,52 @@ export default async function HomePage() {
         aria-labelledby="audience-heading"
       >
         <h2 id="audience-heading" className="sr-only">
-          For clients and candidates
+          {homePage.audienceSection.heading}
         </h2>
         <div className="home-audience-panel home-audience-client grain">
           <Reveal>
             <p className="eyebrow home-eyebrow home-eyebrow-light">
-              For clients
+              {homePage.audienceSection.client.eyebrow}
             </p>
-            <h3>
-              Hire properly, <em>first time.</em>
-            </h3>
+            <h3>{homePage.audienceSection.client.heading}</h3>
             <ul>
-              {clientItems.map((item) => (
+              {homePage.audienceSection.client.items.map((item) => (
                 <li key={item}>
                   <span aria-hidden="true" />
                   {item}
                 </li>
               ))}
             </ul>
-            <Link className="home-large-link" href="/clients">
-              Sense-check a brief <span aria-hidden="true">→</span>
+            <Link
+              className="home-large-link"
+              href={homePage.audienceSection.client.ctaHref}
+            >
+              {homePage.audienceSection.client.ctaLabel}{" "}
+              <span aria-hidden="true">→</span>
             </Link>
           </Reveal>
         </div>
         <div className="home-audience-panel home-audience-candidate">
           <Reveal delay={120}>
-            <p className="eyebrow home-eyebrow">For candidates</p>
-            <h3>
-              Your career, <em>taken seriously.</em>
-            </h3>
+            <p className="eyebrow home-eyebrow">
+              {homePage.audienceSection.candidate.eyebrow}
+            </p>
+            <h3>{homePage.audienceSection.candidate.heading}</h3>
             <ul>
-              {candidateItems.map((item) => (
+              {homePage.audienceSection.candidate.items.map((item) => (
                 <li key={item}>
                   <span aria-hidden="true" />
                   {item}
                 </li>
               ))}
             </ul>
-            <Link className="home-large-link" href="/jobs">
-              See current roles <span aria-hidden="true">→</span>
+            <Link
+              className="home-large-link"
+              href={homePage.audienceSection.candidate.ctaHref}
+            >
+              {homePage.audienceSection.candidate.ctaLabel}{" "}
+              <span aria-hidden="true">→</span>
             </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      <section
-        id="interim"
-        className="section home-interim dark grain"
-        aria-labelledby="interim-heading"
-      >
-        <div className="container home-interim-grid">
-          <div>
-            <Reveal>
-              <p className="eyebrow home-eyebrow home-eyebrow-light">
-                Strategic interim
-              </p>
-              <h2 id="interim-heading">
-                Senior cover, in <em>weeks</em>, not months.
-              </h2>
-            </Reveal>
-            <Reveal delay={120}>
-              <p className="home-founder-copy">
-                Sometimes the business needs senior marketing or comms
-                leadership now. Strategic Interim puts proven capability in the
-                chair fast: commercially practical, properly scoped and honest
-                about whether interim is even the right answer.
-              </p>
-            </Reveal>
-            <Reveal delay={240}>
-              <div className="button-row home-actions">
-                <Link
-                  className="button button-primary"
-                  href="/services/strategic-interim"
-                >
-                  Explore Strategic Interim
-                </Link>
-                <WhatsAppButton
-                  intent="strategicInterim"
-                  label="Need interim help quickly? WhatsApp David"
-                  location="homepage_strategic_interim"
-                  service="Strategic Interim"
-                  variant="secondary"
-                />
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal variant="mask" delay={180}>
-            <div className="home-interim-card">
-              <h3>When interim earns its keep</h3>
-              <ul>
-                {interimSituations.map((item) => (
-                  <li key={item}>
-                    <span aria-hidden="true" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-        <div className="container home-interim-media">
-          <Reveal delay={260}>
-            <RichMediaBlock media={richMediaExamples[0]} />
           </Reveal>
         </div>
       </section>
@@ -683,33 +486,68 @@ export default async function HomePage() {
       <section className="section home-proof" aria-labelledby="proof-heading">
         <div className="container">
           <Reveal>
-            <p className="eyebrow home-eyebrow">Why trust it</p>
-            <h2 id="proof-heading">Proof has to earn its place here.</h2>
-            <p className="lede home-proof-intro">
-              No borrowed logos. No made-up placement numbers. Each case study
-              only goes live when the role, process, outcome and permission are
-              clear.
+            <p className="eyebrow home-eyebrow">
+              {homePage.proofSection.eyebrow}
             </p>
+            <h2 id="proof-heading">{homePage.proofSection.heading}</h2>
           </Reveal>
-
-          <ul className="home-proof-grid">
-            {commercialProofFramework.map((proofItem, index) => (
-              <li key={proofItem.title}>
-                <Reveal delay={(index % 3) * 120}>
-                  <h3>{proofItem.title}</h3>
-                  <p>{proofItem.copy}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-          <Reveal delay={420}>
-            <p className="home-proof-caveat">
-              Real metrics only go live once verified. Until then, the site
-              shows the standard of proof David will hold himself to.
-            </p>
-          </Reveal>
+          {homeProofCase ? (
+            <Reveal delay={120}>
+              <article className="home-proof-case">
+                <div className="home-proof-case-header">
+                  {homeProofCase.proofLogo ? (
+                    <Image
+                      alt={
+                        homeProofCase.proofLogoAlt ||
+                        `${homeProofCase.clientType} logo`
+                      }
+                      className="home-proof-case-logo"
+                      height={96}
+                      src={homeProofCase.proofLogo}
+                      width={260}
+                    />
+                  ) : null}
+                  <div>
+                    <p className="eyebrow home-eyebrow">
+                      {homePage.proofSection.caseStudyEyebrow}
+                    </p>
+                    <h3>{homeProofCase.title}</h3>
+                  </div>
+                </div>
+                <div className="home-proof-case-points">
+                  <div>
+                    <span>Brief</span>
+                    <p>{firstParagraph(homeProofCase.clientContext)}</p>
+                  </div>
+                  <div>
+                    <span>Search</span>
+                    <p>{firstParagraph(homeProofCase.process)}</p>
+                  </div>
+                  <div>
+                    <span>Outcome</span>
+                    <p>{firstParagraph(homeProofCase.outcome)}</p>
+                  </div>
+                </div>
+                <Link
+                  className="text-link"
+                  href={`/case-studies/${homeProofCase.slug}`}
+                >
+                  {homePage.proofSection.caseStudyPrimaryLinkLabel}
+                </Link>
+                <Link className="text-link" href="/case-studies">
+                  {homePage.proofSection.caseStudySecondaryLinkLabel}
+                </Link>
+              </article>
+            </Reveal>
+          ) : null}
         </div>
       </section>
+
+      <LinkedInRecommendations
+        copy={homePage.linkedInSection}
+        recommendations={homePage.linkedInSection.recommendations}
+        variant="home"
+      />
 
       <section
         className="section home-live-proof surface"
@@ -718,32 +556,16 @@ export default async function HomePage() {
         <div className="container home-live-proof-grid">
           <div>
             <Reveal>
-              <p className="eyebrow home-eyebrow">Case studies and insight</p>
-              <h2 id="live-proof-heading">
-                Specific proof beats anonymous waffle.
-              </h2>
-              <p className="lede">
-                The homepage still uses the published content pipeline: live
-                case studies when approved, and current insight pieces for SEO,
-                AI discovery and proper first-party expertise.
+              <p className="eyebrow home-eyebrow">
+                {homePage.liveProofSection.eyebrow}
               </p>
+              <h2 id="live-proof-heading">
+                {homePage.liveProofSection.heading}
+              </h2>
+              <p className="lede">{homePage.liveProofSection.intro}</p>
             </Reveal>
           </div>
           <div className="home-card-stack">
-            {featuredCases.length ? (
-              featuredCases.map((caseStudy) => (
-                <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
-              ))
-            ) : (
-              <article className="card proof-card">
-                <span className="tag">Proof standard</span>
-                <h3>Permission first</h3>
-                <p>
-                  Named proof, logos and quotes only go live when permission is
-                  clear.
-                </p>
-              </article>
-            )}
             {featuredInsights.map((insight) => (
               <InsightCard key={insight.slug} insight={insight} />
             ))}
@@ -757,15 +579,22 @@ export default async function HomePage() {
       >
         <div className="container">
           <Reveal>
-            <p className="eyebrow home-eyebrow">Specialisms</p>
-            <h2 id="specialisms-heading">Not a boring list of functions.</h2>
+            <p className="eyebrow home-eyebrow">
+              {homePage.specialismsSection.eyebrow}
+            </p>
+            <h2 id="specialisms-heading">
+              {homePage.specialismsSection.heading}
+            </h2>
           </Reveal>
           <div className="home-specialism-grid">
-            {specialisms.map((specialism, index) => (
+            {homePage.specialismsSection.cards.map((specialism, index) => (
               <Reveal key={specialism.title} delay={(index % 4) * 80}>
                 <article>
                   <h3>{specialism.title}</h3>
                   <p>{specialism.description}</p>
+                  <Link className="text-link" href={specialism.href}>
+                    {specialism.linkLabel}
+                  </Link>
                 </article>
               </Reveal>
             ))}
@@ -780,18 +609,20 @@ export default async function HomePage() {
         <div className="container">
           <Reveal>
             <p className="eyebrow home-eyebrow home-eyebrow-light">
-              What Essential Resourcing believes
+              {homePage.manifestoSection.eyebrow}
             </p>
           </Reveal>
           <h2 id="manifesto-heading" className="sr-only">
-            The Essential Resourcing manifesto
+            {homePage.manifestoSection.heading}
           </h2>
           <div className="home-manifesto-lines">
-            {manifestoLines.map((line, index) => (
+            {homePage.manifestoSection.lines.map((line, index) => (
               <Reveal key={line} delay={index * 150}>
                 <p
                   className={
-                    index === manifestoLines.length - 1 ? "is-yellow" : ""
+                    index === homePage.manifestoSection.lines.length - 1
+                      ? "is-yellow"
+                      : ""
                   }
                 >
                   {line}
@@ -801,7 +632,7 @@ export default async function HomePage() {
           </div>
           <Reveal delay={800}>
             <div className="home-signature">
-              <p>- David Walsh</p>
+              <p>{homePage.manifestoSection.signature}</p>
               <span aria-hidden="true" />
             </div>
           </Reveal>
@@ -810,22 +641,20 @@ export default async function HomePage() {
 
       <section
         className="home-city-band"
-        aria-label="Manchester, where Essential Resourcing is based"
+        aria-label={homePage.citySection.ariaLabel}
       >
         <Reveal variant="mask">
           <figure className="grain">
             <Image
-              src="https://images.unsplash.com/photo-1638178350556-a7385a77981a?auto=format&fit=crop&w=2000&q=75"
-              alt="Manchester towers at dusk, windows catching the last of the light"
+              src={homePage.citySection.imageSrc}
+              alt={homePage.citySection.imageAlt}
               fill
               loading="lazy"
               quality={75}
               sizes="100vw"
             />
-            <span>Plate 03 - Deansgate at dusk</span>
             <figcaption>
-              Made in Manchester<span className="home-punctuation">.</span>{" "}
-              <em>At work UK-wide.</em>
+              {homePage.citySection.label} <em>{homePage.citySection.emphasis}</em>
             </figcaption>
           </figure>
         </Reveal>
@@ -839,28 +668,29 @@ export default async function HomePage() {
         <div className="container">
           <Reveal>
             <h2 id="final-heading">
-              Before you waste six weeks on the wrong brief,{" "}
-              <em>talk to David.</em>
+              {emphasiseTrailingPhrase(
+                homePage.finalCtaSection.heading,
+                "talk to David.",
+              )}
             </h2>
           </Reveal>
           <Reveal delay={150}>
-            <p>
-              One straight conversation. If Essential Resourcing isn&rsquo;t the
-              right answer, you&rsquo;ll be told that too.
-            </p>
+            <p>{homePage.finalCtaSection.body}</p>
           </Reveal>
           <Reveal delay={300}>
             <div className="button-row home-actions">
               <Link
-                className="button button-dark"
-                href="/contact"
+                className={`button button-${
+                  homePage.finalCtaSection.primaryCta.variant || "dark"
+                }`}
+                href={homePage.finalCtaSection.primaryCta.href}
                 {...analyticsAttributes("cta_click", {
-                  label: "Sense-check a brief",
-                  href: "/contact",
+                  label: homePage.finalCtaSection.primaryCta.label,
+                  href: homePage.finalCtaSection.primaryCta.href,
                   location: "home final cta",
                 })}
               >
-                Sense-check a brief
+                {homePage.finalCtaSection.primaryCta.label}
               </Link>
               <WhatsAppButton
                 intent="hiring"
@@ -875,7 +705,7 @@ export default async function HomePage() {
                 variant="text"
               />
               <Link className="text-link" href={`mailto:${siteConfig.email}`}>
-                {siteConfig.email}
+                {homePage.finalCtaSection.emailCtaLabel}
               </Link>
             </div>
           </Reveal>

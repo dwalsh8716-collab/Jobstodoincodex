@@ -18,7 +18,7 @@ export const sanityConfig = {
     process.env.NEXT_PUBLIC_SANITY_API_VERSION ||
     process.env.SANITY_API_VERSION ||
     "2026-06-09",
-  useCdn: process.env.NODE_ENV === "production",
+  useCdn: false,
 };
 
 export const sanityClient = createClient({

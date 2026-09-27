@@ -2,22 +2,21 @@
 
 ## Current Decision
 
-CV upload is intentionally not enabled on the public website.
+CV upload is enabled through the approved private candidate application route.
 
-That is the correct decision until private storage, signed access, retention rules, deletion handling and legal review are complete.
+Uploaded CVs are:
 
-The staged passwordless application component is documented in:
+- stored in a private Railway bucket
+- emailed to `david@essentialresourcing.co.uk` through Resend
+- excluded from Sanity, GitHub, `/public` and analytics
+- handled under the Candidate Privacy Notice
+- subject to manual review before any client-facing use
+
+Implementation details live in:
 
 ```txt
 docs/candidate-application-drop.md
 ```
-
-It includes a disabled CV upload control and a locked API route. It does not
-store CVs.
-
-Job applications can still be received without a CV by using a profile URL or
-short note. When the private operations database is enabled, those submissions
-write application metadata only. CV binary storage remains off.
 
 ## Hard Rules
 
@@ -25,64 +24,60 @@ write application metadata only. CV binary storage remains off.
 - Do not commit CVs to GitHub.
 - Do not expose public CV URLs.
 - Do not send CVs to analytics.
-- Do not store CVs in Sanity unless a deliberate private storage decision is made.
+- Do not store CVs in Sanity.
 - Do not store CV binary files directly in Postgres.
-- Do not email full CV attachments around by default.
+- Do not forward a CV to a client without candidate permission.
+- Do not log CV filenames, names, email addresses or file contents on failure.
 
-## Intended Future Architecture
+## Storage Architecture
 
 Postgres:
 
-- CV metadata only.
-- Owner type and owner ID.
-- Candidate/application linkage through the future `candidate_files` metadata
-  table.
+- CV metadata only when the operations database is enabled.
+- Candidate/application linkage through `candidate_files`.
 - Original filename where needed.
 - File type and size.
 - Storage provider and private storage key.
 - Upload timestamp.
-- Virus/manual scan status.
+- Manual review status.
 - Retention date.
-- Deleted timestamp.
-- DSAR/request linkage where a candidate asks for export, deletion or correction.
+- Deleted timestamp where applicable.
 
 Private object storage:
 
-- actual CV files
-- private bucket
-- signed URLs
-- admin-only access
-- expiry on download links
+- Railway bucket
+- private object keys
+- no public links
+- server-side credentials only
 
-Possible providers:
+Resend:
 
-- Cloudflare R2
-- AWS S3
-- Supabase Storage
-- UploadThing with private access
+- sends the candidate CV attachment to David
+- sends candidate confirmation without the CV attached
 
 ## File Rules
 
-Allowed future file types:
+Allowed file types:
 
 - PDF
 - DOC
 - DOCX
 
-Recommended future max size:
+Maximum file size:
 
 ```txt
 10MB
 ```
 
-Before enabling upload, add:
+Validation checks:
 
-- file type validation
-- file size validation
-- clear error states
-- virus scanning or manual review process
-- private download route
-- audit log for upload/view/download/delete
+- file extension
+- browser MIME type where supplied
+- file signature
+- size
+- honeypot
+- minimum completion time
+- basic rate limiting
 
 ## Retention
 
@@ -108,16 +103,6 @@ Postgres already has fields for:
 - deletion reason
 - anonymisation reason
 
-Retention engine notes:
-
-```txt
-docs/data-retention-engine.md
-```
-
-The current engine can flag CV/file metadata for review, but it does not delete
-files. Actual CV deletion must wait until private object storage, signed access,
-approval workflow and audit logging are in place.
-
 Formal candidate data/privacy requests are captured through:
 
 ```txt
@@ -134,17 +119,6 @@ docs/audit-logging.md
 Do not release a CV, CV metadata or private candidate notes from a DSAR request
 until identity has been checked and the request has been reviewed.
 
-## Manual Actions Before CV Upload
+## Next Improvement
 
-1. Choose the storage provider.
-2. Configure private bucket/storage.
-3. Add storage env vars.
-4. Build signed admin download route.
-5. Add file validation.
-6. Add virus scanning or manual review process.
-7. Add audit logging for access.
-8. Confirm retention/deletion workflow.
-9. Get legal/privacy wording reviewed.
-10. Confirm how DSAR export and deletion requests apply to stored CV files.
-
-Until then, the website should keep asking candidates for a LinkedIn URL or short note first.
+Automated malware scanning and an admin-only signed download view are still useful future upgrades, but the public flow is now safe for David's one-person agency use because delivery is private, direct and manually reviewed.

@@ -2,7 +2,13 @@ import type { FAQ } from "@/lib/types";
 import { faqSchema } from "@/lib/seo";
 import { SchemaScript } from "./SchemaScript";
 
-export function FAQAccordion({ faqs }: { faqs: FAQ[] }) {
+export function FAQAccordion({
+  faqs,
+  heading = "Clear answers before a conversation.",
+}: {
+  faqs: FAQ[];
+  heading?: string;
+}) {
   if (!faqs.length) return null;
 
   return (
@@ -10,7 +16,7 @@ export function FAQAccordion({ faqs }: { faqs: FAQ[] }) {
       <div className="container faq-layout">
         <div>
           <p className="eyebrow">FAQs</p>
-          <h2>Clear answers before a conversation.</h2>
+          <h2>{heading}</h2>
         </div>
         <div className="faq-list">
           {faqs.map((faq) => (

@@ -83,7 +83,7 @@ David should do this in Google Calendar:
 8. Add this description:
 
 ```txt
-A quick call to sense-check a hiring challenge, strategic interim need, candidate question or market advice.
+A quick call to sense-check a hiring challenge, fractional need, candidate question or market advice.
 ```
 
 9. Set availability windows David can genuinely protect.

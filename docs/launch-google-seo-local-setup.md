@@ -318,7 +318,7 @@ Checklist:
    - United Kingdom.
 8. Add services:
    - Leadership Search.
-   - Strategic Interim.
+   - Fractional.
    - Senior Marketing Recruitment.
    - Agency Recruitment.
    - Client-side Marketing Recruitment.
@@ -336,7 +336,7 @@ Checklist:
 Business description draft:
 
 ```txt
-Essential Resourcing is a founder-led recruitment and search business helping agencies, brands and growth businesses hire marketing, PR, communications, digital and agency leadership people who move the business forward. Led by David Walsh, the business works across Manchester, the North West and the wider UK, with a focus on senior hiring, retained search, strategic interim and hard-to-fill specialist roles. No CV flinging. No recruitment nonsense. Just honest market advice and hiring done properly.
+Essential Resourcing is a founder-led recruitment and search business helping agencies, brands and growth businesses hire marketing, PR, communications, digital and agency leadership people who move the business forward. Led by David Walsh, the business works across Manchester, the North West and the wider UK, with a focus on senior hiring, retained search, fractional and hard-to-fill specialist roles. No CV flinging. No recruitment nonsense. Just honest market advice and hiring done properly.
 ```
 
 Shorter version:
@@ -416,7 +416,7 @@ Do not add fake reviews, ratings, salary data, client logos or schema properties
 Manual checks on the production URL:
 
 1. Homepage.
-2. Strategic Interim page.
+2. Fractional page.
 3. Leadership Search page.
 4. Jobs page.
 5. A published insight article.
@@ -457,11 +457,11 @@ Checklist:
 1. Align Essential Resourcing LinkedIn company page with website copy.
 2. Align David Walsh's personal profile with the site positioning.
 3. Add the website link.
-4. Add Strategic Interim and Leadership Search links where useful.
+4. Add Fractional and Leadership Search links where useful.
 5. Use consistent service language.
 6. Test Open Graph previews for:
    - Homepage.
-   - Strategic Interim page.
+   - Fractional page.
    - Leadership Search page.
    - A published insight.
 

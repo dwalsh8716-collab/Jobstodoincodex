@@ -63,7 +63,7 @@ List schema is deliberately guarded. Draft proof, closed roles and unvalidated s
 
 ## GEO / AI Search
 
-The insights hub includes crawlable answers to common senior hiring questions around Strategic Interim, retained search, senior marketing hiring failure, agency recruitment, Marketing Director briefs, interim leadership, candidate quality and North West salary context.
+The insights hub includes crawlable answers to common senior hiring questions around Fractional, retained search, senior marketing hiring failure, agency recruitment, Marketing Director briefs, interim leadership, candidate quality and North West salary context.
 
 Public AI/entity signals now include:
 

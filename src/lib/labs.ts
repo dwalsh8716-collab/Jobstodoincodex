@@ -62,7 +62,7 @@ export const labsFeatureFlagDefinitions = [
   },
   {
     name: "FEATURE_INTERIM_BENCH_PORTAL",
-    label: "Strategic Interim bench",
+    label: "Fractional bench",
     description:
       "Future private availability and matching workflow for interim talent.",
   },
@@ -249,7 +249,7 @@ export const labsIdeas: LabsIdea[] = [
       "Launch only with human review, privacy controls, no PII analytics and no automated candidate evaluation.",
   },
   {
-    title: "Strategic Interim bench portal",
+    title: "Fractional bench portal",
     category: "Interim",
     status: "idea",
     priority: "future",
@@ -368,7 +368,7 @@ export const labsRoadmapPhases: LabsRoadmapPhase[] = [
     months: "7-10",
     title: "Interim bench",
     focus:
-      "Keep Strategic Interim availability current without making candidate data public.",
+      "Keep Fractional availability current without making candidate data public.",
     doNow: [
       "Availability toggle",
       "Private interim profile model",

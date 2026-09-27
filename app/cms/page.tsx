@@ -21,9 +21,9 @@ type Props = {
 
 const editableAreas = [
   "Pages, navigation and site settings",
-  "Services, CTAs, FAQs and proof points",
-  "Jobs, salary snapshots and hiring notes",
-  "Insights, case studies, images, video and galleries",
+  "Services, CTAs, FAQs and proof",
+  "Jobs and salary snapshots",
+  "Insights, case studies, images and video",
 ];
 
 const privateAreaLinks = [
@@ -86,10 +86,10 @@ export default async function CmsPage({ searchParams }: Props) {
             alt="Essential Resourcing"
           />
           <p className="eyebrow">Private editor area</p>
-          <h1>Make the site easy to keep sharp.</h1>
+          <h1>Keep the site sharp.</h1>
           <p className="lede">
-            Log in here, open the CMS, and update the parts of the website that
-            need to move with the business.
+            Log in to update the bits of Essential that need to move with the
+            business.
           </p>
           <div className="cms-checklist" aria-label="Editable website areas">
             {editableAreas.map((item) => (
@@ -136,11 +136,6 @@ export default async function CmsPage({ searchParams }: Props) {
             <>
               <span className="tag">Editor login</span>
               <h2>Log in to the CMS.</h2>
-              <p>
-                This is a simple site-level gate for the preview and live
-                website. Use the same login for CMS Studio, Recruiter Labs,
-                Labs and private admin.
-              </p>
 
               {!hasSetup || params?.setup === "missing" ? (
                 <div className="cms-alert">

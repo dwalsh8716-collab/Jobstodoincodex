@@ -63,7 +63,7 @@ export default async function AdminLabsSalaryBenchmarkPage() {
           <h1>Salary Benchmark Request.</h1>
           <p className="lede">
             A future bespoke asset builder for senior marketing, comms, digital,
-            agency leadership and Strategic Interim salary sense-checks. David
+            agency leadership and Fractional salary sense-checks. David
             reviews the advice before anything is sent.
           </p>
           <div className="button-row hero-actions">

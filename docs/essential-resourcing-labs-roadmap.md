@@ -15,7 +15,7 @@ Build in this order:
 3. Advisory tools.
 4. Private data infrastructure.
 5. Client portal features.
-6. Strategic Interim bench.
+6. Fractional bench.
 7. Market intelligence products.
 
 Do not build everything at once.
@@ -47,7 +47,7 @@ No faff.
 | 3 | Month 2-4 | Advisory tools | Bad hire calculator, functional matrix, AI brief builder prototype. | Automated brief scoring or candidate matching. | Shows David's thinking and creates better first conversations. |
 | 4 | Month 3-6 | Private data infrastructure | Railway/Postgres, auth, admin dashboard, audit logs, DSAR, retention, CV storage plan. | Public/private candidate views. | Private features need the backend to be boring and safe. |
 | 5 | Month 5-8 | Client portal features | Passwordless shortlists, client feedback, anonymised market mapping. | Real client links until private beta is approved. | Strong differentiation, high privacy risk. |
-| 6 | Month 7-10 | Strategic Interim bench | Availability toggle, private interim profiles, consent/retention flow. | Client-visible matching views. | Useful operationally, but candidate data must stay protected. |
+| 6 | Month 7-10 | Fractional bench | Availability toggle, private interim profiles, consent/retention flow. | Client-visible matching views. | Useful operationally, but candidate data must stay protected. |
 | 7 | Month 9-12 | Market intelligence | Live dashboards, salary intelligence, digital PR data assets. | Automated live feeds until data quality is proven. | Strong authority play only if data is sourced and maintainable. |
 
 ## Feature Decision Matrix
@@ -65,7 +65,7 @@ complexity and maintenance.
 | AI brief builder | 4 | 5 | 4 | 2 | 4 | 5 | 4 | 3 | Yes | Admin | Yes | No PII | 3 |
 | Passwordless client shortlists | 2 | 5 | 5 | 1 | 5 | 5 | 4 | 2 | Yes | Magic link | No | Candidate consent | 5 |
 | Market mapping visuals | 3 | 5 | 4 | 4 | 4 | 5 | 4 | 2 | Yes | Optional | No | Yes | 5 |
-| Strategic Interim bench | 2 | 4 | 5 | 2 | 5 | 5 | 4 | 2 | Yes | Magic link | No | Candidate consent | 6 |
+| Fractional bench | 2 | 4 | 5 | 2 | 5 | 5 | 4 | 2 | Yes | Magic link | No | Candidate consent | 6 |
 | Live market dashboards | 4 | 5 | 3 | 5 | 3 | 5 | 5 | 2 | Yes | Optional | Optional | Yes | 7 |
 
 ## Feature Notes
@@ -249,7 +249,7 @@ Implementation notes live in:
 docs/labs-market-mapping.md
 ```
 
-### Strategic Interim Bench
+### Fractional Bench
 
 Commercial value: helps David respond quickly when interim needs are urgent.
 
@@ -310,7 +310,7 @@ docs/labs-live-market-dashboards.md
 
 1. Passwordless client shortlists: candidate data, client access, magic links,
    expiry, revocation and audit logs all matter.
-2. Strategic Interim bench: availability and candidate data can become sensitive
+2. Fractional bench: availability and candidate data can become sensitive
    quickly.
 3. AI brief builder: useful, but AI governance and human review must be strict.
 
@@ -395,7 +395,7 @@ Should stay private/client-only:
 6. `#64` AI brief builder prototype.
 7. `#63` Client shortlist portal foundation.
 8. `#60` Market mapping.
-9. `#65` Strategic Interim bench.
+9. `#65` Fractional bench.
 10. `#66` Live market dashboards.
 
 Keep `#69` to `#73` as the deeper Recruiter Labs client-pipeline stream.

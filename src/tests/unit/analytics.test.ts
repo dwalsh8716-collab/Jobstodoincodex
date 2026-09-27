@@ -62,7 +62,7 @@ describe("analytics utility", () => {
 
   it("keeps analytics available on public commercial pages", () => {
     expect(shouldRenderAnalyticsForPath("/")).toBe(true);
-    expect(shouldRenderAnalyticsForPath("/services/leadership-search")).toBe(
+    expect(shouldRenderAnalyticsForPath("/services/retained-search")).toBe(
       true,
     );
     expect(shouldRenderAnalyticsForPath("/contact")).toBe(true);

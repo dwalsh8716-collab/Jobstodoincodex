@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SchemaScript } from "@/components/SchemaScript";
@@ -8,18 +9,19 @@ import { absoluteUrl, createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
-  title: "Book a 15-Minute Call with David | Essential Resourcing",
+  title: "Book a Call with David Walsh | Essential Resourcing",
   description:
-    "Book a short Google Calendar call with David Walsh to sense-check a hiring brief, strategic interim need or quick recruitment question.",
+    "Book 15 minutes with David Walsh to discuss a marketing hire, leadership search, Fractional requirement or recruitment question.",
   path: siteConfig.booking.pagePath,
   noIndex: !siteConfig.booking.enabled,
 });
 
 const bookingReasons = [
-  "You are hiring and want to sense-check the brief.",
-  "You need senior interim marketing or agency support quickly.",
-  "You want a straight view on salary, market or process.",
-  "You are a candidate with a quick question before sending detail.",
+  "Hiring and want somebody to sense-check the brief",
+  "Need senior marketing or agency support quickly",
+  "Want an honest view on salary or the candidate market",
+  "Not sure whether permanent, retained or Fractional makes most sense",
+  "Want to talk through a recruitment problem before it becomes a bigger one",
 ];
 
 const bookingSetupSchema = {
@@ -28,7 +30,7 @@ const bookingSetupSchema = {
   name: "Book a 15-minute call with David",
   url: absoluteUrl(siteConfig.booking.pagePath),
   description:
-    "A short booking route for hiring, strategic interim and recruitment questions.",
+    "A short booking route for hiring, Fractional and recruitment questions.",
   ...(siteConfig.booking.enabled
     ? {
         potentialAction: {
@@ -41,6 +43,8 @@ const bookingSetupSchema = {
 };
 
 export default function BookCallPage() {
+  if (!siteConfig.booking.enabled) redirect("/contact");
+
   return (
     <>
       <Breadcrumbs
@@ -56,8 +60,8 @@ export default function BookCallPage() {
             <h1>{siteConfig.booking.heading}</h1>
             <p className="lede">{siteConfig.booking.intro}</p>
             <p className="lede">
-              No sales script. No recruitment nonsense. Just a straight
-              conversation about what you need and whether I can help.
+              No sales script. No awkward pitch. Just a proper conversation
+              about what you need and whether David can help.
             </p>
           </div>
           <div className="booking-panel">
@@ -85,7 +89,7 @@ export default function BookCallPage() {
                 <p>
                   David still needs to create the Google Calendar appointment
                   schedule and add the booking URL. Until then, WhatsApp, email
-                  and the contact form are the right routes.
+                  or the contact form are the quickest routes.
                 </p>
               </>
             )}
@@ -106,10 +110,10 @@ export default function BookCallPage() {
           </article>
           <article className="card">
             <span className="tag">Other routes</span>
-            <h2>Need the fastest route?</h2>
+            <h2>Need the quickest route?</h2>
             <p>
-              Fastest way to reach me? Message me on WhatsApp. If you need to
-              send more detail, use the contact form.
+              WhatsApp David. If there&apos;s more detail to send, use the
+              contact form.
             </p>
             <div className="button-row hero-actions">
               <WhatsAppButton
@@ -154,16 +158,13 @@ export default function BookCallPage() {
           <div className="statement-list">
             <p>
               The booking button opens Google Calendar in a new tab. Google
-              handles availability, calendar invites and Meet links.
+              handles availability, calendar invitations and Meet links.
             </p>
             <p>
-              Do not put sensitive candidate details or confidential client
-              information into the booking form. Use the contact form if you
-              need to send detail carefully.
-            </p>
-            <p>
-              This is a technical setup note, not legal advice. The final Google
-              booking wording should be checked before launch.
+              Please don&apos;t put sensitive candidate information or
+              confidential client detail into the booking form. Use the contact
+              form or speak to David directly if you need to share something
+              confidential.
             </p>
           </div>
         </div>

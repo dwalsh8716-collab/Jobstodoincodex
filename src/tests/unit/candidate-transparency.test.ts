@@ -140,7 +140,7 @@ describe("candidate transparency foundation", () => {
   });
 
   it("sets practical candidate trust questions and job page standards", () => {
-    expect(candidateTrustQuestions).toContain("Is the salary or rate clear?");
+    expect(candidateTrustQuestions).toContain("What's the salary or rate?");
     expect(candidateTrustQuestions).toContain(
       "How will my CV and data be handled?",
     );

@@ -249,7 +249,7 @@ export default async function AdminPage() {
           <section className={styles.adminPanel}>
             <div className={styles.adminPanelHeading}>
               <div>
-                <p className="eyebrow">Strategic Interim bench</p>
+                <p className="eyebrow">Fractional bench</p>
                 <h2>Latest availability updates.</h2>
               </div>
             </div>

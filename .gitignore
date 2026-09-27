@@ -17,6 +17,12 @@ tsconfig.tsbuildinfo
 qa-*.json
 qa-screenshots/
 .qa/
+bd-intelligence/.venv/
+bd-intelligence/.pytest_cache/
+bd-intelligence/exports/
+bd-intelligence/logs/
+bd-intelligence/data/*.sqlite3
+bd-intelligence/data/*.sqlite
 
 # Environment and logs
 .env

@@ -55,7 +55,7 @@ The feature can support assets such as:
 
 - North West Senior Marketing Salary Guide
 - Manchester Agency Salary Guide
-- Strategic Interim Day Rate Guide
+- Fractional Day Rate Guide
 - PR & Communications Salary Snapshot
 - Marketing Director Salary Guide
 - Head of Marketing Salary Guide

@@ -14,7 +14,7 @@ vi.mock("server-only", () => ({}));
 
 const validToken = "abcdefghijklmnopqrstuvwxyzABCDEF";
 
-describe("Labs Strategic Interim bench", () => {
+describe("Labs Fractional bench", () => {
   it("keeps the bench private, feature-flagged and database-gated", () => {
     expect(getLabsInterimBenchStatus({})).toMatchObject({
       benchFeatureEnabled: false,

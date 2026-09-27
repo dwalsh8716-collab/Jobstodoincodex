@@ -34,6 +34,28 @@ export type RichMedia =
       items: Array<{ src: string; alt: string; caption?: string }>;
     };
 
+export type LinkedInRecommendation = {
+  name: string;
+  role: string;
+  date: string;
+  excerpt: string;
+  proofPoint: string;
+  serviceSlugs: string[];
+};
+
+export type ClientProofQuote = {
+  name: string;
+  role: string;
+  company: string;
+  companyUrl: string;
+  quote: string;
+  proofPoint: string;
+  personImage: string;
+  personImageAlt: string;
+  brandLogo: string;
+  brandLogoAlt: string;
+};
+
 export type Service = {
   title: string;
   slug: string;
@@ -47,11 +69,21 @@ export type Service = {
   whenToUse: string[];
   howEssentialWorks: string[];
   mistakes: string[];
+  processEyebrow?: string;
+  processHeading?: string;
+  processIntro?: string;
+  processSteps?: Array<{ title: string; description: string }>;
+  marketFitEyebrow?: string;
+  marketFitHeading?: string;
+  judgementEyebrow?: string;
+  judgementHeading?: string;
   faqs: FAQ[];
   relatedServiceSlugs: string[];
   relatedInsightSlugs: string[];
   relatedCaseStudySlugs: string[];
   cta: CTA;
+  ctaHeading?: string;
+  ctaText?: string;
   searchSummary: string;
   searchPhrases: string[];
   seoTitle: string;
@@ -64,7 +96,9 @@ export type Insight = {
   status: "published" | "draft";
   noIndex?: boolean;
   category: string;
+  cardCategory?: string;
   excerpt: string;
+  cardExcerpt?: string;
   publishedDate: string;
   updatedDate: string;
   readingTime: string;
@@ -75,6 +109,8 @@ export type Insight = {
   relatedServiceSlugs: string[];
   relatedInsightSlugs: string[];
   media?: RichMedia;
+  ctaHeading?: string;
+  ctaText?: string;
   seoTitle: string;
   metaDescription: string;
 };
@@ -99,9 +135,21 @@ export type CaseStudy = {
   approach: string[];
   process: string;
   outcome: string;
+  whatChangedHeading?: string;
   whatChanged: string;
+  impactHeading?: string;
   impact: string;
   quote?: string;
+  essentialView?: string[];
+  ctaHeading?: string;
+  ctaText?: string;
+  ctaLabel?: string;
+  proofLogo?: string;
+  proofLogoAlt?: string;
+  proofLinkedInUrl?: string;
+  proofLinkedInLabel?: string;
+  externalSourceUrl?: string;
+  externalSourceLabel?: string;
   featured: boolean;
   seoTitle: string;
   metaDescription: string;
@@ -142,19 +190,11 @@ export type Job = {
   salaryCurrency: string;
   salaryPeriod: "annual" | "daily" | "hourly" | "fixed" | "to_be_confirmed";
   salaryVisibility:
-    | "public_range"
-    | "indicative_range"
-    | "confidential"
-    | "to_be_confirmed";
+    "public_range" | "indicative_range" | "confidential" | "to_be_confirmed";
   rateMin?: number;
   rateMax?: number;
   ratePeriod:
-    | "daily"
-    | "hourly"
-    | "weekly"
-    | "monthly"
-    | "fixed"
-    | "to_be_confirmed";
+    "daily" | "hourly" | "weekly" | "monthly" | "fixed" | "to_be_confirmed";
   salary: string;
   salaryStatus: "verified" | "indicative" | "unverified";
   salaryTransparencyNote: string;

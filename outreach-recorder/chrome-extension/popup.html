@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Essential Resourcing Video Outreach</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup-shell">
+      <section class="brand">
+        <span class="brand-mark">ER</span>
+        <div>
+          <h1>Video Outreach</h1>
+          <p>Record this tab with your webcam bubble.</p>
+        </div>
+      </section>
+
+      <section class="warning">
+        Check the page before recording. Avoid passwords, private inboxes, candidate data, or anything you would not want saved in a local video.
+      </section>
+
+      <section class="field-grid" aria-label="Video details">
+        <label>
+          Prospect
+          <input
+            id="prospectName"
+            autocomplete="off"
+            placeholder="Jane Smith"
+            required
+          />
+        </label>
+        <label>
+          Company
+          <input id="companyName" autocomplete="off" placeholder="Acme Agency" />
+        </label>
+        <label>
+          Role / title
+          <input id="roleTitle" autocomplete="off" placeholder="CMO" />
+        </label>
+      </section>
+
+      <section class="options" aria-label="Recording options">
+        <label class="check-row">
+          <input id="showWebcam" type="checkbox" checked />
+          Show webcam bubble
+        </label>
+        <label class="check-row">
+          <input id="includeMic" type="checkbox" checked />
+          Record microphone
+        </label>
+        <label class="check-row">
+          <input id="includeTabAudio" type="checkbox" />
+          Include tab audio
+        </label>
+        <label>
+          Bubble size
+          <select id="bubbleSize">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="actions">
+        <button id="startButton" type="button">Start on this tab</button>
+        <button id="stopButton" type="button" class="secondary">Stop recording</button>
+      </section>
+
+      <p id="status" class="status" role="status">Ready. Open the page you want to record, then start here.</p>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

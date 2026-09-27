@@ -3,6 +3,7 @@ import "server-only";
 import {
   CASE_STUDIES_QUERY,
   CASE_STUDY_BY_SLUG_QUERY,
+  HOME_PAGE_QUERY,
   INSIGHTS_QUERY,
   INSIGHT_BY_SLUG_QUERY,
   JOBS_QUERY,
@@ -13,17 +14,31 @@ import {
   SERVICE_BY_SLUG_QUERY,
 } from "./sanity-queries";
 import { sanityFetchWithFallback } from "./sanity-content";
+import {
+  defaultHomePageContent,
+  type HomeAudiencePanel,
+  type HomeComparisonRow,
+  type HomeDefinition,
+  type HomePageContent,
+  type HomeProofItem,
+  type HomeRecommendation,
+  type HomeServiceCard,
+  type HomeSpecialismCard,
+} from "./homepage-content";
 import type {
   SanityCaseStudy,
   SanityInsight,
   SanityJob,
   SanityCardReference,
+  SanityHomePage,
   SanitySalarySnapshot,
   SanityService,
+  SanityVideo,
   SanityPortableTextBlock,
 } from "./sanity-types";
 import {
   caseStudies as fallbackCaseStudies,
+  homepageFeatureVideo,
   insights as fallbackInsights,
   jobs as fallbackJobs,
   salarySnapshots as fallbackSalarySnapshots,
@@ -34,15 +49,42 @@ import type {
   CTA,
   Insight,
   Job,
+  RichMedia,
   SalarySnapshot,
   Service,
 } from "./types";
+
+type VideoMedia = Extract<RichMedia, { type: "video" }>;
+type SanityHomeDefinition = NonNullable<
+  NonNullable<SanityHomePage["filterSection"]>["definitions"]
+>[number];
+type SanityHomeComparisonRow = NonNullable<
+  NonNullable<SanityHomePage["differenceSection"]>["rows"]
+>[number];
+type SanityHomeAudiencePanel = NonNullable<
+  NonNullable<SanityHomePage["audienceSection"]>["client"]
+>;
+type SanityHomeProofItem = NonNullable<
+  NonNullable<SanityHomePage["proofSection"]>["framework"]
+>[number];
+type SanityHomeRecommendation = NonNullable<
+  NonNullable<SanityHomePage["linkedInSection"]>["recommendations"]
+>[number];
+type SanityHomeSpecialismCard = NonNullable<
+  NonNullable<SanityHomePage["specialismsSection"]>["cards"]
+>[number];
+
+const fallbackHomepageVideo = homepageFeatureVideo as VideoMedia;
 
 const defaultCta: CTA = {
   label: "Talk to David",
   href: "/contact",
   variant: "primary",
 };
+
+const retiredInsightSlugs = new Set([
+  "what-is-a-strategic-interim-marketing-leader",
+]);
 
 function bySlug<T extends { slug: string }>(items: T[], slug?: string) {
   if (!slug) return undefined;
@@ -69,11 +111,446 @@ function referenceSlugs(items: SanityCardReference[] | undefined) {
   );
 }
 
+function valueOrFallback(value: string | undefined, fallback: string) {
+  return value?.trim() || fallback;
+}
+
+function imageUrl(image: SanityVideo["posterImage"]) {
+  return image?.asset?.url;
+}
+
+function mapSanityHomepageMedia(
+  media: SanityVideo | undefined,
+  fallback: VideoMedia = fallbackHomepageVideo,
+): RichMedia {
+  const title =
+    media?.title ||
+    fallback.title ||
+    "David Walsh, founder of Essential Resourcing";
+  const stillImageUrl = imageUrl(media?.stillImage);
+
+  if (stillImageUrl) {
+    return {
+      type: "image",
+      title,
+      src: stillImageUrl,
+      alt:
+        media?.stillImage?.alt ||
+        "David Walsh, founder of Essential Resourcing and marketing recruitment specialist in Manchester",
+      caption: media?.stillImage?.caption,
+    };
+  }
+
+  const uploadedVideoUrl = media?.uploadedVideo?.asset?.url;
+  const url = uploadedVideoUrl || media?.url;
+  const thumbnail = imageUrl(media?.posterImage);
+
+  if (!url && !thumbnail) return fallback;
+
+  return {
+    type: "video",
+    provider: media?.provider || (uploadedVideoUrl ? "upload" : "youtube"),
+    title,
+    url,
+    description: media?.description || fallback.description,
+    thumbnail: thumbnail || fallback.thumbnail,
+    thumbnailAlt:
+      media?.posterImage?.alt ||
+      fallback.thumbnailAlt ||
+      "David Walsh, founder of Essential Resourcing",
+    captionsUrl: media?.captionsUrl,
+    transcript: media?.transcript,
+  };
+}
+
 function cta(value?: CTA, fallback: CTA = defaultCta): CTA {
   return {
     label: value?.label || fallback.label,
     href: value?.href || fallback.href,
     variant: value?.variant || fallback.variant,
+  };
+}
+
+function arrayOrFallback<T>(value: T[] | undefined, fallback: T[]) {
+  return value?.length ? value : fallback;
+}
+
+function cleanDefinitions(
+  value: SanityHomeDefinition[] | undefined,
+  fallback: HomeDefinition[],
+) {
+  const items =
+    value
+      ?.map((item) => ({
+        number: item.number || "",
+        phrase: item.phrase || "",
+        copy: item.copy || "",
+      }))
+      .filter((item) => item.number && item.phrase && item.copy) ?? [];
+
+  return items.length ? items : fallback;
+}
+
+function cleanRows(
+  value: SanityHomeComparisonRow[] | undefined,
+  fallback: HomeComparisonRow[],
+) {
+  const items =
+    value
+      ?.map((item) => ({
+        usual: item.usual || "",
+        essential: item.essential || "",
+      }))
+      .filter((item) => item.usual && item.essential) ?? [];
+
+  return items.length ? items : fallback;
+}
+
+function cleanServiceCards(
+  value: SanityHomePage["serviceCards"],
+  fallback: HomeServiceCard[],
+) {
+  const items =
+    value
+      ?.map((item) => ({
+        slug: item.slug || "",
+        title: item.title || "",
+        proposition: item.proposition || "",
+        description: item.description || "",
+        linkLabel: item.linkLabel || "",
+        href: item.href || (item.slug ? `/services/${item.slug}` : ""),
+      }))
+      .filter((item) => item.slug && item.title && item.href) ?? [];
+
+  return items.length ? items : fallback;
+}
+
+function cleanProofItems(
+  value: SanityHomeProofItem[] | undefined,
+  fallback: HomeProofItem[],
+) {
+  const items =
+    value
+      ?.map((item) => ({
+        title: item.title || "",
+        copy: item.copy || "",
+      }))
+      .filter((item) => item.title && item.copy) ?? [];
+
+  return items.length ? items : fallback;
+}
+
+function cleanRecommendations(
+  value: SanityHomeRecommendation[] | undefined,
+  fallback: HomeRecommendation[],
+) {
+  const items =
+    value
+      ?.map((item) => ({
+        proofPoint: item.proofPoint || "",
+        name: item.name || "",
+        role: item.role || "",
+        date: item.date || "",
+        quote: item.quote || "",
+      }))
+      .filter((item) => item.proofPoint && item.name && item.quote) ?? [];
+
+  return items.length ? items : fallback;
+}
+
+function cleanSpecialismCards(
+  value: SanityHomeSpecialismCard[] | undefined,
+  fallback: HomeSpecialismCard[],
+) {
+  const items =
+    value
+      ?.map((item) => ({
+        slug: item.slug || "",
+        title: item.title || "",
+        description: item.description || "",
+        linkLabel: item.linkLabel || "",
+        href: item.href || (item.slug ? `/specialisms/${item.slug}` : ""),
+      }))
+      .filter((item) => item.slug && item.title && item.href) ?? [];
+
+  return items.length ? items : fallback;
+}
+
+function audiencePanel(
+  value: SanityHomeAudiencePanel | undefined,
+  fallback: HomeAudiencePanel,
+) {
+  return {
+    eyebrow: valueOrFallback(value?.eyebrow, fallback.eyebrow),
+    heading: valueOrFallback(value?.heading, fallback.heading),
+    items: arrayOrFallback(value?.items, fallback.items),
+    ctaLabel: valueOrFallback(value?.ctaLabel, fallback.ctaLabel),
+    ctaHref: valueOrFallback(value?.ctaHref, fallback.ctaHref),
+  };
+}
+
+export async function getPublicHomePage(): Promise<HomePageContent> {
+  const item = await sanityFetchWithFallback<SanityHomePage | null>({
+    query: HOME_PAGE_QUERY,
+    fallback: null,
+    tags: ["homePage"],
+  });
+  const fallback = defaultHomePageContent;
+  const cityImageUrl = item?.citySection?.image?.asset?.url;
+  const linkedInSection = item?.linkedInSection;
+  const specialismsSection = item?.specialismsSection;
+
+  return {
+    ...fallback,
+    heroEyebrow:
+      item?.heroEyebrow || fallback.heroEyebrow,
+    heroHeadline: item?.heroHeadline || fallback.heroHeadline,
+    heroSubheadline: item?.heroSubheadline || fallback.heroSubheadline,
+    heroLede: item?.heroLede || fallback.heroLede,
+    heroPrimaryCta: cta(item?.heroPrimaryCta, fallback.heroPrimaryCta),
+    heroSecondaryCta: cta(item?.heroSecondaryCta, fallback.heroSecondaryCta),
+    premiumMedia: mapSanityHomepageMedia(item?.premiumVideo),
+    proofPoints: item?.proofPoints?.length
+      ? item.proofPoints
+      : fallback.proofPoints,
+    disciplines: arrayOrFallback(item?.disciplines, fallback.disciplines),
+    filterSection: {
+      eyebrow: valueOrFallback(
+        item?.filterSection?.eyebrow,
+        fallback.filterSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.filterSection?.heading,
+        fallback.filterSection.heading,
+      ),
+      paragraphs: arrayOrFallback(
+        item?.filterSection?.paragraphs,
+        fallback.filterSection.paragraphs,
+      ),
+      definitions: cleanDefinitions(
+        item?.filterSection?.definitions,
+        fallback.filterSection.definitions,
+      ),
+    },
+    differenceSection: {
+      eyebrow: valueOrFallback(
+        item?.differenceSection?.eyebrow,
+        fallback.differenceSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.differenceSection?.heading,
+        fallback.differenceSection.heading,
+      ),
+      paragraphs: arrayOrFallback(
+        item?.differenceSection?.paragraphs,
+        fallback.differenceSection.paragraphs,
+      ),
+      comparisonLabelLeft: valueOrFallback(
+        item?.differenceSection?.comparisonLabelLeft,
+        fallback.differenceSection.comparisonLabelLeft,
+      ),
+      comparisonLabelRight: valueOrFallback(
+        item?.differenceSection?.comparisonLabelRight,
+        fallback.differenceSection.comparisonLabelRight,
+      ),
+      rows: cleanRows(
+        item?.differenceSection?.rows,
+        fallback.differenceSection.rows,
+      ),
+    },
+    servicesSection: {
+      eyebrow: valueOrFallback(
+        item?.servicesSection?.eyebrow,
+        fallback.servicesSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.servicesSection?.heading,
+        fallback.servicesSection.heading,
+      ),
+      intro: valueOrFallback(
+        item?.servicesSection?.intro,
+        fallback.servicesSection.intro,
+      ),
+      cards: cleanServiceCards(item?.serviceCards, fallback.servicesSection.cards),
+    },
+    founderSection: {
+      eyebrow: valueOrFallback(
+        item?.founderSection?.eyebrow,
+        fallback.founderSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.founderSection?.heading,
+        fallback.founderSection.heading,
+      ),
+      paragraphs: arrayOrFallback(
+        item?.founderSection?.paragraphs,
+        fallback.founderSection.paragraphs,
+      ),
+      straightTalkHeading: valueOrFallback(
+        item?.founderSection?.straightTalkHeading,
+        fallback.founderSection.straightTalkHeading,
+      ),
+      straightTalkPoints: arrayOrFallback(
+        item?.founderSection?.straightTalkPoints,
+        fallback.founderSection.straightTalkPoints,
+      ),
+    },
+    audienceSection: {
+      heading: valueOrFallback(
+        item?.audienceSection?.heading,
+        fallback.audienceSection.heading,
+      ),
+      client: audiencePanel(
+        item?.audienceSection?.client,
+        fallback.audienceSection.client,
+      ),
+      candidate: audiencePanel(
+        item?.audienceSection?.candidate,
+        fallback.audienceSection.candidate,
+      ),
+    },
+    proofSection: {
+      eyebrow: valueOrFallback(
+        item?.proofSection?.eyebrow,
+        fallback.proofSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.proofSection?.heading,
+        fallback.proofSection.heading,
+      ),
+      intro: valueOrFallback(
+        item?.proofSection?.intro,
+        fallback.proofSection.intro,
+      ),
+      framework: cleanProofItems(
+        item?.proofSection?.framework,
+        fallback.proofSection.framework,
+      ),
+      caseStudyEyebrow: valueOrFallback(
+        item?.proofSection?.caseStudyEyebrow,
+        fallback.proofSection.caseStudyEyebrow,
+      ),
+      caseStudyPrimaryLinkLabel: valueOrFallback(
+        item?.proofSection?.caseStudyPrimaryLinkLabel,
+        fallback.proofSection.caseStudyPrimaryLinkLabel,
+      ),
+      caseStudySecondaryLinkLabel: valueOrFallback(
+        item?.proofSection?.caseStudySecondaryLinkLabel,
+        fallback.proofSection.caseStudySecondaryLinkLabel,
+      ),
+      caveat: valueOrFallback(
+        item?.proofSection?.caveat,
+        fallback.proofSection.caveat,
+      ),
+    },
+    linkedInSection: {
+      eyebrow: valueOrFallback(
+        linkedInSection?.eyebrow,
+        fallback.linkedInSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        linkedInSection?.heading,
+        fallback.linkedInSection.heading,
+      ),
+      intro: valueOrFallback(
+        linkedInSection?.intro,
+        fallback.linkedInSection.intro,
+      ),
+      linkLabel: valueOrFallback(
+        linkedInSection?.linkLabel,
+        fallback.linkedInSection.linkLabel,
+      ),
+      recommendations: cleanRecommendations(
+        linkedInSection?.recommendations,
+        fallback.linkedInSection.recommendations,
+      ),
+    },
+    liveProofSection: {
+      eyebrow: valueOrFallback(
+        item?.liveProofSection?.eyebrow,
+        fallback.liveProofSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.liveProofSection?.heading,
+        fallback.liveProofSection.heading,
+      ),
+      intro: valueOrFallback(
+        item?.liveProofSection?.intro,
+        fallback.liveProofSection.intro,
+      ),
+    },
+    specialismsSection: {
+      eyebrow: valueOrFallback(
+        specialismsSection?.eyebrow,
+        fallback.specialismsSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        specialismsSection?.heading,
+        fallback.specialismsSection.heading,
+      ),
+      cards: cleanSpecialismCards(
+        specialismsSection?.cards,
+        fallback.specialismsSection.cards,
+      ),
+    },
+    manifestoSection: {
+      eyebrow: valueOrFallback(
+        item?.manifestoSection?.eyebrow,
+        fallback.manifestoSection.eyebrow,
+      ),
+      heading: valueOrFallback(
+        item?.manifestoSection?.heading,
+        fallback.manifestoSection.heading,
+      ),
+      lines: arrayOrFallback(
+        item?.manifestoSection?.lines,
+        fallback.manifestoSection.lines,
+      ),
+      signature: valueOrFallback(
+        item?.manifestoSection?.signature,
+        fallback.manifestoSection.signature,
+      ),
+    },
+    citySection: {
+      ariaLabel: valueOrFallback(
+        item?.citySection?.ariaLabel,
+        fallback.citySection.ariaLabel,
+      ),
+      imageSrc: cityImageUrl || fallback.citySection.imageSrc,
+      imageAlt: valueOrFallback(
+        item?.citySection?.image?.alt,
+        fallback.citySection.imageAlt,
+      ),
+      label: valueOrFallback(item?.citySection?.label, fallback.citySection.label),
+      emphasis: valueOrFallback(
+        item?.citySection?.emphasis,
+        fallback.citySection.emphasis,
+      ),
+    },
+    finalCtaSection: {
+      heading: valueOrFallback(
+        item?.finalCtaSection?.heading,
+        fallback.finalCtaSection.heading,
+      ),
+      body: valueOrFallback(
+        item?.finalCtaSection?.body,
+        fallback.finalCtaSection.body,
+      ),
+      primaryCta: cta(
+        item?.finalCtaSection?.primaryCta,
+        fallback.finalCtaSection.primaryCta,
+      ),
+      emailCtaLabel: valueOrFallback(
+        item?.finalCtaSection?.emailCtaLabel,
+        fallback.finalCtaSection.emailCtaLabel,
+      ),
+    },
+    featuredInsightSlugs: item?.featuredInsights?.length
+      ? referenceSlugs(item.featuredInsights)
+      : fallback.featuredInsightSlugs,
+    featuredCaseStudySlugs: item?.featuredCaseStudies?.length
+      ? referenceSlugs(item.featuredCaseStudies)
+      : fallback.featuredCaseStudySlugs,
   };
 }
 
@@ -132,44 +609,60 @@ function bodySections(
 
 function mapService(item: SanityService, fallback?: Service): Service {
   return {
-    title: item.title || fallback?.title || "Untitled service",
+    title: fallback?.title || item.title || "Untitled service",
     slug: item.slug || fallback?.slug || "",
     status: item.status === "draft" ? "draft" : "published",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
-    shortDescription: item.shortDescription || fallback?.shortDescription || "",
-    heroHeadline: item.heroHeadline || fallback?.heroHeadline || item.title,
-    heroSubheadline: item.heroSubheadline || fallback?.heroSubheadline || "",
-    audience: stringsOrFallback(item.whoFor, fallback?.audience),
-    problemsSolved: stringsOrFallback(
-      item.problemsSolved,
-      fallback?.problemsSolved,
-    ),
-    whenToUse: stringsOrFallback(item.whenToUse, fallback?.whenToUse),
-    howEssentialWorks: stringsOrFallback(
-      item.howEssentialWorks,
-      fallback?.howEssentialWorks,
-    ),
-    mistakes: stringsOrFallback(item.commonMistakes, fallback?.mistakes),
-    faqs: item.faqs || fallback?.faqs || [],
-    relatedServiceSlugs: referenceSlugs(item.relatedServices).length
-      ? referenceSlugs(item.relatedServices)
-      : fallback?.relatedServiceSlugs || [],
-    relatedInsightSlugs: referenceSlugs(item.relatedInsights).length
-      ? referenceSlugs(item.relatedInsights)
-      : fallback?.relatedInsightSlugs || [],
-    relatedCaseStudySlugs: referenceSlugs(item.relatedCaseStudies).length
-      ? referenceSlugs(item.relatedCaseStudies)
-      : fallback?.relatedCaseStudySlugs || [],
-    cta: cta(item.cta, fallback?.cta),
-    searchSummary: item.searchSummary || fallback?.searchSummary || "",
-    searchPhrases: stringsOrFallback(
-      item.searchPhrases,
-      fallback?.searchPhrases,
-    ),
-    seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
+    shortDescription: fallback?.shortDescription || item.shortDescription || "",
+    heroHeadline: fallback?.heroHeadline || item.heroHeadline || item.title,
+    heroSubheadline: fallback?.heroSubheadline || item.heroSubheadline || "",
+    audience: fallback ? fallback.audience : strings(item.whoFor),
+    problemsSolved: fallback
+      ? fallback.problemsSolved
+      : strings(item.problemsSolved),
+    whenToUse: fallback ? fallback.whenToUse : strings(item.whenToUse),
+    howEssentialWorks: fallback
+      ? fallback.howEssentialWorks
+      : strings(item.howEssentialWorks),
+    mistakes: fallback ? fallback.mistakes : strings(item.commonMistakes),
+    processEyebrow: fallback?.processEyebrow,
+    processHeading: fallback?.processHeading,
+    processIntro: fallback?.processIntro,
+    processSteps: fallback?.processSteps?.length
+      ? fallback.processSteps
+      : item.processSteps?.length
+        ? item.processSteps
+            .filter((step) => step.title && step.text)
+            .map((step) => ({
+              title: step.title || "",
+              description: step.text || "",
+            }))
+        : undefined,
+    marketFitEyebrow: fallback?.marketFitEyebrow,
+    marketFitHeading: fallback?.marketFitHeading,
+    judgementEyebrow: fallback?.judgementEyebrow,
+    judgementHeading: fallback?.judgementHeading,
+    faqs: fallback ? fallback.faqs : item.faqs || [],
+    relatedServiceSlugs: fallback
+      ? fallback.relatedServiceSlugs
+      : referenceSlugs(item.relatedServices),
+    relatedInsightSlugs: fallback
+      ? fallback.relatedInsightSlugs
+      : referenceSlugs(item.relatedInsights),
+    relatedCaseStudySlugs: fallback
+      ? fallback.relatedCaseStudySlugs
+      : referenceSlugs(item.relatedCaseStudies),
+    cta: cta(fallback?.cta || item.cta),
+    ctaHeading: fallback?.ctaHeading || item.ctaHeading,
+    ctaText: fallback?.ctaText || item.ctaText,
+    searchSummary: fallback?.searchSummary || item.searchSummary || "",
+    searchPhrases: fallback
+      ? fallback.searchPhrases
+      : strings(item.searchPhrases),
+    seoTitle: fallback?.seoTitle || item.seoTitle || item.title,
     metaDescription:
-      item.metaDescription ||
       fallback?.metaDescription ||
+      item.metaDescription ||
       item.shortDescription ||
       "",
   };
@@ -182,21 +675,25 @@ function mapInsight(item: SanityInsight, fallback?: Insight): Insight {
     status: item.status || fallback?.status || "draft",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
     category: item.category || fallback?.category || "Insight",
+    cardCategory: fallback?.cardCategory,
     excerpt: item.excerpt || fallback?.excerpt || "",
+    cardExcerpt: fallback?.cardExcerpt,
     publishedDate: item.publishedDate || fallback?.publishedDate || "",
     updatedDate:
       item.updatedDate || fallback?.updatedDate || item.publishedDate || "",
     readingTime: item.readingTime || fallback?.readingTime || "5 min read",
     author: item.author?.name || fallback?.author || "David Walsh",
     body: bodySections(item.body, fallback?.body),
-    faqs: item.faqs || fallback?.faqs || [],
-    relatedServiceSlugs: referenceSlugs(item.relatedServices).length
+    faqs: item.faqs?.length ? item.faqs : fallback?.faqs || [],
+    relatedServiceSlugs: item.relatedServices?.length
       ? referenceSlugs(item.relatedServices)
       : fallback?.relatedServiceSlugs || [],
-    relatedInsightSlugs: referenceSlugs(item.relatedInsights).length
+    relatedInsightSlugs: item.relatedInsights?.length
       ? referenceSlugs(item.relatedInsights)
       : fallback?.relatedInsightSlugs || [],
     media: fallback?.media,
+    ctaHeading: item.ctaHeading || fallback?.ctaHeading,
+    ctaText: item.ctaText || fallback?.ctaText,
     seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
     metaDescription:
       item.metaDescription || fallback?.metaDescription || item.excerpt || "",
@@ -219,19 +716,46 @@ function mapCaseStudy(item: SanityCaseStudy, fallback?: CaseStudy): CaseStudy {
     serviceSlug: item.serviceUsed?.slug || fallback?.serviceSlug || "",
     challengeSummary: item.challengeSummary || fallback?.challengeSummary || "",
     clientContext:
-      fallback?.clientContext || item.clientType || item.sector || "",
-    hiringChallenge: fallback?.hiringChallenge || item.challengeSummary || "",
-    whyHard: fallback?.whyHard || item.whatMadeItTricky || "",
+      item.clientContext ||
+      fallback?.clientContext ||
+      item.clientType ||
+      item.sector ||
+      "",
+    hiringChallenge:
+      item.hiringChallenge ||
+      fallback?.hiringChallenge ||
+      item.challengeSummary ||
+      "",
+    whyHard: item.whyHard || fallback?.whyHard || item.whatMadeItTricky || "",
     businessProblem: item.businessProblem || fallback?.businessProblem || "",
     whyHireMattered: item.whyHireMattered || fallback?.whyHireMattered || "",
     whatMadeItTricky: item.whatMadeItTricky || fallback?.whatMadeItTricky || "",
-    whatKindOfPerson: fallback?.whatKindOfPerson || item.roleHired || "",
+    whatKindOfPerson:
+      item.whatKindOfPerson ||
+      fallback?.whatKindOfPerson ||
+      item.roleHired ||
+      "",
     approach,
-    process: fallback?.process || approach.join(" "),
+    process: item.process || fallback?.process || approach.join(" "),
     outcome: item.outcome || fallback?.outcome || "",
+    whatChangedHeading: item.whatChangedHeading || fallback?.whatChangedHeading,
     whatChanged: item.whatChanged || fallback?.whatChanged || "",
+    impactHeading: item.impactHeading || fallback?.impactHeading,
     impact: item.commercialImpact || fallback?.impact || "",
     quote: item.testimonialQuote || fallback?.quote,
+    essentialView: item.essentialView?.length
+      ? item.essentialView
+      : fallback?.essentialView,
+    ctaHeading: item.ctaHeading || fallback?.ctaHeading,
+    ctaText: item.ctaText || fallback?.ctaText,
+    ctaLabel: item.ctaLabel || fallback?.ctaLabel,
+    proofLogo: item.proofLogoPath || fallback?.proofLogo,
+    proofLogoAlt: item.proofLogoAlt || fallback?.proofLogoAlt,
+    proofLinkedInUrl: item.proofLinkedInUrl || fallback?.proofLinkedInUrl,
+    proofLinkedInLabel: item.proofLinkedInLabel || fallback?.proofLinkedInLabel,
+    externalSourceUrl: item.externalSourceUrl || fallback?.externalSourceUrl,
+    externalSourceLabel:
+      item.externalSourceLabel || fallback?.externalSourceLabel,
     featured: item.featured ?? fallback?.featured ?? false,
     seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
     metaDescription:
@@ -247,33 +771,39 @@ function mapSalarySnapshot(
   fallback?: SalarySnapshot,
 ): SalarySnapshot {
   return {
-    title: item.title || fallback?.title || "Untitled salary snapshot",
+    title: fallback?.title || item.title || "Untitled salary snapshot",
     slug: item.slug || fallback?.slug || "",
     status: item.status || fallback?.status || "draft",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
-    contentFormat: item.contentFormat || fallback?.contentFormat || "snapshot",
-    quarter: item.quarterDate || fallback?.quarter || "",
-    market: item.market || fallback?.market || "",
-    intro: item.introSummary || fallback?.intro || "",
-    commentary: item.marketCommentary || fallback?.commentary || [],
-    rows:
-      item.salaryTableRows?.map((row) => ({
-        role: row.roleTitle || "",
-        low: row.lowSalary || "",
-        mid: row.midSalary || "",
-        high: row.highSalary || "",
-        notes: row.notes || "",
-      })) ??
-      fallback?.rows ??
-      [],
-    hiringNotes: item.hiringNotes || fallback?.hiringNotes || [],
-    candidateAvailability:
-      item.candidateAvailabilityNotes || fallback?.candidateAvailability || [],
-    takeaways: item.keyTakeaways || fallback?.takeaways || [],
-    seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
+    contentFormat: fallback?.contentFormat || item.contentFormat || "snapshot",
+    quarter: fallback?.quarter || item.quarterDate || "",
+    market: fallback?.market || item.market || "",
+    intro: fallback?.intro || item.introSummary || "",
+    commentary: fallback?.commentary?.length
+      ? fallback.commentary
+      : item.marketCommentary || [],
+    rows: fallback?.rows?.length
+      ? fallback.rows
+      : (item.salaryTableRows?.map((row) => ({
+          role: row.roleTitle || "",
+          low: row.lowSalary || "",
+          mid: row.midSalary || "",
+          high: row.highSalary || "",
+          notes: row.notes || "",
+        })) ?? []),
+    hiringNotes: fallback?.hiringNotes?.length
+      ? fallback.hiringNotes
+      : item.hiringNotes || [],
+    candidateAvailability: fallback?.candidateAvailability?.length
+      ? fallback.candidateAvailability
+      : item.candidateAvailabilityNotes || [],
+    takeaways: fallback?.takeaways?.length
+      ? fallback.takeaways
+      : item.keyTakeaways || [],
+    seoTitle: fallback?.seoTitle || item.seoTitle || item.title,
     metaDescription:
-      item.metaDescription ||
       fallback?.metaDescription ||
+      item.metaDescription ||
       item.introSummary ||
       "",
   };
@@ -504,9 +1034,18 @@ async function fetchSanityList<T>(query: string, tag: string) {
 
 export async function getPublicServices() {
   const items = await fetchSanityList<SanityService>(SERVICES_QUERY, "service");
-  return items.length
-    ? items.map((item) => mapService(item, bySlug(fallbackServices, item.slug)))
-    : fallbackServices;
+  if (!items.length) return fallbackServices;
+
+  return fallbackServices.map((fallback) =>
+    mapService(
+      items.find((item) => item.slug === fallback.slug) || {
+        _id: fallback.slug,
+        title: fallback.title,
+        slug: fallback.slug,
+      },
+      fallback,
+    ),
+  );
 }
 
 export async function getPublicService(slug: string) {
@@ -523,12 +1062,22 @@ export async function getPublicService(slug: string) {
 
 export async function getPublicInsights() {
   const items = await fetchSanityList<SanityInsight>(INSIGHTS_QUERY, "insight");
-  return items.length
-    ? items.map((item) => mapInsight(item, bySlug(fallbackInsights, item.slug)))
-    : fallbackInsights;
+  if (!items.length) return fallbackInsights;
+
+  const mapped = items
+    .filter((item) => !retiredInsightSlugs.has(item.slug))
+    .map((item) => mapInsight(item, bySlug(fallbackInsights, item.slug)));
+  const mappedSlugs = new Set(mapped.map((item) => item.slug));
+  const missingFallbacks = fallbackInsights.filter(
+    (item) => !mappedSlugs.has(item.slug),
+  );
+
+  return [...mapped, ...missingFallbacks];
 }
 
 export async function getPublicInsight(slug: string) {
+  if (retiredInsightSlugs.has(slug)) return undefined;
+
   const fallback = bySlug(fallbackInsights, slug);
   const item = await sanityFetchWithFallback<SanityInsight | null>({
     query: INSIGHT_BY_SLUG_QUERY,
@@ -545,11 +1094,17 @@ export async function getPublicCaseStudies() {
     CASE_STUDIES_QUERY,
     "caseStudy",
   );
-  return items.length
-    ? items.map((item) =>
-        mapCaseStudy(item, bySlug(fallbackCaseStudies, item.slug)),
-      )
-    : fallbackCaseStudies;
+  if (!items.length) return fallbackCaseStudies;
+
+  const mapped = items.map((item) =>
+    mapCaseStudy(item, bySlug(fallbackCaseStudies, item.slug)),
+  );
+  const mappedSlugs = new Set(mapped.map((item) => item.slug));
+  const missingFallbackCaseStudies = fallbackCaseStudies.filter(
+    (caseStudy) => !mappedSlugs.has(caseStudy.slug),
+  );
+
+  return [...mapped, ...missingFallbackCaseStudies];
 }
 
 export async function getPublicCaseStudy(slug: string) {

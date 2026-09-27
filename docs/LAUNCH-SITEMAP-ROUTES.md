@@ -10,10 +10,10 @@ All required launch pages exist and are linked through the header, footer, servi
 - For Clients: `/clients`
 - For Candidates: `/candidates`
 - Services: `/services`
-- Leadership Search: `/services/leadership-search`
-- Strategic Interim: `/services/strategic-interim`
-- Agency Recruitment: `/services/agency-recruitment`
-- Client-side Marketing Recruitment: `/services/client-side-marketing-recruitment`
+- Permanent Recruitment: `/services/permanent-recruitment`
+- Retained Search: `/services/retained-search`
+- Fractional: `/services/fractional`
+- Market Intelligence & Advisory: `/services/market-intelligence-advisory`
 - Marketing and communications specialisms: `/specialisms`
 - Case Studies: `/case-studies`
 - Insights: `/insights`
@@ -29,14 +29,14 @@ All required launch pages exist and are linked through the header, footer, servi
 The top navigation is deliberately client-led:
 
 - Clients
+- Candidates
 - Services
-- Strategic Interim
 - Jobs
-- Insights
+- Insight
 - About
-- Talk to David
 
-The candidate journey still exists, but it does not dominate the header. Candidates can reach it from the homepage, jobs page and footer.
+The four service products sit under Services. Agency-side, client-side, digital,
+PR and communications recruitment are markets/specialisms, not service products.
 
 ## Sitemap Rules
 

@@ -57,7 +57,7 @@ export const labsMarketDashboardDefinitions = [
   },
   {
     slug: "strategic-interim-rate-dashboard",
-    title: "Strategic Interim Rate Dashboard",
+    title: "Fractional Rate Dashboard",
     audience: "Clients needing senior interim marketing or comms support",
     focus: ["interim day rates", "availability", "function demand"],
     requiredSources: [
@@ -67,7 +67,7 @@ export const labsMarketDashboardDefinitions = [
     ],
     confidenceRule:
       "Keep candidate availability aggregate-only and never expose named interim profiles.",
-    leadCapturePath: "/services/strategic-interim",
+    leadCapturePath: "/services/fractional",
   },
   {
     slug: "senior-marketing-leadership-market-snapshot",

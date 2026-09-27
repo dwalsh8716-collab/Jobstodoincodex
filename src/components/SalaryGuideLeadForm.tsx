@@ -96,19 +96,10 @@ export function SalaryGuideLeadForm({
       <div className="form-assurance">
         <strong>Useful salary context. No spam.</strong>
         <span>
-          David will use this to understand what you are planning. Marketing
-          consent is separate and never pre-ticked.
+          David will use your details to understand what you&apos;re planning.
+          Marketing consent is separate and never pre-ticked.
         </span>
       </div>
-      {!enabled ? (
-        <div className="form-trust-panel">
-          <h3>Not live yet</h3>
-          <p>
-            The salary guide request flow is staged. It needs Railway Postgres,
-            email delivery and David approval before launch.
-          </p>
-        </div>
-      ) : null}
       <div className="form-row">
         <label htmlFor="salary-guide-name">Name</label>
         <input
@@ -175,7 +166,7 @@ export function SalaryGuideLeadForm({
         />
       </div>
       <div className="form-row">
-        <label htmlFor="salary-guide-interest">Hiring interest</label>
+        <label htmlFor="salary-guide-interest">What are you looking at?</label>
         <select
           defaultValue=""
           disabled={!enabled}

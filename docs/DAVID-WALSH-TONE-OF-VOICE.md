@@ -145,7 +145,7 @@ Use CTAs that sound natural and useful:
 - Sense-check a brief
 - Talk to David
 - Get honest market advice
-- Discuss Strategic Interim
+- Discuss Fractional
 - Explore Leadership Search
 - Talk through an agency hire
 - Talk through a marketing hire
@@ -159,7 +159,7 @@ Avoid vague or corporate CTAs.
 
 FAQs should answer real buyer questions in plain English.
 
-They should be honest, helpful and direct. If retained search is not right, say so. If a salary is light, say so. If Strategic Interim is better than a permanent hire for now, say so.
+They should be honest, helpful and direct. If retained search is not right, say so. If a salary is light, say so. If Fractional is better than a permanent hire for now, say so.
 
 ## Design Note
 

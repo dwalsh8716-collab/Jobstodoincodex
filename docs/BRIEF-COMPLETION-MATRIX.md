@@ -7,7 +7,7 @@ Status: Implemented.
 - Positioning carried into homepage, services, clients, candidates and about pages.
 - Required phrases included where appropriate.
 - Candidate route exists but does not dominate the homepage.
-- Strategic Interim has a dedicated journey and page.
+- Fractional has a dedicated journey and page.
 
 ## 9-12: Visual Identity, Palette, Typography, Imagery
 
@@ -126,7 +126,7 @@ Status: Implemented as phase-one production structure.
 - Full phase-one site structure created.
 - Not a generic recruitment theme.
 - No fake testimonials or fake logos.
-- Strategic Interim is not buried.
+- Fractional is not buried.
 - Site is scalable and editable.
 
 ## Remaining Manual Inputs

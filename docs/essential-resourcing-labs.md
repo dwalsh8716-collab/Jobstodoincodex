@@ -35,7 +35,7 @@ Labs can hold planning for:
 - functional matrix tools
 - passwordless client shortlists
 - AI-assisted brief builders and client diagnostics
-- Strategic Interim bench workflows
+- Fractional bench workflows
 - live market dashboards
 - future client and candidate portal ideas
 - digital PR data products
@@ -52,7 +52,7 @@ The staged live market dashboard methodology lives in:
 docs/labs-live-market-dashboards.md
 ```
 
-The staged Strategic Interim bench notes live in:
+The staged Fractional bench notes live in:
 
 ```txt
 docs/labs-strategic-interim-bench.md

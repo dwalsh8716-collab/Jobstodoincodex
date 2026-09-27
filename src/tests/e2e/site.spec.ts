@@ -15,7 +15,7 @@ test("homepage loads with accessible hero and navigation", async ({ page }) => {
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: "Specialist marketing, digital and agency recruitment.",
+      name: "Helping businesses make better hiring decisions.",
     }),
   ).toBeVisible();
   await expect(page.locator("h1")).toHaveCount(1);
@@ -31,7 +31,7 @@ test("homepage loads with accessible hero and navigation", async ({ page }) => {
   await servicesLink.click();
   await expect(page).toHaveURL(/\/services$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Marketing and comms hiring",
+    "Start with the problem. Not the recruitment product.",
   );
 });
 
@@ -45,7 +45,10 @@ test("mobile menu opens and closes", async ({ page }) => {
   await expect(
     page.getByRole("navigation", { name: "Primary navigation" }),
   ).toHaveClass(/is-open/);
-  await page.getByRole("link", { name: "Jobs" }).click();
+  await page
+    .getByRole("navigation", { name: "Primary navigation" })
+    .getByRole("link", { name: "Jobs" })
+    .click();
   await expect(page).toHaveURL(/\/jobs$/);
 });
 
@@ -70,7 +73,7 @@ test("contact form validates and returns a safe success state", async ({
   await contactForm
     .locator('textarea[name="message"]')
     .fill("I need help testing the enquiry flow before launch.");
-  await contactForm.getByLabel(/I agree to be contacted/).check();
+  await contactForm.locator('input[name="consent"]').check();
   await contactForm.getByRole("button", { name: "Send enquiry" }).click();
 
   await expect(contactForm.getByRole("status")).toContainText("validated");
@@ -81,11 +84,13 @@ test("contact form validates and returns a safe success state", async ({
 
 test("key public pages load", async ({ page }) => {
   const paths = [
-    "/services/leadership-search",
-    "/services/strategic-interim",
+    "/services/permanent-recruitment",
+    "/services/retained-search",
+    "/services/fractional",
+    "/services/market-intelligence-advisory",
     "/jobs",
     "/jobs/senior-account-director-draft",
-    "/insights/what-is-a-strategic-interim-marketing-leader",
+    "/insights/what-is-a-fractional-marketing-leader",
     "/case-studies",
     "/salary-snapshots",
   ];
@@ -102,7 +107,7 @@ test("key public pages have no obvious WCAG AA violations", async ({
   const paths = [
     "/",
     "/services",
-    "/services/leadership-search",
+    "/services/retained-search",
     "/clients",
     "/candidates",
     "/jobs",
@@ -147,25 +152,41 @@ test("common short launch URLs redirect to canonical pages", async ({
 }) => {
   const redirects = [
     ["/about-david", "/about-david-walsh"],
-    ["/strategic-interim", "/services/strategic-interim"],
-    ["/leadership-search", "/services/leadership-search"],
-    ["/marketing-recruitment", "/services/client-side-marketing-recruitment"],
+    ["/strategic-interim", "/services/fractional"],
+    ["/leadership-search", "/services/retained-search"],
+    ["/marketing-recruitment", "/specialisms"],
     ["/privacy", "/privacy-policy"],
     ["/cookies", "/cookie-policy"],
   ];
 
   for (const [source, destination] of redirects) {
     const response = await request.get(source, { maxRedirects: 0 });
-    expect(response.status()).toBe(308);
+    expect([301, 308]).toContain(response.status());
     expect(response.headers().location).toBe(destination);
   }
+});
+
+test("www hostname redirects to the canonical apex domain", async ({
+  request,
+}) => {
+  const response = await request.get("/services/retained-search", {
+    headers: {
+      host: "www.essentialresourcing.co.uk",
+    },
+    maxRedirects: 0,
+  });
+
+  expect(response.status()).toBe(308);
+  expect(response.headers().location).toBe(
+    "https://essentialresourcing.co.uk/services/retained-search",
+  );
 });
 
 test("404 page displays correctly", async ({ page }) => {
   await page.goto("/definitely-not-a-real-page");
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "That page has gone missing.",
+    "Well, this is awkward.",
   );
   await expect(
     page.locator("#main").getByRole("link", { name: "Talk to David" }),

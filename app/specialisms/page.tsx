@@ -5,10 +5,10 @@ import { specialisms } from "@/lib/content";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "Marketing & Comms Specialisms | Essential Resourcing",
+  title: "Marketing, PR & Digital Specialisms | Essential",
   description:
-    "Specialist recruitment across marketing leadership, PR, communications, digital, performance, content, client services, growth and agency operations.",
-  path: "/specialisms"
+    "Specialist recruitment across marketing, PR, communications, digital, performance, eCommerce and agency client services.",
+  path: "/specialisms",
 });
 
 export default function SpecialismsPage() {
@@ -18,9 +18,13 @@ export default function SpecialismsPage() {
       <section className="section dark">
         <div className="container section-heading">
           <p className="eyebrow">Specialisms</p>
-          <h1>Marketing and communications roles, grouped by judgement rather than job-board noise.</h1>
+          <h1>
+            Marketing, PR, digital and agency recruitment. That&apos;s the
+            patch.
+          </h1>
           <p className="lede">
-            Titles vary across agencies and client-side teams. The important question is what the hire needs to change.
+            Job titles change constantly. The underlying question doesn&apos;t:
+            what does this person actually need to be good at?
           </p>
         </div>
       </section>
@@ -31,14 +35,20 @@ export default function SpecialismsPage() {
               <span className="tag">Specialism</span>
               <h2>{specialism.title}</h2>
               <p>{specialism.description}</p>
-              <Link className="text-link" href="/contact">
-                Discuss this area
+              <Link
+                className="text-link"
+                href={`/specialisms/${specialism.slug}`}
+              >
+                Explore {specialism.title}
               </Link>
             </article>
           ))}
         </div>
       </section>
-      <CTASection title="Not sure where your role fits?" text="Send the brief. David will help sharpen the role before it goes to market." />
+      <CTASection
+        title="Can't see your exact job title?"
+        text="That's probably because there are about 400 different ways to name marketing jobs these days 😂 Send David the brief and he'll tell you whether it's in his patch."
+      />
     </>
   );
 }

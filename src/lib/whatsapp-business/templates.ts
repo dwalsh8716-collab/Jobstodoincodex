@@ -34,10 +34,7 @@ export type WhatsAppTemplateMessage = {
 };
 
 export type WhatsAppInterviewLocationType =
-  | "google_meet"
-  | "physical"
-  | "phone"
-  | "to_be_confirmed";
+  "google_meet" | "physical" | "phone" | "to_be_confirmed";
 
 export type WhatsAppInterviewTemplateInput = {
   trigger: WhatsAppInterviewLogisticsTrigger;
@@ -188,7 +185,7 @@ export function templateForContactPayload(
     };
   }
 
-  if (/strategic interim/i.test(payload.briefType)) {
+  if (/fractional|fractional/i.test(payload.briefType)) {
     return {
       trigger: "strategic_interim_enquiry_received",
       templateName:

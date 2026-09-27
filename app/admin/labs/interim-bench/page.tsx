@@ -16,9 +16,9 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   ...createMetadata({
-    title: "Strategic Interim Bench | Essential Resourcing Labs",
+    title: "Fractional Bench | Essential Resourcing Labs",
     description:
-      "Private, noindexed Labs preview for the future Strategic Interim bench.",
+      "Private, noindexed Labs preview for the future Fractional bench.",
     path: "/admin/labs/interim-bench",
   }),
   robots: {
@@ -46,7 +46,7 @@ export default async function AdminLabsInterimBenchPage() {
       : undefined,
     action: "labs_dashboard_viewed",
     entityType: "labs_dashboard",
-    entityLabel: "Strategic Interim bench preview",
+    entityLabel: "Fractional bench preview",
     metadata: {
       surface: "admin_labs_interim_bench",
       benchFeatureEnabled: preview.status.benchFeatureEnabled,
@@ -61,7 +61,7 @@ export default async function AdminLabsInterimBenchPage() {
       <div className="container">
         <div className="section-heading">
           <p className="eyebrow">Private Labs preview</p>
-          <h1>Strategic Interim bench.</h1>
+          <h1>Fractional bench.</h1>
           <p className="lede">
             A future private bench for vetted interim marketing and comms
             leaders. Useful for David, safe for candidates, invisible to the
@@ -73,9 +73,9 @@ export default async function AdminLabsInterimBenchPage() {
             </Link>
             <Link
               className="button button-secondary"
-              href="/services/strategic-interim"
+              href="/services/fractional"
             >
-              Strategic Interim page
+              Fractional page
             </Link>
           </div>
         </div>

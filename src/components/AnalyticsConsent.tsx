@@ -30,6 +30,8 @@ type StoredConsentPreferences = ConsentPreferences & {
   source?: "custom-banner" | "legacy";
 };
 
+const consentPreferenceLifetimeMs = 180 * 24 * 60 * 60 * 1000;
+
 const analyticsCookiePrefixes = [
   "_ga",
   "_gid",
@@ -70,7 +72,22 @@ function readStoredPreferences(): ConsentPreferences | null {
 
   if (rawPreferences) {
     try {
-      const parsed = JSON.parse(rawPreferences) as Partial<ConsentPreferences>;
+      const parsed = JSON.parse(
+        rawPreferences,
+      ) as Partial<StoredConsentPreferences>;
+      const updatedAt = parsed.updatedAt
+        ? Date.parse(parsed.updatedAt)
+        : Number.NaN;
+
+      if (
+        !Number.isFinite(updatedAt) ||
+        Date.now() - updatedAt > consentPreferenceLifetimeMs
+      ) {
+        window.localStorage.removeItem(consentPreferencesStorageKey);
+        window.localStorage.removeItem(analyticsConsentStorageKey);
+        return null;
+      }
+
       if (
         typeof parsed.analytics === "boolean" &&
         typeof parsed.marketing === "boolean"

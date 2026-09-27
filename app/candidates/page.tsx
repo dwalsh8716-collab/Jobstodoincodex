@@ -1,84 +1,78 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
-import { FAQAccordion } from "@/components/FAQAccordion";
 import { JobCard } from "@/components/Cards";
+import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
+import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { candidateTrustQuestions } from "@/lib/candidate-transparency-content";
-import {
-  candidatePrivacyPath,
-  candidateRetentionStatement,
-} from "@/lib/candidate-trust";
-import { isJobLive, jobs } from "@/lib/content";
-import { createMetadata } from "@/lib/seo";
-
-const candidateFaqs = [
-  {
-    question: "Will my CV be sent anywhere without permission?",
-    answer:
-      "No. Essential does not do pointless CV sending or push candidates into wrong roles.",
-  },
-  {
-    question: "Can I have a confidential conversation?",
-    answer:
-      "Yes. If you are senior, visible in your market or not actively looking, the conversation can stay confidential.",
-  },
-  {
-    question: "Why is there no CV upload?",
-    answer:
-      "Because CVs should be handled properly. Send a LinkedIn URL or short note first; if a CV is useful, David will ask for it directly.",
-  },
-];
-
-const candidateNextStepsPreview = [
-  {
-    title: "Send a short note",
-    copy: "A LinkedIn/profile URL and a few useful lines is enough. No cover-letter theatre.",
-  },
-  {
-    title: "David checks relevance",
-    copy: "If there is a sensible role or market conversation, he will come back to you directly.",
-  },
-  {
-    title: "Nothing goes anywhere without permission",
-    copy: "Your details are not fired around the market or added to a noisy mailing list.",
-  },
-];
+import { isJobLive } from "@/lib/content";
+import { candidatePrivacyPath } from "@/lib/candidate-trust";
+import { getPublicJobs } from "@/lib/public-content";
+import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "Marketing, PR & Digital Careers | Essential Resourcing",
+  title: "Marketing, Digital & PR Jobs | Essential Resourcing",
   description:
-    "Honest candidate support for senior marketing, PR, communications and digital roles. No pointless CV sending.",
+    "Marketing, digital, PR, communications and agency opportunities with straight-talking, confidential recruitment support from David Walsh.",
   path: "/candidates",
 });
 
-export default function CandidatesPage() {
+const candidateRecruitAreas = [
+  "Marketing & Leadership",
+  "Digital, Performance & eCommerce",
+  "PR, Communications & Content",
+  "Agency Client Services & Leadership",
+] as const;
+
+export default async function CandidatesPage() {
+  const jobs = await getPublicJobs();
   const liveJobs = jobs.filter((job) => isJobLive(job));
+  const featuredJobs = liveJobs.slice(0, 3);
 
   return (
-    <>
+    <div className="candidate-page">
       <Breadcrumbs items={[{ name: "Candidates", href: "/candidates" }]} />
-      <section className="section dark">
+
+      <section className="section dark candidate-hero">
         <div className="container section-heading">
           <p className="eyebrow">For candidates</p>
-          <h1>Good roles. Honest advice. No recruitment nonsense.</h1>
+          <h1>
+            Looking for your next move?
+            <br />
+            Or just quietly curious?
+          </h1>
           <p className="lede">
-            If the right role is not live today, you can still get honest
-            salary/process advice and a proper conversation without your CV
-            being fired around the market.
+            Good roles. Honest advice. No recruitment nonsense.
+          </p>
+          <p className="lede">
+            You don’t need to be desperately looking for another job to have a
+            conversation with me.
+          </p>
+          <p className="lede">
+            Maybe you’re actively looking. Maybe something doesn’t feel quite
+            right where you are. Or maybe you’re perfectly happy but you’d still
+            listen if the right thing came along.
+          </p>
+          <p className="lede">
+            I recruit across marketing, digital, PR, communications and
+            agencies, from specialist roles through to senior leadership.
+          </p>
+          <p className="lede">
+            I’ll give you an honest view on the opportunity, salary and market.
+            I won’t push you into something that isn’t right, and your details
+            don’t go anywhere without you knowing about it.
+          </p>
+          <p className="lede">
+            No hard sell. No CV flinging. Just a proper conversation.
           </p>
           <div className="button-row hero-actions">
-            <Link className="button button-primary" href="/jobs">
-              View live roles
+            <Link
+              className="button button-primary"
+              href="#current-opportunities"
+            >
+              See current roles
             </Link>
             <Link className="button button-secondary" href="#candidate-contact">
-              Send a note
-            </Link>
-            <Link
-              className="button button-secondary"
-              href={candidatePrivacyPath}
-            >
-              Candidate privacy
+              Talk to David confidentially
             </Link>
             <WhatsAppButton
               intent="candidates"
@@ -87,69 +81,78 @@ export default function CandidatesPage() {
               variant="secondary"
             />
           </div>
-        </div>
-      </section>
-      <section className="section surface">
-        <div className="container grid grid-3">
-          {[
-            "No pointless CV sending",
-            "No pushing people into wrong roles",
-            "Proper advice on salary, market and process",
-          ].map((item) => (
-            <article className="card" key={item}>
-              <h3>{item}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="section">
-        <div className="container section-heading">
-          <p className="eyebrow">Candidate transparency</p>
-          <h2>You should not have to guess.</h2>
-          <p className="lede">
-            A decent candidate process answers the practical questions before
-            you waste time on a role that was never right.
+          <p className="candidate-credibility-line">
+            Agency-side · Client-side · Permanent · Fractional ·
+            Manchester-led · UK-wide
           </p>
         </div>
-        <div className="container grid grid-3">
-          {candidateTrustQuestions.slice(0, 9).map((question) => (
-            <article className="card" key={question}>
-              <h3>{question}</h3>
-            </article>
-          ))}
-        </div>
       </section>
-      <section className="section">
-        <div className="container section-heading">
-          <p className="eyebrow">Current roles</p>
-          <h2>
-            {liveJobs.length
-              ? "Live roles."
-              : "No live roles published right now."}
-          </h2>
-          <p className="lede">
-            Draft and closed roles stay out of this list. If the right role is
-            sensitive or not public, use the confidential route.
-          </p>
-        </div>
-        {liveJobs.length ? (
-          <div className="container grid grid-3">
-            {liveJobs.map((job) => (
-              <JobCard key={job.slug} job={job} />
-            ))}
+
+      <section className="section surface" aria-labelledby="candidate-world">
+        <div className="container split split-start">
+          <div className="section-heading">
+            <p className="eyebrow">What David recruits</p>
+            <h2 id="candidate-world">
+              Marketing, digital, PR and agency people.
+            </h2>
           </div>
+          <div className="statement-list">
+            <p>That’s my world.</p>
+            <p>I recruit specialist and senior people across:</p>
+            <ul className="candidate-recruit-list">
+              {candidateRecruitAreas.map((area) => (
+                <li key={area}>{area}</li>
+              ))}
+            </ul>
+            <Link className="text-link" href="/specialisms">
+              Explore Specialisms
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="section"
+        id="current-opportunities"
+        aria-labelledby="candidate-jobs"
+      >
+        <div className="container section-heading">
+          <p className="eyebrow">Current opportunities</p>
+          <h2 id="candidate-jobs">Current opportunities.</h2>
+          <p className="lede">
+            Only genuine, published live roles appear here.
+          </p>
+        </div>
+        {featuredJobs.length ? (
+          <>
+            <div className="container grid grid-3">
+              {featuredJobs.map((job) => (
+                <JobCard key={job.slug} job={job} />
+              ))}
+            </div>
+            <div className="container candidate-jobs-actions">
+              <Link className="button button-secondary" href="/jobs">
+                View all current roles
+              </Link>
+            </div>
+          </>
         ) : (
           <div className="container empty-state">
-            <p className="eyebrow">Confidential route</p>
-            <h2>No live roles are published today.</h2>
+            <p className="eyebrow">Nothing right today?</p>
+            <h2>
+              Good roles don’t always appear at exactly the right moment.
+            </h2>
             <p className="lede">
-              Good senior roles are not always public. Send a short note or
-              LinkedIn URL and David can tell you whether there is a sensible
-              conversation to have.
+              And some senior opportunities never make it onto the website.
+            </p>
+            <p className="lede">
+              If you’re quietly curious, send me your LinkedIn profile and a
+              few lines about what would genuinely get your attention. No cover
+              letter needed.
             </p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="#candidate-contact">
-                Send a confidential note
+                Send David a confidential note
               </Link>
               <WhatsAppButton
                 intent="candidates"
@@ -157,50 +160,78 @@ export default function CandidatesPage() {
                 location="candidate_empty_state"
                 variant="secondary"
               />
+              <Link className="button button-secondary" href="/jobs">
+                View all current roles
+              </Link>
             </div>
           </div>
         )}
       </section>
-      <section className="section surface">
-        <div className="container section-heading">
-          <p className="eyebrow">What happens next</p>
-          <h2>Simple, private and not over-engineered.</h2>
-          <p className="lede">
-            The candidate route is deliberately light because good people do not
-            need another portal to remember.
-          </p>
-        </div>
-        <div className="container grid grid-3">
-          {candidateNextStepsPreview.map((step) => (
-            <article className="card" key={step.title}>
-              <span className="tag">Candidate route</span>
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="section muted" id="candidate-contact">
-        <div className="container split">
+
+      <section
+        className="section surface"
+        id="candidate-contact"
+        aria-labelledby="candidate-next-move"
+      >
+        <div className="container candidate-contact-grid">
           <div>
-            <p className="eyebrow">Confidential note</p>
-            <h2>Send your details without the nonsense.</h2>
+            <p className="eyebrow">Your next move</p>
+            <h2 id="candidate-next-move">
+              Actively looking. Quietly curious. Both are fine.
+            </h2>
             <p className="lede">
-              Add a note and LinkedIn URL. If a CV is useful, David will ask for
-              it directly and handle it properly.
+              You don’t need to know exactly what you’re looking for.
             </p>
-            <p className="form-note">{candidateRetentionStatement}</p>
-            <WhatsAppButton
-              intent="candidates"
-              label="Quick WhatsApp to David"
-              location="candidate_contact"
-              variant="secondary"
-            />
+            <p className="lede">
+              Tell me where you’re at and what would genuinely interest you.
+            </p>
+            <p className="lede">
+              If I’ve got something relevant, brilliant. If I haven’t, I won’t
+              invent one.
+            </p>
+            <p>
+              A LinkedIn or profile URL and a few lines is enough to start.
+              There’s no account, no long registration and no faff.
+            </p>
+            <p>
+              Your details are handled under the{" "}
+              <Link className="text-link" href={candidatePrivacyPath}>
+                Candidate Privacy Notice
+              </Link>
+              .
+            </p>
+            <div className="button-row hero-actions">
+              <Link className="button button-primary" href="#candidate-note">
+                Talk to David confidentially
+              </Link>
+              <WhatsAppButton
+                intent="candidates"
+                label="Message David on WhatsApp"
+                location="candidate_final_cta"
+                variant="secondary"
+              />
+            </div>
           </div>
-          <CandidateApplicationDrop type="candidate" />
+          <div id="candidate-note">
+            <CandidateApplicationDrop type="candidate" />
+          </div>
         </div>
       </section>
-      <FAQAccordion faqs={candidateFaqs} />
-    </>
+
+      {liveJobs.length ? (
+        <SchemaScript
+          data={itemListSchema({
+            name: "Essential Resourcing live candidate opportunities",
+            description:
+              "Visible live marketing, digital, PR, communications and agency opportunities handled by Essential Resourcing.",
+            items: liveJobs.map((job) => ({
+              name: job.title,
+              url: `/jobs/${job.slug}`,
+              description: job.summary,
+            })),
+          })}
+        />
+      ) : null}
+    </div>
   );
 }

@@ -19,6 +19,8 @@ function toEmbedUrl(url: string, provider: "youtube" | "vimeo") {
 export function VideoEmbed({ media }: { media: VideoMedia }) {
   const hasUrl = Boolean(media.url);
 
+  if (!hasUrl && !media.thumbnail) return null;
+
   if (media.provider === "upload" && hasUrl) {
     return (
       <figure className="video-block">

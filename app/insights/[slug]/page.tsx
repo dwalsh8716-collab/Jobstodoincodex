@@ -18,6 +18,15 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+function orderBySlug<T extends { slug: string }>(items: T[], slugs: string[]) {
+  const uniqueSlugs = Array.from(new Set(slugs));
+  const ordered = uniqueSlugs
+    .map((slug) => items.find((item) => item.slug === slug))
+    .filter((item): item is T => Boolean(item));
+  const remaining = items.filter((item) => !uniqueSlugs.includes(item.slug));
+  return [...ordered, ...remaining];
+}
+
 export async function generateStaticParams() {
   const insights = await getPublicInsights();
   return insights
@@ -46,18 +55,24 @@ export default async function InsightPage({ params }: Props) {
     getPublicServices(),
     getPublicInsights(),
   ]);
-  const relatedServices = services.filter((service) =>
-    insight.relatedServiceSlugs.includes(service.slug),
+  const relatedServices = orderBySlug(
+    services.filter((service) =>
+      insight.relatedServiceSlugs.includes(service.slug),
+    ),
+    insight.relatedServiceSlugs,
   );
-  const relatedInsights = insights.filter(
-    (item) =>
-      item.status === "published" &&
-      !item.noIndex &&
-      insight.relatedInsightSlugs.includes(item.slug),
+  const relatedInsights = orderBySlug(
+    insights.filter(
+      (item) =>
+        item.status === "published" &&
+        !item.noIndex &&
+        insight.relatedInsightSlugs.includes(item.slug),
+    ),
+    insight.relatedInsightSlugs,
   );
   const isDavidAuthored = insight.author
-    .toLowerCase()
-    .includes(siteConfig.founder.toLowerCase());
+    .trim()
+    .toLowerCase() === siteConfig.founder.toLowerCase();
 
   return (
     <>
@@ -70,11 +85,17 @@ export default async function InsightPage({ params }: Props) {
       <article>
         <section className="section dark">
           <div className="container section-heading">
-            <p className="eyebrow">{insight.category}</p>
+            <p className="eyebrow">
+              {insight.cardCategory || insight.category}
+            </p>
             <h1>{insight.title}</h1>
             <p className="lede">{insight.excerpt}</p>
             <p className="meta">
-              {insight.author} · Published {insight.publishedDate} · Updated{" "}
+              {isDavidAuthored ? (
+                <>By <Link href="/about-david-walsh">David Walsh</Link>, Founder, Essential Resourcing</>
+              ) : (
+                <>By {insight.author}</>
+              )} · Published {insight.publishedDate} · Updated{" "}
               {insight.updatedDate} · {insight.readingTime}
             </p>
             {isDavidAuthored ? (
@@ -119,6 +140,15 @@ export default async function InsightPage({ params }: Props) {
                   ))}
                 </div>
               </div>
+              <div className="card">
+                <span className="tag">How David recruits</span>
+                <Link
+                  className="text-link"
+                  href="/how-essential-resourcing-works"
+                >
+                  See the search and assessment process
+                </Link>
+              </div>
               {relatedInsights.length ? (
                 <div className="card">
                   <span className="tag">Related insights</span>
@@ -141,7 +171,10 @@ export default async function InsightPage({ params }: Props) {
       </article>
       <FAQAccordion faqs={insight.faqs} />
       <CTASection
-        title="Need this thinking applied to a real brief?"
+        title={
+          insight.ctaHeading || "Need this thinking applied to a real brief?"
+        }
+        text={insight.ctaText}
         whatsAppIntent="hiring"
         whatsAppLabel="Message David on WhatsApp"
       />
