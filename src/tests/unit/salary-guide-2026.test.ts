@@ -139,7 +139,7 @@ describe("public 2026 salary guide", () => {
   });
   it("uses the confirmed experience and keeps the guide public", () => {
     expect(salaryEditorial.methodology.content.join(" ")).toContain(
-      "nearly 15 years’ experience recruiting in the market",
+      "more than a decade’s experience recruiting in the market",
     );
     expect(salaryGuideInsight.status).toBe("published");
     expect(salaryGuideInsight.noIndex).toBe(false);

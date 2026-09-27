@@ -15,6 +15,7 @@ import {
   getPublicInsights,
 } from "@/lib/public-content";
 import { createMetadata } from "@/lib/seo";
+import { salaryGuideSlug } from "@/lib/salary-guide-2026";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = createMetadata({
@@ -96,7 +97,7 @@ export default async function HomePage() {
     : heroHeadlineSecondLine;
   const featuredInsights = orderBySlug(
     insights,
-    homePage.featuredInsightSlugs,
+    [...new Set([salaryGuideSlug, ...homePage.featuredInsightSlugs])],
   ).slice(0, 3);
   const publishedCaseStudies = caseStudies.filter(
     (caseStudy) => caseStudy.status === "published",

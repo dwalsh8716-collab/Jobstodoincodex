@@ -1,6 +1,24 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { assertLocalPreview, previewDecision } from "./rebrand-preview-safety.mjs";
+import { createPreviewSession } from "./rebrand-preview-session.mjs";
+
+test("browser access uses a single-use expiring link and private session cookie", () => {
+  let now = 0;
+  const session = createPreviewSession(() => now);
+  const token = new URL(session.url).searchParams.get("token");
+  assert.equal(session.unlock("wrong"), null);
+  assert.equal(session.matches("dwr_preview=wrong"), false);
+  const cookie = session.unlock(token);
+  assert.match(cookie, /HttpOnly; SameSite=Strict/);
+  assert.equal(session.matches(cookie.split(";")[0]), true);
+  assert.equal(session.unlock(token), null);
+  now = 8 * 60 * 60_000 + 1;
+  assert.equal(session.matches(cookie.split(";")[0]), false);
+  const expired = createPreviewSession(() => now);
+  now += 15 * 60_000 + 1;
+  assert.equal(expired.unlock(new URL(expired.url).searchParams.get("token")), null);
+});
 
 const credentials = { username: "reviewer", password: "synthetic-test-credential-only" };
 const authorization = `Basic ${Buffer.from(`${credentials.username}:${credentials.password}`).toString("base64")}`;

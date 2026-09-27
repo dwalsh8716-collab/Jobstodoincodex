@@ -197,7 +197,7 @@ export const salaryEditorial = {
       "Some roles produce a useful body of local evidence. Others, particularly senior agency, brand and Fractional leadership roles, don’t produce a neat local dataset. The planning ranges reflect that difference.",
       "Permanent figures are annual gross base salaries. Bonus, commission, benefits, equity, LTIP, profit share and dividends sit separately, as do employer pension and National Insurance costs. Fractional rates retain the pricing models shown in their table.",
       "The junior ranges also take account of the 2026 National Living Wage context. An annual salary still needs checking against age, contracted hours and the applicable hourly rate.",
-      "And finally, a bit of recruiter nous and noggin. Where the public numbers are thin or messy, I’ve applied nearly 15 years’ experience recruiting in the market and the figures I’d genuinely use when advising a client on a live brief. That’s judgement, and I’d rather be open about it than dress it up as a statistical finding.",
+      "And finally, a bit of recruiter nous and noggin. Where the public numbers are thin or messy, I’ve applied more than a decade’s experience recruiting in the market and the figures I’d genuinely use when advising a client on a live brief. That’s judgement, and I’d rather be open about it than dress it up as a statistical finding.",
       "Salary information changes. For an active hire, sense-check the budget when you’re ready to go to market.",
       "Last reviewed: September 2026.",
     ],

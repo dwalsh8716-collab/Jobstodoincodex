@@ -72,7 +72,7 @@ export default async function InsightsPage() {
           <p className="eyebrow">Insights</p>
           <h1>Useful thinking on marketing hiring. No SEO sludge.</h1>
           <p className="lede">
-            Nearly 13 years of conversations with candidates, clients, agencies
+            More than a decade of conversations with candidates, clients, agencies
             and marketing teams creates a fair few opinions.
           </p>
           <p className="lede">This is where David puts the useful ones.</p>
