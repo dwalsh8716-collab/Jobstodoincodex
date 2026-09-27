@@ -213,7 +213,7 @@ export default function HowEssentialResourcingWorksPage() {
 
       <CTASection
         title="Got a role that needs this level of attention?"
-        text="Start with the problem.\n\nTell me what you’re trying to hire and what you need that person to change.\n\nI’ll tell you how I’d approach it."
+        text={"Start with the problem.\n\nTell me what you’re trying to hire and what you need that person to change.\n\nI’ll tell you how I’d approach it."}
         ctaLabel="Sense-check a brief"
         ctaHref="/contact"
         whatsAppIntent="hiring"

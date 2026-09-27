@@ -145,7 +145,7 @@ export default async function ServicesPage() {
 
       <CTASection
         title="Need good people?"
-        text="Before you put another job description into the market and hope for the best, give me a shout.\n\nOne straight conversation about what you’re trying to achieve.\n\nIf I can help, I’ll tell you how. If I can’t, I’ll tell you that too."
+        text={"Before you put another job description into the market and hope for the best, give me a shout.\n\nOne straight conversation about what you’re trying to achieve.\n\nIf I can help, I’ll tell you how. If I can’t, I’ll tell you that too."}
         ctaLabel="Sense-check a brief"
         ctaHref="/contact"
         whatsAppIntent="hiring"
