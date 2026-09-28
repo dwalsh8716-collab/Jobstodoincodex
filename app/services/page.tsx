@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
+import { ServiceProductCards } from "@/components/ServiceProductCards";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import styles from "@/components/ServicesLanding.module.css";
+import { analyticsAttributes } from "@/lib/analytics";
 import { getPublicServices } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
@@ -12,161 +15,183 @@ export const metadata = createMetadata({
   path: "/services",
 });
 
-const serviceProductOrder = [
-  "permanent-recruitment",
-  "retained-search",
-  "fractional",
-  "market-intelligence-advisory",
-] as const;
-
-const serviceProductCopy = {
-  "permanent-recruitment": {
-    number: "01",
+const serviceProducts = [
+  {
+    slug: "permanent-recruitment",
     title: "Permanent Recruitment",
+    proposition: "Permanent marketing recruitment. Done properly.",
     clientNeed: "We know roughly what we need and want somebody permanently.",
-    proposition: "Good people. Properly recruited.",
-    description:
-      "Success-based recruitment for permanent marketing, digital, PR, communications and agency hires. I get underneath the brief, search properly and give you fewer, better candidates who are actually worth meeting.",
+    description: [
+      "Specialist, success-based recruitment for marketing, digital, PR, communications and agency hires.",
+      "Get underneath the brief. Pressure-test the market. Search beyond applicants. Introduce fewer, better candidates who are actually worth meeting.",
+    ],
     ctaLabel: "Explore Permanent Recruitment",
   },
-  "retained-search": {
-    number: "02",
+  {
+    slug: "retained-search",
     title: "Retained Search",
-    clientNeed: "This hire really matters. We need to search the market properly.",
     proposition: "When the hire matters enough to search the market properly.",
-    description:
-      "A committed search for senior, confidential or commercially important hires. Deeper market mapping, direct approaches and assessment with evidence.",
+    clientNeed:
+      "This hire really matters. We need a committed search of the market.",
+    description: [
+      "A research-led search for senior, confidential, difficult or commercially important appointments.",
+      "Deeper briefing. Market mapping. Direct approaches. Transparent calibration. Proper assessment.",
+    ],
     ctaLabel: "Explore Retained Search",
   },
-  fractional: {
-    number: "03",
+  {
+    slug: "fractional",
     title: "Fractional Leadership",
-    clientNeed: "We need senior capability, but not necessarily five days a week.",
-    proposition: "Senior leadership. For the time you actually need it.",
-    description:
-      "Search and selection for experienced CMOs, Marketing Directors and agency leaders who can get properly into the business without a full-time hire.",
+    proposition:
+      "Senior marketing leadership. Just not necessarily five days a week.",
+    clientNeed:
+      "We need senior capability, but another full-time permanent hire isn't necessarily the answer.",
+    description: [
+      "Work out what leadership the business actually needs, then find an experienced CMO, Marketing Director or senior agency leader who can deliver it.",
+    ],
     ctaLabel: "Explore Fractional Leadership",
   },
-  "market-intelligence-advisory": {
-    number: "04",
+  {
+    slug: "market-intelligence-advisory",
     title: "Market Intelligence & Advisory",
-    clientNeed: "We need to understand the market before deciding what to hire.",
     proposition: "Before you recruit, make sure the brief actually stacks up.",
-    description:
-      "Salary benchmarking, talent mapping, competitor intelligence and hiring advice to help you understand what you need, whether the people exist and what they’re going to cost.",
+    clientNeed:
+      "We're not ready to search yet. We need to understand the market first.",
+    description: [
+      "Salary intelligence, talent mapping, competitor insight, brief design and practical hiring advice to help you decide what — or whether — to hire.",
+    ],
     ctaLabel: "Explore Market Intelligence & Advisory",
   },
-} as const;
+] as const;
+
+function ContactActions({ final = false }: { final?: boolean }) {
+  const label = final ? "Sense-check it with David" : "Talk to David";
+  const location = final ? "services_final" : "services_hero";
+  return (
+    <div className={`button-row ${styles.actions}`}>
+      <Link
+        className="button button-primary"
+        href="/contact"
+        {...analyticsAttributes("cta_click", {
+          label,
+          href: "/contact",
+          location,
+        })}
+      >
+        {label}
+      </Link>
+      <WhatsAppButton
+        intent="hiring"
+        location={location}
+        label={final ? "Message David on WhatsApp" : "WhatsApp David"}
+      />
+    </div>
+  );
+}
 
 export default async function ServicesPage() {
   const publicServices = await getPublicServices();
-  const serviceWays = serviceProductOrder.map((slug) => {
-    const publicService = publicServices.find(
-      (service) => service.slug === slug,
-    );
-    const card = serviceProductCopy[slug];
-
-    return {
-      ...card,
-      title: publicService?.title || card.title,
-      href: `/services/${slug}`,
-    };
-  });
+  const serviceWays = serviceProducts.map((product) => ({
+    ...product,
+    title:
+      publicServices.find((service) => service.slug === product.slug)?.title ||
+      product.title,
+    href: `/services/${product.slug}`,
+  }));
 
   return (
-    <div className="services-page">
+    <div className={styles.page}>
       <Breadcrumbs items={[{ name: "Services", href: "/services" }]} />
 
-      <section className="section dark services-hero">
-        <div className="container services-hero-grid">
-          <div className="section-heading">
-            <p className="eyebrow">Services</p>
-            <h1>Start with the problem. Not the recruitment product.</h1>
-          </div>
-          <div className="services-hero-copy">
-            <p className="lede">
-              You don’t need to know whether you need Permanent Recruitment,
-              Retained Search, Fractional Leadership or market intelligence
-              before we speak.
-            </p>
-            <p>
-              Tell me what you’re trying to hire, what’s not working and what
-              the business actually needs this person to change.
-            </p>
-            <p>Then we’ll work out the right way to solve it.</p>
-          </div>
-        </div>
-      </section>
-
       <section
-        className="section services-route-section"
-        aria-labelledby="services-route-heading"
+        className={`section dark ${styles.hero}`}
+        aria-labelledby="services-title"
       >
-        <div className="container">
-          <div className="services-route-heading">
-            <p className="eyebrow">Find your route</p>
-            <h2 id="services-route-heading">Not sure which route you need?</h2>
+        <div className={`container ${styles.heroGrid}`}>
+          <div>
+            <p className="eyebrow">Services</p>
+            <h1 id="services-title">
+              Start with the problem. Not the recruitment product.
+            </h1>
+          </div>
+          <div className={styles.heroCopy}>
             <p>
-              You know what the problem is. You don’t need to know what
-              recruitment product it’s called.
+              You don&apos;t need to know whether you need Permanent
+              Recruitment, Retained Search, Fractional Leadership or Market
+              Intelligence &amp; Advisory before we speak.
+            </p>
+            <p>
+              Tell me what you&apos;re trying to solve, what&apos;s not working
+              and what the business actually needs.
+            </p>
+            <p>Then we&apos;ll work out the right route.</p>
+            <ContactActions />
+          </div>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="service-ways">
+        <div className="container">
+          <div className={styles.heading}>
+            <p className="eyebrow">Find your route</p>
+            <h2 id="service-ways">Four ways I can help.</h2>
+            <p>
+              You know the problem. You don&apos;t need to know what recruitment
+              product it&apos;s called.
             </p>
           </div>
-          <div className="services-route-grid">
-            {serviceWays.map((service) => (
-              <Link
-                className="services-route-item"
-                href={service.href}
-                key={service.href}
-              >
-                <span>{service.clientNeed}</span>
-                <strong>{service.title}</strong>
-              </Link>
-            ))}
-          </div>
-          <p className="services-route-close">
-            Still not sure? Good. Tell me what you’re trying to solve and I’ll
-            give you a straight view, including if the answer is not to recruit
-            yet. <Link className="text-link" href="/contact">Talk to David</Link>
-          </p>
-        </div>
-      </section>
-
-      <section className="section surface" aria-labelledby="service-ways">
-        <div className="container">
-          <div className="services-section-head">
-            <p className="eyebrow">Services</p>
-            <h2 id="service-ways">Four ways I can help.</h2>
-          </div>
-
-          <div className="service-way-grid">
-            {serviceWays.map((service) => (
-              <Link
-                aria-labelledby={`service-product-${service.number}`}
-                className="service-way-card service-product-card"
-                href={service.href}
-                key={service.href}
-              >
-                <div>
-                  <span className="service-way-number">{service.number}</span>
-                  <h3 id={`service-product-${service.number}`}>
-                    {service.title}
-                  </h3>
-                </div>
-                <p className="service-way-proposition">{service.proposition}</p>
-                <p className="service-way-description">{service.description}</p>
-                <span className="text-link service-way-link">
-                  {service.ctaLabel}
-                </span>
-              </Link>
-            ))}
+          <ServiceProductCards services={serviceWays} />
+          <div className={styles.selectorClose}>
+            <div>
+              <h3>Still not sure? Good.</h3>
+              <p>
+                You don&apos;t need to diagnose the recruitment product
+                yourself.
+              </p>
+              <p>
+                Tell me what you&apos;re trying to solve and I&apos;ll give you
+                a straight view — including if I think the answer is not to
+                recruit yet.
+              </p>
+            </div>
+            <Link className="text-link" href="/contact">
+              Talk to David
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="section dark services-region-band">
-        <div className="container services-region-copy">
+      <section className="section surface" aria-labelledby="services-approach">
+        <div className={`container ${styles.bridge}`}>
+          <div>
+            <p className="eyebrow">How Essential works</p>
+            <h2 id="services-approach">
+              Different routes. Same basic principles.
+            </h2>
+            <p className={styles.bridgeCopy}>
+              Whichever route makes sense, the thinking underneath it
+              doesn&apos;t change.
+            </p>
+            <Link className="text-link" href="/how-essential-resourcing-works">
+              See how Essential Resourcing works
+            </Link>
+          </div>
+          <ul className={styles.principles}>
+            <li>Get underneath the problem.</li>
+            <li>Reality-check the market.</li>
+            <li>Look beyond who&apos;s available.</li>
+            <li>Get behind the evidence.</li>
+            <li>Help you make the decision.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="section dark" aria-labelledby="services-coverage">
+        <div className={`container ${styles.coverage}`}>
           <p className="eyebrow">Agency-side. Client-side. UK-wide.</p>
-          <h2>Manchester-led. North West-rooted. UK-wide.</h2>
+          <h2 id="services-coverage">
+            Manchester-led. North West-rooted. UK-wide.
+          </h2>
           <p>
             Essential Resourcing has its roots in Manchester and the North West,
             with particularly deep experience across the marketing and agency
@@ -180,14 +205,36 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <CTASection
-        title="Need good people?"
-        text={"Before you put another job description into the market and hope for the best, give me a shout.\n\nOne straight conversation about what you’re trying to achieve.\n\nIf I can help, I’ll tell you how. If I can’t, I’ll tell you that too."}
-        ctaLabel="Sense-check a brief"
-        ctaHref="/contact"
-        whatsAppIntent="hiring"
-        whatsAppLabel="Message David on WhatsApp"
-      />
+      <section
+        className="section-tight dark"
+        aria-labelledby="services-next-step"
+      >
+        <div className="container">
+          <p className="eyebrow">Next step</p>
+          <h2 id="services-next-step">Not sure which route you need?</h2>
+          <div className={styles.finalCopy}>
+            <p>Good.</p>
+            <p>Tell me what you&apos;re trying to solve.</p>
+            <p>
+              If it&apos;s a straightforward Permanent search, I&apos;ll tell
+              you.
+            </p>
+            <p>
+              If it needs Retained Search, Fractional Leadership or some market
+              work first, I&apos;ll tell you that too.
+            </p>
+            <p>
+              And if I don&apos;t think you should recruit yet, that&apos;s a
+              perfectly valid answer.
+            </p>
+          </div>
+          <ContactActions final />
+          <p className={styles.closing}>
+            Start with the problem. We&apos;ll work out the recruitment product
+            afterwards.
+          </p>
+        </div>
+      </section>
 
       <SchemaScript
         data={itemListSchema({

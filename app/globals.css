@@ -432,390 +432,6 @@ p {
   padding-left: 0.15rem;
 }
 
-.services-page .section-heading {
-  margin-bottom: 0;
-}
-
-.services-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.62fr);
-  gap: clamp(34px, 7vw, 96px);
-  align-items: end;
-}
-
-.services-hero h1 {
-  max-width: 900px;
-}
-
-.services-hero-copy {
-  display: grid;
-  gap: 16px;
-  max-width: 580px;
-  padding-top: 22px;
-  border-top: 1px solid var(--color-dark-line);
-}
-
-.services-hero-copy p:not(.lede) {
-  color: rgba(246, 244, 239, 0.74);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
-.services-hero-kicker {
-  margin-top: 10px;
-  color: var(--color-primary-on-dark) !important;
-  font-weight: 900;
-}
-
-.services-route-heading {
-  max-width: 760px;
-  margin-bottom: 26px;
-}
-
-.services-route-section {
-  padding-block: 62px;
-}
-
-.services-route-heading h2 {
-  margin-bottom: 16px;
-  font-size: 3.1rem;
-  line-height: 1.08;
-}
-
-.services-route-heading p:not(.eyebrow),
-.services-route-close {
-  color: var(--color-text-muted);
-  line-height: 1.65;
-}
-
-.services-route-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 30px;
-}
-
-.services-route-item {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: center;
-  min-width: 0;
-  min-height: 84px;
-  border-top: 1px solid var(--color-line);
-  padding: 18px 0;
-  color: var(--color-ink);
-  text-decoration: none;
-}
-
-.services-route-item span {
-  color: var(--color-text-muted);
-  line-height: 1.45;
-}
-
-.services-route-item strong {
-  max-width: 185px;
-  line-height: 1.25;
-  text-align: right;
-}
-
-.services-route-item:hover strong,
-.services-route-item:focus-visible strong {
-  color: var(--color-accent-readable);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.services-route-close {
-  max-width: 860px;
-  margin-top: 22px;
-}
-
-.services-route-close .text-link {
-  margin-left: 4px;
-}
-
-.services-section-head,
-.services-specialism-intro {
-  max-width: 760px;
-  margin-bottom: clamp(30px, 5vw, 58px);
-}
-
-.service-way-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 2.5vw, 28px);
-  align-items: stretch;
-}
-
-.service-way-card {
-  position: relative;
-  display: grid;
-  gap: clamp(18px, 2.2vw, 28px);
-  min-height: clamp(330px, 35vw, 430px);
-  overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-sm);
-  background: var(--surface-sheen), var(--color-bg);
-  padding: clamp(24px, 3.5vw, 42px);
-  box-shadow: 0 1px 0 rgba(16, 17, 20, 0.03);
-  text-decoration: none;
-  transition:
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    transform 220ms ease,
-    background 220ms ease;
-}
-
-.service-way-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-readable),
-    color-mix(in srgb, var(--color-primary) 82%, var(--color-accent-readable))
-  );
-}
-
-.service-way-card:hover,
-.service-way-card:focus-visible {
-  border-color: color-mix(
-    in srgb,
-    var(--color-accent-readable) 54%,
-    var(--color-line)
-  );
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--color-surface) 94%, var(--color-accent-readable)),
-    var(--color-bg)
-  );
-  box-shadow: 0 22px 52px rgba(16, 17, 20, 0.1);
-  transform: translateY(-3px);
-}
-
-.service-product-card {
-  grid-template-rows: auto auto 1fr auto;
-}
-
-.service-way-head {
-  display: grid;
-  gap: 14px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--color-line);
-}
-
-.service-way-number {
-  color: var(--color-accent-readable);
-  font-size: 0.76rem;
-  font-weight: 950;
-  letter-spacing: 0;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.service-way-head h3 {
-  max-width: 720px;
-  font-size: clamp(2.2rem, 4vw, 3.55rem);
-  line-height: 0.98;
-}
-
-.service-product-card h3 {
-  margin-top: 18px;
-  max-width: 620px;
-  color: var(--color-ink);
-  font-size: clamp(2.35rem, 4vw, 3.75rem);
-  font-weight: 700;
-  line-height: 0.98;
-  transition: color 220ms ease;
-}
-
-.service-way-proposition {
-  max-width: 560px;
-  color: var(--color-ink);
-  font-size: clamp(1.25rem, 2vw, 1.72rem);
-  font-weight: 850;
-  line-height: 1.18;
-}
-
-.service-way-description {
-  max-width: 610px;
-  align-self: start;
-  color: var(--color-text-muted);
-  font-size: 1.02rem;
-  line-height: 1.65;
-}
-
-.service-way-link {
-  align-self: end;
-  justify-self: start;
-}
-
-.service-product-card:hover .service-way-link,
-.service-product-card:focus-visible .service-way-link {
-  color: var(--color-accent-readable);
-}
-
-.service-way-head p,
-.service-way-copy p,
-.service-way-detail p,
-.service-advisory-grid p,
-.services-choice-copy p,
-.services-region-copy p {
-  color: var(--color-text-muted);
-  line-height: 1.7;
-}
-
-.service-way-copy,
-.services-choice-copy,
-.services-region-copy {
-  display: grid;
-  gap: 14px;
-}
-
-.service-way-card h4 {
-  color: var(--color-ink);
-  font-size: 0.82rem;
-  font-weight: 950;
-  letter-spacing: 0;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.service-good-for {
-  display: grid;
-  gap: 10px;
-  margin: 14px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.service-good-for li {
-  position: relative;
-  padding-left: 22px;
-  color: var(--color-text-muted);
-  line-height: 1.55;
-}
-
-.service-good-for li::before {
-  content: "";
-  position: absolute;
-  top: 0.72em;
-  left: 0;
-  width: 10px;
-  height: 2px;
-  background: var(--color-accent-readable);
-}
-
-.service-way-detail {
-  display: grid;
-  gap: 14px;
-  padding-top: 20px;
-  border-top: 1px solid var(--color-line);
-}
-
-.service-detail-lines {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 20px;
-}
-
-.service-way-kicker {
-  align-self: end;
-  padding-top: 18px;
-  border-top: 1px solid var(--color-line);
-  color: var(--color-ink);
-  font-size: 1.08rem;
-  font-weight: 950;
-  line-height: 1.35;
-}
-
-.service-advisory-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  padding-top: 22px;
-  border-top: 1px solid var(--color-line);
-}
-
-.service-advisory-grid div {
-  min-width: 0;
-  padding-left: 16px;
-  border-left: 2px solid
-    color-mix(in srgb, var(--color-accent-readable) 72%, transparent);
-}
-
-.service-advisory-grid h4 + p {
-  margin-top: 10px;
-}
-
-.services-choice-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(360px, 0.78fr);
-  gap: clamp(30px, 6vw, 86px);
-  align-items: start;
-}
-
-.services-option-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 6px 0;
-}
-
-.services-option-list span {
-  border-top: 1px solid var(--color-line);
-  padding-top: 10px;
-  color: var(--color-ink);
-  font-weight: 950;
-}
-
-.services-specialisms {
-  background: var(--color-bg);
-}
-
-.services-specialism-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-sm);
-  background: var(--color-line);
-}
-
-.services-specialism-card {
-  min-height: 220px;
-  background: var(--color-surface);
-  padding: clamp(20px, 2.4vw, 28px);
-}
-
-.services-specialism-card h3 {
-  font-size: clamp(1.32rem, 2vw, 1.74rem);
-}
-
-.services-specialism-card p {
-  margin-top: 14px;
-  color: var(--color-text-muted);
-  line-height: 1.58;
-}
-
-.services-specialism-link {
-  margin-top: 28px;
-}
-
-.services-region-copy {
-  max-width: 850px;
-}
-
-.services-region-copy h2 {
-  margin-bottom: 22px;
-}
-
-.services-region-copy p {
-  color: rgba(246, 244, 239, 0.76);
-  font-size: 1.08rem;
-}
 
 .clients-hero-grid,
 .process-hero-grid {
@@ -4863,18 +4479,10 @@ fieldset.form-row legend {
   .clients-process-intro,
   .clients-why-grid,
   .candidate-contact-grid,
-  .services-hero-grid,
-  .services-choice-panel,
   .split {
     grid-template-columns: 1fr;
   }
 
-  .service-way-card:nth-child(3),
-  .service-way-card:nth-child(4) {
-    grid-column: auto;
-  }
-
-  .service-advisory-grid,
   .clients-core-specialism-grid,
   .clients-hire-grid,
   .clients-benefit-grid,
@@ -4882,8 +4490,7 @@ fieldset.form-row legend {
   .clients-service-grid,
   .candidate-specialism-grid,
   .candidate-expectations-grid,
-  .process-related-grid,
-  .services-specialism-grid {
+  .process-related-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -4908,10 +4515,6 @@ fieldset.form-row legend {
 
   .clients-process-track {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .service-detail-lines {
-    grid-template-columns: 1fr;
   }
 
   .grid-2 {
@@ -5144,16 +4747,6 @@ fieldset.form-row legend {
   }
 }
 
-@media (max-width: 740px) {
-  .service-way-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .services-route-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 640px) {
   body {
     padding-bottom: 74px;
@@ -5224,39 +4817,6 @@ fieldset.form-row legend {
     max-width: calc(100vw - 48px);
   }
 
-  .services-hero-copy {
-    padding-top: 18px;
-  }
-
-  .services-route-section {
-    padding-block: 48px;
-  }
-
-  .services-route-heading h2 {
-    font-size: 2.2rem;
-  }
-
-  .services-route-item {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  .services-route-item strong {
-    max-width: none;
-    text-align: left;
-  }
-
-  .service-way-card {
-    grid-template-rows: auto;
-    padding: 22px;
-  }
-
-  .service-way-head h3 {
-    font-size: 2rem;
-    line-height: 1.04;
-  }
-
-  .service-advisory-grid,
   .clients-core-specialism-grid,
   .clients-hire-grid,
   .clients-benefit-grid,
@@ -5267,9 +4827,7 @@ fieldset.form-row legend {
   .candidate-expectations-grid,
   .candidate-contact-grid,
   .process-principle-lines,
-  .process-related-grid,
-  .services-option-list,
-  .services-specialism-grid {
+  .process-related-grid {
     grid-template-columns: 1fr;
   }
 
@@ -5295,10 +4853,6 @@ fieldset.form-row legend {
   .process-stage-card {
     grid-template-columns: 1fr;
     gap: 18px;
-  }
-
-  .services-specialism-card {
-    min-height: 0;
   }
 
   .brand {
