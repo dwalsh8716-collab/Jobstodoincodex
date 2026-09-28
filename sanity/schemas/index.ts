@@ -1,6 +1,7 @@
 import { icons } from "@sanity/icons";
 import type { ComponentType } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { caseStudySearchStory } from "./caseStudySearchStory";
 
 // Sanity is the public website CMS. Do not add private candidate records,
 // client contact records, CV files, DSAR requests, audit logs or internal notes here.
@@ -2833,6 +2834,16 @@ const caseStudy = defineType({
   icon: CaseIcon,
   fields: [
     defineField({
+      name: "searchStory",
+      title: "Havas search story",
+      type: "caseStudySearchStory",
+      description:
+        "Headings, search stages and proof points for the Havas page. The existing client context, business problem, challenge, wider impact, quote, links and CTA fields are still used below. The layout stays protected in code.",
+      hidden: ({ document }) =>
+        (document?.slug as { current?: string } | undefined)?.current !==
+        "havas-media-manchester-managing-partner-james-reddington",
+    }),
+    defineField({
       name: "contentVersion",
       title: "Content model version",
       type: "number",
@@ -3591,6 +3602,7 @@ const labsIdea = defineType({
 });
 
 export const schemaTypes = [
+  caseStudySearchStory,
   siteSettings,
   homePage,
   jobsPage,

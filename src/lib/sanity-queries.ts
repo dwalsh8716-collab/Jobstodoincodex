@@ -253,6 +253,7 @@ const insightFields = /* groq */ `
 
 const caseStudyFields = /* groq */ `
   _id,
+  searchStory,
   contentVersion,
   title,
   "slug": slug.current,

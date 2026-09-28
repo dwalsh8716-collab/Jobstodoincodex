@@ -123,6 +123,7 @@ export type Insight = {
 };
 
 export type CaseStudy = {
+  searchStory?: import("./havas-search-story").CaseStudySearchStory;
   title: string;
   slug: string;
   status: "published" | "draft";

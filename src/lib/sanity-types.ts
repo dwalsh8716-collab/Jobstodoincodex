@@ -484,6 +484,7 @@ export type SanityInsight = SanitySeo & {
 };
 
 export type SanityCaseStudy = SanitySeo & {
+  searchStory?: import("./havas-search-story").CaseStudySearchStory;
   _id: string;
   title: string;
   slug: string;

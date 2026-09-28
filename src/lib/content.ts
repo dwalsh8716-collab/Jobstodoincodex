@@ -1,4 +1,5 @@
 import { salaryGuideInsight } from "./salary-guide-2026";
+import { havasSearchStory } from "./havas-search-story";
 import type {
   CaseStudy,
   ClientProofQuote,
@@ -2745,6 +2746,7 @@ export const aiSearchQuestions = [
 export const caseStudies: CaseStudy[] = [
   {
     title: "Hiring a Managing Partner for Havas Media Manchester",
+    searchStory: havasSearchStory,
     slug: "havas-media-manchester-managing-partner-james-reddington",
     status: "published",
     clientType: "Havas Media Manchester",

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
+import { HavasCaseStudy } from "@/components/HavasCaseStudy";
 import {
   getPublicCaseStudies,
   getPublicCaseStudy,
@@ -56,6 +57,19 @@ export default async function CaseStudyPage({ params }: Props) {
   const caseStudy = await getPublicCaseStudy(slug);
   if (!caseStudy || caseStudy.status !== "published") notFound();
   const service = await getPublicService(caseStudy.serviceSlug);
+
+  if (
+    slug === "havas-media-manchester-managing-partner-james-reddington" &&
+    caseStudy.searchStory
+  ) {
+    return (
+      <HavasCaseStudy
+        study={caseStudy}
+        story={caseStudy.searchStory}
+        serviceTitle={service?.title || "Retained Search"}
+      />
+    );
+  }
 
   return (
     <>

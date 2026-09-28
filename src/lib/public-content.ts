@@ -786,6 +786,7 @@ function mapCaseStudy(item: SanityCaseStudy, fallback?: CaseStudy): CaseStudy {
   const approach = item.howWeDeriskedIt ?? fallback?.approach ?? [];
 
   return {
+    searchStory: item.searchStory ?? fallback?.searchStory,
     title: item.title ?? fallback?.title ?? "Untitled case study",
     slug: item.slug ?? fallback?.slug ?? "",
     status: item.status ?? fallback?.status ?? "draft",
