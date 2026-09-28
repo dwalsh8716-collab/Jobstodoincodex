@@ -3362,7 +3362,7 @@ export function getGoogleJobPostingIssues(
     issues.push("job_title_not_plain_role_title");
   }
 
-  if (!job.postedDate.trim() && !job.publishedDate.trim()) {
+  if (!job.postedDate.trim()) {
     issues.push("job_posted_date_missing");
   }
 

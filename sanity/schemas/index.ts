@@ -2000,8 +2000,8 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
     return "Use the plain role title only. No salary, urgency, brand stuffing or punctuation tricks.";
   }
 
-  if (!cmsText(document.publishedDate) && !cmsText(document.postedDate)) {
-    return "Add a posted or published date before marking the role live.";
+  if (!cmsText(document.postedDate)) {
+    return "Add the original posted date before marking the role live.";
   }
 
   if (!cmsText(document.hiringOrganizationName)) {
@@ -2630,8 +2630,10 @@ const job = defineType({
     }),
     defineField({
       name: "publishedDate",
-      title: "Published date",
+      title: "Legacy published date (existing adverts)",
       type: "date",
+      description:
+        "Kept for older job records. Use Google Jobs: original posted date for new adverts.",
     }),
     defineField({
       name: "postedDate",

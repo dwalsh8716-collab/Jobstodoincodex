@@ -205,6 +205,14 @@ describe("candidate transparency foundation", () => {
     expect(
       getGoogleJobPostingIssues({
         ...transparentJob,
+        postedDate: "",
+        publishedDate: "2026-06-10",
+      }),
+    ).toContain("job_posted_date_missing");
+
+    expect(
+      getGoogleJobPostingIssues({
+        ...transparentJob,
         applicationFormEnabled: false,
         applicationEmail: "",
       }),
