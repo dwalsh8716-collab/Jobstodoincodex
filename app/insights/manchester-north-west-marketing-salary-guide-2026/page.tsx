@@ -95,7 +95,10 @@ const navigation = [
 ];
 
 export default function SalaryGuidePage() {
-  const schema = articleSchema(guide);
+  const schema = {
+    ...articleSchema(guide),
+    image: absoluteUrl("/assets/salary-guide-2026-social.png"),
+  };
   const salarySenseCheckWhatsAppUrl = buildWhatsAppUrl({
     number: siteConfig.whatsApp.number,
     message:

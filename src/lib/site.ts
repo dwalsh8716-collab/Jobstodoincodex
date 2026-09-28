@@ -89,7 +89,7 @@ export const siteConfig = {
     "Marketing Recruitment Agency Manchester & North West | Essential Resourcing",
   defaultDescription:
     "Specialist marketing, digital, PR and agency recruitment across Manchester, the North West and UK. Permanent, retained, fractional and advisory support.",
-  ogImage: "/assets/og-image.png",
+  ogImage: "/assets/essential-resourcing-social-2026.png",
   logoDark: "/assets/logo-dark.svg",
   logoLight: "/assets/logo-light.svg",
   iconDark: "/assets/icon-dark.svg",

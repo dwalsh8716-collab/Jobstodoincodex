@@ -577,9 +577,9 @@ export const services: Service[] = [
       "fractional CMO",
       "fractional marketing director",
       "fractional marketing leader",
-      "interim CMO",
-      "interim marketing director",
-      "senior marketing interim North West",
+      "fractional marketing leadership Manchester",
+      "fractional agency leadership",
+      "fractional marketing leadership North West",
     ],
     seoTitle: "Fractional Marketing Leadership | Essential Resourcing",
     metaDescription:
