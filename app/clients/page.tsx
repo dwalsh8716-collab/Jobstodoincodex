@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { specialisms } from "@/lib/content";
+import { SpecialismRoutes } from "@/components/SpecialismRoutes";
+import styles from "@/components/AudiencePages.module.css";
 import { getPublicCaseStudies } from "@/lib/public-content";
 import { createMetadata } from "@/lib/seo";
 
@@ -57,7 +58,7 @@ const clientQuestions = [
   {
     title: "How much does marketing recruitment cost?",
     answer:
-      "It depends on the search model, salary and complexity of the hire. Permanent recruitment is generally success-based; retained search and Fractional work differently.",
+      "It depends on the search model, salary and complexity of the hire. Permanent Recruitment is generally success-based; Retained Search and Fractional Leadership work differently.",
     linkLabel: "Read: How much does senior marketing recruitment cost?",
     href: "/insights/how-much-does-senior-marketing-recruitment-cost",
   },
@@ -95,7 +96,7 @@ export default async function ClientsPage() {
   );
 
   return (
-    <div className="clients-page">
+    <div className={`clients-page ${styles.page}`}>
       <Breadcrumbs items={[{ name: "Clients", href: "/clients" }]} />
 
       <section className="section dark clients-hero">
@@ -124,9 +125,6 @@ export default async function ClientsPage() {
               <Link className="button button-primary" href="/contact">
                 Sense-check a brief
               </Link>
-              <Link className="button button-secondary" href="/contact">
-                Talk to David
-              </Link>
               <WhatsAppButton
                 intent="hiring"
                 label="Message David on WhatsApp"
@@ -134,6 +132,7 @@ export default async function ClientsPage() {
                 variant="secondary"
               />
             </div>
+            <Link className="text-link" href="/how-essential-resourcing-works">See how Essential works</Link>
           </div>
         </div>
       </section>
@@ -167,22 +166,8 @@ export default async function ClientsPage() {
             Specialist, not generalist. That’s the point.
           </p>
         </div>
-        <div className="container clients-core-specialism-grid">
-          {specialisms.map((area, index) => (
-            <Link
-              className="card lift-card clients-core-specialism-card"
-              href={`/specialisms/${area.slug}`}
-              key={area.slug}
-            >
-              <span className="tag">
-                {String(index + 1).padStart(2, "0")} — Specialism
-              </span>
-              <h3>{area.title}</h3>
-              <p className="clients-core-specialism-summary">
-                {area.description}
-              </p>
-            </Link>
-          ))}
+        <div className="container">
+          <SpecialismRoutes />
         </div>
         <div className="container clients-subtle-link-row">
           <p>For the full picture, explore the specialisms in more detail.</p>
@@ -193,27 +178,20 @@ export default async function ClientsPage() {
       </section>
 
       <section className="section muted" aria-labelledby="recruiter-value">
-        <div className="container clients-recruiter-value">
+        <div className="container">
           <div className="clients-recruiter-copy">
-            <p className="eyebrow">When recruitment earns its money</p>
+            <p className="eyebrow">When a recruiter earns their money</p>
             <h2 id="recruiter-value">
-              Why use a recruiter when I can advertise the role myself?
+              Not every vacancy needs a recruiter.
             </h2>
-            <p className="lede">Sometimes you shouldn’t.</p>
-            <p>
-              There. Probably not what you’d expect on a recruitment website. 😂
-            </p>
             <p>
               If you’ve got a straightforward role, a strong employer brand and
               plenty of relevant applicants, recruit it yourself. Seriously.
             </p>
-            <p>That’s when recruitment should add value.</p>
-            <p>Not by creating more activity.</p>
-            <p>By helping you make a better decision.</p>
+            <p>Recruitment should add value when the market or decision becomes harder.</p>
           </div>
-          <div className="clients-trigger-panel">
-            <h3>Where a specialist recruiter starts earning their money:</h3>
-            <ul className="clients-check-list">
+          <div>
+            <ul className={styles.triggers}>
               {recruiterValueTriggers.map((trigger) => (
                 <li key={trigger}>{trigger}</li>
               ))}
@@ -229,21 +207,25 @@ export default async function ClientsPage() {
             What does a good recruitment search actually give you?
           </h2>
         </div>
-        <div className="container clients-benefit-grid">
+        <div className="container">
+          <ol className={styles.searchValues}>
           {betterSearchBlocks.map((block) => (
-            <article className="card clients-benefit-card" key={block.title}>
-              <span className="tag">
-                {block.number} — {block.title}
-              </span>
-              <p>{block.copy}</p>
-            </article>
+            <li key={block.title}>
+              <span aria-hidden="true">{block.number}</span>
+              <div><h3>{block.title}</h3><p>{block.copy}</p></div>
+            </li>
           ))}
+          </ol>
         </div>
         <div className="container clients-closing-line">
           <p>Fewer CVs. Better conversations. Better hiring decisions.</p>
           <Link className="text-link" href="/how-essential-resourcing-works">
-            See exactly how I recruit
+            See exactly how Essential works
           </Link>
+          <div className={styles.serviceContext}>
+            <p>Choose the right route: <Link href="/services/permanent-recruitment">Permanent Recruitment</Link>, <Link href="/services/retained-search">Retained Search</Link> or <Link href="/services/fractional">Fractional Leadership</Link>. If the brief needs work first, start with <Link href="/services/market-intelligence-advisory">Market Intelligence &amp; Advisory</Link>.</p>
+            <Link className="text-link" href="/services">Compare the four services</Link>
+          </div>
         </div>
       </section>
 
@@ -254,7 +236,7 @@ export default async function ClientsPage() {
         </div>
         <div className="container clients-proof-grid">
           {havasCaseStudy ? (
-            <article className="card lift-card clients-proof-card">
+            <article className={styles.proofPanel}>
               <span className="tag">Case study</span>
               {havasCaseStudy.proofLogo ? (
                 <Image
@@ -269,7 +251,11 @@ export default async function ClientsPage() {
                 />
               ) : null}
               <h3>{havasCaseStudy.title}</h3>
-              <p>{havasCaseStudy.challengeSummary}</p>
+              <dl className={styles.proofFacts}>
+                <div><dt>Role</dt><dd>{havasCaseStudy.roleHired}</dd></div>
+                <div><dt>Service</dt><dd>Retained Search</dd></div>
+                <div><dt>Outcome</dt><dd>{havasCaseStudy.searchStory?.outcome.heading || havasCaseStudy.challengeSummary}{havasCaseStudy.searchStory ? ` Later progressed to ${havasCaseStudy.searchStory.progression.to}.` : ""}</dd></div>
+              </dl>
               <Link
                 className="text-link"
                 href={`/case-studies/${havasCaseStudy.slug}`}
@@ -289,20 +275,20 @@ export default async function ClientsPage() {
           <p className="eyebrow">Quick client questions</p>
           <h2 id="client-questions">The questions clients normally ask me.</h2>
         </div>
-        <div className="container clients-question-grid">
+        <div className={`container ${styles.questions}`}>
           {clientQuestions.map((question) => (
-            <article
-              className="card clients-question-card"
+            <details
+              className="faq-item"
               key={question.title}
             >
-              <h3>{question.title}</h3>
+              <summary>{question.title}</summary>
               <p>{question.answer}</p>
               {"href" in question ? (
                 <Link className="text-link" href={question.href}>
                   {question.linkLabel}
                 </Link>
               ) : null}
-            </article>
+            </details>
           ))}
         </div>
       </section>

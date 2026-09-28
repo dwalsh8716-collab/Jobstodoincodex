@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { SpecialismRoutes } from "@/components/SpecialismRoutes";
+import styles from "@/components/AudiencePages.module.css";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JobCard } from "@/components/Cards";
 import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
@@ -16,20 +18,13 @@ export const metadata = createMetadata({
   path: "/candidates",
 });
 
-const candidateRecruitAreas = [
-  "Marketing & Leadership",
-  "Digital, Performance & eCommerce",
-  "PR, Communications & Content",
-  "Agency Client Services & Leadership",
-] as const;
-
 export default async function CandidatesPage() {
   const jobs = await getPublicJobs();
   const liveJobs = jobs.filter((job) => isJobLive(job));
   const featuredJobs = liveJobs.slice(0, 3);
 
   return (
-    <div className="candidate-page">
+    <div className={`candidate-page ${styles.page}`}>
       <Breadcrumbs items={[{ name: "Candidates", href: "/candidates" }]} />
 
       <section className="section dark candidate-hero">
@@ -40,7 +35,8 @@ export default async function CandidatesPage() {
             <br />
             Or just quietly curious?
           </h1>
-          <p className="lede">
+          <div className={styles.candidateHeroCopy}>
+          <p>
             Good roles. Honest advice. No recruitment nonsense.
           </p>
           <p className="lede">
@@ -64,6 +60,7 @@ export default async function CandidatesPage() {
           <p className="lede">
             No hard sell. No CV flinging. Just a proper conversation.
           </p>
+          </div>
           <div className="button-row hero-actions">
             <Link
               className="button button-primary"
@@ -78,7 +75,7 @@ export default async function CandidatesPage() {
               intent="candidates"
               label="Message David on WhatsApp"
               location="candidate_hero"
-              variant="secondary"
+              variant="text"
             />
           </div>
           <p className="candidate-credibility-line">
@@ -96,19 +93,15 @@ export default async function CandidatesPage() {
               Marketing, digital, PR and agency people.
             </h2>
           </div>
-          <div className="statement-list">
+          <div>
             <p>That’s my world.</p>
             <p>I recruit specialist and senior people across:</p>
-            <ul className="candidate-recruit-list">
-              {candidateRecruitAreas.map((area) => (
-                <li key={area}>{area}</li>
-              ))}
-            </ul>
             <Link className="text-link" href="/specialisms">
               Explore Specialisms
             </Link>
           </div>
         </div>
+        <div className="container"><SpecialismRoutes /></div>
       </section>
 
       <section
@@ -137,11 +130,11 @@ export default async function CandidatesPage() {
             </div>
           </>
         ) : (
-          <div className="container empty-state">
+          <div className={`container ${styles.empty}`}>
             <p className="eyebrow">Nothing right today?</p>
-            <h2>
+            <h3>
               Good roles don’t always appear at exactly the right moment.
-            </h2>
+            </h3>
             <p className="lede">
               And some senior opportunities never make it onto the website.
             </p>
@@ -160,7 +153,7 @@ export default async function CandidatesPage() {
                 location="candidate_empty_state"
                 variant="secondary"
               />
-              <Link className="button button-secondary" href="/jobs">
+              <Link className="text-link" href="/jobs">
                 View all current roles
               </Link>
             </div>
@@ -173,8 +166,8 @@ export default async function CandidatesPage() {
         id="candidate-contact"
         aria-labelledby="candidate-next-move"
       >
-        <div className="container candidate-contact-grid">
-          <div>
+        <div className={`container ${styles.contactGrid}`}>
+          <div className={styles.contactCopy}>
             <p className="eyebrow">Your next move</p>
             <h2 id="candidate-next-move">
               Actively looking. Quietly curious. Both are fine.
@@ -211,9 +204,33 @@ export default async function CandidatesPage() {
                 variant="secondary"
               />
             </div>
+            <div className={styles.trust}>
+              <h3>What happens to your details?</h3>
+              <ol>
+                <li><strong>David reviews it</strong>Your note or CV goes directly to David for manual review.</li>
+                <li><strong>It stays private</strong>Your identifiable CV or profile is not sent to a client without a proper conversation and the appropriate permission for that introduction.</li>
+                <li><strong>No database nonsense</strong>You can ask for access, correction or deletion of your information, as explained in the <Link href={candidatePrivacyPath}>Candidate Privacy Notice</Link>.</li>
+              </ol>
+            </div>
           </div>
-          <div id="candidate-note">
+          <div id="candidate-note" className={styles.formPanel}>
+            <p className="eyebrow">Private details</p>
+            <h2>Send me enough to start the conversation.</h2>
+            <p>A LinkedIn/profile URL, a few lines or a CV is enough. No account. No long registration. No faff.</p>
+            <p>I’ll review it personally and get in touch if there’s something worth discussing.</p>
             <CandidateApplicationDrop type="candidate" />
+          </div>
+        </div>
+      </section>
+
+      <section className={`section ${styles.closing}`}>
+        <div className="container">
+          <p className="eyebrow">Not ready to send anything?</p>
+          <h2>That’s fine too.</h2>
+          <p>If you’re just quietly curious and want to ask a question first, message me.</p>
+          <div className="button-row hero-actions">
+            <WhatsAppButton intent="candidates" label="Message David on WhatsApp" location="candidate_closing" variant="primary" />
+            <Link className="text-link" href="/contact">Talk to David confidentially</Link>
           </div>
         </div>
       </section>

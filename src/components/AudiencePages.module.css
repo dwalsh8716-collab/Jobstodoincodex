@@ -1,0 +1,68 @@
+.page h2 { font-size: 3.2rem; line-height: 1.12; }
+.page :global(.clients-hero) h1, .page :global(.candidate-hero) h1 { font-size: 4.5rem; line-height: 1.06; }
+.page :global(.clients-section-intro) > p { max-width: 65ch; line-height: 1.7; }
+.specialismRoutes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; padding: 0; margin: 32px 0 0; list-style: none; }
+.specialismRoutes li { border-top: 1px solid var(--color-line); }
+.specialismRoutes a { display: flex; flex-direction: column; gap: 16px; padding-block: 24px; height: 100%; text-decoration: none; color: var(--color-ink); }
+.specialismRoutes h3 { font-size: 1.65rem; line-height: 1.2; }
+.specialismRoutes p { line-height: 1.65; }
+.specialismRoutes :global(.text-link) { margin-top: auto; }
+.triggers { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 40px; list-style: none; padding: 0; margin-top: 40px; }
+.triggers li { padding: 20px 0; border-top: 1px solid var(--color-line); line-height: 1.6; font-weight: 550; }
+.searchValues { margin: 0; padding: 0; list-style: none; }
+.searchValues li { display: grid; grid-template-columns: 64px minmax(0,1fr); gap: 24px; padding: 28px 0; border-top: 1px solid var(--color-line); }
+.searchValues li > span { font-size: 2rem; color: var(--color-accent-readable); line-height: 1.2; }
+.searchValues h3 { font-size: 1.7rem; line-height: 1.2; }
+.searchValues p { max-width: 65ch; margin-top: 12px; line-height: 1.7; }
+.page .serviceContext { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-line); }
+.page .serviceContext p { max-width: 75ch; font-family: var(--font-body); font-size: 1rem; line-height: 1.7; font-weight: 400; }
+.serviceContext a:not(:global(.text-link)) { text-decoration: underline; text-underline-offset: 3px; }
+.proofPanel { border-top: 3px solid var(--color-ink); padding-block: 32px; display: grid; gap: 24px; }
+.proofPanel h3 { font-size: 2rem; line-height: 1.2; }
+.proofFacts { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 24px; margin: 0; }
+.proofFacts dt { font-size: 0.8rem; font-weight: 700; color: var(--color-accent-readable); }
+.proofFacts dd { margin: 12px 0 0; line-height: 1.65; }
+.questions :global(.faq-item) { background: transparent; border-radius: 0; border: 0; border-top: 1px solid var(--color-line); }
+.questions summary { padding-block: 24px; font-size: 1.2rem; line-height: 1.4; }
+.questions details > p { max-width: 70ch; line-height: 1.7; }
+.questions details > a { margin-bottom: 24px; }
+.candidateHeroCopy { max-width: 70ch; }
+.candidateHeroCopy p { margin-top: 20px; line-height: 1.7; }
+.candidateHeroCopy p:first-child { font-size: 1.3rem; font-weight: 550; }
+.page :global(.candidate-hero) :global(.section-heading) { max-width: var(--max-site); }
+.page :global(.candidate-hero) h1 { max-width: 20ch; }
+.page :global(.candidate-credibility-line) { margin-top: 32px; }
+.empty { border-top: 2px solid var(--color-ink); padding-top: 32px; max-width: 70ch; }
+.empty h3 { font-size: 2rem; line-height: 1.2; }
+.empty p { margin-top: 20px; line-height: 1.7; }
+.contactGrid { display: grid; grid-template-columns: minmax(0,0.85fr) minmax(0,1fr); gap: 64px; align-items: start; }
+.contactCopy > p { margin-top: 20px; max-width: 60ch; line-height: 1.7; }
+.trust { margin-top: 40px; border-top: 1px solid var(--color-line); padding-top: 24px; }
+.trust h3 { font-size: 1.4rem; }
+.trust ol { list-style: decimal-leading-zero; padding-left: 28px; }
+.trust li { padding: 16px 0 16px 8px; line-height: 1.65; }
+.trust li::marker { color: var(--color-accent-readable); font-weight: 600; }
+.trust strong { display: block; }
+.formPanel { border-top: 3px solid var(--color-ink); padding-top: 28px; scroll-margin-top: 120px; }
+.formPanel h2 { font-size: 2rem; }
+.formPanel > p { margin: 20px 0; line-height: 1.7; }
+.formPanel :global(.candidate-application-drop) { border: 0; padding: 0; background: transparent; box-shadow: none; }
+.formPanel :global(.contact-form) { border: 0; padding: 0; box-shadow: none; background: transparent; }
+.formPanel :global(.candidate-dropzone) { border-radius: var(--radius-xs); background: transparent; }
+.formPanel :global(.form-row) { min-width: 0; }
+.formPanel input, .formPanel select, .formPanel textarea { max-width: 100%; min-width: 0; }
+.closing { border-top: 1px solid var(--color-line); }
+.closing p { margin-top: 20px; max-width: 65ch; line-height: 1.7; }
+@media(max-width:1023px) {
+  .page h2 { font-size: 2.6rem; }
+  .page :global(.clients-hero) h1, .page :global(.candidate-hero) h1 { font-size: 3.5rem; }
+  .contactGrid { grid-template-columns: minmax(0,1fr); gap: 48px; }
+}
+@media(max-width:767px) {
+  .page h2 { font-size: 2rem; }
+  .page :global(.clients-hero) h1, .page :global(.candidate-hero) h1 { font-size: 2.6rem; }
+  .specialismRoutes, .triggers, .proofFacts { grid-template-columns: minmax(0,1fr); }
+  .searchValues li { grid-template-columns: 40px minmax(0,1fr); gap: 16px; }
+  .searchValues h3 { font-size: 1.4rem; }
+  .formPanel h2 { font-size: 1.75rem; }
+}
