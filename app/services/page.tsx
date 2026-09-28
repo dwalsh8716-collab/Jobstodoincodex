@@ -23,6 +23,7 @@ const serviceProductCopy = {
   "permanent-recruitment": {
     number: "01",
     title: "Permanent Recruitment",
+    clientNeed: "We know roughly what we need and want somebody permanently.",
     proposition: "Good people. Properly recruited.",
     description:
       "Success-based recruitment for permanent marketing, digital, PR, communications and agency hires. I get underneath the brief, search properly and give you fewer, better candidates who are actually worth meeting.",
@@ -31,22 +32,25 @@ const serviceProductCopy = {
   "retained-search": {
     number: "02",
     title: "Retained Search",
+    clientNeed: "This hire really matters. We need to search the market properly.",
     proposition: "When the hire matters enough to search the market properly.",
     description:
-      "For senior, confidential, difficult or commercially important appointments where waiting for the right person to apply isn’t enough. Proper market mapping, direct approaches and deeper assessment.",
+      "A committed search for senior, confidential or commercially important hires. Deeper market mapping, direct approaches and assessment with evidence.",
     ctaLabel: "Explore Retained Search",
   },
   fractional: {
     number: "03",
-    title: "Fractional",
-    proposition: "Senior experience. Without another full-time salary.",
+    title: "Fractional Leadership",
+    clientNeed: "We need senior capability, but not necessarily five days a week.",
+    proposition: "Senior leadership. For the time you actually need it.",
     description:
-      "Experienced CMOs, Marketing Directors and agency leaders embedded into the business for the time you actually need them. Senior capability, just not necessarily five days a week.",
-    ctaLabel: "Explore Fractional",
+      "Search and selection for experienced CMOs, Marketing Directors and agency leaders who can get properly into the business without a full-time hire.",
+    ctaLabel: "Explore Fractional Leadership",
   },
   "market-intelligence-advisory": {
     number: "04",
     title: "Market Intelligence & Advisory",
+    clientNeed: "We need to understand the market before deciding what to hire.",
     proposition: "Before you recruit, make sure the brief actually stacks up.",
     description:
       "Salary benchmarking, talent mapping, competitor intelligence and hiring advice to help you understand what you need, whether the people exist and what they’re going to cost.",
@@ -82,8 +86,8 @@ export default async function ServicesPage() {
           <div className="services-hero-copy">
             <p className="lede">
               You don’t need to know whether you need Permanent Recruitment,
-              Retained Search, Fractional or some market intelligence before we
-              speak.
+              Retained Search, Fractional Leadership or market intelligence
+              before we speak.
             </p>
             <p>
               Tell me what you’re trying to hire, what’s not working and what
@@ -91,6 +95,39 @@ export default async function ServicesPage() {
             </p>
             <p>Then we’ll work out the right way to solve it.</p>
           </div>
+        </div>
+      </section>
+
+      <section
+        className="section services-route-section"
+        aria-labelledby="services-route-heading"
+      >
+        <div className="container">
+          <div className="services-route-heading">
+            <p className="eyebrow">Find your route</p>
+            <h2 id="services-route-heading">Not sure which route you need?</h2>
+            <p>
+              You know what the problem is. You don’t need to know what
+              recruitment product it’s called.
+            </p>
+          </div>
+          <div className="services-route-grid">
+            {serviceWays.map((service) => (
+              <Link
+                className="services-route-item"
+                href={service.href}
+                key={service.href}
+              >
+                <span>{service.clientNeed}</span>
+                <strong>{service.title}</strong>
+              </Link>
+            ))}
+          </div>
+          <p className="services-route-close">
+            Still not sure? Good. Tell me what you’re trying to solve and I’ll
+            give you a straight view, including if the answer is not to recruit
+            yet. <Link className="text-link" href="/contact">Talk to David</Link>
+          </p>
         </div>
       </section>
 

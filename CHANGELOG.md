@@ -5,6 +5,68 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-09-28 - Four Service Routes And The Essential Approach
+
+### Summary
+
+Publish the approved four service-page designs and the new parent explanation
+of how Essential works: start with the problem, choose the right service and
+apply the same market knowledge and judgement.
+
+### Public Website Changes
+
+- Rebuilt Permanent Recruitment, Retained Search, Fractional Leadership and
+  Market Intelligence & Advisory with their approved copy and distinct process
+  visuals, including responsive overview cards.
+- Rebuilt How Essential Resourcing Works with the four-route selector, shared
+  principles, responsive comparison and qualified common search methodology.
+- Included the approved Services hub routing and supporting Fractional Leadership
+  navigation/homepage fallback labels. Existing service URLs are unchanged.
+- Preserved existing recommendations, case-study proof and contact routes.
+
+### CMS Changes
+
+- No production CMS edits or schema changes. The public content loader carries
+  the new approved local service presentation fields through existing CMS reads.
+- Homepage CMS overrides remain as published; this release does not silently
+  replace editor-managed homepage content.
+
+### Form Changes
+
+- None. Existing Contact and WhatsApp journeys are reused.
+
+### SEO Changes
+
+- Updated the approved Fractional Leadership and How Essential Works metadata.
+- Retained canonicals, indexability, breadcrumb and organization relationships.
+- How Essential Works now lists its four visible service routes in structured
+  data. The original seven search-stage anchor IDs remain available.
+- No URL migrations, redirects, sitemap exclusions or Search Console changes.
+
+### Security / Privacy Changes
+
+- None. No new dependencies, secrets, personal data or external integrations.
+
+### Recruiter Labs Changes
+
+- None. Rebrand work is not included.
+
+### Manual Actions For David
+
+- No configuration changes required. Both page-design reviews were approved
+  before this release. Review records are in `docs/SERVICES-PRODUCTION-REVIEW.md`
+  and `docs/HOW-ESSENTIAL-WORKS-PRODUCTION-REVIEW.md`; their local-only status
+  describes the pre-publication review stage.
+- Pre-release checks: build, typecheck, lint, 404 unit tests, targeted responsive
+  and accessibility checks passed. Public JavaScript remains within its budget.
+
+### Rollback Note
+
+- Revert this release commit on main and let Railway redeploy, or restore the
+  previous successful Railway deployment for commit
+  `6ca69c07cf6b963d575bf3a81fc942af842430eb` in an urgent rollback. No database,
+  CMS, environment-variable or DNS reversal is required.
+
 ## 2026-06-11 - Interim Availability Toggle Staged
 
 ### Summary

@@ -467,6 +467,73 @@ p {
   font-weight: 900;
 }
 
+.services-route-heading {
+  max-width: 760px;
+  margin-bottom: 26px;
+}
+
+.services-route-section {
+  padding-block: 62px;
+}
+
+.services-route-heading h2 {
+  margin-bottom: 16px;
+  font-size: 3.1rem;
+  line-height: 1.08;
+}
+
+.services-route-heading p:not(.eyebrow),
+.services-route-close {
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.services-route-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 30px;
+}
+
+.services-route-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  min-width: 0;
+  min-height: 84px;
+  border-top: 1px solid var(--color-line);
+  padding: 18px 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.services-route-item span {
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.services-route-item strong {
+  max-width: 185px;
+  line-height: 1.25;
+  text-align: right;
+}
+
+.services-route-item:hover strong,
+.services-route-item:focus-visible strong {
+  color: var(--color-accent-readable);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.services-route-close {
+  max-width: 860px;
+  margin-top: 22px;
+}
+
+.services-route-close .text-link {
+  margin-left: 4px;
+}
+
 .services-section-head,
 .services-specialism-intro {
   max-width: 760px;
@@ -5081,6 +5148,10 @@ fieldset.form-row legend {
   .service-way-grid {
     grid-template-columns: 1fr;
   }
+
+  .services-route-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -5155,6 +5226,24 @@ fieldset.form-row legend {
 
   .services-hero-copy {
     padding-top: 18px;
+  }
+
+  .services-route-section {
+    padding-block: 48px;
+  }
+
+  .services-route-heading h2 {
+    font-size: 2.2rem;
+  }
+
+  .services-route-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .services-route-item strong {
+    max-width: none;
+    text-align: left;
   }
 
   .service-way-card {

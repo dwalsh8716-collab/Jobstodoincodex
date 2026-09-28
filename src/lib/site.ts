@@ -109,7 +109,7 @@ export const serviceNavigation = [
   { label: "View all Services", href: "/services" },
   { label: "Permanent Recruitment", href: "/services/permanent-recruitment" },
   { label: "Retained Search", href: "/services/retained-search" },
-  { label: "Fractional", href: "/services/fractional" },
+  { label: "Fractional Leadership", href: "/services/fractional" },
   {
     label: "Market Intelligence & Advisory",
     href: "/services/market-intelligence-advisory",

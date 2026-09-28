@@ -248,7 +248,7 @@ export const defaultHomePageContent: HomePageContent = {
     eyebrow: "Services",
     heading: "Four ways to work with Essential.",
     intro:
-      "Permanent Recruitment, Retained Search, Fractional and Market Intelligence for marketing, communications, PR, digital and agency hiring.",
+      "Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence for marketing, communications, PR, digital and agency hiring.",
     cards: [
       {
         slug: "permanent-recruitment",
@@ -271,11 +271,11 @@ export const defaultHomePageContent: HomePageContent = {
       },
       {
         slug: "fractional",
-        title: "Fractional",
-        proposition: "Senior experience. Without another full-time salary.",
+        title: "Fractional Leadership",
+        proposition: "Senior leadership. For the time you actually need it.",
         description:
-          "Experienced CMOs, Marketing Directors and agency leaders for the time you actually need them.",
-        linkLabel: "Explore Fractional",
+          "Search for experienced CMOs, Marketing Directors and agency leaders when a full-time hire isn't the right answer.",
+        linkLabel: "Explore Fractional Leadership",
         href: "/services/fractional",
       },
       {

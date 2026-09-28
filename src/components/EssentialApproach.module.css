@@ -1,0 +1,593 @@
+.page h2 {
+  font-size: 3.2rem;
+  line-height: 1.1;
+}
+
+.hero {
+  padding-block: 80px;
+}
+
+.heroGrid,
+.editorialSplit,
+.judgementGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.heroGrid h1 {
+  font-size: 4.5rem;
+  line-height: 1.04;
+}
+
+.heroCopy {
+  display: grid;
+  gap: 20px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-dark-line);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.heroCopy strong {
+  color: var(--color-primary-on-dark);
+}
+
+.actions {
+  margin-top: 12px;
+}
+
+.prose {
+  display: grid;
+  gap: 16px;
+  max-width: 65ch;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.prose .lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.heading {
+  max-width: var(--max-site);
+  margin-bottom: 40px;
+}
+
+.heading h2 {
+  max-width: 25ch;
+}
+
+.heading > p:not(:first-child) {
+  max-width: 68ch;
+  margin-top: 20px;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.origin {
+  position: relative;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 0.8rem;
+  font-weight: 750;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.origin::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: 24px;
+  width: 1px;
+  background: var(--color-line);
+}
+
+.routeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: disc;
+}
+
+.routeGrid > li {
+  min-width: 0;
+}
+
+.routeGrid > li::marker,
+.principles > li::marker,
+.technology > li::marker,
+.questions > li::marker,
+.routeLinks > li::marker {
+  font-size: 0;
+}
+
+.routeCard {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 36px;
+  border: 1px solid var(--color-line);
+  border-top: 3px solid var(--color-ink);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.routeCard:hover,
+.routeCard:focus-visible {
+  border-color: var(--color-accent-readable);
+  background: var(--color-bg);
+}
+
+.number {
+  color: var(--color-accent-readable);
+  font-size: 1rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.routeCard h3 {
+  max-width: 19ch;
+  margin-top: 24px;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.15;
+  text-wrap: wrap;
+}
+
+.thought {
+  margin-top: 24px;
+  font-size: 1.1875rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.routeDescription {
+  margin: 16px 0 28px;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.routeLink {
+  margin-top: auto;
+  line-height: 1.5;
+}
+
+.routeCard:hover .routeLink::after {
+  transform: translateX(4px);
+}
+
+.principles {
+  padding: 0;
+  list-style: disc;
+}
+
+.principles > li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 32px;
+  align-items: baseline;
+  padding-block: 32px;
+  border-top: 1px solid var(--color-line);
+}
+
+.principles > li:last-child {
+  padding-bottom: 0;
+}
+
+.principles .number {
+  font-size: 1.75rem;
+}
+
+.principles h3 {
+  max-width: 22ch;
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: wrap;
+}
+
+/* Shared grid rows align dimensions, while DOM order stays service-first. */
+.comparison {
+  display: grid;
+  grid-template-columns: 0.85fr repeat(4, minmax(0, 1fr));
+  grid-template-rows: auto repeat(6, auto);
+}
+
+.comparisonLabels,
+.comparisonService {
+  display: grid;
+  grid-row: 1 / span 7;
+  grid-template-rows: subgrid;
+  min-width: 0;
+}
+
+.comparisonLabels > p,
+.comparisonService > h3,
+.comparisonService dl > div {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.comparisonLabels > p {
+  padding-left: 0;
+  font-size: 0.875rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.comparisonService > h3 {
+  border-top: 3px solid var(--color-ink);
+  background: var(--color-surface);
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-wrap: wrap;
+}
+
+.comparisonService dl {
+  display: grid;
+  grid-row: 2 / span 6;
+  grid-template-rows: subgrid;
+  margin: 0;
+}
+
+.comparisonService dt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.comparisonService dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.methodIntro .prose {
+  margin-top: 24px;
+}
+
+.method {
+  margin: 0;
+  padding: 0;
+  list-style: decimal;
+}
+
+.method > li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 20px;
+  padding-bottom: 28px;
+  scroll-margin-top: 140px;
+}
+
+.method > li + li {
+  padding-top: 28px;
+  border-top: 1px solid var(--color-line);
+}
+
+.method > li:last-child {
+  padding-bottom: 0;
+}
+
+.method > li::marker {
+  font-size: 0;
+}
+
+.method h3 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: wrap;
+}
+
+.method .prose {
+  gap: 12px;
+  font-size: 1rem;
+}
+
+.technology,
+.questions {
+  margin: 0;
+  padding: 0;
+  list-style: disc;
+}
+
+.technology {
+  display: grid;
+  gap: 20px;
+  color: var(--color-primary-on-dark);
+  font-size: 1.75rem;
+  font-weight: 550;
+  line-height: 1.3;
+}
+
+.questions {
+  display: grid;
+  gap: 8px;
+}
+
+.cadence {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-dark-line);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.cadence strong {
+  color: var(--color-primary-on-dark);
+}
+
+.routeLinks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+  margin: 0;
+  padding: 0;
+  list-style: disc;
+}
+
+.routeLinks a {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 20px;
+  height: 100%;
+  gap: 20px;
+  padding-block: 28px;
+  border-top: 1px solid var(--color-line);
+}
+
+.routeLinks h3 {
+  margin-bottom: 12px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: wrap;
+}
+
+.routeLinks p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.arrow {
+  transition: transform 180ms ease;
+}
+
+.routeLinks a:hover .arrow {
+  transform: translateX(4px);
+}
+
+.secondaryLinks {
+  display: flex;
+  gap: 16px 32px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.finalCta h2 {
+  max-width: 26ch;
+}
+
+.finalCta .prose {
+  margin-top: 24px;
+}
+
+.finalCta .actions {
+  margin-top: 28px;
+}
+
+.closing {
+  margin-top: 32px;
+  max-width: 62ch;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 1199px) {
+  .heroGrid,
+  .editorialSplit,
+  .judgementGrid {
+    gap: 40px;
+  }
+
+  .heroGrid h1 {
+    font-size: 3.75rem;
+  }
+
+  .page h2 {
+    font-size: 2.75rem;
+  }
+
+  .comparisonLabels > p,
+  .comparisonService > h3,
+  .comparisonService dl > div {
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 980px) {
+  .heroGrid,
+  .editorialSplit,
+  .judgementGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .heroGrid h1 {
+    max-width: 20ch;
+  }
+
+  .heroCopy {
+    max-width: 65ch;
+  }
+
+  .principles > li {
+    grid-template-columns: 32px minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 24px;
+  }
+
+  .comparison {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    gap: 24px;
+  }
+
+  .comparisonLabels {
+    display: none;
+  }
+
+  .comparisonService {
+    display: block;
+    grid-row: auto;
+    padding: 24px;
+    border: 1px solid var(--color-line);
+    border-top: 3px solid var(--color-ink);
+    border-radius: var(--radius-xs);
+    background: var(--color-surface);
+  }
+
+  .comparisonService > h3 {
+    padding: 0 0 24px;
+    border-top: 0;
+    font-size: 1.35rem;
+  }
+
+  .comparisonService dl {
+    display: block;
+  }
+
+  .comparisonService dl > div {
+    padding: 16px 0;
+  }
+
+  .comparisonService dl > div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .comparisonService dt {
+    position: static;
+    width: auto;
+    height: auto;
+    margin-bottom: 4px;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    font-size: 0.8125rem;
+    font-weight: 650;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 740px) {
+  .hero {
+    padding-block: 56px;
+  }
+
+  .routeGrid,
+  .comparison,
+  .routeLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .principles > li {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 16px 20px;
+  }
+
+  .principles .number {
+    font-size: 1.2rem;
+  }
+
+  .principles .prose {
+    grid-column: 2;
+  }
+
+  .routeCard {
+    padding: 28px;
+  }
+
+  .origin {
+    text-align: left;
+  }
+
+  .origin::after {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroGrid h1 {
+    font-size: 2.6rem;
+    line-height: 1.1;
+  }
+
+  .page h2 {
+    font-size: 2.2rem;
+    line-height: 1.15;
+  }
+
+  .heroCopy,
+  .prose,
+  .heading > p:not(:first-child) {
+    font-size: 1rem;
+  }
+
+  .routeCard {
+    padding: 24px;
+  }
+
+  .routeCard h3 {
+    font-size: 1.7rem;
+  }
+
+  .thought {
+    font-size: 1.125rem;
+  }
+
+  .heading {
+    margin-bottom: 32px;
+  }
+
+  .routeLinks a {
+    gap: 12px;
+  }
+
+  .technology {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .routeCard,
+  .arrow,
+  .routeLink::after {
+    transition: none;
+  }
+
+  .routeLinks a:hover .arrow,
+  .routeCard:hover .routeLink::after {
+    transform: none;
+  }
+}

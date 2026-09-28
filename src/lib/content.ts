@@ -176,30 +176,19 @@ export const services: Service[] = [
       "Success-based recruitment for permanent marketing, digital, PR, communications and agency hires.",
     heroHeadline: "Permanent marketing recruitment. Done properly.",
     heroSubheadline:
-      "For permanent marketing, digital, PR, communications and agency hires where you need specialist market knowledge and access to people beyond whoever happens to apply. This is the straightforward, success-based recruitment model. But straightforward doesn't mean chucking CVs at you.",
+      "For permanent marketing, digital, PR, communications and agency hires where you need specialist market knowledge and access to people beyond whoever happens to apply.\n\nIt's the straightforward, success-based recruitment model.\n\nStraightforward doesn't mean chucking CVs at you.",
     audience: [
-      "Agencies",
-      "Brands",
-      "Growth businesses",
-      "Marketing teams",
-      "PR, communications and digital teams",
-      "Businesses making specialist or mid-to-senior hires",
+      "Agencies, brands, growth businesses and marketing teams making specialist or mid-to-senior permanent hires.",
     ],
     problemsSolved: [
-      "You need better candidates than the advert is producing",
-      "The brief needs tightening before the role goes properly to market",
-      "The salary, title or hybrid expectation needs a market reality check",
-      "You want a focused shortlist rather than a CV avalanche",
+      "You need better candidates than the advert is producing, or the brief, salary and proposition need tightening before you properly go to market.",
     ],
     whenToUse: [
-      "The role is permanent and the candidate market is reasonably accessible",
-      "You need specialist marketing, digital, PR, communications or agency knowledge",
-      "You want success-based recruitment with a proper brief and focused search",
-      "You need candidates who are actually worth meeting, not just technically available",
+      "You know you need somebody permanently and want specialist, success-based recruitment with a proper search behind it.",
     ],
     howEssentialWorks: [
       "I get underneath the brief before searching.",
-      "What does this person actually need to do? What's genuinely essential? Does the salary stack up? Why would somebody good want the job?",
+      "What does this person actually need to do? What's genuinely essential? Does the salary stack up? And why would somebody good want the job?",
       "Then I search the market, speak to the right people and give you a focused shortlist of candidates I genuinely think are worth meeting.",
     ],
     mistakes: [
@@ -208,47 +197,53 @@ export const services: Service[] = [
       "Judging people by job title rather than evidence",
       "Dragging feedback out until the best candidate takes another role",
     ],
-    processEyebrow: "Permanent recruitment process",
+    processEyebrow: "The Permanent Recruitment process",
     processHeading: "Good people. Properly recruited.",
+    processIntro: "A straightforward search. Done with a bit more thought.",
     processSteps: [
       {
         title: "Get underneath the brief",
         description:
-          "What does the business need this person to change, deliver or improve?",
+          "What does this person actually need to change?",
       },
       {
         title: "Pressure-test the market",
         description:
-          "Salary, location, hybrid expectations and candidate appetite all need to stack up.",
+          "Does the salary, title and proposition stack up?",
       },
       {
         title: "Search beyond applicants",
         description:
-          "Useful people are often already employed and not waiting for your advert.",
+          "Search the real market. Not just who's looking.",
       },
       {
-        title: "Assess properly",
+        title: "Get behind the CV",
         description:
-          "What did they actually deliver, what was their contribution and why might this move make sense?",
+          "What did they actually deliver?",
       },
       {
-        title: "Build a focused shortlist",
+        title: "Build a shortlist worth meeting",
         description:
-          "Fewer candidates, more context and no padding to make a search look busier than it is.",
+          "Fewer people. Better evidence.",
       },
       {
-        title: "Keep momentum",
+        title: "Interview, offer & onboard",
         description:
-          "Feedback, interviews, offers and the awkward conversations in between.",
+          "Keep momentum and make the hire stick.",
       },
     ],
     marketFitEyebrow: "Where this service fits",
     marketFitHeading:
-      "Permanent Recruitment is the right route when the brief is clear enough to search, but still needs specialist market knowledge and proper judgement.",
+      "You know roughly what you need. Now let's make sure the brief stacks up.",
     judgementEyebrow: "What David actually does",
     judgementHeading:
       "Fewer CVs. Better conversations. Better hiring decisions.",
     faqs: [
+      {
+        question: "Is Permanent Recruitment the same as contingency recruitment?",
+        answer:
+          "Broadly, yes. It's the traditional success-based model: you pay a fee when I successfully appoint somebody. But contingent shouldn't mean chucking CVs at the wall and hoping one sticks.",
+      },
       {
         question: "Is Permanent Recruitment success-based?",
         answer:
@@ -281,15 +276,15 @@ export const services: Service[] = [
       "havas-media-manchester-managing-partner-james-reddington",
     ],
     cta: {
-      label: "Explore Permanent Recruitment",
+      label: "Talk to David",
       href: "/contact",
       variant: "primary",
     },
     ctaHeading: "Need a permanent marketing hire?",
     ctaText:
-      "Tell David what you're trying to hire and he'll give you a straight view on the brief, salary and market.",
+      "Tell me what you're trying to hire. I'll give you a straight view on the brief, salary and market.",
     searchSummary:
-      "Typical roles include marketing leadership, digital, performance, PR, communications, client services, agency operations and senior specialist appointments.",
+      "Permanent Recruitment works when the role is permanent, the market is reasonably accessible and you want specialist recruitment without committing to a retained search.\n\nTypical briefs span marketing leadership, digital, performance, PR, communications, client services, agency operations and senior specialist appointments.",
     searchPhrases: [
       "marketing recruiters Manchester",
       "permanent marketing recruitment",
@@ -309,30 +304,20 @@ export const services: Service[] = [
       "A deeper, exclusive search for senior, confidential, difficult or commercially important appointments.",
     heroHeadline: "When the hire matters enough to search the market properly.",
     heroSubheadline:
-      "For senior, confidential, difficult or commercially important appointments where candidate quality and judgement matter more than CV volume.",
+      "For senior, confidential, difficult or commercially important appointments where you want a committed search of the relevant market — not simply a hopeful advert and a pile of CVs.",
     audience: [
-      "Founders",
-      "CEOs",
-      "MDs",
-      "CMOs",
-      "Marketing Directors",
-      "Agency leaders",
+      "Founders, CEOs, MDs, CMOs, Marketing Directors and agency leaders making an appointment that really matters.",
     ],
     problemsSolved: [
-      "The strongest senior candidates often aren't applying",
-      "The role is too important for a hopeful advert and a pile of CVs",
-      "The search needs discretion, commitment or confidentiality",
-      "You need somebody to challenge the brief, not just accept it",
+      "The market is narrow, the strongest candidates aren't necessarily looking and you need more research, coverage and control than a standard recruitment process gives you.",
     ],
     whenToUse: [
-      "The hire is senior, confidential, difficult or commercially important",
-      "The candidate market is narrow or hard to reach",
-      "You need retained market mapping and direct approaches",
-      "Getting the wrong person would cost considerably more than getting the search right",
+      "The hire is senior, confidential, difficult or commercially important enough to justify a committed search of the market.",
     ],
     howEssentialWorks: [
-      "Retained Search gives the brief a proper mandate.",
-      "That means deeper briefing, market mapping, target-company research, direct approaches and proper candidate conversations.",
+      "It gives the brief a proper mandate.",
+      "That means deeper briefing, structured market research, target-company mapping, direct approaches, transparent progress and regular calibration as the search develops.",
+      "If the market tells us something different from what we expected, we deal with it while we're searching — not six weeks later when everybody's wondering why the shortlist isn't right.",
       "This isn't about making recruitment sound posher. It's about giving an important hire the search it deserves.",
     ],
     mistakes: [
@@ -341,52 +326,58 @@ export const services: Service[] = [
       "Writing the brief around the last person who held the role",
       "Taking three weeks between interviews and wondering where the candidate went",
     ],
-    processEyebrow: "Retained search process",
-    processHeading: "Not more CVs. A proper search.",
+    processEyebrow: "The Retained Search process",
+    processHeading: "A proper search of the market.",
+    processIntro: "More research. More visibility. More confidence in the decision.",
     processSteps: [
       {
-        title: "Interrogate the brief",
+        title: "Get the brief right",
         description:
-          "Why are you hiring? What needs to change? What evidence actually matters?",
+          "Define the role, outcomes, behaviours, target market and search parameters.",
       },
       {
         title: "Map the market",
         description:
-          "Relevant businesses, adjacent sectors and senior people who have done something genuinely comparable.",
+          "Identify the relevant talent across the agreed market.",
       },
       {
-        title: "Approach passive candidates",
+        title: "Approach",
         description:
-          "Strong people need proper context and a reason to listen, not a lazy message.",
+          "Professionally engage the people we actually want to speak to.",
       },
       {
-        title: "Get behind the CV",
+        title: "Steer & calibrate",
         description:
-          "What did they actually deliver, how did they lead and what was genuinely theirs?",
+          "Share progress, market feedback and adjust the search where needed.",
       },
       {
-        title: "Shortlist with evidence",
+        title: "Longlist",
         description:
-          "A considered shortlist with strengths, questions, motivation, salary and concerns.",
+          "Assess interested candidates against the agreed brief.",
       },
       {
-        title: "Keep the whole search moving",
+        title: "Shortlist",
         description:
-          "Candidate management, feedback, offers and straight conversations from start to finish.",
+          "Agree the 3–5 people genuinely worth meeting.",
+      },
+      {
+        title: "Hire",
+        description:
+          "Interview, select, offer and support the move into the business.",
       },
     ],
     marketFitEyebrow: "Where this service fits",
     marketFitHeading:
-      "Retained Search is for appointments where the right person matters more than getting some CVs quickly.",
-    judgementEyebrow: "What David brings",
+      "The right person matters more than getting some CVs quickly.",
+    judgementEyebrow: "Why retained?",
     judgementHeading:
-      "Market knowledge, direct founder involvement and honest judgement.",
+      "Retained doesn't mean “the same recruitment, but you pay me some money upfront.”",
     faqs: [
       {
         question:
-          "How is retained search different from contingency recruitment?",
+          "How is Retained Search different from Permanent Recruitment?",
         answer:
-          "Retained search gives the brief a committed search process: deeper briefing, market mapping, direct approaches and a more controlled assessment route. Contingency can work for simpler roles, but senior or sensitive hires usually need more focus.",
+          "Retained Search gives the brief a committed mandate and a more research-led process: deeper briefing, market mapping, systematic direct approaches, regular search calibration, longlisting and an agreed shortlist. Permanent Recruitment can work brilliantly when the brief and candidate market are reasonably accessible. Retained is for the appointments where you want to search the relevant market more comprehensively.",
       },
       {
         question: "Can you help shape the brief before the search starts?",
@@ -419,15 +410,15 @@ export const services: Service[] = [
       "independent-pr-agency-senior-account-director",
     ],
     cta: {
-      label: "Explore Retained Search",
+      label: "Talk to David",
       href: "/contact",
       variant: "primary",
     },
     ctaHeading: "Got a senior hire that needs a proper search?",
     ctaText:
-      "Tell David what you're trying to hire and he'll tell you whether retained search is the right route.",
+      "Tell me what you're trying to hire and I'll tell you whether Retained Search is actually the right route.",
     searchSummary:
-      "Typical retained briefs include CMOs, Marketing Directors, Managing Directors, Managing Partners, Heads of Marketing, communications leaders and senior agency leadership.",
+      "Retained Search is for the appointments where you want to know the market has been properly researched, relevant people have been identified and approached, and the process has been continually calibrated rather than left to chance.\n\nTypical searches include CMOs, Marketing Directors, Managing Directors, Managing Partners, Heads of Marketing, senior communications leaders and agency leadership.",
     searchPhrases: [
       "retained marketing recruitment",
       "retained search Manchester",
@@ -441,80 +432,100 @@ export const services: Service[] = [
       "Retained search for senior, confidential and commercially important marketing, digital, PR and agency leadership appointments across Manchester and the UK.",
   },
   {
-    title: "Fractional",
+    title: "Fractional Leadership",
     slug: "fractional",
     shortDescription:
-      "Senior marketing and agency leadership without necessarily adding another full-time salary.",
-    heroHeadline: "Senior experience. Without another full-time salary.",
+      "Search and selection for embedded senior marketing and agency leaders when a full-time hire isn't the right answer.",
+    heroHeadline: "Senior marketing leadership. Just not necessarily five days a week.",
     heroSubheadline:
-      "Sometimes you need an experienced CMO, Marketing Director or agency leader in the business, just not necessarily five days a week.",
+      "Sometimes the business needs a CMO, Marketing Director or senior agency leader — but another full-time permanent hire isn't necessarily the right answer.\n\nI help you work out what senior capability you actually need, then find the person who can deliver it.",
     audience: [
-      "Founders",
-      "MDs",
-      "CMOs",
-      "Agency owners",
-      "Growth businesses",
-      "Post-investment teams",
+      "Founders, MDs, agency owners, growth businesses and leadership teams that need experienced marketing leadership now.",
     ],
     problemsSolved: [
-      "There's no senior marketing leader in place",
-      "The founder or MD is carrying too much",
-      "The team can execute but needs experienced direction",
-      "Growth or change has moved faster than the leadership structure",
-      "A permanent appointment would take too long",
-      "The business needs somebody to do the work, not hand over another slide deck",
+      "There's a senior leadership gap, the team needs direction or the business is changing faster than the permanent structure can keep up.",
     ],
     whenToUse: [
-      "A full-time senior hire feels too early",
-      "There's a leadership gap that can't wait",
-      "You need experienced marketing thinking one, two or three days a week",
-      "The team needs mentoring and direction",
-      "The permanent structure is still being worked out",
+      "You need senior capability and accountability, but a five-day-a-week permanent appointment isn't necessarily the answer.",
     ],
     howEssentialWorks: [
-      "Fractional means senior experience for the amount of time the business actually needs.",
-      "That might be one day a week, three days a week, a defined interim period or support while you work out the permanent structure.",
-      "The right leader gets properly into the business. They don't drop in once a month, produce a PowerPoint and vanish.",
+      "Fractional generally means senior leadership for part of the working week over an ongoing period.",
+      "Interim usually means somebody stepping into a role for a defined temporary period.",
+      "Advisory is typically lighter-touch guidance. Consultancy is often project or recommendation-led.",
+      "In reality, the lines can blur.",
+      "I'd rather understand what you actually need somebody to do and then work out the right model than force the problem into whichever label happens to be fashionable.",
     ],
     mistakes: [
       "Hiring a tactical freelancer when the problem is leadership",
       "Bringing somebody senior in without giving them enough access to make a difference",
       "Leaving the outcome vague",
-      "Assuming Fractional support is automatically cheaper rather than asking whether it's the right model",
+      "Assuming Fractional Leadership is automatically cheaper rather than asking whether it's the right model",
     ],
-    processEyebrow: "Fractional process",
-    processHeading: "Senior capability, just not necessarily five days a week.",
+    processEyebrow: "Fractional Leadership Search",
+    processHeading:
+      "Work out what leadership you actually need. Then find the person.",
+    processIntro: "Because “we need someone fractional” isn't really a brief.",
+    leadershipStages: [
+      {
+        title: "Define the leadership need",
+        label: "Problem · Model · Mandate",
+        paragraphs: [
+          "What needs fixing, building, changing or leading?",
+          "What level of seniority does the business actually need?",
+          "What should they own, for how long and with what authority?",
+        ],
+      },
+      {
+        title: "Find the right person",
+        label: "Search · Assess · Engage · Embed",
+        paragraphs: [
+          "Find somebody who's genuinely solved something comparable.",
+          "Assess whether they can create impact quickly.",
+          "Agree the engagement and get them properly into the business.",
+        ],
+      },
+    ],
     processSteps: [
       {
-        title: "Start with the outcome",
+        title: "Define the problem",
         description:
-          "What does the business need this person to fix, build, lead or change?",
+          "What actually needs changing?",
       },
       {
-        title: "Work out what level you actually need",
+        title: "Define the model",
         description:
-          "CMO? Marketing Director? Agency MD? Specialist leader? One day a week or three? Don't overhire the title.",
+          "Fractional, interim, advisory or permanent?",
       },
       {
-        title: "Find somebody who's done it before",
+        title: "Define the mandate",
         description:
-          "Relevant experience matters because an interim needs to get useful quickly.",
+          "Outcomes, authority, access, time commitment and duration.",
       },
       {
-        title: "Get clear on scope",
+        title: "Search the market",
         description:
-          "Agree priorities, access, decision-making and what success should look like.",
+          "Find leaders who've genuinely solved comparable problems.",
       },
       {
-        title: "Review impact",
+        title: "Assess for impact",
         description:
-          "The point isn't to fill somebody's diary. It's to make progress against the reason they were brought in.",
+          "Can they get useful quickly and bring the team with them?",
+      },
+      {
+        title: "Agree the engagement",
+        description:
+          "Scope, availability, expectations, commercials and start date.",
+      },
+      {
+        title: "Onboard & review",
+        description:
+          "Get them properly into the business and keep the original outcomes visible.",
       },
     ],
-    marketFitEyebrow: "What is a Fractional marketing leader?",
+    marketFitEyebrow: "Fractional Leadership",
     marketFitHeading:
-      "A Fractional marketing leader is an experienced senior marketer who joins a business for a defined period or number of days to lead, advise and help deliver against an agreed commercial problem.",
-    judgementEyebrow: "Fractional vs interim vs consultancy",
+      "What is Fractional Leadership?",
+    judgementEyebrow: "Fractional, interim, advisory & consultancy",
     judgementHeading:
       "Don't get too hung up on the label. Get clear on the problem.",
     faqs: [
@@ -552,16 +563,16 @@ export const services: Service[] = [
     ],
     relatedCaseStudySlugs: ["integrated-agency-fractional"],
     cta: {
-      label: "Discuss Fractional support",
+      label: "Discuss Fractional Leadership",
       href: "/contact",
       variant: "primary",
     },
     ctaHeading:
       "Need senior marketing leadership without rushing into another permanent hire?",
     ctaText:
-      "Tell David what's going on and he'll tell you whether Fractional support makes sense.",
+      "Tell me what's going on. I'll give you a straight view on whether Fractional actually makes sense.",
     searchSummary:
-      "Unlike traditional consultancy, they're typically embedded in the business and accountable for helping make things happen, not just recommending what somebody else should do.",
+      "A Fractional leader is an experienced senior operator who joins the business for an agreed amount of time to help lead against a defined commercial problem.\n\nThey might work one, two or three days a week. The important bit isn't the number of days. It's what they're there to change.\n\nUnlike traditional advisory consultancy, the right Fractional leader gets properly into the business, works with the team and remains involved when the plan meets reality.",
     searchPhrases: [
       "fractional CMO",
       "fractional marketing director",
@@ -570,9 +581,9 @@ export const services: Service[] = [
       "interim marketing director",
       "senior marketing interim North West",
     ],
-    seoTitle: "Fractional Marketing Leaders | Essential Resourcing",
+    seoTitle: "Fractional Marketing Leadership | Essential Resourcing",
     metaDescription:
-      "Find fractional CMOs, Marketing Directors and senior leaders for businesses needing experienced leadership without a permanent hire.",
+      "Find Fractional CMOs, Marketing Directors and senior marketing or agency leaders when you need experienced leadership without immediately making another full-time permanent hire.",
   },
   {
     title: "Market Intelligence & Advisory",
@@ -581,27 +592,15 @@ export const services: Service[] = [
       "Salary benchmarking, talent mapping, competitor intelligence, brief design and hiring advice.",
     heroHeadline: "Before you recruit, make sure the brief actually stacks up.",
     heroSubheadline:
-      "Sometimes the most useful thing I can do is tell you not to start recruiting yet. Maybe the salary is wrong. Maybe the brief is actually three jobs. Maybe you don't know what level you need. Or maybe you want to understand where the talent actually sits before committing to a search.",
+      "Sometimes the most useful thing I can do is tell you not to start recruiting yet.\n\nMaybe the salary is wrong. Maybe the brief is actually three jobs. Maybe you're not sure what level you need. Or maybe you want to understand where the talent actually sits before committing to a search.",
     audience: [
-      "Founders",
-      "CEOs",
-      "MDs",
-      "People leaders",
-      "Marketing leaders",
-      "Agencies and growth businesses",
+      "Founders, CEOs, MDs, People leaders, marketing leaders and agencies making an important hiring or team decision.",
     ],
     problemsSolved: [
-      "You're not sure what level you need",
-      "The salary, location or hybrid model may not attract the people you want",
-      "The brief has become a shopping list",
-      "You need to understand where the relevant talent actually sits",
-      "You want market evidence before committing to a search",
+      "You're missing the market evidence needed to decide what to hire, what to pay or whether the brief is realistic.",
     ],
     whenToUse: [
-      "Before launching a senior or specialist search",
-      "When a role has been difficult or previously unsuccessful",
-      "When salary, scope, title or structure needs checking",
-      "When you need a practical market view rather than a long consultancy exercise",
+      "Before, during or instead of recruitment when salary, scope, structure, talent availability or market reality needs checking.",
     ],
     howEssentialWorks: [
       "No 87-page consultancy deck.",
@@ -614,9 +613,33 @@ export const services: Service[] = [
       "Assuming the person you have described exists at the salary you want to pay",
       "Mistaking competitor gossip for useful intelligence",
     ],
-    processEyebrow: "Advisory areas",
-    processHeading: "Practical market intelligence before you commit.",
-    processSteps: [
+    processEyebrow: "Market Intelligence",
+    processHeading: "Get the market facts before you make the hiring decision.",
+    processIntro:
+      "Sometimes the answer is to recruit. Sometimes it's to change the brief, change the salary, go Fractional — or not hire yet.",
+    evidenceAreas: [
+      {
+        title: "Market Mapping",
+        description: "Where does the relevant talent actually sit?",
+      },
+      {
+        title: "Salary Intelligence",
+        description: "What does the market realistically pay?",
+      },
+      {
+        title: "Talent Availability",
+        description: "How much relevant talent is actually out there?",
+      },
+      {
+        title: "Competitor Intelligence",
+        description: "How are comparable businesses structured?",
+      },
+      {
+        title: "Hiring Feasibility",
+        description: "Does the brief and proposition actually stack up?",
+      },
+    ],
+    advisoryAreas: [
       {
         title: "Salary benchmarking",
         description:
@@ -628,9 +651,9 @@ export const services: Service[] = [
           "Where does the relevant talent sit and how big is the realistic candidate market?",
       },
       {
-        title: "Competitor intelligence",
+        title: "Competitor / team intelligence",
         description:
-          "How are comparable businesses structuring and hiring their marketing teams?",
+          "How are comparable businesses structuring their marketing, digital or agency teams?",
       },
       {
         title: "Brief design",
@@ -640,12 +663,12 @@ export const services: Service[] = [
       {
         title: "Market testing",
         description:
-          "Will the salary, location, hybrid model and proposition attract the people you're targeting?",
+          "Will the salary, location, hybrid model, title and proposition attract the people you're targeting?",
       },
       {
         title: "Hiring advisory",
         description:
-          "Interview structure, assessment and practical advice around making the decision.",
+          "How should you structure the interview, assessment and eventual hiring decision?",
       },
     ],
     marketFitEyebrow: "Where this service fits",
@@ -653,7 +676,7 @@ export const services: Service[] = [
       "Market Intelligence & Advisory is useful before, during or instead of recruitment.",
     judgementEyebrow: "Commercial reality check",
     judgementHeading:
-      "Does the person you are describing actually exist, and what are they going to cost?",
+      "Does the person you're describing actually exist — and what are they going to cost?",
     faqs: [
       {
         question: "Can Essential help with salary benchmarking?",
@@ -690,9 +713,9 @@ export const services: Service[] = [
     },
     ctaHeading: "Need to check the market before you recruit?",
     ctaText:
-      "Tell David what you're thinking and he'll help you work out whether the brief, salary and candidate market actually stack up.",
+      "Tell me what you're thinking. I'll help you work out whether the brief, salary and candidate market actually stack up.",
     searchSummary:
-      "Service areas include salary benchmarking, talent mapping, competitor intelligence, brief design, market testing and hiring advisory.",
+      "A defined piece of research to give you useful evidence before committing to a search. Sometimes the answer is to reshape the brief or salary. Sometimes it's not to recruit yet.",
     searchPhrases: [
       "marketing recruitment market intelligence",
       "salary benchmarking marketing roles",

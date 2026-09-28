@@ -1,116 +1,58 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CTASection } from "@/components/CTASection";
+import { FourRouteSelector } from "@/components/FourRouteSelector";
 import { SchemaScript } from "@/components/SchemaScript";
+import { ServiceComparison } from "@/components/ServiceComparison";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import styles from "@/components/EssentialApproach.module.css";
+import { analyticsAttributes } from "@/lib/analytics";
+import {
+  commonSearchStages,
+  comparisonDimensions,
+  essentialPrinciples,
+  essentialRoutes,
+} from "@/lib/essential-approach";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
 export const metadata = createMetadata({
-  title: "How Essential Resourcing Finds Candidates | Essential",
+  title: "How Essential Resourcing Works | Recruitment, Search & Advisory",
   description:
-    "How Essential Resourcing finds, approaches and assesses marketing, digital, PR and agency candidates, from the brief to behind the CV.",
+    "How Essential Resourcing helps businesses make better hiring decisions through Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence & Advisory.",
   path: "/how-essential-resourcing-works",
 });
 
-const processStages = [
-  {
-    id: "get-underneath-the-brief",
-    number: "01",
-    title: "Get underneath the brief.",
-    summary: "The job title isn’t the brief.",
-    body: [
-      "Before I look for anybody, I need to understand what you’re actually trying to fix.",
-      "Not just the job title and a six-page job description.",
-      "Why are you hiring? What’s not working now? What does this person need to have changed in 12 months? What are they inheriting? And what does genuinely good look like?",
-      "If the salary, expectations or brief don’t stack up, this is where I’ll tell you.",
-    ],
-  },
-  {
-    id: "map-the-market",
-    number: "02",
-    title: "Work out where the good people are.",
-    body: [
-      "Then we build the market rather than just post the job.",
-      "I’ll look at relevant businesses, competitors, adjacent sectors and people who’ve done something genuinely comparable.",
-      "Technology and AI help me search wider and faster. My network helps. Years in the market definitely help.",
-      "But the point isn’t to produce a spreadsheet containing 300 names. It’s to work out who’s actually worth approaching.",
-    ],
-  },
-  {
-    id: "approach-people-properly",
-    number: "03",
-    title: "Approach people properly.",
-    body: [
-      "The best candidate might not be looking for a job.",
-      "So a generic LinkedIn message saying “I have an exciting opportunity that matches your profile” probably isn’t going to cut it.",
-      "Why might this opportunity make sense for them? What’s interesting about the business? Why now?",
-      "And if they’re happy where they are, what would genuinely make them listen?",
-      "Recruitment is a two-way sell.",
-    ],
-  },
-  {
-    id: "get-behind-the-cv",
-    number: "04",
-    title: "Get behind the CV.",
-    body: [
-      "This is where the interesting bit starts.",
-      "A CV tells me where somebody worked. I want to know what they actually did when they got there.",
-      "What did they inherit? What did they change? What were the results? What was genuinely their contribution?",
-      "What went wrong? How did they respond? How did they lead? How commercially strong are they?",
-      "Finding somebody who looks right is increasingly easy. Working out who’s genuinely bloody good isn’t.",
-    ],
-  },
-  {
-    id: "focused-shortlist",
-    number: "05",
-    title: "Fewer people. More context.",
-    body: [
-      "I’m not interested in winning the award for Most CVs Sent Before Lunch.",
-      "You’ll get a considered shortlist of people I genuinely think are worth your time. And I’ll tell you why.",
-      "Strengths. Questions. Motivation. Salary. Availability. And any concerns I’ve got.",
-      "If there’s something you’re going to discover at final interview, I’d much rather we knew about it before first stage.",
-    ],
-  },
-  {
-    id: "help-you-assess",
-    number: "06",
-    title: "Help you make the decision.",
-    body: [
-      "Introducing the candidate isn’t where my job ends.",
-      "I’ll keep both sides talking. Help structure the interview process where useful. Challenge feedback. Dig into concerns. Keep good candidates engaged.",
-      "Depending on the search, structured assessment or psychometric tools can also be added where they genuinely give us better evidence.",
-      "Not another hoop because recruitment apparently needed more admin. Something useful that helps you make the decision.",
-    ],
-  },
-  {
-    id: "get-it-over-the-line",
-    number: "07",
-    title: "Get the bloody thing over the line.",
-    body: [
-      "Good candidates get lost in bad processes.",
-      "Slow feedback. Fourteen interview stages. Radio silence. An offer nobody has properly discussed.",
-      "I’ll keep things moving, deal with the awkward conversations, help manage the offer and make sure both sides know where they stand.",
-      "Because finding the right person and then losing them through a crap process is a fairly spectacular waste of everyone’s time.",
-    ],
-  },
-] as const;
-
-const relatedLinks = [
-  {
-    label: "Explore Permanent Recruitment",
-    href: "/services/permanent-recruitment",
-  },
-  { label: "Explore Retained Search", href: "/services/retained-search" },
-  { label: "Explore Fractional", href: "/services/fractional" },
-  {
-    label: "See the Havas Media Manchester case study",
-    href: "/case-studies/havas-media-manchester-managing-partner-james-reddington",
-  },
-  { label: "For Clients", href: "/clients" },
-] as const;
+function ContactActions({
+  label,
+  location,
+}: {
+  label: string;
+  location: string;
+}) {
+  return (
+    <div className={`button-row ${styles.actions}`}>
+      <Link
+        className="button button-primary"
+        href="/contact"
+        {...analyticsAttributes("cta_click", {
+          label,
+          href: "/contact",
+          location,
+        })}
+      >
+        {label}
+      </Link>
+      <WhatsAppButton
+        intent="hiring"
+        label="WhatsApp David"
+        location={location}
+      />
+    </div>
+  );
+}
 
 export default function HowEssentialResourcingWorksPage() {
   return (
-    <div className="process-page">
+    <div className={styles.page}>
       <Breadcrumbs
         items={[
           {
@@ -120,115 +62,337 @@ export default function HowEssentialResourcingWorksPage() {
         ]}
       />
 
-      <section className="section dark process-hero">
-        <div className="container process-hero-grid">
-          <div className="section-heading">
+      <section
+        className={`section dark ${styles.hero}`}
+        aria-labelledby="approach-title"
+      >
+        <div className={`container ${styles.heroGrid}`}>
+          <div>
             <p className="eyebrow">How Essential Resourcing works</p>
-            <h1>How I actually find the right people.</h1>
+            <h1 id="approach-title">
+              Start with the problem. Not the recruitment product.
+            </h1>
           </div>
-          <div className="process-hero-copy">
-            <p className="lede">Finding people is getting easier.</p>
-            <p>LinkedIn can find people.</p>
-            <p>AI can find people.</p>
-            <p>A job advert can definitely find you people.</p>
-            <p>
-              The valuable bit is knowing who to look for, getting good people
-              interested and working out who’s genuinely bloody good.
+          <div className={styles.heroCopy}>
+            <p className="lede">
+              You don&apos;t need to know whether you need Permanent
+              Recruitment, Retained Search, Fractional Leadership or Market
+              Intelligence before we speak.
             </p>
-            <p className="process-hero-kicker">
-              That’s what the process is built around.
+            <p>You need to know what you&apos;re trying to solve.</p>
+            <p>
+              Maybe you need somebody permanently. Maybe it&apos;s a senior hire
+              that needs a proper search of the market. Maybe you need
+              experienced leadership, just not five days a week. Or maybe the
+              brief isn&apos;t ready to recruit at all.
+            </p>
+            <p>
+              <strong>My job is to help work that out first.</strong>
+            </p>
+            <ContactActions
+              label="Sense-check a brief"
+              location="how_essential_works_hero"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="section surface"
+        aria-labelledby="essential-philosophy"
+      >
+        <div className={`container ${styles.editorialSplit}`}>
+          <div>
+            <p className="eyebrow">The Essential approach</p>
+            <h2 id="essential-philosophy">
+              Finding people is getting easier. Knowing who&apos;s genuinely
+              good isn&apos;t.
+            </h2>
+          </div>
+          <div className={styles.prose}>
+            <p className={styles.lead}>
+              LinkedIn can find people. AI can find people. A job advert can
+              definitely find you people.
+            </p>
+            <p>
+              The valuable bit is understanding what the business actually
+              needs, knowing where to look, getting good people interested and
+              working out who&apos;s genuinely bloody good.
+            </p>
+            <p>
+              And sometimes the valuable bit is telling you not to start
+              recruiting yet.
+            </p>
+            <p>
+              <strong>That&apos;s what Essential is built around.</strong>
             </p>
           </div>
         </div>
       </section>
 
-      <section className="section surface" aria-labelledby="process-stages">
-        <div className="container section-heading">
-          <p className="eyebrow">The method</p>
-          <h2 id="process-stages">Seven stages. No recruitment theatre.</h2>
+      <section className="section" aria-labelledby="essential-routes">
+        <div className={`container ${styles.heading}`}>
+          <p className="eyebrow">Four ways to work with Essential</p>
+          <h2 id="essential-routes">Which route actually makes sense?</h2>
+          <p>
+            Start with what you&apos;re trying to solve. We&apos;ll work out the
+            recruitment product afterwards.
+          </p>
         </div>
-        <div className="container process-stage-list">
-          {processStages.map((stage) => (
-            <article
-              className="process-stage-card"
-              id={stage.id}
-              key={stage.number}
-            >
-              <div className="process-stage-number">{stage.number}</div>
-              <div className="process-stage-copy">
-                <h2>{stage.title}</h2>
-                {"summary" in stage && stage.summary ? (
-                  <p className="process-stage-summary">{stage.summary}</p>
-                ) : null}
-                {stage.body.map((paragraph) => (
+        <div className="container">
+          <FourRouteSelector routes={essentialRoutes} />
+        </div>
+      </section>
+
+      <section
+        className="section surface"
+        aria-labelledby="essential-principles"
+      >
+        <div className={`container ${styles.heading}`}>
+          <p className="eyebrow">What doesn&apos;t change</p>
+          <h2 id="essential-principles">
+            Different routes. Same basic principles.
+          </h2>
+          <p>
+            The service changes depending on the problem. The judgement behind
+            it doesn&apos;t.
+          </p>
+          <p>
+            Whether I&apos;m running a Permanent search, mapping the market for
+            a Retained assignment, finding a Fractional leader or helping you
+            work out what to hire in the first place, a few things don&apos;t
+            change.
+          </p>
+        </div>
+        <ul className={`container ${styles.principles}`}>
+          {essentialPrinciples.map((principle, index) => (
+            <li key={principle.title}>
+              <span className={styles.number} aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3>{principle.title}</h3>
+              <div className={styles.prose}>
+                {principle.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-            </article>
+            </li>
           ))}
+        </ul>
+      </section>
+
+      <section className="section" aria-labelledby="service-comparison">
+        <div className={`container ${styles.heading}`}>
+          <p className="eyebrow">The bit that changes</p>
+          <h2 id="service-comparison">
+            Same thinking. Different depth, mandate and outcome.
+          </h2>
+          <p>
+            The principles stay consistent. The route changes depending on what
+            you&apos;re actually trying to solve.
+          </p>
+        </div>
+        <div className="container">
+          <ServiceComparison
+            dimensions={comparisonDimensions}
+            services={essentialRoutes}
+          />
         </div>
       </section>
 
-      <section className="section muted" aria-labelledby="process-principle">
-        <div className="container process-principle">
-          <p className="eyebrow">Closing principle</p>
-          <h2 id="process-principle">
-            Technology helps me search. Judgement decides who gets put in front
-            of you.
-          </h2>
-          <p className="lede">
-            I’m not trying to remove humans from recruitment. I’m trying to use
-            better technology to spend more time on the bits where humans
-            actually add value.
+      <section className="section surface" aria-labelledby="search-methodology">
+        <div className={`container ${styles.editorialSplit}`}>
+          <div className={styles.methodIntro}>
+            <p className="eyebrow">When we&apos;re searching for somebody</p>
+            <h2 id="search-methodology">
+              How I actually find the right people.
+            </h2>
+            <div className={styles.prose}>
+              <p>
+                Not every Essential service follows this exact seven-stage
+                journey.
+              </p>
+              <p>
+                Retained Search has its own more formal seven-stage methodology.
+                Fractional starts by defining the leadership model. Market
+                Intelligence may finish with a decision rather than a hire.
+              </p>
+              <p>
+                <strong>
+                  This is the common search thinking underneath the recruitment
+                  work.
+                </strong>
+              </p>
+            </div>
+          </div>
+          <ol className={styles.method}>
+            {commonSearchStages.map((stage, index) => (
+              <li id={stage.id} key={stage.id}>
+                <span className={styles.number} aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3>{stage.title}</h3>
+                  <div className={styles.prose}>
+                    {stage.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="section dark" aria-labelledby="technology-judgement">
+        <div className="container">
+          <div className={styles.heading}>
+            <p className="eyebrow">Technology + judgement</p>
+            <h2 id="technology-judgement">
+              Technology helps me search. Judgement decides what happens next.
+            </h2>
+            <p>
+              I&apos;m not trying to remove humans from recruitment. I&apos;m
+              trying to use better technology to spend more time on the bits
+              where humans actually add value.
+            </p>
+          </div>
+          <div className={styles.judgementGrid}>
+            <ul className={styles.technology}>
+              <li>Research faster.</li>
+              <li>Search wider.</li>
+              <li>Organise information better.</li>
+            </ul>
+            <div className={styles.prose}>
+              <p>
+                Then use experience and judgement for the things technology
+                still doesn&apos;t decide for you:
+              </p>
+              <ul className={styles.questions}>
+                <li>Is the brief right?</li>
+                <li>Is this person genuinely good?</li>
+                <li>Will they work here?</li>
+                <li>Is this move right for them?</li>
+                <li>Is this actually the right hire?</li>
+              </ul>
+            </div>
+          </div>
+          <p className={styles.cadence}>
+            Better brief. Better conversations. Better assessment. Better
+            decision. Fewer CVs. <strong>Better hiring decisions.</strong>
           </p>
-          <div className="process-principle-lines">
-            <p>Better brief.</p>
-            <p>Better conversations.</p>
-            <p>Better assessment.</p>
-            <p>Better decision.</p>
-            <p>Fewer CVs.</p>
-            <p>Better hiring decisions.</p>
+        </div>
+      </section>
+
+      <section
+        className="section surface"
+        aria-labelledby="founder-involvement"
+      >
+        <div className={`container ${styles.editorialSplit}`}>
+          <div>
+            <p className="eyebrow">Founder-led means founder-led</p>
+            <h2 id="founder-involvement">
+              When you work with Essential, you work with me.
+            </h2>
+          </div>
+          <div className={styles.prose}>
+            <p className={styles.lead}>
+              I&apos;m not taking the brief and handing it to somebody
+              you&apos;ve never met.
+            </p>
+            <p>
+              I stay involved from the first conversation through the search,
+              the market feedback, the candidate conversations and the eventual
+              decision.
+            </p>
+            <p>
+              If something doesn&apos;t stack up, I&apos;ll tell you. If I think
+              you need a different route, I&apos;ll tell you that too.
+            </p>
+            <p>
+              And if I don&apos;t think you should recruit yet, that&apos;s a
+              perfectly valid answer.
+            </p>
+            <Link className="text-link" href="/about-david-walsh">
+              David Walsh
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="process-related-links">
-        <div className="container section-heading">
-          <p className="eyebrow">Related links</p>
-          <h2 id="process-related-links">Go deeper where it’s useful.</h2>
+      <section className="section" aria-labelledby="choose-your-route">
+        <div className={`container ${styles.heading}`}>
+          <p className="eyebrow">Choose your route</p>
+          <h2 id="choose-your-route">Know what you need?</h2>
         </div>
-        <div className="container process-related-grid">
-          {relatedLinks.map((link) => (
-            <Link
-              className="card lift-card process-related-card"
-              href={link.href}
-              key={link.href}
-            >
-              <span className="tag">Read next</span>
-              <span>{link.label}</span>
+        <div className="container">
+          <ul className={styles.routeLinks}>
+            {essentialRoutes.map((route, index) => (
+              <li key={route.href}>
+                <Link href={route.href}>
+                  <span className={styles.number} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3>{route.title}</h3>
+                    <p>{route.summary}</p>
+                  </div>
+                  <span className={styles.arrow} aria-hidden="true">
+                    &rarr;
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className={styles.secondaryLinks}>
+            <Link className="text-link" href="/case-studies">
+              See client case studies
             </Link>
-          ))}
+            <Link className="text-link" href="/clients">
+              For Clients
+            </Link>
+          </div>
         </div>
       </section>
 
-      <CTASection
-        title="Got a role that needs this level of attention?"
-        text={"Start with the problem.\n\nTell me what you’re trying to hire and what you need that person to change.\n\nI’ll tell you how I’d approach it."}
-        ctaLabel="Sense-check a brief"
-        ctaHref="/contact"
-        whatsAppIntent="hiring"
-        whatsAppLabel="Message David on WhatsApp"
-      />
+      <section className="section-tight dark" aria-labelledby="next-step">
+        <div className={`container ${styles.finalCta}`}>
+          <p className="eyebrow">Next step</p>
+          <h2 id="next-step">
+            Got a hiring problem you&apos;re trying to work out?
+          </h2>
+          <div className={styles.prose}>
+            <p>Tell me what&apos;s going on.</p>
+            <p>
+              What are you trying to change? What do you think you need?
+              What&apos;s not stacking up?
+            </p>
+            <p>
+              I&apos;ll give you a straight view on the market and which route
+              &mdash; if any &mdash; I think makes sense.
+            </p>
+          </div>
+          <ContactActions
+            label="Sense-check it with David"
+            location="how_essential_works_final"
+          />
+          <p className={styles.closing}>
+            Start with the problem. We&apos;ll work out the recruitment product
+            afterwards.
+          </p>
+        </div>
+      </section>
 
       <SchemaScript
         data={itemListSchema({
-          name: "Essential Resourcing recruitment process",
+          name: "How Essential Resourcing Works",
           description:
-            "How Essential Resourcing finds, approaches and assesses marketing, digital, PR and agency candidates.",
-          items: processStages.map((stage) => ({
-            name: stage.title,
-            url: `/how-essential-resourcing-works#${stage.id}`,
-            description: stage.body[0],
+            "How Essential Resourcing approaches recruitment, retained search, fractional leadership search and market intelligence for marketing, digital, PR, communications and agency hiring.",
+          items: essentialRoutes.map((route) => ({
+            name: route.title,
+            url: route.href,
+            description: route.description,
           })),
         })}
       />

@@ -6,6 +6,9 @@ import { CTASection } from "@/components/CTASection";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LinkedInRecommendations } from "@/components/LinkedInRecommendations";
 import { SchemaScript } from "@/components/SchemaScript";
+import { ServiceOverviewCards } from "@/components/ServiceOverviewCards";
+import { ServiceProcess } from "@/components/ServiceProcess";
+import serviceStyles from "@/components/ServicePresentation.module.css";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
   getPublicCaseStudies,
@@ -19,31 +22,6 @@ import type { WhatsAppIntent } from "@/lib/whatsapp";
 type Props = {
   params: Promise<{ slug: string }>;
 };
-
-const defaultServiceProcessSteps = [
-  {
-    title: "Work out what you are really hiring for",
-    description: "Not just the job title. The problem behind it.",
-  },
-  {
-    title: "Define what good actually looks like",
-    description:
-      "Experience, judgement, behaviours, salary, expectations and what the person needs to deliver.",
-  },
-  {
-    title: "Position the opportunity properly",
-    description:
-      "Strong people need a reason to care. A job spec on its own rarely does the job.",
-  },
-  {
-    title: "Build a focused shortlist",
-    description: "Fewer CVs. Better fit. Proper context.",
-  },
-  {
-    title: "Keep the process moving",
-    description: "Clear feedback, honest advice and no recruitment theatre.",
-  },
-];
 
 function orderBySlug<T extends { slug: string }>(items: T[], slugs: string[]) {
   const uniqueSlugs = Array.from(new Set(slugs));
@@ -82,9 +60,10 @@ export default async function ServicePage({ params }: Props) {
     getPublicCaseStudies(),
   ]);
   const relatedInsights = orderBySlug(
-    allInsights.filter((insight) =>
-      service.relatedInsightSlugs.includes(insight.slug) ||
-      insight.relatedServiceSlugs.includes(service.slug),
+    allInsights.filter(
+      (insight) =>
+        service.relatedInsightSlugs.includes(insight.slug) ||
+        insight.relatedServiceSlugs.includes(service.slug),
     ),
     service.relatedInsightSlugs,
   );
@@ -105,13 +84,7 @@ export default async function ServicePage({ params }: Props) {
   );
   const whatsAppIntent: WhatsAppIntent =
     service.slug === "fractional" ? "strategicInterim" : "hiring";
-  const whatsAppLabel =
-    service.slug === "fractional"
-      ? "Need fractional help quickly? WhatsApp David"
-      : "Message David on WhatsApp";
-  const processSteps = service.processSteps?.length
-    ? service.processSteps
-    : defaultServiceProcessSteps;
+  const whatsAppLabel = "WhatsApp David";
 
   return (
     <>
@@ -125,7 +98,13 @@ export default async function ServicePage({ params }: Props) {
         <div className="container section-heading">
           <p className="eyebrow">{service.title}</p>
           <h1>{service.heroHeadline}</h1>
-          <p className="lede">{service.heroSubheadline}</p>
+          <div className={serviceStyles.heroCopy}>
+            {service.heroSubheadline.split(/\n{2,}/).map((paragraph) => (
+              <p className="lede" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
           <div className="button-row hero-actions">
             <Link className="button button-primary" href={service.cta.href}>
               {service.cta.label}
@@ -141,37 +120,7 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="section surface">
-        <div className="container grid grid-3">
-          <article className="card">
-            <span className="tag">Who it is for</span>
-            <h2>Audience</h2>
-            <ul>
-              {service.audience.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
-          <article className="card">
-            <span className="tag">Problem</span>
-            <h2>What it solves</h2>
-            <ul>
-              {service.problemsSolved.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
-          <article className="card">
-            <span className="tag">Use case</span>
-            <h2>When this makes sense</h2>
-            <ul>
-              {service.whenToUse.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
-        </div>
-      </section>
+      <ServiceOverviewCards service={service} />
 
       {service.searchSummary ? (
         <section className="section muted">
@@ -185,37 +134,15 @@ export default async function ServicePage({ params }: Props) {
               ) : null}
             </div>
             <div className="statement-list">
-              <p>{service.searchSummary}</p>
+              {service.searchSummary.split(/\n{2,}/).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
           </div>
         </section>
       ) : null}
 
-      <section className="section">
-        <div className="container split split-start">
-          <div>
-            <p className="eyebrow">{service.processEyebrow || "Process"}</p>
-            {service.processHeading ? <h2>{service.processHeading}</h2> : null}
-            {service.processIntro ? (
-              <p className="lede">{service.processIntro}</p>
-            ) : null}
-            <Link className="text-link" href="/how-essential-resourcing-works">
-              See exactly how I recruit
-            </Link>
-          </div>
-          <div className="grid grid-2">
-            {processSteps.map((step, index) => (
-              <article className="card" key={step.title}>
-                <span className="tag">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{step.title}</h3>
-                {step.description ? <p>{step.description}</p> : null}
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServiceProcess service={service} />
 
       {service.howEssentialWorks.length ? (
         <section className="section surface">
@@ -312,6 +239,7 @@ export default async function ServicePage({ params }: Props) {
         title={service.ctaHeading || `${service.cta.label}.`}
         text={service.ctaText}
         ctaLabel={service.cta.label}
+        ctaHref={service.cta.href}
         whatsAppIntent={whatsAppIntent}
         whatsAppLabel={whatsAppLabel}
         whatsAppService={service.title}

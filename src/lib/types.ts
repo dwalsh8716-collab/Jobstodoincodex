@@ -73,6 +73,13 @@ export type Service = {
   processHeading?: string;
   processIntro?: string;
   processSteps?: Array<{ title: string; description: string }>;
+  leadershipStages?: Array<{
+    title: string;
+    label: string;
+    paragraphs: string[];
+  }>;
+  evidenceAreas?: Array<{ title: string; description: string }>;
+  advisoryAreas?: Array<{ title: string; description: string }>;
   marketFitEyebrow?: string;
   marketFitHeading?: string;
   judgementEyebrow?: string;

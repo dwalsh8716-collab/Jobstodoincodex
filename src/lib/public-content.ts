@@ -638,6 +638,9 @@ function mapService(item: SanityService, fallback?: Service): Service {
               description: step.text || "",
             }))
         : undefined,
+    leadershipStages: fallback?.leadershipStages,
+    evidenceAreas: fallback?.evidenceAreas,
+    advisoryAreas: fallback?.advisoryAreas,
     marketFitEyebrow: fallback?.marketFitEyebrow,
     marketFitHeading: fallback?.marketFitHeading,
     judgementEyebrow: fallback?.judgementEyebrow,

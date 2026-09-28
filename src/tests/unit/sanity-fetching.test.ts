@@ -52,7 +52,7 @@ describe("Sanity public fetching layer", () => {
         cards: expect.arrayContaining([
           expect.objectContaining({ title: "Permanent Recruitment" }),
           expect.objectContaining({ title: "Retained Search" }),
-          expect.objectContaining({ title: "Fractional" }),
+          expect.objectContaining({ title: "Fractional Leadership" }),
           expect.objectContaining({
             title: "Market Intelligence & Advisory",
           }),
