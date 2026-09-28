@@ -27,6 +27,7 @@ const baseMetadata = createMetadata({
   title: guide.seoTitle,
   description: guide.metaDescription,
   path: salaryGuidePath,
+  image: "/assets/salary-guide-2026-social.png",
 });
 export const metadata: Metadata = {
   ...baseMetadata,
@@ -34,6 +35,12 @@ export const metadata: Metadata = {
   openGraph: {
     ...baseMetadata.openGraph,
     type: "article",
+    images: [{
+      url: absoluteUrl("/assets/salary-guide-2026-social.png"),
+      width: 1200,
+      height: 630,
+      alt: "Manchester & North West Marketing Salary Guide 2026 by David Walsh, Essential Resourcing",
+    }],
     description: salaryGuideSocialDescription,
     publishedTime: guide.publishedDate,
     modifiedTime: guide.updatedDate,
