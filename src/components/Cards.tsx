@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CaseStudy, Insight, Job, Service } from "@/lib/types";
+import editorialStyles from "./Editorial.module.css";
 
 export function ServiceCard({ service }: { service: Service }) {
   return (
@@ -15,9 +16,9 @@ export function ServiceCard({ service }: { service: Service }) {
   );
 }
 
-export function InsightCard({ insight }: { insight: Insight }) {
+export function InsightCard({ insight, editorial = false }: { insight: Insight; editorial?: boolean }) {
   return (
-    <article className="card lift-card">
+    <article className={editorial ? editorialStyles.card : "card lift-card"}>
       <span className="tag">{insight.cardCategory || insight.category}</span>
       <h3>{insight.title}</h3>
       <p>{insight.cardExcerpt || insight.excerpt}</p>

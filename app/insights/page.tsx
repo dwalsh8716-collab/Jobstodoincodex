@@ -1,4 +1,6 @@
 import Link from "next/link";
+import styles from "@/components/Editorial.module.css";
+import { salaryGuideSlug } from "@/lib/salary-guide-2026";
 import { InsightCard } from "@/components/Cards";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
@@ -55,9 +57,10 @@ export default async function InsightsPage() {
   const publishedCaseStudies = caseStudies.filter(
     (caseStudy) => caseStudy.status === "published" && !caseStudy.noIndex,
   );
+  const featured = published.find((item) => item.slug === salaryGuideSlug);
 
   return (
-    <>
+    <div className={styles.page}>
       <Breadcrumbs items={[{ name: "Insights", href: "/insights" }]} />
       <section className="section dark">
         <div className="container section-heading">
@@ -71,19 +74,29 @@ export default async function InsightsPage() {
         </div>
       </section>
       <section className="section surface">
-        <div className="container grid grid-3">
-          {published.map((insight) => (
-            <InsightCard key={insight.slug} insight={insight} />
-          ))}
+        <div className="container">
+          {featured ? <div className={styles.featured}>
+            <p className="eyebrow">Salary Guide · Manchester &amp; North West · 2026</p>
+            <h2>{featured.title}</h2><p>{featured.cardExcerpt || featured.excerpt}</p>
+            <p className="meta">{featured.author} · {featured.updatedDate || featured.publishedDate} · {featured.readingTime}</p>
+            <Link className="text-link" href={`/insights/${featured.slug}`}>View Salary Guide</Link>
+          </div> : null}
         </div>
       </section>
       <section className="section">
-        <div className="container split split-start">
+        <div className="container"><h2>Useful insights</h2><div className={styles.cards}>
+          {published.filter((item) => item.slug !== featured?.slug).map((insight) => (
+            <InsightCard editorial key={insight.slug} insight={insight} />
+          ))}
+        </div></div>
+      </section>
+      <section className="section">
+        <div className="container">
           <div>
             <p className="eyebrow">{copy?.categoryEyebrow}</p>
             <h2>{copy?.categoryHeading}</h2>
           </div>
-          <div className="grid">
+          <div className={styles.topics}>
             {copy?.categories?.map((category) => {
               const categoryInsights = published.filter((insight) =>
                 insightMatchesCategory(insight, category),
@@ -100,7 +113,7 @@ export default async function InsightsPage() {
                     }));
 
               return (
-                <article className="card insight-category-card" key={category}>
+                <article className={styles.topic} key={category}>
                   <h3>{category}</h3>
                   {categoryLinks.length ? (
                     <div className="insight-category-links">
@@ -128,12 +141,12 @@ export default async function InsightsPage() {
           <p className="eyebrow">{copy?.quickAnswersEyebrow}</p>
           <h2>{copy?.quickAnswersHeading}</h2>
         </div>
-        <div className="container grid grid-3">
+        <div className={`container ${styles.answers}`}>
           {copy?.questions?.map((item) => (
-            <article className="card" key={item.question}>
-              <h3>{item.question}</h3>
+            <details className={styles.answer} key={item.question}>
+              <summary>{item.question}</summary>
               <p>{item.answer}</p>
-            </article>
+            </details>
           ))}
         </div>
       </section>
@@ -153,6 +166,6 @@ export default async function InsightsPage() {
           })}
         />
       ) : null}
-    </>
+    </div>
   );
 }

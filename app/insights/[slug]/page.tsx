@@ -1,4 +1,6 @@
 import Link from "next/link";
+import styles from "@/components/Editorial.module.css";
+import { InsightCard } from "@/components/Cards";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
@@ -66,16 +68,16 @@ export default async function InsightPage({ params }: Props) {
       (item) =>
         item.status === "published" &&
         !item.noIndex &&
-        insight.relatedInsightSlugs.includes(item.slug),
+        item.slug !== insight.slug && insight.relatedInsightSlugs.includes(item.slug),
     ),
     insight.relatedInsightSlugs,
-  );
+  ).slice(0, 3);
   const isDavidAuthored = insight.author
     .trim()
     .toLowerCase() === siteConfig.founder.toLowerCase();
 
   return (
-    <>
+    <div className={styles.page}>
       <Breadcrumbs
         items={[
           { name: "Insights", href: "/insights" },
@@ -108,7 +110,7 @@ export default async function InsightPage({ params }: Props) {
           </div>
         </section>
         <section className="section surface">
-          <div className="container split split-start">
+          <div className={`container ${styles.reading}`}>
             <div className="article-body">
               {insight.body.map((section) => (
                 <section key={section.heading}>
@@ -124,12 +126,12 @@ export default async function InsightPage({ params }: Props) {
                 </blockquote>
               ) : null}
             </div>
-            <aside className="grid">
+            <aside className={styles.relatedService}>
               {insight.media ? <RichMediaBlock media={insight.media} /> : null}
-              <div className="card">
-                <span className="tag">Related services</span>
+              {relatedServices.length ? <div>
+                <p className="eyebrow">Related service</p>
                 <div className="grid">
-                  {relatedServices.map((service) => (
+                  {relatedServices.slice(0, 1).map((service) => (
                     <Link
                       className="text-link"
                       href={`/services/${service.slug}`}
@@ -139,9 +141,8 @@ export default async function InsightPage({ params }: Props) {
                     </Link>
                   ))}
                 </div>
-              </div>
-              <div className="card">
-                <span className="tag">How David recruits</span>
+              </div> : null}
+              <div>
                 <Link
                   className="text-link"
                   href="/how-essential-resourcing-works"
@@ -149,27 +150,12 @@ export default async function InsightPage({ params }: Props) {
                   See the search and assessment process
                 </Link>
               </div>
-              {relatedInsights.length ? (
-                <div className="card">
-                  <span className="tag">Related insights</span>
-                  <div className="grid">
-                    {relatedInsights.map((item) => (
-                      <Link
-                        className="text-link"
-                        href={`/insights/${item.slug}`}
-                        key={item.slug}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
             </aside>
           </div>
         </section>
       </article>
       <FAQAccordion faqs={insight.faqs} />
+      {relatedInsights.length ? <section className="section"><div className="container"><h2>Related insights</h2><div className={styles.cards}>{relatedInsights.map((item) => <InsightCard editorial key={item.slug} insight={item} />)}</div></div></section> : null}
       <CTASection
         title={
           insight.ctaHeading || "Need this thinking applied to a real brief?"
@@ -179,6 +165,6 @@ export default async function InsightPage({ params }: Props) {
         whatsAppLabel="Message David on WhatsApp"
       />
       <SchemaScript data={articleSchema(insight)} />
-    </>
+    </div>
   );
 }
