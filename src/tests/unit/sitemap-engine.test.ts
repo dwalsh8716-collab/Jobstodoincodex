@@ -27,6 +27,7 @@ const liveJob: Job = {
   ...jobs[0],
   slug: "live-marketing-director",
   status: "live",
+  hiringOrganizationName: "confidential",
   salaryRange: "£80,000 to £90,000",
   salaryMin: 80000,
   salaryMax: 90000,
@@ -92,6 +93,7 @@ const liveJob: Job = {
     "Candidates can message David with a sensible question before applying.",
   publishedDate: "2026-06-10",
   updatedDate: "2026-06-11",
+  closingDate: "2026-12-31",
 };
 
 function urls(entries: ReturnType<typeof buildPublicSitemap>) {

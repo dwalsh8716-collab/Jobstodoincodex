@@ -1,4 +1,4 @@
-import { salaryGuideInsight } from './salary-guide-2026';
+import { salaryGuideInsight } from "./salary-guide-2026";
 import type {
   CaseStudy,
   ClientProofQuote,
@@ -133,8 +133,7 @@ export const specialisms = [
       "Digital and commercially focused specialists across performance, paid media, PPC, SEO, CRM, eCommerce, acquisition and retention.",
     detail:
       "From hands-on specialists through to Heads of Digital, Performance Directors and digital leadership.",
-    seoTitle:
-      "Digital & eCommerce Recruitment | Essential",
+    seoTitle: "Digital & eCommerce Recruitment | Essential",
     metaDescription:
       "Digital, performance and eCommerce recruitment across PPC, SEO, paid media, CRM, acquisition, retention and digital leadership roles.",
   },
@@ -145,8 +144,7 @@ export const specialisms = [
       "PR, communications, corporate comms, content, social, influencer and reputation roles across agency and client-side teams.",
     detail:
       "From Account Executives and Managers through to Heads of Communications, PR Directors and senior leaders.",
-    seoTitle:
-      "PR & Communications Recruitment | Essential",
+    seoTitle: "PR & Communications Recruitment | Essential",
     metaDescription:
       "PR, communications and content recruitment across agency and client-side teams, from account roles to PR Directors and senior communications leaders.",
   },
@@ -157,8 +155,7 @@ export const specialisms = [
       "The people who lead clients, teams and agencies, from Account Manager and Account Director through to Business Director, Managing Partner and Managing Director.",
     detail:
       "PR, digital, integrated, creative, media and performance agencies.",
-    seoTitle:
-      "Agency Client Services Recruitment | Essential",
+    seoTitle: "Agency Client Services Recruitment | Essential",
     metaDescription:
       "Agency client services and leadership recruitment across Account Manager, Account Director, Business Director and Managing Partner roles.",
   },
@@ -203,33 +200,27 @@ export const services: Service[] = [
     processSteps: [
       {
         title: "Get underneath the brief",
-        description:
-          "What does this person actually need to change?",
+        description: "What does this person actually need to change?",
       },
       {
         title: "Pressure-test the market",
-        description:
-          "Does the salary, title and proposition stack up?",
+        description: "Does the salary, title and proposition stack up?",
       },
       {
         title: "Search beyond applicants",
-        description:
-          "Search the real market. Not just who's looking.",
+        description: "Search the real market. Not just who's looking.",
       },
       {
         title: "Get behind the CV",
-        description:
-          "What did they actually deliver?",
+        description: "What did they actually deliver?",
       },
       {
         title: "Build a shortlist worth meeting",
-        description:
-          "Fewer people. Better evidence.",
+        description: "Fewer people. Better evidence.",
       },
       {
         title: "Interview, offer & onboard",
-        description:
-          "Keep momentum and make the hire stick.",
+        description: "Keep momentum and make the hire stick.",
       },
     ],
     marketFitEyebrow: "Where this service fits",
@@ -240,7 +231,8 @@ export const services: Service[] = [
       "Fewer CVs. Better conversations. Better hiring decisions.",
     faqs: [
       {
-        question: "Is Permanent Recruitment the same as contingency recruitment?",
+        question:
+          "Is Permanent Recruitment the same as contingency recruitment?",
         answer:
           "Broadly, yes. It's the traditional success-based model: you pay a fee when I successfully appoint somebody. But contingent shouldn't mean chucking CVs at the wall and hoping one sticks.",
       },
@@ -292,8 +284,7 @@ export const services: Service[] = [
       "PR recruitment Manchester",
       "agency recruitment UK",
     ],
-    seoTitle:
-      "Permanent Marketing Recruitment | Essential",
+    seoTitle: "Permanent Marketing Recruitment | Essential",
     metaDescription:
       "Success-based permanent recruitment for marketing, digital, PR, communications and agency hires across Manchester, the North West and UK.",
   },
@@ -328,7 +319,8 @@ export const services: Service[] = [
     ],
     processEyebrow: "The Retained Search process",
     processHeading: "A proper search of the market.",
-    processIntro: "More research. More visibility. More confidence in the decision.",
+    processIntro:
+      "More research. More visibility. More confidence in the decision.",
     processSteps: [
       {
         title: "Get the brief right",
@@ -337,8 +329,7 @@ export const services: Service[] = [
       },
       {
         title: "Map the market",
-        description:
-          "Identify the relevant talent across the agreed market.",
+        description: "Identify the relevant talent across the agreed market.",
       },
       {
         title: "Approach",
@@ -352,13 +343,11 @@ export const services: Service[] = [
       },
       {
         title: "Longlist",
-        description:
-          "Assess interested candidates against the agreed brief.",
+        description: "Assess interested candidates against the agreed brief.",
       },
       {
         title: "Shortlist",
-        description:
-          "Agree the 3–5 people genuinely worth meeting.",
+        description: "Agree the 3–5 people genuinely worth meeting.",
       },
       {
         title: "Hire",
@@ -426,8 +415,7 @@ export const services: Service[] = [
       "senior marketing recruitment Manchester",
       "agency leadership search",
     ],
-    seoTitle:
-      "Retained Marketing Search | Essential",
+    seoTitle: "Retained Marketing Search | Essential",
     metaDescription:
       "Retained search for senior, confidential and commercially important marketing, digital, PR and agency leadership appointments across Manchester and the UK.",
   },
@@ -436,7 +424,8 @@ export const services: Service[] = [
     slug: "fractional",
     shortDescription:
       "Search and selection for embedded senior marketing and agency leaders when a full-time hire isn't the right answer.",
-    heroHeadline: "Senior marketing leadership. Just not necessarily five days a week.",
+    heroHeadline:
+      "Senior marketing leadership. Just not necessarily five days a week.",
     heroSubheadline:
       "Sometimes the business needs a CMO, Marketing Director or senior agency leader — but another full-time permanent hire isn't necessarily the right answer.\n\nI help you work out what senior capability you actually need, then find the person who can deliver it.",
     audience: [
@@ -488,13 +477,11 @@ export const services: Service[] = [
     processSteps: [
       {
         title: "Define the problem",
-        description:
-          "What actually needs changing?",
+        description: "What actually needs changing?",
       },
       {
         title: "Define the model",
-        description:
-          "Fractional, interim, advisory or permanent?",
+        description: "Fractional, interim, advisory or permanent?",
       },
       {
         title: "Define the mandate",
@@ -523,8 +510,7 @@ export const services: Service[] = [
       },
     ],
     marketFitEyebrow: "Fractional Leadership",
-    marketFitHeading:
-      "What is Fractional Leadership?",
+    marketFitHeading: "What is Fractional Leadership?",
     judgementEyebrow: "Fractional, interim, advisory & consultancy",
     judgementHeading:
       "Don't get too hung up on the label. Get clear on the problem.",
@@ -723,8 +709,7 @@ export const services: Service[] = [
       "marketing hiring advisory",
       "marketing recruitment brief design",
     ],
-    seoTitle:
-      "Market Intelligence & Advisory | Essential",
+    seoTitle: "Market Intelligence & Advisory | Essential",
     metaDescription:
       "Salary benchmarking, talent mapping, competitor intelligence, brief design and market advice for marketing, digital, PR and agency hiring.",
   },
@@ -934,8 +919,7 @@ export const insights: Insight[] = [
       "Need a straight view on a Manchester or North West marketing hire?",
     ctaText:
       "Send David the brief and he’ll tell you what the market is likely to do with it.",
-    seoTitle:
-      "Marketing Recruitment Manchester | Essential",
+    seoTitle: "Marketing Recruitment Manchester | Essential",
     metaDescription:
       "A practical guide to hiring marketing, digital, PR and agency talent across Manchester and the North West.",
   },
@@ -1105,10 +1089,7 @@ export const insights: Insight[] = [
           "No model can guarantee a better hire on its own. Retained search creates the conditions for a more thorough process, but the quality still depends on the brief, search work, assessment and decision-making.",
       },
     ],
-    relatedServiceSlugs: [
-      "retained-search",
-      "permanent-recruitment",
-    ],
+    relatedServiceSlugs: ["retained-search", "permanent-recruitment"],
     relatedInsightSlugs: [
       "when-should-an-agency-use-retained-search",
       "why-senior-marketing-hiring-goes-wrong",
@@ -1117,8 +1098,7 @@ export const insights: Insight[] = [
     ctaHeading: "Not sure whether your role needs retained search?",
     ctaText:
       "Send David the brief and he’ll tell you which route he’d use, even if it’s the cheaper one.",
-    seoTitle:
-      "Retained vs Contingent Recruitment | Essential",
+    seoTitle: "Retained vs Contingent Recruitment | Essential",
     metaDescription:
       "Retained search or contingency recruitment? A plain-English guide to how each works, what they cost and when businesses should use them.",
   },
@@ -1327,8 +1307,7 @@ export const insights: Insight[] = [
     ctaHeading: "Want an actual number for your role?",
     ctaText:
       "Send David the brief and he’ll tell you what recruitment route he’d recommend, what he’d charge and why.",
-    seoTitle:
-      "Senior Marketing Recruitment Cost | Essential",
+    seoTitle: "Senior Marketing Recruitment Cost | Essential",
     metaDescription:
       "What it costs to recruit a Marketing Director, CMO or senior marketer, including recruitment fees, retained search and hidden hiring costs.",
   },
@@ -1586,10 +1565,7 @@ export const insights: Insight[] = [
           "AI can make search and preparation faster, but it does not replace the judgement needed to assess whether somebody is genuinely right for a brief.",
       },
     ],
-    relatedServiceSlugs: [
-      "retained-search",
-      "permanent-recruitment",
-    ],
+    relatedServiceSlugs: ["retained-search", "permanent-recruitment"],
     relatedInsightSlugs: [
       "why-senior-marketing-hiring-goes-wrong",
       "the-job-title-isnt-the-brief-senior-marketing-hire",
@@ -1729,10 +1705,7 @@ export const insights: Insight[] = [
           "The same title can carry very different levels of ownership, risk, leadership and commercial responsibility from one business to another.",
       },
     ],
-    relatedServiceSlugs: [
-      "retained-search",
-      "permanent-recruitment",
-    ],
+    relatedServiceSlugs: ["retained-search", "permanent-recruitment"],
     relatedInsightSlugs: [
       "how-to-hire-a-marketing-director-without-wasting-six-weeks",
       "how-much-does-senior-marketing-recruitment-cost",
@@ -1837,14 +1810,12 @@ export const insights: Insight[] = [
     ],
     faqs: [
       {
-        question:
-          "When should a business use a Fractional Marketing Director?",
+        question: "When should a business use a Fractional Marketing Director?",
         answer:
           "When senior marketing leadership is needed quickly but the business is not ready, able or certain enough to make the right permanent appointment.",
       },
       {
-        question:
-          "Is Fractional the same as interim marketing leadership?",
+        question: "Is Fractional the same as interim marketing leadership?",
         answer:
           "They often overlap. Essential uses Fractional to describe senior marketing leadership for a defined business need, usually closer to the work than detached consultancy.",
       },
@@ -2327,8 +2298,7 @@ export const insights: Insight[] = [
     ],
     faqs: [
       {
-        question:
-          "Is Fractional the same as interim marketing leadership?",
+        question: "Is Fractional the same as interim marketing leadership?",
         answer:
           "Often, yes. Fractional is the phrase many people search for when they need senior leadership for a defined business need.",
       },
@@ -2356,8 +2326,7 @@ export const insights: Insight[] = [
     ],
     ctaHeading: "Wondering whether this could work in your business?",
     ctaText: "Tell David what's going on and he'll give you a straight view.",
-    seoTitle:
-      "What Is a Fractional Marketing Leader? | Essential",
+    seoTitle: "What Is a Fractional Marketing Leader? | Essential",
     metaDescription:
       "What a fractional marketing leader does, when to hire one and how the model differs from traditional consultancy.",
   },
@@ -2440,8 +2409,7 @@ export const insights: Insight[] = [
     ],
     ctaHeading: "Got a role you're not sure how to take to market?",
     ctaText: "Give David a shout.",
-    seoTitle:
-      "Agency Retained Search | Essential",
+    seoTitle: "Agency Retained Search | Essential",
     metaDescription:
       "When retained recruitment makes sense for agencies hiring senior, confidential or difficult-to-find marketing, PR and digital talent.",
   },
@@ -2837,8 +2805,7 @@ export const caseStudies: CaseStudy[] = [
       "https://lbbonline.com/news/havas-media-manchester-creates-joint-general-manager-role",
     externalSourceLabel: "Read the Havas leadership update",
     featured: true,
-    seoTitle:
-      "Havas Managing Partner Case Study | Essential",
+    seoTitle: "Havas Managing Partner Case Study | Essential",
     metaDescription:
       "How Essential Resourcing ran a retained senior agency leadership search for Havas Media Manchester and appointed James Reddington.",
   },
@@ -2922,8 +2889,7 @@ export const caseStudies: CaseStudy[] = [
     impact:
       "Proof is being checked. Add real commercial impact if permission allows.",
     featured: true,
-    seoTitle:
-      "Head of Marketing Case Study | Essential",
+    seoTitle: "Head of Marketing Case Study | Essential",
     metaDescription:
       "Draft anonymised case study structure for a client-side Head of Marketing hire. Add verified outcome before publication.",
   },
@@ -2965,8 +2931,7 @@ export const caseStudies: CaseStudy[] = [
     impact:
       "Proof is being checked. Add real commercial impact if permission allows.",
     featured: true,
-    seoTitle:
-      "Fractional Agency Leadership Case Study | Essential",
+    seoTitle: "Fractional Agency Leadership Case Study | Essential",
     metaDescription:
       "Draft anonymised case study structure for a fractional agency leadership brief.",
   },
@@ -3140,8 +3105,7 @@ export const salarySnapshots: SalarySnapshot[] = [
     takeaways: [
       "Leadership salaries need context. The title alone tells you very little.",
     ],
-    seoTitle:
-      "Senior Marketing Salary Snapshot | Essential",
+    seoTitle: "Senior Marketing Salary Snapshot | Essential",
     metaDescription:
       "Draft senior marketing leadership salary snapshot for validation before publication.",
   },
@@ -3402,6 +3366,17 @@ export function getGoogleJobPostingIssues(
     issues.push("job_posted_date_missing");
   }
 
+  if (!job.hiringOrganizationName?.trim()) {
+    issues.push("job_hiring_organization_missing");
+  }
+
+  if (
+    !job.employmentType.trim() ||
+    /to be confirmed/i.test(job.employmentType)
+  ) {
+    issues.push("job_employment_type_missing");
+  }
+
   if (
     !job.summary.trim() ||
     job.description.length === 0 ||
@@ -3432,14 +3407,17 @@ export function getGoogleJobPostingIssues(
     if (!ukApplicantLocationPattern.test(remoteCopy)) {
       issues.push("remote_applicant_location_missing");
     }
+  } else if (!job.location.trim()) {
+    issues.push("job_physical_location_missing");
   }
 
   if (
     job.status === "live" &&
-    job.closingDate &&
-    job.closingDate < todayIsoDate(referenceDate)
+    (!job.closingDate || job.closingDate < todayIsoDate(referenceDate))
   ) {
-    issues.push("expired_live_job");
+    issues.push(
+      job.closingDate ? "expired_live_job" : "job_closing_date_missing",
+    );
   }
 
   return issues;

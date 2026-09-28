@@ -5,18 +5,30 @@ import { ClientProofCards } from "@/components/ClientProofCards";
 import { LinkedInRecommendations } from "@/components/LinkedInRecommendations";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { getPublicCaseStudies } from "@/lib/public-content";
+import {
+  getPublicCaseStudies,
+  getPublicContentHubPages,
+} from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
-export const metadata = createMetadata({
-  title: "Marketing Recruitment Case Studies | Essential Resourcing",
-  description:
-    "Real marketing recruitment, leadership search and fractional case studies from Essential Resourcing, published with permission.",
-  path: "/case-studies",
-});
+export async function generateMetadata() {
+  const { caseStudies } = await getPublicContentHubPages();
+  return createMetadata({
+    title:
+      caseStudies?.seoTitle ||
+      "Marketing Recruitment Case Studies | Essential Resourcing",
+    description:
+      caseStudies?.metaDescription ||
+      "Real marketing recruitment, leadership search and fractional case studies from Essential Resourcing, published with permission.",
+    path: "/case-studies",
+  });
+}
 
 export default async function CaseStudiesPage() {
-  const caseStudies = await getPublicCaseStudies();
+  const [{ caseStudies: copy }, caseStudies] = await Promise.all([
+    getPublicContentHubPages(),
+    getPublicCaseStudies(),
+  ]);
   const publishedCaseStudies = caseStudies.filter(
     (caseStudy) => caseStudy.status === "published" && !caseStudy.noIndex,
   );
@@ -26,12 +38,13 @@ export default async function CaseStudiesPage() {
       <Breadcrumbs items={[{ name: "Case Studies", href: "/case-studies" }]} />
       <section className="section dark">
         <div className="container section-heading">
-          <p className="eyebrow">Case studies</p>
-          <h1>Proper proof. Not a page full of logos.</h1>
-          <p className="lede">
-            Real marketing recruitment, leadership search and fractional
-            case studies, published when the facts and permission are clear.
-          </p>
+          <p className="eyebrow">{copy?.eyebrow}</p>
+          <h1>{copy?.title}</h1>
+          {copy?.intro?.map((paragraph) => (
+            <p className="lede" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
         </div>
       </section>
       <section className="section surface">
@@ -43,17 +56,13 @@ export default async function CaseStudiesPage() {
           </div>
         ) : (
           <div className="container empty-state">
-            <p className="eyebrow">Proof in progress</p>
-            <h2>The first case studies are currently being verified.</h2>
-            <p className="lede">
-              Rather than publishing anonymous success stories with suspiciously
-              perfect outcomes, Essential only publishes case studies when the
-              facts and permission are clear.
-            </p>
-            <p className="lede">
-              If you want to understand how David would approach a live brief in
-              the meantime, have a conversation with him.
-            </p>
+            <p className="eyebrow">{copy?.emptyEyebrow}</p>
+            <h2>{copy?.emptyHeading}</h2>
+            {copy?.emptyText?.map((paragraph) => (
+              <p className="lede" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="/contact">
                 Talk to David

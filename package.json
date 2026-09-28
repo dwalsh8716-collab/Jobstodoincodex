@@ -30,6 +30,7 @@
     "sanity:sync-copy": "sanity exec scripts/sync-approved-copy-to-sanity.mjs --with-user-token",
     "sanity:sync-copy:dry-run": "sanity exec scripts/sync-approved-copy-to-sanity.mjs --with-user-token -- --dry-run",
     "sanity:verify-copy": "sanity exec scripts/sync-approved-copy-to-sanity.mjs --with-user-token -- --verify",
+    "sanity:seed-hub-pages": "sanity exec scripts/seed-content-hub-pages.mjs --with-user-token",
     "health:monthly": "node scripts/monthly-health-check.mjs",
     "monitor:production": "node scripts/production-monitor.mjs",
     "verify": "npm run lint && npm run build && npm run clean:next-dev-types && npm run typecheck && npm run test && npm run performance:budget && playwright test",

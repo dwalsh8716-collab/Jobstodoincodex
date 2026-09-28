@@ -63,6 +63,12 @@ export const structure: StructureResolver = (S) =>
               S.documentTypeListItem("caseStudy")
                 .title("Case Studies")
                 .icon(CaseIcon),
+              singletonListItem(
+                S,
+                "caseStudiesPage",
+                "Case Studies page",
+                CaseIcon,
+              ),
               S.documentTypeListItem("testimonial")
                 .title("Testimonials")
                 .icon(StarIcon),
@@ -86,6 +92,12 @@ export const structure: StructureResolver = (S) =>
               S.documentTypeListItem("insight")
                 .title("Insights / Posts")
                 .icon(ComposeIcon),
+              singletonListItem(
+                S,
+                "insightsPage",
+                "Insights page",
+                ComposeIcon,
+              ),
               S.documentTypeListItem("salarySnapshot")
                 .title("Salary Guides / Snapshots")
                 .icon(TiersIcon),
@@ -99,6 +111,7 @@ export const structure: StructureResolver = (S) =>
           S.list()
             .title("Recruitment")
             .items([
+              singletonListItem(S, "jobsPage", "Jobs page", RocketIcon),
               S.documentTypeListItem("job").title("Jobs").icon(RocketIcon),
             ]),
         ),

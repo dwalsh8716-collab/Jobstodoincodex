@@ -20,6 +20,7 @@ const transparentJob: Job = {
   slug: "senior-pr-account-director",
   status: "live",
   noIndex: false,
+  hiringOrganizationName: "confidential",
   salaryRange: "GBP 55,000 to GBP 65,000",
   salaryMin: 55000,
   salaryMax: 65000,

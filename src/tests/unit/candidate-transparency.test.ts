@@ -23,6 +23,7 @@ vi.mock("server-only", () => ({}));
 const transparentJob: Job = {
   ...jobs[0],
   status: "live",
+  hiringOrganizationName: "confidential",
   salaryRange: "GBP 55,000 to GBP 65,000",
   salaryMin: 55000,
   salaryMax: 65000,

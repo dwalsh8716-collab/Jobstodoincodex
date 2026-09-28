@@ -74,6 +74,12 @@ For Essential Resourcing:
 
 - `JobPosting` schema belongs on the individual job page only, never on the
   jobs listing page.
+- The CMS has explicit fields for the original posting date, plain job title,
+  hiring employer, employment type, location/remote status, full description,
+  application route and closing date. Complete these before changing Status to
+  Live. For an anonymous search, record the hiring organization as
+  `confidential`; do not label Essential Resourcing as the employer unless it
+  is actually hiring.
 - Draft jobs must stay out of the sitemap, AI index routes and JobPosting
   schema.
 - Closed or expired jobs must not keep live JobPosting schema. Close the role,
@@ -83,8 +89,16 @@ For Essential Resourcing:
 - The description must be complete and visible on the page: role overview,
   responsibilities, requirements, must-haves, location, working pattern,
   salary/rate, process and how to apply.
+- Use the real employer name in the advert and structured data when it can be
+  disclosed. If the employer is anonymous, use `confidential` in the structured
+  data and make that clear in the visible advert.
+- Every live job needs a genuine closing date. Close or expire the advert when
+  applications stop; do not keep an evergreen role live.
 - Salary/rate schema should use real client- or employer-provided pay data.
   Do not invent a number to make the advert look better.
+- Google does not require salary data for JobPosting eligibility; Essential's
+  own candidate-transparency standard is stricter and requires a confirmed
+  public salary/rate range before a role is marked live.
 - Fixed project fees can be shown in the advert, but they are not pushed into
   salary schema with a made-up unit.
 - Use remote = Yes only for a role that is genuinely 100% remote. Hybrid,

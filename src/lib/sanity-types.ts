@@ -45,6 +45,60 @@ export type SanitySeo = {
   noIndex?: boolean;
 };
 
+export type SanityContentHubPages = {
+  _id?: string;
+  jobs?: {
+    eyebrow?: string;
+    title?: string;
+    intro?: string[];
+    rolesEyebrow?: string;
+    rolesHeading?: string;
+    rolesIntro?: string[];
+    emptyEyebrow?: string;
+    emptyHeading?: string;
+    emptyCtaHeading?: string;
+    emptyText?: string[];
+    emptyCtaLabel?: string;
+    roleStandardTag?: string;
+    roleStandardHeading?: string;
+    roleStandardPoints?: string[];
+    standardsEyebrow?: string;
+    standardsHeading?: string;
+    standards?: string[];
+    ctaHeading?: string;
+    ctaText?: string;
+    seoTitle?: string;
+    metaDescription?: string;
+  };
+  insights?: {
+    eyebrow?: string;
+    title?: string;
+    intro?: string[];
+    categoryEyebrow?: string;
+    categoryHeading?: string;
+    categories?: string[];
+    categoryEmptyMessage?: string;
+    quickAnswersEyebrow?: string;
+    quickAnswersHeading?: string;
+    questions?: Array<{ _key?: string; question?: string; answer?: string }>;
+    displayOrder?: string[];
+    ctaHeading?: string;
+    ctaText?: string;
+    seoTitle?: string;
+    metaDescription?: string;
+  };
+  caseStudies?: {
+    eyebrow?: string;
+    title?: string;
+    intro?: string[];
+    emptyEyebrow?: string;
+    emptyHeading?: string;
+    emptyText?: string[];
+    seoTitle?: string;
+    metaDescription?: string;
+  };
+};
+
 export type SanityCardReference = {
   _id: string;
   title?: string;
@@ -327,6 +381,7 @@ export type SanityJob = SanitySeo & {
   _id: string;
   title: string;
   slug: string;
+  contentVersion?: number;
   salaryRange?: string;
   salaryMin?: number;
   salaryMax?: number;
@@ -341,7 +396,9 @@ export type SanityJob = SanitySeo & {
   salary?: string;
   salaryStatus?: "verified" | "indicative" | "unverified";
   salaryTransparencyNote?: string;
+  hiringOrganizationName?: string;
   location?: string;
+  locationRegion?: string;
   officeLocation?: string;
   workingPattern?: string;
   hybridPattern?: string;
@@ -403,8 +460,11 @@ export type SanityInsight = SanitySeo & {
   _id: string;
   title: string;
   slug: string;
+  contentVersion?: number;
   excerpt?: string;
+  cardExcerpt?: string;
   category?: string;
+  cardCategory?: string;
   buyerQuestionAnswered?: string;
   problemAddressed?: string;
   author?: SanityPerson;
@@ -412,6 +472,7 @@ export type SanityInsight = SanitySeo & {
   updatedDate?: string;
   readingTime?: string;
   heroImage?: SanityImage;
+  media?: SanityVideo;
   body?: SanityPortableTextBlock[];
   faqs?: FAQ[];
   relatedServices?: SanityCardReference[];
@@ -457,6 +518,7 @@ export type SanityCaseStudy = SanitySeo & {
   externalSourceUrl?: string;
   externalSourceLabel?: string;
   featured?: boolean;
+  contentVersion?: number;
   status?: "draft" | "published";
 };
 

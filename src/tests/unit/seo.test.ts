@@ -117,6 +117,30 @@ describe("structured data builders", () => {
     });
     expect(schema.description).toContain("<p><strong>Summary:</strong>");
     expect(schema.description).toContain("Responsibilities");
+    expect(schema.hiringOrganization).toMatchObject({
+      "@type": "Organization",
+      name: "confidential",
+    });
+  });
+
+  it("uses remote JobPosting location properties without inventing an office", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      hiringOrganizationName: "confidential",
+      remotePossible: "yes",
+      summary:
+        "A fully remote role open to applicants across the United Kingdom.",
+      locationExpectation: "Fully remote within the United Kingdom.",
+    });
+
+    expect(schema).toMatchObject({
+      jobLocationType: "TELECOMMUTE",
+      applicantLocationRequirements: {
+        "@type": "Country",
+        name: "United Kingdom",
+      },
+    });
+    expect(schema).not.toHaveProperty("jobLocation");
   });
 
   it("builds a full HTML job description from visible advert sections", () => {

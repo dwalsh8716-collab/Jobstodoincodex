@@ -436,18 +436,26 @@ export function jobPostingSchema(job: Job) {
       : {}),
     hiringOrganization: {
       "@type": "Organization",
-      name: siteConfig.name,
-      sameAs: siteConfig.url,
-      logo: absoluteUrl(siteConfig.logoDark),
+      name:
+        job.hiringOrganizationName?.trim().toLowerCase() === "confidential"
+          ? "confidential"
+          : job.hiringOrganizationName || "confidential",
     },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: job.location,
-        addressCountry: "GB",
-      },
-    },
+    ...(job.remotePossible !== "yes"
+      ? {
+          jobLocation: {
+            "@type": "Place",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: job.location,
+              ...(job.locationRegion
+                ? { addressRegion: job.locationRegion }
+                : {}),
+              addressCountry: "GB",
+            },
+          },
+        }
+      : {}),
     ...(job.remotePossible === "yes"
       ? {
           jobLocationType: "TELECOMMUTE",

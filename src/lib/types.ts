@@ -205,7 +205,9 @@ export type Job = {
   salary: string;
   salaryStatus: "verified" | "indicative" | "unverified";
   salaryTransparencyNote: string;
+  hiringOrganizationName?: string;
   location: string;
+  locationRegion?: string;
   officeLocation: string;
   workingPattern: string;
   hybridPattern: string;

@@ -4,20 +4,27 @@ import { JobCard } from "@/components/Cards";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { candidateJobPageStandards } from "@/lib/candidate-transparency-content";
 import { isJobLive } from "@/lib/content";
-import { getPublicJobs } from "@/lib/public-content";
+import { getPublicContentHubPages, getPublicJobs } from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
-export const metadata = createMetadata({
-  title: "Marketing, PR & Digital Jobs | Essential Resourcing",
-  description:
-    "Current marketing, PR, communications, digital and agency jobs handled by specialist recruiter Essential Resourcing.",
-  path: "/jobs",
-});
+export async function generateMetadata() {
+  const { jobs } = await getPublicContentHubPages();
+  return createMetadata({
+    title:
+      jobs?.seoTitle || "Marketing, PR & Digital Jobs | Essential Resourcing",
+    description:
+      jobs?.metaDescription ||
+      "Current marketing, PR, communications, digital and agency jobs handled by specialist recruiter Essential Resourcing.",
+    path: "/jobs",
+  });
+}
 
 export default async function JobsPage() {
-  const jobs = await getPublicJobs();
+  const [{ jobs: copy }, jobs] = await Promise.all([
+    getPublicContentHubPages(),
+    getPublicJobs(),
+  ]);
   const liveJobs = jobs.filter((job) => isJobLive(job));
 
   return (
@@ -25,34 +32,24 @@ export default async function JobsPage() {
       <Breadcrumbs items={[{ name: "Jobs", href: "/jobs" }]} />
       <section className="section dark">
         <div className="container section-heading">
-          <p className="eyebrow">Jobs</p>
-          <h1>Marketing, PR and digital jobs. Without the mystery.</h1>
-          <p className="lede">
-            Live roles handled by Essential appear here.
-          </p>
-          <p className="lede">
-            Wherever possible, you&apos;ll see the useful stuff upfront: salary,
-            location, hybrid setup, what the role actually involves and what the
-            process looks like.
-          </p>
+          <p className="eyebrow">{copy?.eyebrow}</p>
+          <h1>{copy?.title}</h1>
+          {copy?.intro?.map((paragraph) => (
+            <p className="lede" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
         </div>
       </section>
       <section className="section surface">
         <div className="container section-heading">
-          <p className="eyebrow">Live roles</p>
-          <h2>
-            {liveJobs.length
-              ? "Current live roles."
-              : "No live roles published right now."}
-          </h2>
-          <p className="lede">
-            If you&apos;re open to something senior or specialist, don&apos;t wait
-            for the perfect advert to appear.
-          </p>
-          <p className="lede">
-            Some searches are confidential and some conversations start before a
-            role ever reaches a job board.
-          </p>
+          <p className="eyebrow">{copy?.rolesEyebrow}</p>
+          <h2>{liveJobs.length ? copy?.rolesHeading : copy?.emptyHeading}</h2>
+          {copy?.rolesIntro?.map((paragraph) => (
+            <p className="lede" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
           <div className="button-row hero-actions">
             <WhatsAppButton
               intent="candidates"
@@ -70,18 +67,19 @@ export default async function JobsPage() {
           </div>
         ) : (
           <div className="container empty-state">
-            <p className="eyebrow">Confidential route</p>
-            <h2>Open to the right thing?</h2>
-            <p className="lede">
-              Send David your LinkedIn profile and a few lines about what
-              you&apos;d consider next.
-            </p>
+            <p className="eyebrow">{copy?.emptyEyebrow}</p>
+            <h2>{copy?.emptyCtaHeading}</h2>
+            {copy?.emptyText?.map((paragraph) => (
+              <p className="lede" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
             <div className="button-row hero-actions">
               <Link
                 className="button button-primary"
                 href="/candidates#candidate-contact"
               >
-                Send a confidential note
+                {copy?.emptyCtaLabel}
               </Link>
               <WhatsAppButton
                 intent="candidates"
@@ -96,27 +94,21 @@ export default async function JobsPage() {
       <section className="section muted">
         <div className="container grid grid-3">
           <article className="card">
-            <span className="tag">Live role standard</span>
-            <h2>Only real roles go live.</h2>
-            <p>
-              No fake evergreen vacancies designed to collect CVs.
-            </p>
-            <p>
-              No closed roles pretending they&apos;re still available.
-            </p>
-            <p>
-              No &quot;competitive salary&quot; when a proper range can be shared.
-            </p>
+            <span className="tag">{copy?.roleStandardTag}</span>
+            <h2>{copy?.roleStandardHeading}</h2>
+            {copy?.roleStandardPoints?.map((point) => (
+              <p key={point}>{point}</p>
+            ))}
           </article>
         </div>
       </section>
       <section className="section surface">
         <div className="container section-heading">
-          <p className="eyebrow">Candidate standards</p>
-          <h2>What a good job ad should tell you.</h2>
+          <p className="eyebrow">{copy?.standardsEyebrow}</p>
+          <h2>{copy?.standardsHeading}</h2>
         </div>
         <div className="container grid grid-3">
-          {candidateJobPageStandards.map((standard) => (
+          {copy?.standards?.map((standard) => (
             <article className="card" key={standard}>
               <p>{standard}</p>
             </article>
@@ -124,9 +116,9 @@ export default async function JobsPage() {
         </div>
       </section>
       <CTASection
-        title="Looking for your next move?"
-        text="Send David a note or LinkedIn URL."
-        ctaLabel="Send a confidential note"
+        title={copy?.ctaHeading}
+        text={copy?.ctaText}
+        ctaLabel={copy?.emptyCtaLabel}
         ctaHref="/candidates#candidate-contact"
         whatsAppIntent="candidates"
         whatsAppLabel="Quick WhatsApp to David"

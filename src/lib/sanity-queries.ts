@@ -147,6 +147,7 @@ const serviceFields = /* groq */ `
 
 const jobFields = /* groq */ `
   _id,
+  contentVersion,
   title,
   "slug": slug.current,
   salaryRange,
@@ -161,7 +162,9 @@ const jobFields = /* groq */ `
   salary,
   salaryStatus,
   salaryTransparencyNote,
+  hiringOrganizationName,
   location,
+  locationRegion,
   officeLocation,
   workingPattern,
   hybridPattern,
@@ -222,10 +225,13 @@ const jobFields = /* groq */ `
 
 const insightFields = /* groq */ `
   _id,
+  contentVersion,
   title,
   "slug": slug.current,
   excerpt,
+  cardExcerpt,
   category,
+  cardCategory,
   buyerQuestionAnswered,
   problemAddressed,
   author->{_id, name, role, bio, headshot{${imageFields}}},
@@ -233,6 +239,7 @@ const insightFields = /* groq */ `
   updatedDate,
   readingTime,
   heroImage{${imageFields}},
+  media{${videoFields}},
   body[]{_key, _type, ...},
   ${faqFields},
   relatedServices[]->{${serviceCardFields}},
@@ -246,6 +253,7 @@ const insightFields = /* groq */ `
 
 const caseStudyFields = /* groq */ `
   _id,
+  contentVersion,
   title,
   "slug": slug.current,
   clientType,
@@ -281,6 +289,12 @@ const caseStudyFields = /* groq */ `
   featured,
   ${seoFields},
   status
+`;
+
+const contentHubFields = /* groq */ `
+  "jobs": *[_id == "jobsPage"][0]{eyebrow, title, intro, rolesEyebrow, rolesHeading, rolesIntro, emptyEyebrow, emptyHeading, emptyCtaHeading, emptyText, emptyCtaLabel, roleStandardTag, roleStandardHeading, roleStandardPoints, standardsEyebrow, standardsHeading, standards, ctaHeading, ctaText, seoTitle, metaDescription},
+  "insights": *[_id == "insightsPage"][0]{eyebrow, title, intro, displayOrder, categoryEyebrow, categoryHeading, categories, categoryEmptyMessage, quickAnswersEyebrow, quickAnswersHeading, questions[]{_key, question, answer}, ctaHeading, ctaText, seoTitle, metaDescription},
+  "caseStudies": *[_id == "caseStudiesPage"][0]{eyebrow, title, intro, emptyEyebrow, emptyHeading, emptyText, seoTitle, metaDescription}
 `;
 
 const salarySnapshotFields = /* groq */ `
@@ -348,6 +362,10 @@ export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
     footerNavigation[]->{_id, label, url, order, isCta, openInNewTab},
     featuredProof[]->{${proofItemFields}}
   }
+`);
+
+export const CONTENT_HUB_PAGES_QUERY = defineQuery(/* groq */ `
+  {${contentHubFields}}
 `);
 
 export const HOME_PAGE_QUERY = defineQuery(/* groq */ `

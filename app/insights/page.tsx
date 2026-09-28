@@ -3,34 +3,25 @@ import { InsightCard } from "@/components/Cards";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { SchemaScript } from "@/components/SchemaScript";
-import { aiSearchQuestions, insightCategories } from "@/lib/content";
-import { getPublicCaseStudies, getPublicInsights } from "@/lib/public-content";
+import {
+  getPublicCaseStudies,
+  getPublicContentHubPages,
+  getPublicInsights,
+} from "@/lib/public-content";
 import { createMetadata, itemListSchema } from "@/lib/seo";
 
-export const metadata = createMetadata({
-  title: "Marketing Recruitment & Hiring Insights | David Walsh",
-  description:
-    "Practical marketing recruitment advice, market commentary, salary insight and fractional guidance from recruiter David Walsh.",
-  path: "/insights",
-});
-
-const insightOrder = [
-  "manchester-north-west-marketing-salary-guide-2026",
-  "marketing-recruitment-manchester-north-west-guide",
-  "retained-search-vs-contingent-recruitment",
-  "how-much-does-senior-marketing-recruitment-cost",
-  "the-job-title-isnt-the-brief-senior-marketing-hire",
-  "marketing-recruitment-market-isnt-dead-businesses-hiring-differently",
-  "what-should-you-pay-a-senior-marketing-hire-in-2026",
-  "do-you-actually-need-a-full-time-marketing-director",
-  "your-first-marketing-director-what-should-you-actually-be-hiring-for",
-  "why-hiring-senior-agency-people-is-harder-than-matching-clients-and-job-titles",
-  "your-cv-tells-me-where-youve-worked-what-you-actually-did",
-  "how-to-hire-a-marketing-director-without-wasting-six-weeks",
-  "what-is-a-fractional-marketing-leader",
-  "when-should-an-agency-use-retained-search",
-  "why-senior-marketing-hiring-goes-wrong",
-];
+export async function generateMetadata() {
+  const { insights } = await getPublicContentHubPages();
+  return createMetadata({
+    title:
+      insights?.seoTitle ||
+      "Marketing Recruitment & Hiring Insights | David Walsh",
+    description:
+      insights?.metaDescription ||
+      "Practical marketing recruitment advice, market commentary, salary insight and fractional guidance from recruiter David Walsh.",
+    path: "/insights",
+  });
+}
 
 function orderBySlug<T extends { slug: string }>(items: T[], slugs: string[]) {
   const ordered = slugs
@@ -52,13 +43,14 @@ function insightMatchesCategory(
 }
 
 export default async function InsightsPage() {
-  const [insights, caseStudies] = await Promise.all([
+  const [{ insights: copy }, insights, caseStudies] = await Promise.all([
+    getPublicContentHubPages(),
     getPublicInsights(),
     getPublicCaseStudies(),
   ]);
   const published = orderBySlug(
     insights.filter((insight) => insight.status === "published"),
-    insightOrder,
+    copy?.displayOrder || [],
   );
   const publishedCaseStudies = caseStudies.filter(
     (caseStudy) => caseStudy.status === "published" && !caseStudy.noIndex,
@@ -69,17 +61,13 @@ export default async function InsightsPage() {
       <Breadcrumbs items={[{ name: "Insights", href: "/insights" }]} />
       <section className="section dark">
         <div className="container section-heading">
-          <p className="eyebrow">Insights</p>
-          <h1>Useful thinking on marketing hiring. No SEO sludge.</h1>
-          <p className="lede">
-            More than a decade of conversations with candidates, clients, agencies
-            and marketing teams creates a fair few opinions.
-          </p>
-          <p className="lede">This is where David puts the useful ones.</p>
-          <p className="lede">
-            Hiring advice, market observations and straight answers to the
-            questions businesses and candidates are actually asking.
-          </p>
+          <p className="eyebrow">{copy?.eyebrow}</p>
+          <h1>{copy?.title}</h1>
+          {copy?.intro?.map((paragraph) => (
+            <p className="lede" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
         </div>
       </section>
       <section className="section surface">
@@ -92,11 +80,11 @@ export default async function InsightsPage() {
       <section className="section">
         <div className="container split split-start">
           <div>
-            <p className="eyebrow">Categories</p>
-            <h2>Find the useful stuff.</h2>
+            <p className="eyebrow">{copy?.categoryEyebrow}</p>
+            <h2>{copy?.categoryHeading}</h2>
           </div>
           <div className="grid">
-            {insightCategories.map((category) => {
+            {copy?.categories?.map((category) => {
               const categoryInsights = published.filter((insight) =>
                 insightMatchesCategory(insight, category),
               );
@@ -127,10 +115,7 @@ export default async function InsightsPage() {
                       ))}
                     </div>
                   ) : (
-                    <p className="meta">
-                      Case studies and proof-led articles will sit here once the
-                      facts and permissions are ready.
-                    </p>
+                    <p className="meta">{copy?.categoryEmptyMessage}</p>
                   )}
                 </article>
               );
@@ -140,11 +125,11 @@ export default async function InsightsPage() {
       </section>
       <section className="section">
         <div className="container section-heading">
-          <p className="eyebrow">Quick answers</p>
-          <h2>Straight answers to common marketing recruitment questions.</h2>
+          <p className="eyebrow">{copy?.quickAnswersEyebrow}</p>
+          <h2>{copy?.quickAnswersHeading}</h2>
         </div>
         <div className="container grid grid-3">
-          {aiSearchQuestions.map((item) => (
+          {copy?.questions?.map((item) => (
             <article className="card" key={item.question}>
               <h3>{item.question}</h3>
               <p>{item.answer}</p>
@@ -152,15 +137,13 @@ export default async function InsightsPage() {
           ))}
         </div>
       </section>
-      <CTASection
-        title="Want a market view before you hire?"
-        text="Tell David what you're trying to hire."
-      />
+      <CTASection title={copy?.ctaHeading} text={copy?.ctaText} />
       {published.length ? (
         <SchemaScript
           data={itemListSchema({
             name: "Essential Resourcing insights",
             description:
+              copy?.metaDescription ||
               "Published hiring advice, market commentary and senior marketing recruitment insight from David Walsh.",
             items: published.map((insight) => ({
               name: insight.title,

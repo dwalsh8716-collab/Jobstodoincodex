@@ -135,6 +135,226 @@ const seoFields = [
   }),
 ];
 
+const jobsPage = defineType({
+  name: "jobsPage",
+  title: "Jobs page content",
+  type: "document",
+  icon: RocketIcon,
+  fields: [
+    defineField({ name: "title", title: "Page heading", type: "string" }),
+    defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+    textListField("intro", "Introduction"),
+    defineField({
+      name: "rolesEyebrow",
+      title: "Roles small heading",
+      type: "string",
+    }),
+    defineField({
+      name: "rolesHeading",
+      title: "Roles heading",
+      type: "string",
+    }),
+    textListField("rolesIntro", "Roles introduction"),
+    defineField({
+      name: "emptyEyebrow",
+      title: "No roles small heading",
+      type: "string",
+    }),
+    defineField({
+      name: "emptyHeading",
+      title: "No roles heading",
+      type: "string",
+    }),
+    defineField({
+      name: "emptyCtaHeading",
+      title: "No roles contact heading",
+      type: "string",
+    }),
+    textListField("emptyText", "No roles explanation"),
+    defineField({
+      name: "emptyCtaLabel",
+      title: "No roles button label",
+      type: "string",
+    }),
+    defineField({
+      name: "roleStandardTag",
+      title: "Role standard label",
+      type: "string",
+    }),
+    defineField({
+      name: "roleStandardHeading",
+      title: "Role standard heading",
+      type: "string",
+    }),
+    textListField("roleStandardPoints", "Role standard points"),
+    defineField({
+      name: "standardsEyebrow",
+      title: "Standards small heading",
+      type: "string",
+    }),
+    defineField({
+      name: "standardsHeading",
+      title: "Standards heading",
+      type: "string",
+    }),
+    textListField("standards", "Candidate standards"),
+    defineField({
+      name: "ctaHeading",
+      title: "Closing CTA heading",
+      type: "string",
+    }),
+    defineField({
+      name: "ctaText",
+      title: "Closing CTA text",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "seoTitle",
+      title: "SEO title",
+      type: "string",
+      validation: (rule) => rule.max(70),
+    }),
+    defineField({
+      name: "metaDescription",
+      title: "Meta description",
+      type: "text",
+      rows: 3,
+      validation: (rule) => rule.max(160),
+    }),
+  ],
+});
+
+const insightsPage = defineType({
+  name: "insightsPage",
+  title: "Insights page content",
+  type: "document",
+  icon: ComposeIcon,
+  fields: [
+    defineField({ name: "title", title: "Page heading", type: "string" }),
+    defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+    textListField("intro", "Introduction"),
+    defineField({
+      name: "displayOrder",
+      title: "Featured article order",
+      type: "array",
+      description:
+        "Add article slugs in display order. Other published articles follow by date.",
+      of: [defineArrayMember({ type: "string" })],
+    }),
+    defineField({
+      name: "categoryEyebrow",
+      title: "Categories small heading",
+      type: "string",
+    }),
+    defineField({
+      name: "categoryHeading",
+      title: "Categories heading",
+      type: "string",
+    }),
+    stringListField("categories", "Categories"),
+    defineField({
+      name: "categoryEmptyMessage",
+      title: "Empty category message",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "quickAnswersEyebrow",
+      title: "Quick answers small heading",
+      type: "string",
+    }),
+    defineField({
+      name: "quickAnswersHeading",
+      title: "Quick answers heading",
+      type: "string",
+    }),
+    defineField({
+      name: "questions",
+      title: "Quick answers",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({
+              name: "question",
+              title: "Question",
+              type: "string",
+            }),
+            defineField({
+              name: "answer",
+              title: "Answer",
+              type: "text",
+              rows: 4,
+            }),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: "ctaHeading",
+      title: "Closing CTA heading",
+      type: "string",
+    }),
+    defineField({
+      name: "ctaText",
+      title: "Closing CTA text",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "seoTitle",
+      title: "SEO title",
+      type: "string",
+      validation: (rule) => rule.max(70),
+    }),
+    defineField({
+      name: "metaDescription",
+      title: "Meta description",
+      type: "text",
+      rows: 3,
+      validation: (rule) => rule.max(160),
+    }),
+  ],
+});
+
+const caseStudiesPage = defineType({
+  name: "caseStudiesPage",
+  title: "Case studies page content",
+  type: "document",
+  icon: CaseIcon,
+  fields: [
+    defineField({ name: "title", title: "Page heading", type: "string" }),
+    defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+    textListField("intro", "Introduction"),
+    defineField({
+      name: "emptyEyebrow",
+      title: "No case studies small heading",
+      type: "string",
+    }),
+    defineField({
+      name: "emptyHeading",
+      title: "No case studies heading",
+      type: "string",
+    }),
+    textListField("emptyText", "No case studies explanation"),
+    defineField({
+      name: "seoTitle",
+      title: "SEO title",
+      type: "string",
+      validation: (rule) => rule.max(70),
+    }),
+    defineField({
+      name: "metaDescription",
+      title: "Meta description",
+      type: "text",
+      rows: 3,
+      validation: (rule) => rule.max(160),
+    }),
+  ],
+});
+
 const ctaButtonField = () =>
   defineField({
     name: "cta",
@@ -1784,6 +2004,18 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
     return "Add a posted or published date before marking the role live.";
   }
 
+  if (!cmsText(document.hiringOrganizationName)) {
+    return "Add the hiring employer's name, or enter 'confidential' if the employer must remain anonymous.";
+  }
+
+  if (!cmsText(document.employmentType)) {
+    return "Choose the employment type before marking the role live.";
+  }
+
+  if (!cmsText(document.closingDate)) {
+    return "Add the genuine application closing date so the advert can be expired accurately.";
+  }
+
   if (
     document.salaryStatus === "unverified" ||
     !["public_range", "indicative_range"].includes(
@@ -1794,8 +2026,11 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
     return "Keep this as draft until the public salary or rate range is confirmed enough to show.";
   }
 
-  if (!cmsText(document.location) || !cmsText(document.officeLocation)) {
-    return "Add the job location and office base before marking the role live.";
+  if (
+    document.remotePossible !== "yes" &&
+    (!cmsText(document.location) || !cmsText(document.officeLocation))
+  ) {
+    return "Add the physical job location and office base, or mark the role as genuinely fully remote.";
   }
 
   if (
@@ -1866,14 +2101,24 @@ const job = defineType({
   validation: (rule) => rule.custom(liveJobReadinessIssue),
   fields: [
     defineField({
+      name: "contentVersion",
+      title: "Content model version",
+      type: "number",
+      hidden: true,
+      readOnly: true,
+      initialValue: 2,
+    }),
+    defineField({
       name: "title",
-      title: "Job title",
+      title: "Google Jobs: job title",
       type: "string",
+      description:
+        "Required for a live listing. Use the exact role title only: no employer, location, salary, job code or promotional wording.",
       validation: requiredText("Add the job title."),
     }),
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Public job URL",
       type: "slug",
       options: { source: "title" },
       validation: requiredText("Add a slug."),
@@ -1928,7 +2173,7 @@ const job = defineType({
       title: "Salary visibility",
       type: "string",
       description:
-        "Choose what candidates can safely see. Do not publish a live role with hidden pay unless David has approved the exception.",
+        "Choose what candidates can see. Essential's live-job standard requires a confirmed public salary/rate range; keep the advert in draft if it cannot be shared.",
       options: {
         list: [
           { title: "Published range", value: "public_range" },
@@ -2002,7 +2247,23 @@ const job = defineType({
       description:
         "Plain-English note for candidates. Example: salary range confirmed with the client, or indicative pending final sign-off.",
     }),
+    defineField({
+      name: "hiringOrganizationName",
+      title: "Google Jobs: hiring employer",
+      type: "string",
+      description:
+        "Enter the actual organization offering the role. If it must remain anonymous, enter exactly: confidential. Never enter Essential Resourcing unless it is the employer.",
+      validation: requiredText(
+        "Add the employer name or enter 'confidential'.",
+      ),
+    }),
     defineField({ name: "location", title: "Location", type: "string" }),
+    defineField({
+      name: "locationRegion",
+      title: "Location region (optional)",
+      type: "string",
+      description: "For example Greater Manchester or North West England.",
+    }),
     defineField({
       name: "officeLocation",
       title: "Office location",
@@ -2085,7 +2346,7 @@ const job = defineType({
     }),
     defineField({
       name: "employmentType",
-      title: "Employment type",
+      title: "Google Jobs: employment type",
       type: "string",
       description:
         "Choose the closest Google Jobs-safe type. Use Permanent full-time for normal permanent roles.",
@@ -2101,6 +2362,7 @@ const job = defineType({
         ],
         layout: "radio",
       },
+      validation: requiredText("Choose an employment type."),
     }),
     defineField({
       name: "roleType",
@@ -2175,9 +2437,11 @@ const job = defineType({
     }),
     defineField({
       name: "summary",
-      title: "Short summary",
+      title: "Google Jobs: advert summary",
       type: "text",
       rows: 3,
+      description:
+        "Write a factual opening summary. The full advert must also explain responsibilities, qualifications, skills, working pattern and experience requirements where relevant.",
     }),
     portableBodyField(),
     portableBodyField("davidsTake", "David's Take"),
@@ -2371,10 +2635,10 @@ const job = defineType({
     }),
     defineField({
       name: "postedDate",
-      title: "Posted date",
+      title: "Google Jobs: original posted date",
       type: "date",
       description:
-        "Public date shown in job schema. Usually the same as published date.",
+        "Required for a live listing. Use the date this vacancy was first posted; do not reset it for a minor edit.",
     }),
     defineField({
       name: "updatedDate",
@@ -2382,7 +2646,13 @@ const job = defineType({
       type: "date",
       description: "Use when material job details have changed.",
     }),
-    defineField({ name: "closingDate", title: "Closing date", type: "date" }),
+    defineField({
+      name: "closingDate",
+      title: "Google Jobs: application closing date",
+      type: "date",
+      description:
+        "The real date applications close. Required before a job can be marked live so expired structured data can be removed on time.",
+    }),
     defineField({
       name: "status",
       title: "Status",
@@ -2423,6 +2693,14 @@ const insight = defineType({
   icon: ComposeIcon,
   fields: [
     defineField({
+      name: "contentVersion",
+      title: "Content model version",
+      type: "number",
+      hidden: true,
+      readOnly: true,
+      initialValue: 2,
+    }),
+    defineField({
       name: "title",
       title: "Title",
       type: "string",
@@ -2436,7 +2714,18 @@ const insight = defineType({
       validation: requiredText("Add a slug."),
     }),
     defineField({ name: "excerpt", title: "Excerpt", type: "text", rows: 3 }),
+    defineField({
+      name: "cardExcerpt",
+      title: "Short card excerpt",
+      type: "text",
+      rows: 2,
+    }),
     defineField({ name: "category", title: "Category", type: "string" }),
+    defineField({
+      name: "cardCategory",
+      title: "Card category label",
+      type: "string",
+    }),
     defineField({
       name: "buyerQuestionAnswered",
       title: "Buyer question answered",
@@ -2462,6 +2751,53 @@ const insight = defineType({
     defineField({ name: "updatedDate", title: "Updated date", type: "date" }),
     defineField({ name: "readingTime", title: "Reading time", type: "string" }),
     imageWithAltField("heroImage", "Hero image"),
+    defineField({
+      name: "media",
+      title: "Article video",
+      type: "object",
+      fields: [
+        defineField({ name: "title", title: "Video title", type: "string" }),
+        defineField({
+          name: "provider",
+          title: "Provider",
+          type: "string",
+          options: {
+            list: [
+              { title: "YouTube", value: "youtube" },
+              { title: "Vimeo", value: "vimeo" },
+              { title: "Sanity upload", value: "upload" },
+            ],
+            layout: "radio",
+          },
+        }),
+        defineField({ name: "url", title: "Video URL", type: "url" }),
+        defineField({
+          name: "uploadedVideo",
+          title: "Uploaded video",
+          type: "file",
+          options: { accept: "video/*" },
+        }),
+        defineField({
+          name: "description",
+          title: "Description",
+          type: "text",
+          rows: 2,
+        }),
+        imageWithAltField("stillImage", "Still image"),
+        imageWithAltField("posterImage", "Poster image"),
+        defineField({
+          name: "transcript",
+          title: "Transcript",
+          type: "text",
+          rows: 6,
+        }),
+        defineField({
+          name: "captionsUrl",
+          title: "Captions URL",
+          type: "url",
+        }),
+      ],
+    }),
     portableBodyField(),
     inlineFaqField(),
     referenceListField("relatedServices", "Related services", ["service"]),
@@ -2494,6 +2830,14 @@ const caseStudy = defineType({
   type: "document",
   icon: CaseIcon,
   fields: [
+    defineField({
+      name: "contentVersion",
+      title: "Content model version",
+      type: "number",
+      hidden: true,
+      readOnly: true,
+      initialValue: 2,
+    }),
     defineField({
       name: "title",
       title: "Title",
@@ -3247,6 +3591,9 @@ const labsIdea = defineType({
 export const schemaTypes = [
   siteSettings,
   homePage,
+  jobsPage,
+  insightsPage,
+  caseStudiesPage,
   navigation,
   page,
   service,

@@ -43,6 +43,8 @@ export async function sanityFetchWithFallback<T>({
 
     if (fallbackOnEmpty && isEmptyResult(result)) return fallback;
 
+    if (result === null && !fallbackOnEmpty) return result as T;
+
     return result ?? fallback;
   } catch {
     return fallback;

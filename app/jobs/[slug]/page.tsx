@@ -75,6 +75,9 @@ export default async function JobPage({ params }: Props) {
           <h1>{job.title}</h1>
           <p className="lede">{job.summary}</p>
           <p className="meta">
+            {job.hiringOrganizationName?.toLowerCase() !== "confidential"
+              ? `Hiring for ${job.hiringOrganizationName} · `
+              : "Confidential employer · "}
             {job.salaryRange} · {job.location} · {job.workingPattern} ·{" "}
             {job.roleType}
           </p>

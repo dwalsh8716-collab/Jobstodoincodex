@@ -3,6 +3,7 @@ import "server-only";
 import {
   CASE_STUDIES_QUERY,
   CASE_STUDY_BY_SLUG_QUERY,
+  CONTENT_HUB_PAGES_QUERY,
   HOME_PAGE_QUERY,
   INSIGHTS_QUERY,
   INSIGHT_BY_SLUG_QUERY,
@@ -27,6 +28,7 @@ import {
 } from "./homepage-content";
 import type {
   SanityCaseStudy,
+  SanityContentHubPages,
   SanityInsight,
   SanityJob,
   SanityCardReference,
@@ -36,6 +38,7 @@ import type {
   SanityVideo,
   SanityPortableTextBlock,
 } from "./sanity-types";
+import { fallbackContentHubPages } from "./content-hub-pages";
 import {
   caseStudies as fallbackCaseStudies,
   homepageFeatureVideo,
@@ -99,8 +102,7 @@ function stringsOrFallback(
   value: Array<string | undefined | null> | undefined,
   fallback: string[] = [],
 ) {
-  const items = strings(value);
-  return items.length ? items : fallback;
+  return value == null ? fallback : strings(value);
 }
 
 function referenceSlugs(items: SanityCardReference[] | undefined) {
@@ -578,7 +580,7 @@ function bodySections(
   body: SanityPortableTextBlock[] | undefined,
   fallback: Insight["body"] = [],
 ): Insight["body"] {
-  if (!body?.length) return fallback;
+  if (body == null) return fallback;
 
   const sections: Insight["body"] = [];
   let current: Insight["body"][number] | undefined;
@@ -727,29 +729,51 @@ function mapService(item: SanityService, fallback?: Service): Service {
 }
 
 function mapInsight(item: SanityInsight, fallback?: Insight): Insight {
+  const featuredImage = item.heroImage?.asset?.url
+    ? {
+        type: "image" as const,
+        title: item.heroImage.caption || item.title,
+        src: item.heroImage.asset.url,
+        alt: item.heroImage.alt || item.title,
+        caption: item.heroImage.caption,
+      }
+    : undefined;
+  const video = item.media?.url
+    ? {
+        type: "video" as const,
+        provider: item.media.provider || "youtube",
+        title: item.media.title || item.title,
+        url: item.media.url,
+        description: item.media.description,
+        thumbnail: item.media.posterImage?.asset?.url,
+        thumbnailAlt: item.media.posterImage?.alt,
+        captionsUrl: item.media.captionsUrl,
+        transcript: item.media.transcript,
+      }
+    : featuredImage;
   return {
     title: item.title || fallback?.title || "Untitled insight",
     slug: item.slug || fallback?.slug || "",
     status: item.status || fallback?.status || "draft",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
-    category: item.category || fallback?.category || "Insight",
-    cardCategory: fallback?.cardCategory,
+    category: item.category ?? fallback?.category ?? "Insight",
+    cardCategory: item.cardCategory ?? fallback?.cardCategory,
     excerpt: item.excerpt || fallback?.excerpt || "",
-    cardExcerpt: fallback?.cardExcerpt,
+    cardExcerpt: item.cardExcerpt ?? fallback?.cardExcerpt,
     publishedDate: item.publishedDate || fallback?.publishedDate || "",
     updatedDate:
       item.updatedDate || fallback?.updatedDate || item.publishedDate || "",
     readingTime: item.readingTime || fallback?.readingTime || "5 min read",
     author: item.author?.name || fallback?.author || "David Walsh",
     body: bodySections(item.body, fallback?.body),
-    faqs: item.faqs?.length ? item.faqs : fallback?.faqs || [],
-    relatedServiceSlugs: item.relatedServices?.length
+    faqs: item.faqs ?? fallback?.faqs ?? [],
+    relatedServiceSlugs: item.relatedServices
       ? referenceSlugs(item.relatedServices)
       : fallback?.relatedServiceSlugs || [],
-    relatedInsightSlugs: item.relatedInsights?.length
+    relatedInsightSlugs: item.relatedInsights
       ? referenceSlugs(item.relatedInsights)
       : fallback?.relatedInsightSlugs || [],
-    media: fallback?.media,
+    media: video || fallback?.media,
     ctaHeading: item.ctaHeading || fallback?.ctaHeading,
     ctaText: item.ctaText || fallback?.ctaText,
     seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
@@ -759,67 +783,63 @@ function mapInsight(item: SanityInsight, fallback?: Insight): Insight {
 }
 
 function mapCaseStudy(item: SanityCaseStudy, fallback?: CaseStudy): CaseStudy {
-  const approach = item.howWeDeriskedIt?.length
-    ? item.howWeDeriskedIt
-    : fallback?.approach || [];
+  const approach = item.howWeDeriskedIt ?? fallback?.approach ?? [];
 
   return {
-    title: item.title || fallback?.title || "Untitled case study",
-    slug: item.slug || fallback?.slug || "",
-    status: item.status || fallback?.status || "draft",
+    title: item.title ?? fallback?.title ?? "Untitled case study",
+    slug: item.slug ?? fallback?.slug ?? "",
+    status: item.status ?? fallback?.status ?? "draft",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
-    clientType: item.clientType || fallback?.clientType || "Client",
-    sector: item.sector || fallback?.sector || "",
-    roleHired: item.roleHired || fallback?.roleHired || "",
-    serviceSlug: item.serviceUsed?.slug || fallback?.serviceSlug || "",
-    challengeSummary: item.challengeSummary || fallback?.challengeSummary || "",
+    clientType: item.clientType ?? fallback?.clientType ?? "Client",
+    sector: item.sector ?? fallback?.sector ?? "",
+    roleHired: item.roleHired ?? fallback?.roleHired ?? "",
+    serviceSlug: item.serviceUsed?.slug ?? fallback?.serviceSlug ?? "",
+    challengeSummary: item.challengeSummary ?? fallback?.challengeSummary ?? "",
     clientContext:
-      item.clientContext ||
-      fallback?.clientContext ||
-      item.clientType ||
-      item.sector ||
+      item.clientContext ??
+      fallback?.clientContext ??
+      item.clientType ??
+      item.sector ??
       "",
     hiringChallenge:
-      item.hiringChallenge ||
-      fallback?.hiringChallenge ||
-      item.challengeSummary ||
+      item.hiringChallenge ??
+      fallback?.hiringChallenge ??
+      item.challengeSummary ??
       "",
-    whyHard: item.whyHard || fallback?.whyHard || item.whatMadeItTricky || "",
-    businessProblem: item.businessProblem || fallback?.businessProblem || "",
-    whyHireMattered: item.whyHireMattered || fallback?.whyHireMattered || "",
-    whatMadeItTricky: item.whatMadeItTricky || fallback?.whatMadeItTricky || "",
+    whyHard: item.whyHard ?? fallback?.whyHard ?? item.whatMadeItTricky ?? "",
+    businessProblem: item.businessProblem ?? fallback?.businessProblem ?? "",
+    whyHireMattered: item.whyHireMattered ?? fallback?.whyHireMattered ?? "",
+    whatMadeItTricky: item.whatMadeItTricky ?? fallback?.whatMadeItTricky ?? "",
     whatKindOfPerson:
-      item.whatKindOfPerson ||
-      fallback?.whatKindOfPerson ||
-      item.roleHired ||
+      item.whatKindOfPerson ??
+      fallback?.whatKindOfPerson ??
+      item.roleHired ??
       "",
     approach,
-    process: item.process || fallback?.process || approach.join(" "),
-    outcome: item.outcome || fallback?.outcome || "",
-    whatChangedHeading: item.whatChangedHeading || fallback?.whatChangedHeading,
-    whatChanged: item.whatChanged || fallback?.whatChanged || "",
-    impactHeading: item.impactHeading || fallback?.impactHeading,
-    impact: item.commercialImpact || fallback?.impact || "",
-    quote: item.testimonialQuote || fallback?.quote,
-    essentialView: item.essentialView?.length
-      ? item.essentialView
-      : fallback?.essentialView,
-    ctaHeading: item.ctaHeading || fallback?.ctaHeading,
-    ctaText: item.ctaText || fallback?.ctaText,
-    ctaLabel: item.ctaLabel || fallback?.ctaLabel,
-    proofLogo: item.proofLogoPath || fallback?.proofLogo,
-    proofLogoAlt: item.proofLogoAlt || fallback?.proofLogoAlt,
-    proofLinkedInUrl: item.proofLinkedInUrl || fallback?.proofLinkedInUrl,
-    proofLinkedInLabel: item.proofLinkedInLabel || fallback?.proofLinkedInLabel,
-    externalSourceUrl: item.externalSourceUrl || fallback?.externalSourceUrl,
+    process: item.process ?? fallback?.process ?? approach.join(" "),
+    outcome: item.outcome ?? fallback?.outcome ?? "",
+    whatChangedHeading: item.whatChangedHeading ?? fallback?.whatChangedHeading,
+    whatChanged: item.whatChanged ?? fallback?.whatChanged ?? "",
+    impactHeading: item.impactHeading ?? fallback?.impactHeading,
+    impact: item.commercialImpact ?? fallback?.impact ?? "",
+    quote: item.testimonialQuote ?? fallback?.quote,
+    essentialView: item.essentialView ?? fallback?.essentialView,
+    ctaHeading: item.ctaHeading ?? fallback?.ctaHeading,
+    ctaText: item.ctaText ?? fallback?.ctaText,
+    ctaLabel: item.ctaLabel ?? fallback?.ctaLabel,
+    proofLogo: item.proofLogoPath ?? fallback?.proofLogo,
+    proofLogoAlt: item.proofLogoAlt ?? fallback?.proofLogoAlt,
+    proofLinkedInUrl: item.proofLinkedInUrl ?? fallback?.proofLinkedInUrl,
+    proofLinkedInLabel: item.proofLinkedInLabel ?? fallback?.proofLinkedInLabel,
+    externalSourceUrl: item.externalSourceUrl ?? fallback?.externalSourceUrl,
     externalSourceLabel:
-      item.externalSourceLabel || fallback?.externalSourceLabel,
+      item.externalSourceLabel ?? fallback?.externalSourceLabel,
     featured: item.featured ?? fallback?.featured ?? false,
-    seoTitle: item.seoTitle || fallback?.seoTitle || item.title,
+    seoTitle: item.seoTitle ?? fallback?.seoTitle ?? item.title,
     metaDescription:
-      item.metaDescription ||
-      fallback?.metaDescription ||
-      item.challengeSummary ||
+      item.metaDescription ??
+      fallback?.metaDescription ??
+      item.challengeSummary ??
       "",
   };
 }
@@ -868,6 +888,8 @@ function mapSalarySnapshot(
 }
 
 function mapJob(item: SanityJob, fallback?: Job): Job {
+  if (item.contentVersion === 2) fallback = undefined;
+
   const description = textFromPortableBlocks(item.body);
   const davidsTake = textFromPortableBlocks(item.davidsTake);
   const interviewSteps = stringsOrFallback(
@@ -937,7 +959,12 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       item.salaryTransparencyNote ||
       fallback?.salaryTransparencyNote ||
       "Salary/rate details need confirming before this role goes live.",
+    hiringOrganizationName:
+      item.hiringOrganizationName ||
+      fallback?.hiringOrganizationName ||
+      "confidential",
     location: item.location || fallback?.location || "Location to confirm",
+    locationRegion: item.locationRegion || fallback?.locationRegion || "",
     officeLocation:
       item.officeLocation ||
       fallback?.officeLocation ||
@@ -987,8 +1014,18 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     successInTwelveMonths:
       item.successInTwelveMonths || fallback?.successInTwelveMonths || "",
     summary: item.summary || fallback?.summary || "",
-    description: description.length ? description : fallback?.description || [],
-    davidsTake: davidsTake.length ? davidsTake : fallback?.davidsTake || [],
+    description:
+      item.contentVersion === 2
+        ? description
+        : description.length
+          ? description
+          : fallback?.description || [],
+    davidsTake:
+      item.contentVersion === 2
+        ? davidsTake
+        : davidsTake.length
+          ? davidsTake
+          : fallback?.davidsTake || [],
     responsibilities: item.responsibilities || fallback?.responsibilities || [],
     mustHaves: item.mustHaves || fallback?.mustHaves || [],
     niceToHaves: item.niceToHaves || fallback?.niceToHaves || [],
@@ -1106,6 +1143,25 @@ export async function getPublicServices() {
   );
 }
 
+export async function getPublicContentHubPages() {
+  const pages = await sanityFetchWithFallback<SanityContentHubPages | null>({
+    query: CONTENT_HUB_PAGES_QUERY,
+    fallback: null,
+    tags: ["jobsPage", "insightsPage", "caseStudiesPage"],
+  });
+
+  return {
+    ...fallbackContentHubPages,
+    ...pages,
+    jobs: { ...fallbackContentHubPages.jobs, ...pages?.jobs },
+    insights: { ...fallbackContentHubPages.insights, ...pages?.insights },
+    caseStudies: {
+      ...fallbackContentHubPages.caseStudies,
+      ...pages?.caseStudies,
+    },
+  } satisfies SanityContentHubPages;
+}
+
 export async function getPublicService(slug: string) {
   const fallback = bySlug(fallbackServices, slug);
   const item = await sanityFetchWithFallback<SanityService | null>({
@@ -1119,62 +1175,95 @@ export async function getPublicService(slug: string) {
 }
 
 export async function getPublicInsights() {
-  const items = await fetchSanityList<SanityInsight>(INSIGHTS_QUERY, "insight");
-  if (!items.length) return fallbackInsights;
+  const items = await sanityFetchWithFallback<SanityInsight[] | null>({
+    query: INSIGHTS_QUERY,
+    fallback: null,
+    fallbackOnEmpty: false,
+    tags: ["insight"],
+  });
+  if (items === null) return fallbackInsights;
 
-  const mapped = items
+  const published = items
     .filter((item) => !retiredInsightSlugs.has(item.slug))
-    .map((item) => mapInsight(item, bySlug(fallbackInsights, item.slug)));
-  const mappedSlugs = new Set(mapped.map((item) => item.slug));
-  const missingFallbacks = fallbackInsights.filter(
-    (item) => !mappedSlugs.has(item.slug),
-  );
+    .map((item) =>
+      mapInsight(
+        item,
+        item.contentVersion === 2
+          ? undefined
+          : bySlug(fallbackInsights, item.slug),
+      ),
+    );
 
-  return [...mapped, ...missingFallbacks];
+  // This page still uses its bespoke salary-guide model, so keep its approved
+  // hub card visible until the editorial body is migrated into Sanity.
+  const salaryGuideFallback = fallbackInsights.find(
+    (item) => item.slug === "manchester-north-west-marketing-salary-guide-2026",
+  );
+  if (
+    salaryGuideFallback &&
+    !published.some((item) => item.slug === salaryGuideFallback.slug)
+  ) {
+    published.unshift(salaryGuideFallback);
+  }
+
+  return published;
 }
 
 export async function getPublicInsight(slug: string) {
   if (retiredInsightSlugs.has(slug)) return undefined;
 
   const fallback = bySlug(fallbackInsights, slug);
-  const item = await sanityFetchWithFallback<SanityInsight | null>({
+  const item = await sanityFetchWithFallback<SanityInsight | null | undefined>({
     query: INSIGHT_BY_SLUG_QUERY,
     params: { slug },
-    fallback: null,
+    fallback: undefined,
+    fallbackOnEmpty: false,
     tags: [`insight:${slug}`, "insight"],
   });
 
-  return item ? mapInsight(item, fallback) : fallback;
+  return item === undefined
+    ? fallback
+    : item
+      ? mapInsight(item, item.contentVersion === 2 ? undefined : fallback)
+      : undefined;
 }
 
 export async function getPublicCaseStudies() {
-  const items = await fetchSanityList<SanityCaseStudy>(
-    CASE_STUDIES_QUERY,
-    "caseStudy",
-  );
-  if (!items.length) return fallbackCaseStudies;
+  const items = await sanityFetchWithFallback<SanityCaseStudy[] | null>({
+    query: CASE_STUDIES_QUERY,
+    fallback: null,
+    fallbackOnEmpty: false,
+    tags: ["caseStudy"],
+  });
+  if (items === null) return fallbackCaseStudies;
 
-  const mapped = items.map((item) =>
-    mapCaseStudy(item, bySlug(fallbackCaseStudies, item.slug)),
+  return items.map((item) =>
+    mapCaseStudy(
+      item,
+      item.contentVersion === 2
+        ? undefined
+        : bySlug(fallbackCaseStudies, item.slug),
+    ),
   );
-  const mappedSlugs = new Set(mapped.map((item) => item.slug));
-  const missingFallbackCaseStudies = fallbackCaseStudies.filter(
-    (caseStudy) => !mappedSlugs.has(caseStudy.slug),
-  );
-
-  return [...mapped, ...missingFallbackCaseStudies];
 }
 
 export async function getPublicCaseStudy(slug: string) {
   const fallback = bySlug(fallbackCaseStudies, slug);
-  const item = await sanityFetchWithFallback<SanityCaseStudy | null>({
+  const item = await sanityFetchWithFallback<
+    SanityCaseStudy | null | undefined
+  >({
     query: CASE_STUDY_BY_SLUG_QUERY,
     params: { slug },
-    fallback: null,
+    fallback: undefined,
+    fallbackOnEmpty: false,
     tags: [`caseStudy:${slug}`, "caseStudy"],
   });
 
-  return item ? mapCaseStudy(item, fallback) : fallback;
+  return item === undefined
+    ? fallback
+    : item
+      ? mapCaseStudy(item, item.contentVersion === 2 ? undefined : fallback)
+      : undefined;
 }
 
 export async function getPublicSalarySnapshots() {
@@ -1202,20 +1291,37 @@ export async function getPublicSalarySnapshot(slug: string) {
 }
 
 export async function getPublicJobs() {
-  const items = await fetchSanityList<SanityJob>(JOBS_QUERY, "job");
-  return items.length
-    ? items.map((item) => mapJob(item, bySlug(fallbackJobs, item.slug)))
-    : fallbackJobs;
+  const items = await sanityFetchWithFallback<SanityJob[] | null>({
+    query: JOBS_QUERY,
+    fallback: null,
+    fallbackOnEmpty: false,
+    tags: ["job"],
+  });
+  return items === null
+    ? fallbackJobs
+    : items.map((item) =>
+        mapJob(
+          item,
+          item.contentVersion === 2
+            ? undefined
+            : bySlug(fallbackJobs, item.slug),
+        ),
+      );
 }
 
 export async function getPublicJob(slug: string) {
   const fallback = bySlug(fallbackJobs, slug);
-  const item = await sanityFetchWithFallback<SanityJob | null>({
+  const item = await sanityFetchWithFallback<SanityJob | null | undefined>({
     query: JOB_BY_SLUG_QUERY,
     params: { slug },
-    fallback: null,
+    fallback: undefined,
+    fallbackOnEmpty: false,
     tags: [`job:${slug}`, "job"],
   });
 
-  return item ? mapJob(item, fallback) : fallback;
+  return item === undefined
+    ? fallback
+    : item
+      ? mapJob(item, item.contentVersion === 2 ? undefined : fallback)
+      : undefined;
 }

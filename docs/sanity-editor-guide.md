@@ -97,6 +97,7 @@ Commercial:
 
 - Services.
 - Case Studies.
+- Case Studies page copy.
 - Testimonials.
 - FAQs.
 - CTA Blocks.
@@ -105,11 +106,13 @@ Commercial:
 Content:
 
 - Insights / Posts.
+- Insights page copy.
 - Salary Guides / Snapshots.
 
 Recruitment:
 
 - Jobs.
+- Jobs page copy.
 
 People:
 
@@ -148,29 +151,37 @@ Edit a service page:
 Add a job:
 
 1. Open Recruitment.
-2. Open Jobs.
-3. Add the plain role title and slug. Do not put salary, "apply now",
-   urgency wording or Essential Resourcing into the job title.
-4. Add salary or rate range, salary status, working pattern,
+2. Open Jobs and create a new Job record.
+3. Complete the clearly labelled Google Jobs fields first: plain job title,
+   public URL, original posted date, actual hiring employer (or `confidential`),
+   employment type, location/remote setup, advert summary, full role description,
+   responsibilities, qualifications/must-haves, application route and genuine
+   closing date. These are the publication essentials; Google's markup appears
+   only on an individual job page, not the Jobs listing.
+4. Keep the title to the role itself. Do not add salary, "apply now", urgency
+   wording or Essential Resourcing. Essential also requires a confirmed public
+   salary/rate range before a role can go live, although salary is not a
+   Google-required JobPosting field.
+5. Add salary or rate range, salary status, working pattern,
    salary visibility, currency, any interim rate fields, location, office
    location, seniority and role details.
-5. Add the real hybrid rhythm, location expectation, travel expectation, must-haves,
+6. Add the real hybrid rhythm, location expectation, travel expectation, must-haves,
    nice-to-haves, what good looks like, David's Take, interview steps,
    application notes and candidate privacy note.
-6. Add 3/6/12 month success indicators only where the client has confirmed
+7. Add 3/6/12 month success indicators only where the client has confirmed
    them. Otherwise use the general "what good looks like" list.
-7. Add the process overview, process steps, expected timeline, task or
+8. Add the process overview, process steps, expected timeline, task or
    presentation position, first-stage format, final-stage format, feedback
    expectation and application review timeframe where known.
-8. Use "typical process for this kind of role" if the exact client process is
+9. Use "typical process for this kind of role" if the exact client process is
    not confirmed. Do not pretend certainty.
-9. Use Remote possible = Yes only for genuinely 100% remote roles. Use Limited
-   for hybrid or occasional home working.
-10. Make sure the application form is enabled or a direct application email is
+10. Use Remote possible = Yes only for genuinely 100% remote roles. Use Limited
+    for hybrid or occasional home working.
+11. Make sure the application form is enabled or a direct application email is
     present.
-11. Keep status as draft until the salary/rate, location, hybrid setup, travel,
+12. Keep status as draft until the salary/rate, location, hybrid setup, travel,
     process, privacy note and application route are clear enough for candidates.
-12. For a real live job, test the page in Google's Rich Results Test and inspect
+13. For a real live job, test the page in Google's Rich Results Test and inspect
     the final URL in Search Console after the domain is live.
 
 Detailed job standards live in:
