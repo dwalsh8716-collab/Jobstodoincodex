@@ -12,7 +12,7 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com https://px.ads.linkedin.com https://www.facebook.com https://*.clarity.ms https://*.hotjar.com",
   "media-src 'self' https://cdn.sanity.io",
   "font-src 'self' data:",
-  "connect-src 'self' https://api.resend.com https://api.sanity.io https://*.api.sanity.io https://*.apicdn.sanity.io https://cdn.sanity.io wss://*.api.sanity.io https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net https://px.ads.linkedin.com https://www.facebook.com https://*.clarity.ms https://*.hotjar.com wss://*.hotjar.com https://*.ingest.sentry.io",
+  "connect-src 'self' https://api.resend.com https://api.sanity.io https://*.api.sanity.io https://*.apicdn.sanity.io https://cdn.sanity.io wss://*.api.sanity.io https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net https://px.ads.linkedin.com https://www.facebook.com https://*.clarity.ms https://*.hotjar.com wss://*.hotjar.com https://*.ingest.sentry.io https://o4512128295698432.ingest.de.sentry.io",
   "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.googletagmanager.com",
 ].join("; ");
 
