@@ -296,6 +296,21 @@ export type SanityService = SanitySeo & {
   commonMistakes?: string[];
   howEssentialWorks?: string[];
   processSteps?: Array<{ _key?: string; title?: string; text?: string }>;
+  contentVersion?: number;
+  processEyebrow?: string;
+  processHeading?: string;
+  processIntro?: string;
+  leadershipStages?: Array<{
+    title: string;
+    label: string;
+    paragraphs: string[];
+  }>;
+  evidenceAreas?: Array<{ title: string; description: string }>;
+  advisoryAreas?: Array<{ title: string; description: string }>;
+  marketFitEyebrow?: string;
+  marketFitHeading?: string;
+  judgementEyebrow?: string;
+  judgementHeading?: string;
   searchSummary?: string;
   searchPhrases?: string[];
   relatedServices?: SanityCardReference[];

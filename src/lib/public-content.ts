@@ -302,8 +302,7 @@ export async function getPublicHomePage(): Promise<HomePageContent> {
 
   return {
     ...fallback,
-    heroEyebrow:
-      item?.heroEyebrow || fallback.heroEyebrow,
+    heroEyebrow: item?.heroEyebrow || fallback.heroEyebrow,
     heroHeadline: item?.heroHeadline || fallback.heroHeadline,
     heroSubheadline: item?.heroSubheadline || fallback.heroSubheadline,
     heroLede: item?.heroLede || fallback.heroLede,
@@ -371,7 +370,10 @@ export async function getPublicHomePage(): Promise<HomePageContent> {
         item?.servicesSection?.intro,
         fallback.servicesSection.intro,
       ),
-      cards: cleanServiceCards(item?.serviceCards, fallback.servicesSection.cards),
+      cards: cleanServiceCards(
+        item?.serviceCards,
+        fallback.servicesSection.cards,
+      ),
     },
     founderSection: {
       eyebrow: valueOrFallback(
@@ -521,7 +523,10 @@ export async function getPublicHomePage(): Promise<HomePageContent> {
         item?.citySection?.image?.alt,
         fallback.citySection.imageAlt,
       ),
-      label: valueOrFallback(item?.citySection?.label, fallback.citySection.label),
+      label: valueOrFallback(
+        item?.citySection?.label,
+        fallback.citySection.label,
+      ),
       emphasis: valueOrFallback(
         item?.citySection?.emphasis,
         fallback.citySection.emphasis,
@@ -608,6 +613,56 @@ function bodySections(
 }
 
 function mapService(item: SanityService, fallback?: Service): Service {
+  // Older CMS records predate the approved service redesign. Activate CMS
+  // ownership only after the current copy has been migrated and verified.
+  if (item.contentVersion === 2 && fallback) {
+    return {
+      title: item.title || fallback.title,
+      slug: item.slug || fallback.slug,
+      status: item.status === "draft" ? "draft" : "published",
+      noIndex: item.noIndex ?? fallback.noIndex ?? false,
+      shortDescription: item.shortDescription || fallback.shortDescription,
+      heroHeadline: item.heroHeadline || fallback.heroHeadline,
+      heroSubheadline: item.heroSubheadline || fallback.heroSubheadline,
+      audience: item.whoFor ?? fallback.audience,
+      problemsSolved: item.problemsSolved ?? fallback.problemsSolved,
+      whenToUse: item.whenToUse ?? fallback.whenToUse,
+      howEssentialWorks: item.howEssentialWorks ?? fallback.howEssentialWorks,
+      mistakes: item.commonMistakes ?? fallback.mistakes,
+      processEyebrow: item.processEyebrow ?? fallback.processEyebrow,
+      processHeading: item.processHeading ?? fallback.processHeading,
+      processIntro: item.processIntro ?? fallback.processIntro,
+      processSteps:
+        item.processSteps?.map((step) => ({
+          title: step.title || "",
+          description: step.text || "",
+        })) ?? fallback.processSteps,
+      leadershipStages: item.leadershipStages ?? fallback.leadershipStages,
+      evidenceAreas: item.evidenceAreas ?? fallback.evidenceAreas,
+      advisoryAreas: item.advisoryAreas ?? fallback.advisoryAreas,
+      marketFitEyebrow: item.marketFitEyebrow ?? fallback.marketFitEyebrow,
+      marketFitHeading: item.marketFitHeading ?? fallback.marketFitHeading,
+      judgementEyebrow: item.judgementEyebrow ?? fallback.judgementEyebrow,
+      judgementHeading: item.judgementHeading ?? fallback.judgementHeading,
+      faqs: item.faqs ?? fallback.faqs,
+      relatedServiceSlugs: item.relatedServices
+        ? referenceSlugs(item.relatedServices)
+        : fallback.relatedServiceSlugs,
+      relatedInsightSlugs: item.relatedInsights
+        ? referenceSlugs(item.relatedInsights)
+        : fallback.relatedInsightSlugs,
+      relatedCaseStudySlugs: item.relatedCaseStudies
+        ? referenceSlugs(item.relatedCaseStudies)
+        : fallback.relatedCaseStudySlugs,
+      cta: cta(item.cta, fallback.cta),
+      ctaHeading: item.ctaHeading ?? fallback.ctaHeading,
+      ctaText: item.ctaText ?? fallback.ctaText,
+      searchSummary: item.searchSummary ?? fallback.searchSummary,
+      searchPhrases: item.searchPhrases ?? fallback.searchPhrases,
+      seoTitle: item.seoTitle || fallback.seoTitle,
+      metaDescription: item.metaDescription || fallback.metaDescription,
+    };
+  }
   return {
     title: fallback?.title || item.title || "Untitled service",
     slug: item.slug || fallback?.slug || "",

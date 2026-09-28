@@ -242,8 +242,7 @@ const videoFields = [
     validation: (rule) =>
       rule.custom((value, context) => {
         const parent = context.parent as
-          | { stillImage?: { asset?: unknown } }
-          | undefined;
+          { stillImage?: { asset?: unknown } } | undefined;
         if (parent?.stillImage?.asset || value) return true;
         return "Choose where the video comes from, or add a still image/photo.";
       }),
@@ -258,8 +257,7 @@ const videoFields = [
     validation: (rule) =>
       rule.custom((value, context) => {
         const parent = context.parent as
-          | { provider?: string; stillImage?: { asset?: unknown } }
-          | undefined;
+          { provider?: string; stillImage?: { asset?: unknown } } | undefined;
         if (parent?.stillImage?.asset) return true;
         if (parent?.provider !== "upload" && !value)
           return "Add a YouTube or Vimeo URL.";
@@ -276,8 +274,7 @@ const videoFields = [
     validation: (rule) =>
       rule.custom((value, context) => {
         const parent = context.parent as
-          | { provider?: string; stillImage?: { asset?: unknown } }
-          | undefined;
+          { provider?: string; stillImage?: { asset?: unknown } } | undefined;
         if (parent?.stillImage?.asset) return true;
         if (parent?.provider === "upload" && !value)
           return "Upload a video file or switch video source.";
@@ -1228,8 +1225,17 @@ const homePage = defineType({
       title: "Filter section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
-        defineField({ name: "heading", title: "Heading", type: "text", rows: 2 }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
+        defineField({
+          name: "heading",
+          title: "Heading",
+          type: "text",
+          rows: 2,
+        }),
         textListField("paragraphs", "Paragraphs"),
         homepageDefinitionsField(),
       ],
@@ -1239,7 +1245,11 @@ const homePage = defineType({
       title: "Why it is different section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         textListField("paragraphs", "Paragraphs"),
         defineField({
@@ -1260,7 +1270,11 @@ const homePage = defineType({
       title: "Services section intro",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
       ],
@@ -1271,7 +1285,11 @@ const homePage = defineType({
       title: "Founder section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         textListField("paragraphs", "Paragraphs"),
         defineField({
@@ -1287,7 +1305,11 @@ const homePage = defineType({
       title: "Clients and candidates split section",
       type: "object",
       fields: [
-        defineField({ name: "heading", title: "Accessible heading", type: "string" }),
+        defineField({
+          name: "heading",
+          title: "Accessible heading",
+          type: "string",
+        }),
         homepageAudiencePanelField("client", "Client panel"),
         homepageAudiencePanelField("candidate", "Candidate panel"),
       ],
@@ -1297,7 +1319,11 @@ const homePage = defineType({
       title: "Proof section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
         homepageProofItemsField(),
@@ -1324,7 +1350,11 @@ const homePage = defineType({
       title: "LinkedIn recommendations section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
         defineField({
@@ -1340,7 +1370,11 @@ const homePage = defineType({
       title: "Case studies and insight section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         defineField({ name: "intro", title: "Intro", type: "text", rows: 3 }),
       ],
@@ -1350,7 +1384,11 @@ const homePage = defineType({
       title: "Specialisms section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
         defineField({ name: "heading", title: "Heading", type: "string" }),
         homepageSpecialismCardsField(),
       ],
@@ -1360,8 +1398,16 @@ const homePage = defineType({
       title: "Manifesto section",
       type: "object",
       fields: [
-        defineField({ name: "eyebrow", title: "Small heading", type: "string" }),
-        defineField({ name: "heading", title: "Accessible heading", type: "string" }),
+        defineField({
+          name: "eyebrow",
+          title: "Small heading",
+          type: "string",
+        }),
+        defineField({
+          name: "heading",
+          title: "Accessible heading",
+          type: "string",
+        }),
         stringListField("lines", "Manifesto lines"),
         defineField({ name: "signature", title: "Signature", type: "string" }),
       ],
@@ -1377,8 +1423,16 @@ const homePage = defineType({
           type: "string",
         }),
         imageWithAltField("image", "Image"),
-        defineField({ name: "label", title: "Caption first line", type: "string" }),
-        defineField({ name: "emphasis", title: "Caption emphasis", type: "string" }),
+        defineField({
+          name: "label",
+          title: "Caption first line",
+          type: "string",
+        }),
+        defineField({
+          name: "emphasis",
+          title: "Caption emphasis",
+          type: "string",
+        }),
       ],
     }),
     defineField({
@@ -1548,6 +1602,59 @@ const service = defineType({
   icon: SearchIcon,
   fields: [
     defineField({
+      name: "contentVersion",
+      type: "number",
+      hidden: true,
+      readOnly: true,
+    }),
+    ...[
+      ["processEyebrow", "Process small heading"],
+      ["processHeading", "Process heading"],
+      ["processIntro", "Process introduction"],
+      ["marketFitEyebrow", "Market fit small heading"],
+      ["marketFitHeading", "Market fit heading"],
+      ["judgementEyebrow", "Judgement small heading"],
+      ["judgementHeading", "Judgement heading"],
+    ].map(([name, title]) =>
+      defineField({ name, title, type: "text", rows: 2 }),
+    ),
+    defineField({
+      name: "leadershipStages",
+      title: "Fractional leadership stages",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "title", type: "string" }),
+            defineField({ name: "label", type: "string" }),
+            stringListField("paragraphs", "Paragraphs"),
+          ],
+        }),
+      ],
+      validation: (rule) => rule.max(2),
+    }),
+    ...["evidenceAreas", "advisoryAreas"].map((name) =>
+      defineField({
+        name,
+        title:
+          name === "evidenceAreas"
+            ? "Decision evidence areas"
+            : "Advisory areas",
+        type: "array",
+        of: [
+          defineArrayMember({
+            type: "object",
+            fields: [
+              defineField({ name: "title", type: "string" }),
+              defineField({ name: "description", type: "text", rows: 3 }),
+            ],
+          }),
+        ],
+        validation: (rule) => (name === "evidenceAreas" ? rule.max(5) : rule),
+      }),
+    ),
+    defineField({
       name: "title",
       title: "Title",
       type: "string",
@@ -1596,7 +1703,6 @@ const service = defineType({
       rows: 3,
       description:
         "One useful sentence explaining the search intent this service answers. Keep it human, not keyword-stuffed.",
-      validation: (rule) => rule.max(240),
     }),
     stringListField(
       "searchPhrases",
