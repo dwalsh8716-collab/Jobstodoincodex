@@ -1,4 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
+import { InsightCard } from "@/components/Cards";
+import styles from "@/components/SpecialismPage.module.css";
+import { specialismEditorial, specialismServiceRoutes } from "@/lib/specialism-editorial";
+import { getPublicInsights, getPublicCaseStudies } from "@/lib/public-content";
+import { salaryGuideSlug } from "@/lib/salary-guide-2026";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
@@ -49,9 +55,12 @@ export default async function SpecialismPage({ params }: Props) {
   const { slug } = await params;
   const specialism = getSpecialismBySlug(slug);
   if (!specialism) notFound();
+  const editorial = specialismEditorial[specialism.slug];
+  const insights = (await getPublicInsights()).filter((item) => item.status === "published" && (item.slug === salaryGuideSlug || (specialism.slug === "marketing-and-leadership" && item.slug === "marketing-recruitment-manchester-north-west-guide"))).slice(0, 2);
+  const proof = specialism.slug === "agency-client-services-leadership" ? (await getPublicCaseStudies()).find((item) => item.status === "published" && item.slug === "havas-media-manchester-managing-partner-james-reddington") : undefined;
 
   return (
-    <div className="specialism-detail-page">
+    <div className={`specialism-detail-page ${styles.page}`}>
       <Breadcrumbs
         items={[
           { name: "Specialisms", href: "/specialisms" },
@@ -80,6 +89,17 @@ export default async function SpecialismPage({ params }: Props) {
         </div>
       </section>
 
+      <section className="section" aria-labelledby="market-glance">
+        <div className="container">
+          <p className="eyebrow">Market at a glance</p>
+          <h2 id="market-glance">The people and work inside this market.</h2>
+          <p className={styles.intro}>Typical briefs sit across these areas. These are examples, not a fixed career ladder or an exhaustive list.</p>
+          <div className={styles.taxonomy}>
+            {editorial.groups.map((group) => <div key={group.title}><h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></div>)}
+          </div>
+        </div>
+      </section>
+
       <section className="section surface" aria-labelledby="specialism-summary">
         <div className="container split split-start">
           <div>
@@ -96,48 +116,33 @@ export default async function SpecialismPage({ params }: Props) {
               Manchester-led. North West-rooted. UK-wide when the brief needs
               it.
             </p>
+            <p>{editorial.boundary}</p>
+            <Link className="text-link" href={`/specialisms/${editorial.adjacent}`}>Explore {getSpecialismBySlug(editorial.adjacent)?.title}</Link>
           </div>
         </div>
       </section>
 
-      <section className="section" aria-labelledby="specialism-links">
-        <div className="container section-heading">
-          <p className="eyebrow">Useful next step</p>
-          <h2 id="specialism-links">
-            Start with what you’re trying to solve.
-          </h2>
-          <p className="lede">
-            The same job title can mean something completely different from one
-            business to the next. Send David the brief and he’ll give you a
-            straight view.
-          </p>
-        </div>
-        <div className="container process-related-grid">
-          <Link className="card lift-card process-related-card" href="/clients">
-            <span className="tag">For clients</span>
-            <span>See how Essential helps employers</span>
-          </Link>
-          <Link className="card lift-card process-related-card" href="/services">
-            <span className="tag">Services</span>
-            <span>Explore the four ways to work together</span>
-          </Link>
-          <Link
-            className="card lift-card process-related-card"
-            href="/specialisms"
-          >
-            <span className="tag">Specialisms</span>
-            <span>Back to all specialisms</span>
-          </Link>
-          <Link className="card lift-card process-related-card" href="/contact">
-            <span className="tag">Contact David</span>
-            <span>Talk through this kind of hire</span>
-          </Link>
+      <section className="section" aria-labelledby="brief-judgement">
+        <div className="container split split-start">
+          <div><p className="eyebrow">The job title isn’t the brief</p><h2 id="brief-judgement">{editorial.heading}</h2></div>
+          <div className={styles.judgement}><p>{editorial.judgement}</p><ul>{editorial.questions.map((question) => <li key={question}>{question}</li>)}</ul></div>
         </div>
       </section>
 
+      <section className="section surface" aria-labelledby="hiring-routes">
+        <div className="container">
+          <p className="eyebrow">Which hiring route fits?</p><h2 id="hiring-routes">Know the market. Then choose the right search.</h2>
+          <ul className={styles.routes}>{specialismServiceRoutes.filter((route) => specialism.slug !== "pr-communications-content" || route.slug !== "fractional").map((route) => <li key={route.slug}><Link href={`/services/${route.slug}`}><h3>{route.title}</h3><p>{route.text}</p><span className="text-link">Explore the service</span></Link></li>)}</ul>
+        </div>
+      </section>
+
+      {proof ? <section className="section"><div className={`container ${styles.proof}`}><p className="eyebrow">Agency leadership in practice</p>{proof.proofLogo ? <Image src={proof.proofLogo} alt={proof.proofLogoAlt || "Havas Media"} width={220} height={118} /> : null}<h2>{proof.title}</h2><p>{proof.challengeSummary}</p><Link className="text-link" href={`/case-studies/${proof.slug}`}>Read the Havas case study</Link></div></section> : null}
+
+      {insights.length ? <section className="section"><div className="container"><p className="eyebrow">Useful reading</p><h2>Market context for a better brief.</h2><div className={styles.insights}>{insights.map((insight) => <InsightCard key={insight.slug} insight={insight} />)}</div><p className={styles.intro}>Looking for your next move? <Link href="/jobs">View current roles</Link> or <Link href="/candidates#candidate-contact">send David your details privately</Link>.</p></div></section> : null}
+
       <CTASection
-        title="Want to discuss this kind of hire?"
-        text="Tell David who you’re trying to hire, what’s not working and what this person needs to change."
+        title="Start with what you’re trying to solve."
+        text={"The same job title can mean something completely different from one business to the next.\n\nTell David who you’re trying to hire, what’s not working and what this person needs to change. He’ll give you a straight view on the brief, market and most sensible route."}
         ctaLabel="Contact David"
         ctaHref="/contact"
         whatsAppIntent="hiring"
