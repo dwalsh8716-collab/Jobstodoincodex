@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import styles from "@/components/AboutConversion.module.css";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { createMetadata } from "@/lib/seo";
@@ -13,7 +14,7 @@ export const metadata = createMetadata({
 
 export default function AboutEssentialPage() {
   return (
-    <>
+    <div className={styles.page}>
       <Breadcrumbs
         items={[{ name: "About Essential", href: "/about-essential" }]}
       />
@@ -26,12 +27,12 @@ export default function AboutEssentialPage() {
             }
           </h1>
           <p className="lede">
-            Essential Resourcing is a founder-led marketing recruitment and
-            search business based in Manchester, working across the North West
+            Essential Resourcing is a founder-led marketing recruitment, search
+            and advisory business based in Manchester, working across the North West
             and UK.
           </p>
           <p className="lede">It was built around a fairly simple idea:</p>
-          <p className="lede">
+          <p className={`lede ${styles.proposition}`}>
             <strong>Helping Businesses Make Better Hiring Decisions.</strong>
           </p>
           <p className="lede">
@@ -41,7 +42,7 @@ export default function AboutEssentialPage() {
         </div>
       </section>
       <section className="section surface">
-        <div className="container split split-start">
+        <div className="container">
           <div>
             <p className="eyebrow">Positioning</p>
             <h2>
@@ -49,20 +50,18 @@ export default function AboutEssentialPage() {
               proper conversation.
             </h2>
           </div>
-          <div className="grid">
+          <ol className={styles.positioning}>
             {[
-              "Founder-led from brief to hire",
+              "Founder-led from brief to decision",
               "Specialist experience across marketing, PR, communications, digital and agencies",
               "Agency-side and client-side market knowledge",
-              "Permanent, retained and Fractional hiring",
+              "Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence & Advisory",
               "Straight advice on the brief, salary, market and process",
               "Fewer CVs. Better conversations. Better hiring decisions.",
             ].map((item) => (
-              <article className="card" key={item}>
-                <h3>{item}</h3>
-              </article>
+              <li key={item}>{item}</li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
       <section className="section">
@@ -82,33 +81,43 @@ export default function AboutEssentialPage() {
               Essential isn&apos;t trying to be everything to everyone.
             </p>
             <p className="lede">
-              It&apos;s a specialist recruitment business built around marketing
+              It&apos;s a specialist recruitment, search and advisory business built around marketing
               and the disciplines around it, with David directly involved in the
               work.
             </p>
             <p className="lede">
               That means properly understanding the problem behind the hire,
               challenging the bits that don&apos;t stack up and getting behind
-              the CV before somebody reaches your interview room.
+              the evidence before somebody reaches your interview room.
             </p>
+            <p>And sometimes it means telling you not to recruit yet.</p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="/clients">
                 For clients
               </Link>
               <Link
                 className="button button-secondary"
-                href="/about-david-walsh"
+                href="/how-essential-resourcing-works"
               >
-                About David
+                See how Essential Resourcing works
               </Link>
             </div>
           </div>
         </div>
       </section>
+      <section className="section surface">
+        <div className={`container ${styles.founderBridge}`}>
+          <p className="eyebrow">Founder-led</p>
+          <h2>Essential is the business. David is the person doing the work.</h2>
+          <p>The brief isn’t handed to somebody you’ve never met once the call finishes.</p>
+          <p>David stays involved in the market research, candidate conversations, feedback and eventual decision.</p>
+          <Link className="text-link" href="/about-david-walsh">Meet David Walsh</Link>
+        </div>
+      </section>
       <CTASection
-        title="Need good people?"
-        text="Tell David what you're trying to hire. He'll tell you honestly whether Essential can help."
+        title="Got a hiring problem you're trying to work out?"
+        text="Tell David what you're trying to solve. He'll give you a straight view on whether Essential can help — and which route actually makes sense."
       />
-    </>
+    </div>
   );
 }

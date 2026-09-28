@@ -1,0 +1,41 @@
+.page h1 { font-size: 4rem; line-height: 1.07; }
+.page h2 { font-size: 2.8rem; line-height: 1.13; max-width: 28ch; }
+.page :global(.lede) { line-height: 1.7; }
+.proposition { border-left: 2px solid var(--color-primary-on-dark); padding-left: 20px; }
+.positioning { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 40px; list-style: decimal-leading-zero; padding-left: 32px; margin-top: 40px; }
+.positioning li { border-top: 1px solid var(--color-line); padding: 24px 12px; font-size: 1.2rem; line-height: 1.5; }
+.positioning li::marker { color: var(--color-accent-readable); font-weight: 650; }
+.founderBridge { max-width: 850px; }
+.founderBridge > p:not(:global(.eyebrow)) { margin-top: 24px; max-width: 65ch; line-height: 1.7; }
+.facts { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 24px; margin: 0; padding-block: 32px; }
+.facts dt { font-size: 0.8rem; line-height: 1.4; }
+.facts dd { margin: 12px 0 0; font-size: 1.7rem; font-weight: 550; }
+.davidPrinciples { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 40px; max-width: none; counter-reset: principle; }
+.davidPrinciples section { margin: 0; border-top: 1px solid var(--color-line); padding-top: 24px; }
+.davidPrinciples section:first-child, .davidPrinciples section:last-child { grid-column: 1 / -1; max-width: 70ch; }
+.davidPrinciples section:not(:first-child):not(:last-child)::before { counter-increment: principle; content: "0" counter(principle); display: block; color: var(--color-accent-readable); font-size: 1.7rem; margin-bottom: 20px; }
+.davidPrinciples h3 { font-size: 1.5rem; line-height: 1.25; }
+.routeLinks { display: flex; flex-wrap: wrap; gap: 24px 40px; margin-top: 24px; }
+.routeLinks a { text-decoration: underline; text-underline-offset: 5px; }
+.contact :global(.trust-callout) { border: 0; border-top: 1px solid var(--color-dark-line); padding: 24px 0 0; background: transparent; }
+.contact h2 { font-size: 1.75rem; }
+.contactRoutes { margin-top: 40px; }
+.contactRoutes > div { border-top: 1px solid var(--color-dark-line); margin-top: 24px; padding-top: 20px; }
+.contactRoutes h3 { font-size: 1.2rem; }
+.contactRoutes p { line-height: 1.65; margin-top: 12px; }
+.contact :global(.contact-options-card) { border-radius: var(--radius-xs); box-shadow: none; }
+.contact :global(.contact-options-card) :global(.text-link), .contact :global(.contact-options-card) :global(.eyebrow) { color: var(--color-accent-readable); }
+.contact :global(.contact-secondary-routes) :global(.button-row) { gap: 12px 24px; }
+.contact :global(.contact-secondary-routes) a { font-size: 0.9rem; }
+.contact :global(.contact-form) { border-radius: var(--radius-xs); box-shadow: none; }
+.contact input, .contact select, .contact textarea { min-width: 0; max-width: 100%; }
+.booking :global(.booking-panel) { border-radius: var(--radius-xs); border-top: 3px solid var(--color-primary-on-dark); box-shadow: none; }
+.bookingReasons { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 64px; }
+.bookingReasons article { border-top: 1px solid var(--color-line); padding-top: 28px; }
+.bookingReasons h2 { font-size: 2rem; margin-top: 20px; }
+.bookingReasons ul { padding-left: 20px; margin-top: 24px; }
+.bookingReasons li { line-height: 1.7; padding-bottom: 16px; }
+.bookingReasons p { line-height: 1.7; margin-top: 24px; }
+.bookingReasons a[href^="mailto:"] { max-width: 100%; overflow-wrap: anywhere; white-space: normal; min-width: 0; }
+@media(max-width:1023px) { .page h1 { font-size: 3.4rem; } .page h2 { font-size: 2.4rem; } .facts { grid-template-columns: repeat(3,minmax(0,1fr)); } .davidPrinciples { grid-template-columns: minmax(0,1fr); } .contact h2 { font-size: 1.75rem; } }
+@media(max-width:767px) { .page h1 { font-size: 2.5rem; } .page h2 { font-size: 2rem; } .positioning, .bookingReasons { grid-template-columns: minmax(0,1fr); } .facts { grid-template-columns: repeat(2,minmax(0,1fr)); } .facts dd { font-size: 1.5rem; } .contact h2 { font-size: 1.6rem; } }

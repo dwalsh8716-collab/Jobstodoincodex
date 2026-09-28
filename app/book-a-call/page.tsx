@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styles from "@/components/AboutConversion.module.css";
 import { redirect } from "next/navigation";
 import { BookingButton } from "@/components/BookingButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -20,7 +21,7 @@ const bookingReasons = [
   "Hiring and want somebody to sense-check the brief",
   "Need senior marketing or agency support quickly",
   "Want an honest view on salary or the candidate market",
-  "Not sure whether permanent, retained or Fractional makes most sense",
+  "Not sure whether Permanent Recruitment, Retained Search, Fractional Leadership or Market Intelligence & Advisory makes most sense",
   "Want to talk through a recruitment problem before it becomes a bigger one",
 ];
 
@@ -46,7 +47,7 @@ export default function BookCallPage() {
   if (!siteConfig.booking.enabled) redirect("/contact");
 
   return (
-    <>
+    <div className={`${styles.page} ${styles.booking}`}>
       <Breadcrumbs
         items={[
           { name: "Contact", href: "/contact" },
@@ -58,7 +59,7 @@ export default function BookCallPage() {
           <div>
             <p className="eyebrow">Book a call</p>
             <h1>{siteConfig.booking.heading}</h1>
-            <p className="lede">{siteConfig.booking.intro}</p>
+            <p className="lede">Got a hiring problem, leadership gap or just want a straight view on something? Grab 15 minutes.</p>
             <p className="lede">
               No sales script. No awkward pitch. Just a proper conversation
               about what you need and whether David can help.
@@ -99,8 +100,8 @@ export default function BookCallPage() {
       </section>
 
       <section className="section surface">
-        <div className="container grid grid-2">
-          <article className="card">
+        <div className={`container ${styles.bookingReasons}`}>
+          <article>
             <span className="tag">Good reasons to book</span>
             <h2>Use the call for a quick sense-check.</h2>
             <ul>
@@ -109,7 +110,7 @@ export default function BookCallPage() {
               ))}
             </ul>
           </article>
-          <article className="card">
+          <article>
             <span className="tag">Other routes</span>
             <h2>Need the quickest route?</h2>
             <p>
@@ -172,6 +173,6 @@ export default function BookCallPage() {
         </div>
       </section>
       <SchemaScript data={bookingSetupSchema} />
-    </>
+    </div>
   );
 }

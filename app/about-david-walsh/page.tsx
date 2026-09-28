@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import styles from "@/components/AboutConversion.module.css";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CTASection } from "@/components/CTASection";
 import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
@@ -15,7 +16,7 @@ export const metadata = createMetadata({
 
 export default function AboutDavidPage() {
   return (
-    <>
+    <div className={styles.page}>
       <Breadcrumbs
         items={[{ name: "About David Walsh", href: "/about-david-walsh" }]}
       />
@@ -65,15 +66,24 @@ export default function AboutDavidPage() {
           </div>
         </div>
       </section>
+      <div className="container">
+        <dl className={styles.facts}>
+          <div><dt>Recruiting since</dt><dd>2013</dd></div>
+          <div><dt>Independent since</dt><dd>2017</dd></div>
+          <div><dt>Essential Resourcing Ltd</dt><dd>2019</dd></div>
+          <div><dt>Base</dt><dd>Manchester</dd></div>
+          <div><dt>Reach</dt><dd>UK-wide</dd></div>
+        </dl>
+      </div>
       <section className="section surface">
-        <div className="container split split-start">
+        <div className="container">
           <div>
             <p className="eyebrow">Why he works differently</p>
             <h2>
               The CV is the start of the conversation, not the hiring decision.
             </h2>
           </div>
-          <div className="article-body">
+          <div className={`article-body ${styles.davidPrinciples}`}>
             <section>
               <p>
                 Getting a list of people whose LinkedIn profiles contain the
@@ -91,7 +101,7 @@ export default function AboutDavidPage() {
                   className="text-link"
                   href="/how-essential-resourcing-works"
                 >
-                  See how David recruits
+                  See how Essential Resourcing works
                 </Link>
               </p>
             </section>
@@ -129,6 +139,7 @@ export default function AboutDavidPage() {
               </p>
             </section>
             <section>
+              <p className="eyebrow">The human bit</p>
               <h3>A bit about the human behind it</h3>
               <p>
                 David&apos;s a dad, a retired rugby player, an old-school raver
@@ -145,15 +156,14 @@ export default function AboutDavidPage() {
         </div>
       </section>
       <nav className="section surface" aria-label="Explore Essential Resourcing">
-        <div className="container article-body">
-          <p>
-            See <Link href="/">Essential Resourcing</Link>, explore the{" "}
-            <Link href="/services">services</Link> and{" "}
-            <Link href="/specialisms">specialisms</Link>, or read David&apos;s{" "}
-            <Link href="/insights">hiring insights</Link>. If you&apos;ve got a
-            role to discuss, <Link href="/clients">see how Essential works with clients</Link>{" "}
-            or <Link href="/contact">talk to David</Link>.
-          </p>
+        <div className="container">
+          <p className="eyebrow">Explore Essential</p>
+          <div className={styles.routeLinks}>
+            <Link href="/about-essential">About Essential</Link>
+            <Link href="/services">Services</Link>
+            <Link href="/specialisms">Specialisms</Link>
+            <Link href="/insights">Hiring Insights</Link>
+          </div>
         </div>
       </nav>
       <CTASection
@@ -161,6 +171,6 @@ export default function AboutDavidPage() {
         text="Tell David what you're trying to hire and he'll tell you honestly whether he can help."
       />
       <SchemaScript data={profilePageSchema()} />
-    </>
+    </div>
   );
 }

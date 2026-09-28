@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styles from "@/components/AboutConversion.module.css";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactForm } from "@/components/ContactForm";
 import { LinkedInProfileLink } from "@/components/LinkedInProfileLink";
@@ -20,7 +21,7 @@ export default function ContactPage() {
     : "";
 
   return (
-    <>
+    <div className={`${styles.page} ${styles.contact}`}>
       <Breadcrumbs items={[{ name: "Contact", href: "/contact" }]} />
       <section className="section dark">
         <div className="container split">
@@ -33,7 +34,7 @@ export default function ContactPage() {
             </p>
             <p className="lede">No sales sequence.</p>
             <p className="lede">
-              No pretending every vacancy needs retained search.
+              No pretending every vacancy needs Retained Search.
             </p>
             <p className="lede">
               And if I think the brief, salary or process needs fixing before
@@ -59,33 +60,33 @@ export default function ContactPage() {
               </Link>
             </div>
             <div className="trust-callout hero-actions">
-              <h2>What happens next?</h2>
+              <p className="eyebrow">What happens next?</p>
+              <h2>A straight reply. Not a sales sequence.</h2>
               <p>
                 I read it. If I can help, I&apos;ll suggest the most sensible
                 next step. If I don&apos;t think I&apos;m the right recruiter
                 for it, I&apos;ll tell you that too.
               </p>
             </div>
+            <div className={styles.contactRoutes}>
+              <p className="eyebrow">How do you want to get in touch?</p>
+              <h2>Quick question or proper brief?</h2>
+              <div><h3>Quick question</h3><p>WhatsApp is normally quickest if you just want to ask something or sense-check a role.</p></div>
+              <div><h3>More context to share</h3><p>Use the form if you’ve got a brief, salary, role detail or a bit more context you want David to read properly.</p><Link className="text-link" href="#contact-form">Send the brief</Link></div>
+            </div>
           </div>
           <div id="contact-form">
             <div className="contact-options-card">
-              <p className="eyebrow">Fast route</p>
-              <h2>Message David directly.</h2>
+              <p className="eyebrow">Direct with David</p>
+              <h2>Share the useful context.</h2>
               <p>
-                WhatsApp is normally quickest. If you&apos;ve got more context
-                to share, use the form or email.
+                You’ll get a straight reply, not a sales sequence.
               </p>
-              <WhatsAppButton
-                intent="hiring"
-                label="Message David on WhatsApp"
-                location="contact_options"
-                variant="primary"
-              />
               <div className="contact-secondary-routes">
                 <h3>Other useful routes</h3>
                 <div className="button-row">
                   <Link
-                    className="button button-secondary"
+                    className="text-link"
                     href="/candidates#candidate-contact"
                     {...analyticsAttributes("cta_click", {
                       label: "I'm looking for work",
@@ -96,7 +97,7 @@ export default function ContactPage() {
                     I&apos;m looking for work
                   </Link>
                   <Link
-                    className="button button-secondary"
+                    className="text-link"
                     href={`mailto:${siteConfig.email}`}
                     {...analyticsAttributes("email_click", {
                       label: siteConfig.email,
@@ -108,7 +109,7 @@ export default function ContactPage() {
                   </Link>
                   {phoneHref ? (
                     <Link
-                      className="button button-secondary"
+                      className="text-link"
                       href={phoneHref}
                       {...analyticsAttributes("phone_click", {
                         label: "Call David",
@@ -122,7 +123,7 @@ export default function ContactPage() {
                   <LinkedInProfileLink
                     label="Connect with David on LinkedIn"
                     location="contact_options"
-                    variant="secondary"
+                    variant="text"
                   />
                 </div>
               </div>
@@ -131,6 +132,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
