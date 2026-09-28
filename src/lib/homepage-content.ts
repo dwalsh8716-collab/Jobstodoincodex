@@ -150,7 +150,7 @@ export const defaultHomePageContent: HomePageContent = {
   heroEyebrow:
     "Founder-led marketing recruitment · Leadership search · Digital · PR · Agencies",
   heroHeadline: "Helping Businesses Make Better Hiring Decisions.",
-  heroSubheadline: "Permanent · Retained · Fractional Marketing Search",
+  heroSubheadline: "Marketing recruitment · Leadership search · Fractional Leadership · Market intelligence",
   heroLede:
     "Technology helps find people. Experience and judgement work out who's actually good.",
   heroPrimaryCta: {
@@ -265,16 +265,16 @@ export const defaultHomePageContent: HomePageContent = {
         proposition:
           "When the hire matters enough to search the market properly.",
         description:
-          "For senior, confidential, difficult or commercially important appointments where CV volume is not the answer.",
+          "A committed, research-led search for senior, confidential, difficult or commercially important appointments.",
         linkLabel: "Explore Retained Search",
         href: "/services/retained-search",
       },
       {
         slug: "fractional",
         title: "Fractional Leadership",
-        proposition: "Senior leadership. For the time you actually need it.",
+        proposition: "Senior marketing leadership. Just not necessarily five days a week.",
         description:
-          "Search for experienced CMOs, Marketing Directors and agency leaders when a full-time hire isn't the right answer.",
+          "Work out what senior capability the business actually needs, then find the person who can deliver it.",
         linkLabel: "Explore Fractional Leadership",
         href: "/services/fractional",
       },
@@ -284,7 +284,7 @@ export const defaultHomePageContent: HomePageContent = {
         proposition:
           "Before you recruit, make sure the brief actually stacks up.",
         description:
-          "Salary benchmarking, talent mapping, competitor intelligence, brief design and hiring advice.",
+          "Salary intelligence, talent mapping, competitor insight, brief design and practical hiring advice before you commit.",
         linkLabel: "Explore Market Intelligence & Advisory",
         href: "/services/market-intelligence-advisory",
       },
@@ -318,7 +318,7 @@ export const defaultHomePageContent: HomePageContent = {
         "Reach marketing people who aren't sitting on job boards",
         "Assess candidates beyond what's written on the CV",
         "Get honest salary and market advice",
-        "Hire permanently, retained or through Fractional",
+        "Choose Permanent Recruitment, Retained Search or Fractional Leadership",
       ],
       ctaLabel: "Sense-check a brief",
       ctaHref: "/clients",

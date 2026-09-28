@@ -4,6 +4,7 @@ import { linkedInRecommendations } from "@/lib/content";
 import { siteConfig } from "@/lib/site";
 
 type LinkedInRecommendationsProps = {
+  className?: string;
   copy?: {
     eyebrow: string;
     heading: string;
@@ -43,6 +44,7 @@ const copyByVariant = {
 } as const;
 
 export function LinkedInRecommendations({
+  className = "",
   copy: copyOverride,
   recommendations: recommendationsOverride,
   serviceSlug,
@@ -81,7 +83,7 @@ export function LinkedInRecommendations({
 
   return (
     <section
-      className={`section linkedin-proof linkedin-proof-${variant}`}
+      className={`section linkedin-proof linkedin-proof-${variant} ${className}`}
       aria-labelledby={headingId}
     >
       <div className="container linkedin-proof-layout">

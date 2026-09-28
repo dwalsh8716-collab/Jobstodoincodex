@@ -1,4 +1,5 @@
 import Image from "next/image";
+import styles from "./homepage.module.css";
 import Link from "next/link";
 import { BookingButton } from "@/components/BookingButton";
 import { InsightCard } from "@/components/Cards";
@@ -283,7 +284,7 @@ export default async function HomePage() {
       </section>
 
       <section
-        className="section home-difference"
+        className={`section home-difference ${styles.comparison}`}
         aria-labelledby="difference-heading"
       >
         <div className="container home-ledger-layout">
@@ -314,11 +315,11 @@ export default async function HomePage() {
               {homePage.differenceSection.rows.map((row) => (
                 <li key={row.usual}>
                   <div className="home-ledger-old">
-                    <span aria-hidden="true">x</span>
+                    <span className={styles.comparisonLabel}>{homePage.differenceSection.comparisonLabelLeft}</span>
                     <p>{row.usual}</p>
                   </div>
                   <div className="home-ledger-new">
-                    <span aria-hidden="true">✓</span>
+                    <span className={styles.comparisonLabel}>{homePage.differenceSection.comparisonLabelRight}</span>
                     <p>{row.essential}</p>
                   </div>
                 </li>
@@ -348,7 +349,7 @@ export default async function HomePage() {
             </div>
           </Reveal>
 
-          <ul className="home-service-list">
+          <ul className={styles.serviceGrid}>
             {homePage.servicesSection.cards.map((service, index) => (
               <li key={service.slug}>
                 <Reveal delay={Math.min(index * 80, 400)}>
@@ -357,7 +358,7 @@ export default async function HomePage() {
                     <h3>{service.title}</h3>
                     <p>{service.proposition}</p>
                     <p>{service.description}</p>
-                    <span aria-hidden="true">→</span>
+                    <span className={styles.serviceLink}>{service.linkLabel} <span aria-hidden="true">→</span></span>
                   </Link>
                 </Reveal>
               </li>
@@ -368,7 +369,7 @@ export default async function HomePage() {
 
       <section
         id="david"
-        className="section home-founder dark grain"
+        className={`section home-founder dark grain ${styles.founder}`}
         aria-labelledby="founder-heading"
       >
         <div className="container home-founder-grid">
@@ -430,7 +431,7 @@ export default async function HomePage() {
       </section>
 
       <section
-        className="home-audience-split"
+        className={`home-audience-split ${styles.audience}`}
         aria-labelledby="audience-heading"
       >
         <h2 id="audience-heading" className="sr-only">
@@ -484,7 +485,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section home-proof" aria-labelledby="proof-heading">
+      <section className={`section home-proof ${styles.proof}`} aria-labelledby="proof-heading">
         <div className="container">
           <Reveal>
             <p className="eyebrow home-eyebrow">
@@ -518,15 +519,16 @@ export default async function HomePage() {
                 <div className="home-proof-case-points">
                   <div>
                     <span>Brief</span>
-                    <p>{firstParagraph(homeProofCase.clientContext)}</p>
+                    <p>{homeProofCase.roleHired}</p>
                   </div>
                   <div>
                     <span>Search</span>
-                    <p>{firstParagraph(homeProofCase.process)}</p>
+                    <p>{homeProofCase.searchStory ? "Retained Search" : firstParagraph(homeProofCase.process)}</p>
                   </div>
                   <div>
                     <span>Outcome</span>
-                    <p>{firstParagraph(homeProofCase.outcome)}</p>
+                    <p>{homeProofCase.searchStory ? `${homeProofCase.searchStory.outcome.heading} ${firstParagraph(homeProofCase.searchStory.outcome.text)}` : firstParagraph(homeProofCase.outcome)}</p>
+                    {homeProofCase.searchStory ? <p className={styles.progression}>Later progressed to {homeProofCase.searchStory.progression.to}.</p> : null}
                   </div>
                 </div>
                 <Link
@@ -548,10 +550,11 @@ export default async function HomePage() {
         copy={homePage.linkedInSection}
         recommendations={homePage.linkedInSection.recommendations}
         variant="home"
+        className={styles.recommendations}
       />
 
       <section
-        className="section home-live-proof surface"
+        className={`section home-live-proof surface ${styles.insights}`}
         aria-labelledby="live-proof-heading"
       >
         <div className="container home-live-proof-grid">
@@ -575,7 +578,7 @@ export default async function HomePage() {
       </section>
 
       <section
-        className="section home-specialisms"
+        className={`section home-specialisms ${styles.specialisms}`}
         aria-labelledby="specialisms-heading"
       >
         <div className="container">
@@ -663,7 +666,7 @@ export default async function HomePage() {
 
       <section
         id="contact"
-        className="section home-final-cta"
+        className={`section home-final-cta ${styles.finalCta}`}
         aria-labelledby="final-heading"
       >
         <div className="container">
