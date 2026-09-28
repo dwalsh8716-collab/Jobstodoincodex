@@ -2593,6 +2593,11 @@ fieldset.form-row legend {
   max-width: 860px;
 }
 
+.legal-content .text-link {
+  display: inline;
+  overflow-wrap: anywhere;
+}
+
 .legal-content h2 {
   margin-top: 34px;
   font-size: 2.18rem;

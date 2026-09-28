@@ -234,7 +234,9 @@ export function ContactForm({
           defaultValue={defaultBriefType}
         >
           {briefOptions.map((option) => (
-            <option key={option}>{option}</option>
+            <option key={option} value={option}>
+              {option === "Fractional" ? "Fractional Leadership" : option}
+            </option>
           ))}
         </select>
       </div>
