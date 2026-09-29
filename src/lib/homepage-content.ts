@@ -248,7 +248,7 @@ export const defaultHomePageContent: HomePageContent = {
     eyebrow: "Services",
     heading: "Four ways to work with Essential.",
     intro:
-      "Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence for marketing, communications, PR, digital and agency hiring.",
+      "Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence & Advisory for marketing, communications, PR, digital and agency hiring.",
     cards: [
       {
         slug: "permanent-recruitment",

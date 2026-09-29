@@ -17,7 +17,7 @@ const updates = docs.map((doc) => {
   if (!Array.isArray(items)) throw new Error("Client benefit list missing");
   return { doc, set: {
     heroSubheadline: "Marketing recruitment · Leadership search · Fractional Leadership · Market intelligence",
-    "servicesSection.intro": "Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence for marketing, communications, PR, digital and agency hiring.",
+    "servicesSection.intro": "Permanent Recruitment, Retained Search, Fractional Leadership and Market Intelligence & Advisory for marketing, communications, PR, digital and agency hiring.",
     serviceCards,
     "audienceSection.client.items": items.map((item) => item === "Hire permanently, retained or through Fractional" ? "Choose Permanent Recruitment, Retained Search or Fractional Leadership" : item),
   } };
