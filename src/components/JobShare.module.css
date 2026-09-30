@@ -1,0 +1,45 @@
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding-block: 16px;
+  border-block: 1px solid var(--color-line);
+}
+
+.heading {
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.actions a,
+.actions button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent-readable);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.actions a:focus-visible,
+.actions button:focus-visible {
+  outline: 2px solid var(--color-accent-readable);
+  outline-offset: 3px;
+}
+
+.status {
+  min-height: 1.5em;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}

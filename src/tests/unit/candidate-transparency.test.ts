@@ -17,6 +17,7 @@ import {
 } from "@/lib/content";
 import { parseServerEnv } from "@/lib/env";
 import type { Job } from "@/lib/types";
+import { activeDistributionJobs, buildUniversalJobsXml, buildTalentJobsXml } from "@/lib/job-distribution";
 
 vi.mock("server-only", () => ({}));
 
@@ -168,6 +169,28 @@ describe("candidate transparency foundation", () => {
     expect(getJobTransparencyIssues(transparentJob)).toEqual([]);
     expect(isJobCandidateTransparent(transparentJob)).toBe(true);
     expect(isJobLive(transparentJob, new Date("2026-06-10"))).toBe(true);
+  });
+
+  it("keeps closed roles out of feeds and escapes rich descriptions", () => {
+    const live = {
+      ...transparentJob,
+      externalJobId: "5209d31b-fba4-45c9-948b-492af7eef918",
+      title: "Client Services & Digital Director",
+      hiringOrganizationName: "confidential",
+      summary: "Clients < strategy & delivery.",
+      closingDate: "2026-12-01",
+    };
+    const closed = { ...live, slug: "closed-role", status: "closed" as const };
+    const now = new Date("2026-10-01T12:00:00Z");
+    const feed = buildUniversalJobsXml([live, closed], now);
+
+    expect(activeDistributionJobs([live, closed], now)).toHaveLength(1);
+    expect(activeDistributionJobs([live, live, closed], now)).toHaveLength(1);
+    expect(feed).toContain("5209d31b-fba4-45c9-948b-492af7eef918");
+    expect(feed).toContain("Client Services &amp; Digital Director");
+    expect(feed).toContain("<![CDATA[");
+    expect(feed).not.toContain("closed-role");
+    expect(buildTalentJobsXml([live], now)).not.toContain("<job>");
   });
 
   it("does not require optional editorial extras for a complete job advert", () => {

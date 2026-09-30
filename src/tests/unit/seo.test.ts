@@ -123,6 +123,24 @@ describe("structured data builders", () => {
     });
   });
 
+  it("uses a stable published reference and a single value for fixed pay", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      externalJobId: "published-job-id",
+      salaryStatus: "verified",
+      salaryVisibility: "public_range",
+      salaryMin: 50000,
+      salaryMax: 50000,
+      salaryCurrency: "GBP",
+      salaryPeriod: "annual",
+    });
+
+    expect(schema.identifier).toMatchObject({ value: "published-job-id" });
+    expect(schema.baseSalary?.value).toMatchObject({ value: 50000 });
+    expect(schema.baseSalary?.value).not.toHaveProperty("minValue");
+    expect(schema.baseSalary?.value).not.toHaveProperty("maxValue");
+  });
+
   it("uses remote JobPosting location properties without inventing an office", () => {
     const schema = jobPostingSchema({
       ...jobs[0],

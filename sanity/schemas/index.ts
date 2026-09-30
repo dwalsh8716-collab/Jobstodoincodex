@@ -2,6 +2,7 @@ import { icons } from "@sanity/icons";
 import type { ComponentType } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { caseStudySearchStory } from "./caseStudySearchStory";
+import { JobDistributionPanel } from "../components/JobDistributionPanel";
 
 // Sanity is the public website CMS. Do not add private candidate records,
 // client contact records, CV files, DSAR requests, audit logs or internal notes here.
@@ -2113,6 +2114,7 @@ const newJobFields = new Set([
   "remotePossible", "summary", "body", "whyRoleExists", "davidsTake",
   "responsibilities", "mustHaves", "niceToHaves", "benefits",
   "interviewSteps", "applicationNotes", "postedDate", "closingDate", "status",
+  "distributionPanel",
 ]);
 const jobBasicsFields = new Set([
   "title", "slug", "hiringOrganizationName", "employmentType",
@@ -2135,6 +2137,7 @@ const job = defineType({
     { name: "basics", title: "1. Role & pay", default: true },
     { name: "advert", title: "2. The advert" },
     { name: "publish", title: "3. Publish" },
+    { name: "distribution", title: "4. Share & distribution" },
   ],
   fields: [
     defineField({
@@ -2706,10 +2709,19 @@ const job = defineType({
       initialValue: "draft",
       validation: requiredText("Choose draft, live or closed."),
     }),
+    defineField({
+      name: "distributionPanel",
+      title: "Share & distribution",
+      type: "string",
+      readOnly: true,
+      components: { input: JobDistributionPanel },
+    }),
     ...seoFields,
   ].filter((field) => newJobFields.has(field.name)).map((field) => ({
     ...field,
-    group: jobBasicsFields.has(field.name)
+    group: field.name === "distributionPanel"
+      ? "distribution"
+      : jobBasicsFields.has(field.name)
       ? "basics"
       : jobAdvertFields.has(field.name)
         ? "advert"

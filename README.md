@@ -54,6 +54,8 @@ redirects, 404 behaviour, internal links, desktop/tablet/mobile rendering,
 console errors, page errors, horizontal overflow, visible image URLs, main
 landmarks, H1 counts and visible controls without accessible names.
 
+See [job distribution operating notes](docs/job-distribution.md) for the live-job feeds, Google notification prerequisites, and external board onboarding status.
+
 ## Environment Variables
 
 Copy `.env.example` to `.env.local` and add values as needed.

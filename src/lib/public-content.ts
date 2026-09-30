@@ -15,6 +15,7 @@ import {
   SERVICE_BY_SLUG_QUERY,
 } from "./sanity-queries";
 import { sanityFetchWithFallback } from "./sanity-content";
+import { isSanityReady, sanityClient } from "./sanity";
 import {
   defaultHomePageContent,
   type HomeAudiencePanel,
@@ -961,6 +962,7 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     "Candidate data is handled under the Candidate Privacy Notice.";
 
   return {
+    externalJobId: item._id.replace(/^drafts\./, ""),
     title: item.title || fallback?.title || "Untitled role",
     slug: item.slug || fallback?.slug || "",
     status: item.status || fallback?.status || "draft",
@@ -1345,6 +1347,16 @@ export async function getPublicJobs() {
             : bySlug(fallbackJobs, item.slug),
         ),
       );
+}
+
+export async function getFreshDistributionJobs() {
+  if (!isSanityReady()) throw new Error("Sanity is not configured for job distribution.");
+  const items = await sanityClient.withConfig({ perspective: "published" }).fetch<SanityJob[]>(
+    JOBS_QUERY,
+    {},
+    { cache: "no-store" },
+  );
+  return items.map((item) => mapJob(item));
 }
 
 export async function getPublicJob(slug: string) {

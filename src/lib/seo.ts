@@ -313,8 +313,9 @@ export function jobPostingDescriptionHtml(job: Job) {
     job.locationExpectation,
     job.travelExpectation,
   ]
-    .map(cleanJobText)
+    .map((value) => cleanJobText(value).replace(/[.\s]+$/, ""))
     .filter(Boolean)
+    .filter((value, index, values) => values.findIndex((candidate) => candidate.toLowerCase() === value.toLowerCase()) === index)
     .join(". ");
 
   return [
@@ -397,7 +398,7 @@ export function jobPostingSchema(job: Job) {
     identifier: {
       "@type": "PropertyValue",
       name: siteConfig.name,
-      value: job.slug,
+      value: job.externalJobId || job.slug,
     },
     url: absoluteUrl(`/jobs/${job.slug}`),
     description: jobPostingDescriptionHtml(job),
@@ -405,8 +406,8 @@ export function jobPostingSchema(job: Job) {
     dateModified: job.updatedDate || job.postedDate || job.publishedDate,
     ...(job.closingDate ? { validThrough: job.closingDate } : {}),
     employmentType: googleEmploymentType(job),
-    industry: job.sector,
-    occupationalCategory: job.specialism,
+    ...(job.sector ? { industry: job.sector } : {}),
+    ...(job.specialism ? { occupationalCategory: job.specialism } : {}),
     directApply:
       job.applicationFormEnabled !== false ||
       Boolean(job.applicationEmail.trim()),
@@ -426,8 +427,9 @@ export function jobPostingSchema(job: Job) {
             currency: job.salaryCurrency || "GBP",
             value: {
               "@type": "QuantitativeValue",
-              minValue: salaryMin,
-              maxValue: salaryMax,
+              ...(salaryMin === salaryMax
+                ? { value: salaryMin }
+                : { minValue: salaryMin, maxValue: salaryMax }),
               unitText: salaryUnitText,
             },
           },
@@ -446,7 +448,7 @@ export function jobPostingSchema(job: Job) {
             "@type": "Place",
             address: {
               "@type": "PostalAddress",
-              addressLocality: job.location,
+              addressLocality: job.location.split(",")[0].trim(),
               ...(job.locationRegion
                 ? { addressRegion: job.locationRegion }
                 : {}),

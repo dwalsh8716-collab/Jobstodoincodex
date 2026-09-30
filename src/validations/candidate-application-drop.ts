@@ -69,6 +69,10 @@ export const candidateApplicationDropSchema = z
     sourcePage: z.preprocess(emptyToUndefined, safeText(240).optional()),
     jobTitle: z.preprocess(emptyToUndefined, safeText(160).optional()),
     jobSlug: z.preprocess(emptyToUndefined, safeText(160).optional()),
+    utm_source: z.preprocess(emptyToUndefined, safeText(80).optional()),
+    utm_medium: z.preprocess(emptyToUndefined, safeText(80).optional()),
+    utm_campaign: z.preprocess(emptyToUndefined, safeText(80).optional()),
+    referrerHost: z.preprocess(emptyToUndefined, safeText(100).optional()),
   })
   .superRefine((payload, ctx) => {
     const noteLength = payload.note?.length || 0;
@@ -191,5 +195,9 @@ export function formDataToCandidateApplicationDropInput(formData: FormData) {
     sourcePage: formData.get("sourcePage"),
     jobTitle: formData.get("jobTitle"),
     jobSlug: formData.get("jobSlug"),
+    utm_source: formData.get("utm_source"),
+    utm_medium: formData.get("utm_medium"),
+    utm_campaign: formData.get("utm_campaign"),
+    referrerHost: formData.get("referrerHost"),
   };
 }

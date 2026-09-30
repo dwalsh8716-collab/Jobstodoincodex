@@ -5,6 +5,7 @@ const indexNowEndpoint = "https://api.indexnow.org/indexnow";
 
 export type SanityIndexNowPayload = {
   _id?: string;
+  _rev?: string;
   _type?: string;
   slug?: string | { current?: string };
 };

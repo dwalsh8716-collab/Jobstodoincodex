@@ -188,6 +188,7 @@ export type SalarySnapshot = {
 };
 
 export type Job = {
+  externalJobId?: string;
   title: string;
   slug: string;
   status: "draft" | "live" | "closed";

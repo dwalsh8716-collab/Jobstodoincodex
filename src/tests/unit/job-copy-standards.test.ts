@@ -16,7 +16,7 @@ describe("job copy standards", () => {
       "employmentType", "whyRoleExists", "summary", "body", "davidsTake",
       "responsibilities", "mustHaves", "niceToHaves", "benefits",
       "interviewSteps", "applicationNotes", "postedDate", "closingDate",
-      "status",
+      "status", "distributionPanel",
     ]);
     expect(fieldNames).not.toContain("salaryRange");
     expect(fieldNames).not.toContain("seoTitle");

@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CandidateApplicationDrop } from "@/components/CandidateApplicationDrop";
 import { CandidateProcessTimeline } from "@/components/CandidateProcessTimeline";
 import { JobRoleSnapshot } from "@/components/JobRoleSnapshot";
+import { JobShare } from "@/components/JobShare";
 import { SchemaScript } from "@/components/SchemaScript";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import {
@@ -13,6 +14,7 @@ import {
 import { isJobClosed, isJobLive } from "@/lib/content";
 import { getPublicJob, getPublicJobs } from "@/lib/public-content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
+import { canonicalJobUrl } from "@/lib/job-distribution";
 import { candidateJobWhatsAppMessage } from "@/lib/whatsapp";
 
 type Props = {
@@ -37,6 +39,7 @@ export async function generateMetadata({ params }: Props) {
       : job.seoTitle,
     description: job.metaDescription,
     path: `/jobs/${job.slug}`,
+    image: "/assets/essential-resourcing-social-2026.png",
     noIndex: !isJobLive(job) || job.noIndex,
   });
 }
@@ -83,6 +86,16 @@ export default async function JobPage({ params }: Props) {
           </p>
         </div>
       </section>
+      {live ? (
+        <div className="container">
+          <JobShare
+            title={job.title}
+            location={job.location}
+            salary={job.salaryRange}
+            url={canonicalJobUrl(job)}
+          />
+        </div>
+      ) : null}
       <section className="section surface">
         <div
           className={

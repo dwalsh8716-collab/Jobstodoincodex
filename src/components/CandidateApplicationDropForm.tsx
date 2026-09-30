@@ -59,6 +59,20 @@ export function CandidateApplicationDropForm({
     const formData = new FormData(form);
     formData.set("type", type);
     formData.set("sourcePage", sourcePage);
+    if (type === "job") {
+      const params = new URLSearchParams(window.location.search);
+      for (const key of ["utm_source", "utm_medium", "utm_campaign"] as const) {
+        const value = params.get(key);
+        if (value) formData.set(key, value.slice(0, 80));
+      }
+      if (document.referrer) {
+        try {
+          formData.set("referrerHost", new URL(document.referrer).hostname.slice(0, 100));
+        } catch {
+          // The referrer is optional; never interrupt an application for it.
+        }
+      }
+    }
     if (jobTitle) formData.set("jobTitle", jobTitle);
     if (jobSlug) formData.set("jobSlug", jobSlug);
 
