@@ -265,7 +265,10 @@ export default async function JobPage({ params }: Props) {
                 {job.applicationProcessNotes ? (
                   <p>{job.applicationProcessNotes}</p>
                 ) : null}
-                <p>{job.applicationNotes}</p>
+                {job.applicationNotes &&
+                job.applicationNotes !== job.applicationProcessNotes ? (
+                  <p>{job.applicationNotes}</p>
+                ) : null}
               </section>
             ) : null}
             <section>
