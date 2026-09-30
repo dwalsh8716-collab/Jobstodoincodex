@@ -152,37 +152,28 @@ Add a job:
 
 1. Open Recruitment.
 2. Open Jobs and create a new Job record.
-3. Complete the clearly labelled Google Jobs fields first: plain job title,
-   public URL, original posted date, actual hiring employer (or `confidential`),
-   employment type, location/remote setup, advert summary, full role description,
-   responsibilities, qualifications/must-haves, application route and genuine
-   closing date. These are the publication essentials; Google's markup appears
-   only on an individual job page, not the Jobs listing.
-4. Keep the title to the role itself. Do not add salary, "apply now", urgency
-   wording or Essential Resourcing. Essential also requires a confirmed public
-   salary/rate range before a role can go live, although salary is not a
-   Google-required JobPosting field.
-5. Add salary or rate range, salary status, working pattern,
-   salary visibility, currency, any interim rate fields, location, office
-   location, seniority and role details.
-6. Add the real hybrid rhythm, location expectation, travel expectation, must-haves,
-   nice-to-haves, what good looks like, David's Take, interview steps,
-   application notes and candidate privacy note.
-7. Add 3/6/12 month success indicators only where the client has confirmed
-   them. Otherwise use the general "what good looks like" list.
-8. Add the process overview, process steps, expected timeline, task or
-   presentation position, first-stage format, final-stage format, feedback
-   expectation and application review timeframe where known.
-9. Use "typical process for this kind of role" if the exact client process is
-   not confirmed. Do not pretend certainty.
-10. Use Remote possible = Yes only for genuinely 100% remote roles. Use Limited
-    for hybrid or occasional home working.
-11. Make sure the application form is enabled or a direct application email is
-    present.
-12. Keep status as draft until the salary/rate, location, hybrid setup, travel,
-    process, privacy note and application route are clear enough for candidates.
-13. For a real live job, test the page in Google's Rich Results Test and inspect
-    the final URL in Search Console after the domain is live.
+3. In **1. Role & pay**, enter the plain role title, generate the public URL,
+   enter the actual hiring employer (or `confidential`), choose employment type,
+   location and the real working/hybrid pattern. Use Remote possible = Yes only
+   for a genuinely 100% remote role; say clearly that applicants may be based
+   in the UK if that is the rule.
+4. Enter the salary/rate minimum and maximum, pay period and visibility. The
+   website formats the public range automatically. Choose Published range only
+   when verified with the client; otherwise use Indicative range with honest
+   caveat wording. Do not invent numbers. Salary is an Essential transparency
+   rule, not a Google-required field.
+5. In **2. The advert**, add a factual summary, full overview, responsibilities,
+   must-haves and clear application notes. Add why the role exists, David's Take,
+   useful extras, benefits and interview steps only when they add real detail.
+6. In **3. Publish**, use the original posting date and the genuine closing
+   date. Keep Status as Draft until the advert is complete; then choose Live
+   and publish. The standard website application form and Candidate Privacy
+   Notice are already in place.
+   If the client has not confirmed interview stages, the site shows a clearly
+   labelled typical process for this kind of role; do not invent steps.
+7. Open the public `/jobs/your-role` URL. Check the advert, application route
+   and Google's Rich Results Test. Inspect that URL in Search Console; Google
+   can take time to discover and index it.
 
 Detailed job standards live in:
 

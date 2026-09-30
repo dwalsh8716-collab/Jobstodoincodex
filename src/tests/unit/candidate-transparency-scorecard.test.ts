@@ -158,7 +158,7 @@ describe("candidate transparency scorecard", () => {
     expect(scorecard.issueIds).toEqual(
       expect.arrayContaining([
         "salary_or_rate_not_confirmed",
-        "hybrid_reality_missing",
+        "hybrid_pattern_missing",
         "candidate_transparency_placeholders_present",
       ]),
     );

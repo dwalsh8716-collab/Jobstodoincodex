@@ -373,9 +373,8 @@ export function jobPostingSchema(job: Job) {
     weekly: "WEEK",
     monthly: "MONTH",
   };
-  const canPublishSalary = ["public_range", "indicative_range"].includes(
-    job.salaryVisibility,
-  );
+  const canPublishSalary =
+    job.salaryVisibility === "public_range" && job.salaryStatus === "verified";
   const salaryMin =
     typeof job.salaryMin === "number" ? job.salaryMin : job.rateMin;
   const salaryMax =

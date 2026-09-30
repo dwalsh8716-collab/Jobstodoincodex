@@ -3462,6 +3462,13 @@ export function getJobTransparencyIssues(job: Job) {
   ) {
     issues.push("salary_min_max_missing");
   }
+  if (
+    typeof job.salaryMin === "number" &&
+    typeof job.salaryMax === "number" &&
+    (job.salaryMin <= 0 || job.salaryMin > job.salaryMax)
+  ) {
+    issues.push("salary_range_invalid");
+  }
 
   if (
     publishableSalaryVisibility.includes(job.salaryVisibility) &&
@@ -3479,14 +3486,11 @@ export function getJobTransparencyIssues(job: Job) {
     issues.push("salary_period_missing");
   }
 
-  if (!job.salaryTransparencyNote.trim()) {
-    issues.push("salary_transparency_note_missing");
-  }
-
   if (!job.location.trim()) issues.push("location_missing");
   if (
-    !job.officeLocation.trim() ||
-    emptyJobListPattern.test(job.officeLocation)
+    job.remotePossible !== "yes" &&
+    (!job.officeLocation.trim() ||
+      emptyJobListPattern.test(job.officeLocation))
   ) {
     issues.push("office_location_missing");
   }
@@ -3506,69 +3510,7 @@ export function getJobTransparencyIssues(job: Job) {
     issues.push("remote_possible_missing");
   }
 
-  if (
-    !job.hybridReality.trim() ||
-    emptyJobListPattern.test(job.hybridReality)
-  ) {
-    issues.push("hybrid_reality_missing");
-  }
-
-  if (
-    !job.locationExpectation.trim() ||
-    emptyJobListPattern.test(job.locationExpectation)
-  ) {
-    issues.push("location_expectation_missing");
-  }
-
-  if (
-    !job.travelExpectation.trim() ||
-    emptyJobListPattern.test(job.travelExpectation)
-  ) {
-    issues.push("travel_expectation_missing");
-  }
-
-  if (!job.roleType.trim()) issues.push("role_type_missing");
-  if (!job.seniority.trim()) issues.push("seniority_missing");
-  if (!job.sector.trim()) issues.push("sector_missing");
-  if (job.agencyOrClientSide === "to_be_confirmed") {
-    issues.push("agency_or_client_side_missing");
-  }
-
-  if (!job.whyRoleExists.trim()) {
-    issues.push("why_role_exists_missing");
-  }
-
-  if (!job.whyThisRoleMatters.trim()) {
-    issues.push("why_role_exists_missing");
-  }
-
-  if (job.davidsTake.length === 0) issues.push("davids_take_missing");
   if (job.mustHaves.length === 0) issues.push("must_haves_missing");
-  if (job.niceToHaves.length === 0) issues.push("nice_to_haves_missing");
-  if (job.whatGoodLooksLike.length === 0) {
-    issues.push("what_good_looks_like_missing");
-  }
-  if (
-    ![
-      job.successInThreeMonths,
-      job.successInSixMonths,
-      job.successInTwelveMonths,
-    ].some((item) => item.trim())
-  ) {
-    issues.push("success_indicators_missing");
-  }
-  if (job.interviewSteps.length === 0) {
-    issues.push("interview_steps_missing");
-  }
-  if (job.interviewProcessConfirmed === "to_be_confirmed") {
-    issues.push("interview_process_not_confirmed");
-  }
-  if (job.interviewProcess.length === 0) {
-    issues.push("interview_process_missing");
-  }
-  if (job.applicationProcess.length === 0) {
-    issues.push("application_process_missing");
-  }
 
   const candidateFacingCopy = [
     job.summary,
@@ -3603,24 +3545,8 @@ export function getJobTransparencyIssues(job: Job) {
     issues.push("candidate_transparency_placeholders_present");
   }
 
-  if (!job.candidateDataHandling.trim()) {
-    issues.push("candidate_data_handling_missing");
-  }
-
-  if (!job.candidatePrivacyNote.trim()) {
-    issues.push("candidate_privacy_note_missing");
-  }
-
   if (!job.applicationNotes.trim()) {
     issues.push("application_notes_missing");
-  }
-
-  if (!job.applicationProcessNotes.trim()) {
-    issues.push("application_process_notes_missing");
-  }
-
-  if (!job.quickQuestionRoute.trim()) {
-    issues.push("quick_question_route_missing");
   }
 
   if (candidateBuzzwordPattern.test(searchableCopy)) {

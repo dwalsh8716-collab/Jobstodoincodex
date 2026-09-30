@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props) {
       : job.seoTitle,
     description: job.metaDescription,
     path: `/jobs/${job.slug}`,
-    noIndex: closed || job.noIndex,
+    noIndex: !isJobLive(job) || job.noIndex,
   });
 }
 
@@ -148,10 +148,12 @@ export default async function JobPage({ params }: Props) {
       <section className="section surface">
         <div className="container split split-start">
           <article className="article-body">
-            <section>
-              <h2>Why the role exists</h2>
-              <p>{job.whyRoleExists}</p>
-            </section>
+            {job.whyRoleExists ? (
+              <section>
+                <h2>Why the role exists</h2>
+                <p>{job.whyRoleExists}</p>
+              </section>
+            ) : null}
             {job.davidsTake.length ? (
               <section>
                 <h2>David&apos;s Take</h2>
@@ -163,20 +165,21 @@ export default async function JobPage({ params }: Props) {
             <section>
               <h2>Role shape</h2>
               <p>
-                {job.seniority} · {job.agencyOrClientSide} ·{" "}
-                {job.officeLocation}
+                {[job.seniority, job.agencyOrClientSide !== "to_be_confirmed" ? job.agencyOrClientSide : "", job.officeLocation]
+                  .filter(Boolean)
+                  .join(" · ")}
               </p>
-              <p>
-                Remote possible: {job.remotePossible}. Interview process:{" "}
-                {job.interviewProcessConfirmed}.
-              </p>
+              <p>Remote possible: {job.remotePossible}.</p>
             </section>
             <section>
-              <h2>Salary, hybrid and travel reality</h2>
-              <p>{job.salaryTransparencyNote}</p>
-              <p>{job.hybridReality}</p>
-              <p>{job.locationExpectation}</p>
-              <p>{job.travelExpectation}</p>
+              <h2>
+                {job.travelExpectation
+                  ? "Salary, hybrid and travel reality"
+                  : "Pay and working pattern"}
+              </h2>
+              {[job.salaryTransparencyNote, job.hybridReality, job.locationExpectation, job.travelExpectation]
+                .filter(Boolean)
+                .map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </section>
             <section>
               <h2>Overview</h2>
@@ -196,12 +199,14 @@ export default async function JobPage({ params }: Props) {
                 <p key={item}>{item}</p>
               ))}
             </section>
-            <section>
-              <h2>Useful extras</h2>
-              {job.niceToHaves.map((item) => (
-                <p key={item}>{item}</p>
-              ))}
-            </section>
+            {job.niceToHaves.length ? (
+              <section>
+                <h2>Useful extras</h2>
+                {job.niceToHaves.map((item) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </section>
+            ) : null}
             {job.whatGoodLooksLike.length ? (
               <section>
                 <h2>What good looks like</h2>
@@ -220,18 +225,22 @@ export default async function JobPage({ params }: Props) {
                 ))}
               </section>
             ) : null}
-            <section>
-              <h2>Requirements</h2>
-              {job.requirements.map((item) => (
-                <p key={item}>{item}</p>
-              ))}
-            </section>
-            <section>
-              <h2>Benefits</h2>
-              {job.benefits.map((item) => (
-                <p key={item}>{item}</p>
-              ))}
-            </section>
+            {job.requirements.length ? (
+              <section>
+                <h2>Requirements</h2>
+                {job.requirements.map((item) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </section>
+            ) : null}
+            {job.benefits.length ? (
+              <section>
+                <h2>Benefits</h2>
+                {job.benefits.map((item) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </section>
+            ) : null}
             <section>
               <CandidateProcessTimeline
                 processConfirmed={job.interviewProcessConfirmed}
@@ -274,8 +283,9 @@ export default async function JobPage({ params }: Props) {
                   <span className="tag">Apply</span>
                   <h2>{job.applicationCta.label}</h2>
                   <p>
-                    Applications are handled by David directly at{" "}
-                    {job.applicationEmail}.
+                    {job.applicationFormEnabled
+                      ? "David reviews applications directly."
+                      : `Apply directly to David at ${job.applicationEmail}.`}
                   </p>
                   <div className="mini-process">
                     <h3>What happens next?</h3>

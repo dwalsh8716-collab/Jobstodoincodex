@@ -155,8 +155,8 @@ describe("candidate transparency foundation", () => {
     expect(getJobTransparencyIssues(draft)).toEqual(
       expect.arrayContaining([
         "salary_or_rate_not_confirmed",
-        "hybrid_reality_missing",
-        "location_expectation_missing",
+        "hybrid_pattern_missing",
+        "remote_possible_missing",
         "candidate_transparency_placeholders_present",
       ]),
     );
@@ -168,6 +168,32 @@ describe("candidate transparency foundation", () => {
     expect(getJobTransparencyIssues(transparentJob)).toEqual([]);
     expect(isJobCandidateTransparent(transparentJob)).toBe(true);
     expect(isJobLive(transparentJob, new Date("2026-06-10"))).toBe(true);
+  });
+
+  it("does not require optional editorial extras for a complete job advert", () => {
+    const leanJob: Job = {
+      ...transparentJob,
+      whyRoleExists: "",
+      whyThisRoleMatters: "",
+      davidsTake: [],
+      niceToHaves: [],
+      whatGoodLooksLike: [],
+      successInThreeMonths: "",
+      successInSixMonths: "",
+      successInTwelveMonths: "",
+      interviewSteps: [],
+      interviewProcess: [],
+      applicationProcess: [],
+      candidatePrivacyNote: "",
+      candidateDataHandling: "",
+      travelExpectation: "",
+      locationExpectation: "",
+      applicationProcessNotes: "",
+      quickQuestionRoute: "",
+    };
+
+    expect(getJobTransparencyIssues(leanJob)).toEqual([]);
+    expect(isJobLive(leanJob, new Date("2026-06-10"))).toBe(true);
   });
 
   it("catches lazy candidate-facing jargon", () => {

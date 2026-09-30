@@ -9,62 +9,17 @@ describe("job copy standards", () => {
       | undefined;
     const fieldNames = jobSchema?.fields?.map((field) => field.name) ?? [];
 
-    expect(fieldNames).toEqual(
-      expect.arrayContaining([
-        "title",
-        "slug",
-        "status",
-        "salaryRange",
-        "salaryMin",
-        "salaryMax",
-        "salaryCurrency",
-        "salaryPeriod",
-        "salaryVisibility",
-        "rateMin",
-        "rateMax",
-        "ratePeriod",
-        "salaryStatus",
-        "workingPattern",
-        "location",
-        "officeLocation",
-        "hybridPattern",
-        "remotePossible",
-        "travelExpectation",
-        "roleType",
-        "seniority",
-        "sector",
-        "agencyOrClientSide",
-        "successInThreeMonths",
-        "successInSixMonths",
-        "successInTwelveMonths",
-        "interviewSteps",
-        "interviewProcessConfirmed",
-        "processOverview",
-        "processSteps",
-        "expectedTimeline",
-        "taskRequired",
-        "presentationRequired",
-        "firstStageFormat",
-        "finalStageFormat",
-        "feedbackExpectation",
-        "applicationReviewTimeframe",
-        "applicationProcessNotes",
-        "davidsTake",
-        "whyRoleExists",
-        "mustHaves",
-        "niceToHaves",
-        "whatGoodLooksLike",
-        "applicationNotes",
-        "applicationFormEnabled",
-        "candidatePrivacyNote",
-        "quickQuestionEnabled",
-        "whatsappQuestionEnabled",
-        "postedDate",
-        "updatedDate",
-        "seoTitle",
-        "metaDescription",
-      ]),
-    );
+    expect(fieldNames).toEqual([
+      "contentVersion", "title", "slug", "salaryMin", "salaryMax",
+      "salaryPeriod", "salaryVisibility", "hiringOrganizationName",
+      "location", "workingPattern", "hybridPattern", "remotePossible",
+      "employmentType", "whyRoleExists", "summary", "body", "davidsTake",
+      "responsibilities", "mustHaves", "niceToHaves", "benefits",
+      "interviewSteps", "applicationNotes", "postedDate", "closingDate",
+      "status",
+    ]);
+    expect(fieldNames).not.toContain("salaryRange");
+    expect(fieldNames).not.toContain("seoTitle");
   });
 
   it("documents the plain-English job copy rules and privacy boundary", () => {

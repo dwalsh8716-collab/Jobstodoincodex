@@ -177,6 +177,19 @@ describe("structured data builders", () => {
     expect(schema).not.toHaveProperty("baseSalary");
   });
 
+  it("does not present an indicative range as employer-confirmed base salary", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      salaryVisibility: "indicative_range",
+      salaryStatus: "indicative",
+      salaryMin: 55000,
+      salaryMax: 65000,
+      salaryPeriod: "annual",
+    });
+
+    expect(schema).not.toHaveProperty("baseSalary");
+  });
+
   it("omits fixed project fees from salary schema rather than using a non-standard unit", () => {
     const schema = jobPostingSchema({
       ...jobs[0],

@@ -517,7 +517,7 @@ export const SERVICE_BY_SLUG_QUERY = defineQuery(/* groq */ `
 `);
 
 export const JOBS_QUERY = defineQuery(/* groq */ `
-  *[_type == "job" && defined(slug.current)] | order(publishedDate desc, title asc){
+  *[_type == "job" && defined(slug.current)] | order(coalesce(postedDate, publishedDate) desc, title asc){
     ${jobFields}
   }
 `);

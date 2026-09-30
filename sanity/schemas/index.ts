@@ -1974,19 +1974,27 @@ function cmsArrayHasText(value: unknown) {
 }
 
 function cmsPortableTextHasText(value: unknown) {
-  return (
-    Array.isArray(value) &&
-    value.some(
-      (block) =>
-        typeof block === "object" &&
-        block !== null &&
-        Array.isArray((block as { children?: unknown }).children) &&
-        ((block as { children?: Array<{ text?: unknown }> }).children || [])
-          .map((child) => cmsText(child.text))
-          .join("")
-          .trim().length > 0,
-    )
-  );
+  return cmsPortableTextText(value).length > 0;
+}
+
+function cmsPortableTextText(value: unknown) {
+  if (!Array.isArray(value)) return "";
+  return value
+    .map((block) => {
+      if (
+        typeof block !== "object" ||
+        block === null ||
+        !Array.isArray((block as { children?: unknown }).children)
+      ) {
+        return "";
+      }
+      return ((block as { children?: Array<{ text?: unknown }> }).children || [])
+        .map((child) => cmsText(child.text))
+        .join(" ");
+    })
+    .filter(Boolean)
+    .join(" ")
+    .trim();
 }
 
 function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
@@ -2016,32 +2024,34 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
   if (!cmsText(document.closingDate)) {
     return "Add the genuine application closing date so the advert can be expired accurately.";
   }
-
-  if (
-    document.salaryStatus === "unverified" ||
-    !["public_range", "indicative_range"].includes(
-      cmsText(document.salaryVisibility),
-    ) ||
-    !cmsText(document.salaryRange)
-  ) {
-    return "Keep this as draft until the public salary or rate range is confirmed enough to show.";
+  if (cmsText(document.closingDate) < new Date().toISOString().slice(0, 10)) {
+    return "The closing date has passed. Keep the role draft or choose a genuine future date.";
   }
 
   if (
-    document.remotePossible !== "yes" &&
-    (!cmsText(document.location) || !cmsText(document.officeLocation))
+    !["public_range", "indicative_range"].includes(
+      cmsText(document.salaryVisibility),
+    ) ||
+    typeof document.salaryMin !== "number" ||
+    typeof document.salaryMax !== "number" ||
+    document.salaryMin <= 0 ||
+    document.salaryMin > document.salaryMax ||
+    !["annual", "daily", "hourly", "fixed"].includes(cmsText(document.salaryPeriod))
   ) {
-    return "Add the physical job location and office base, or mark the role as genuinely fully remote.";
+    return "Add an honest public pay range with minimum, maximum and pay period before going live.";
+  }
+
+  if (!cmsText(document.location)) {
+    return "Add the job location. For a fully remote role, say Remote, UK.";
   }
 
   if (
     !cmsText(document.workingPattern) ||
     document.workingPattern === "to_be_confirmed" ||
     !cmsText(document.hybridPattern) ||
-    !cmsText(document.locationExpectation) ||
-    !cmsText(document.travelExpectation)
+    document.remotePossible === "to_be_confirmed"
   ) {
-    return "Add the working pattern, hybrid rhythm, location expectation and travel expectation first.";
+    return "Add the working pattern, actual office/remote rhythm and remote status first.";
   }
 
   if (
@@ -2059,6 +2069,16 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
   ) {
     return "Use remote = Yes only for roles that are clearly 100% remote in the public advert.";
   }
+  if (
+    document.remotePossible === "yes" &&
+    !/\b(UK|United Kingdom|Britain|England|Scotland|Wales|Northern Ireland)\b/i.test(
+      [document.summary, document.hybridPattern, document.location]
+        .map(cmsText)
+        .join(" "),
+    )
+  ) {
+    return "For a fully remote role, say clearly where applicants may be based (for example, UK).";
+  }
 
   if (
     !cmsText(document.summary) ||
@@ -2068,31 +2088,42 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
   ) {
     return "Add a proper summary, role overview, responsibilities and must-haves before marking the role live.";
   }
-
-  if (
-    !cmsArrayHasText(document.interviewSteps) ||
-    document.interviewProcessConfirmed === "to_be_confirmed" ||
-    !cmsArrayHasText(document.applicationProcess)
-  ) {
-    return "Add interview steps, process confidence and what happens after applying first.";
+  const description = [
+    document.summary,
+    cmsPortableTextText(document.body),
+    ...(Array.isArray(document.responsibilities) ? document.responsibilities : []),
+    ...(Array.isArray(document.mustHaves) ? document.mustHaves : []),
+    document.applicationNotes,
+  ].map(cmsText).filter(Boolean).join(" ");
+  if (description.length < 240) {
+    return "Add enough specific role detail to make the advert useful before going live.";
   }
 
-  if (
-    document.applicationFormEnabled === false &&
-    !cmsText(document.applicationEmail)
-  ) {
-    return "Enable the application form or add an application email before marking the role live.";
-  }
-
-  if (
-    !cmsText(document.applicationNotes) ||
-    !cmsText(document.candidatePrivacyNote)
-  ) {
-    return "Add application notes and the candidate privacy note before marking the role live.";
+  if (!cmsText(document.applicationNotes)) {
+    return "Add clear application notes before marking the role live.";
   }
 
   return true;
 }
+
+const newJobFields = new Set([
+  "contentVersion", "title", "slug", "hiringOrganizationName",
+  "employmentType", "salaryMin", "salaryMax", "salaryPeriod",
+  "salaryVisibility", "location", "workingPattern", "hybridPattern",
+  "remotePossible", "summary", "body", "whyRoleExists", "davidsTake",
+  "responsibilities", "mustHaves", "niceToHaves", "benefits",
+  "interviewSteps", "applicationNotes", "postedDate", "closingDate", "status",
+]);
+const jobBasicsFields = new Set([
+  "title", "slug", "hiringOrganizationName", "employmentType",
+  "salaryMin", "salaryMax", "salaryPeriod", "salaryVisibility", "location",
+  "workingPattern", "hybridPattern", "remotePossible",
+]);
+const jobAdvertFields = new Set([
+  "summary", "body", "whyRoleExists", "davidsTake", "responsibilities",
+  "mustHaves", "niceToHaves", "benefits", "interviewSteps",
+  "applicationNotes",
+]);
 
 const job = defineType({
   name: "job",
@@ -2100,6 +2131,11 @@ const job = defineType({
   type: "document",
   icon: RocketIcon,
   validation: (rule) => rule.custom(liveJobReadinessIssue),
+  groups: [
+    { name: "basics", title: "1. Role & pay", default: true },
+    { name: "advert", title: "2. The advert" },
+    { name: "publish", title: "3. Publish" },
+  ],
   fields: [
     defineField({
       name: "contentVersion",
@@ -2111,7 +2147,7 @@ const job = defineType({
     }),
     defineField({
       name: "title",
-      title: "Google Jobs: job title",
+      title: "Role title",
       type: "string",
       description:
         "Required for a live listing. Use the exact role title only: no employer, location, salary, job code or promotional wording.",
@@ -2174,13 +2210,12 @@ const job = defineType({
       title: "Salary visibility",
       type: "string",
       description:
-        "Choose what candidates can see. Essential's live-job standard requires a confirmed public salary/rate range; keep the advert in draft if it cannot be shared.",
+        "Choose what candidates can see. A live role needs a defensible public range; only mark it confirmed when the employer has provided the figures.",
       options: {
         list: [
-          { title: "Published range", value: "public_range" },
-          { title: "Indicative range", value: "indicative_range" },
-          { title: "Confidential / withheld", value: "confidential" },
-          { title: "To be confirmed", value: "to_be_confirmed" },
+          { title: "Confirmed by the employer", value: "public_range" },
+          { title: "Indicative; say so in the advert", value: "indicative_range" },
+          { title: "Not ready (draft only)", value: "to_be_confirmed" },
         ],
         layout: "radio",
       },
@@ -2250,7 +2285,7 @@ const job = defineType({
     }),
     defineField({
       name: "hiringOrganizationName",
-      title: "Google Jobs: hiring employer",
+      title: "Hiring employer",
       type: "string",
       description:
         "Enter the actual organization offering the role. If it must remain anonymous, enter exactly: confidential. Never enter Essential Resourcing unless it is the employer.",
@@ -2347,7 +2382,7 @@ const job = defineType({
     }),
     defineField({
       name: "employmentType",
-      title: "Google Jobs: employment type",
+      title: "Employment type",
       type: "string",
       description:
         "Choose the closest Google Jobs-safe type. Use Permanent full-time for normal permanent roles.",
@@ -2438,7 +2473,7 @@ const job = defineType({
     }),
     defineField({
       name: "summary",
-      title: "Google Jobs: advert summary",
+      title: "Advert summary",
       type: "text",
       rows: 3,
       description:
@@ -2638,7 +2673,7 @@ const job = defineType({
     }),
     defineField({
       name: "postedDate",
-      title: "Google Jobs: original posted date",
+      title: "Original posted date",
       type: "date",
       description:
         "Required for a live listing. Use the date this vacancy was first posted; do not reset it for a minor edit.",
@@ -2651,7 +2686,7 @@ const job = defineType({
     }),
     defineField({
       name: "closingDate",
-      title: "Google Jobs: application closing date",
+      title: "Application closing date",
       type: "date",
       description:
         "The real date applications close. Required before a job can be marked live so expired structured data can be removed on time.",
@@ -2672,7 +2707,14 @@ const job = defineType({
       validation: requiredText("Choose draft, live or closed."),
     }),
     ...seoFields,
-  ],
+  ].filter((field) => newJobFields.has(field.name)).map((field) => ({
+    ...field,
+    group: jobBasicsFields.has(field.name)
+      ? "basics"
+      : jobAdvertFields.has(field.name)
+        ? "advert"
+        : "publish",
+  })),
   preview: {
     select: {
       title: "title",

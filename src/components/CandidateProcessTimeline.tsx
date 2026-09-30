@@ -94,14 +94,18 @@ export function CandidateProcessTimeline({
             <dd>{expectedTimeline}</dd>
           </div>
         ) : null}
-        <div>
-          <dt>Task</dt>
-          <dd>{requirementCopy[taskRequired]}</dd>
-        </div>
-        <div>
-          <dt>Presentation</dt>
-          <dd>{requirementCopy[presentationRequired]}</dd>
-        </div>
+        {taskRequired !== "to_be_confirmed" ? (
+          <div>
+            <dt>Task</dt>
+            <dd>{requirementCopy[taskRequired]}</dd>
+          </div>
+        ) : null}
+        {presentationRequired !== "to_be_confirmed" ? (
+          <div>
+            <dt>Presentation</dt>
+            <dd>{requirementCopy[presentationRequired]}</dd>
+          </div>
+        ) : null}
         {hasText(firstStageFormat) ? (
           <div>
             <dt>First stage</dt>

@@ -62,12 +62,15 @@ export function JobRoleSnapshot({ job }: JobRoleSnapshotProps) {
     {
       label: "Role shape",
       value: job.roleType,
-      note: `${job.seniority} · ${job.workingPattern}`,
+      note: [job.seniority, job.workingPattern].filter(Boolean).join(" · "),
     },
     {
       label: "Sector / side",
       value: job.sector,
-      note: formatSide(job.agencyOrClientSide),
+      note:
+        job.agencyOrClientSide === "to_be_confirmed"
+          ? ""
+          : formatSide(job.agencyOrClientSide),
     },
     {
       label: "Status",
@@ -81,7 +84,7 @@ export function JobRoleSnapshot({ job }: JobRoleSnapshotProps) {
       value: `Posted ${formatDate(job.postedDate)}`,
       note: `Updated ${formatDate(job.updatedDate)}`,
     },
-  ];
+  ].filter((item) => item.value);
 
   return (
     <article className="job-role-snapshot" aria-label="Role snapshot">

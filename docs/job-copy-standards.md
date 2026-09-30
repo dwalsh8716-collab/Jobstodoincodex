@@ -24,46 +24,28 @@ Recruiter Labs feature.
 
 A live Essential Resourcing job advert must tell candidates the truth quickly.
 
-Required public fields:
+The current job editor has three tabs: Role & pay, The advert, and Publish.
+Only the facts needed to make a real vacancy clear are required to go live:
 
-- title
-- slug
-- status
-- salary range
-- salary minimum and maximum when the range is publishable
-- salary/rate currency
-- salary period
-- salary visibility
-- interim rate minimum and maximum when a rate is publishable
-- interim rate period
-- salary status
-- working pattern
-- location
-- office location
-- hybrid pattern
-- whether remote work is possible
-- travel expectation
-- role type
-- seniority
-- sector
-- agency-side or client-side context
-- interview steps
-- whether the interview process is confirmed
-- David's Take
-- why the role exists
-- must-haves
-- useful extras
-- what good looks like
-- 3/6/12 month success indicators where the client has confirmed them
-- application notes
-- application process notes
-- candidate privacy note
-- quick-question route
-- WhatsApp question setting
-- posted date
-- updated date
-- closing date where relevant
-- SEO title and meta description
+- plain role title and public URL
+- real hiring employer, or `confidential` for an anonymous search
+- employment type, location, working pattern and honest hybrid/remote rhythm
+- public salary/rate minimum, maximum, pay period and whether the range is verified or indicative
+- advert summary, full overview, responsibilities and must-haves
+- clear application notes, original posted date and genuine closing date
+
+Why the role exists, David's Take, useful extras, benefits and interview steps
+remain available when they add something specific. Do not fill them with
+generic copy just to complete a form. The website supplies the standard
+candidate privacy link and application process; legacy CMS fields are retained
+in existing records but are not part of the new-job form.
+
+Google does not require salary for `JobPosting` eligibility. Essential chooses
+to show a public range because that is more useful for candidates. Only a
+verified, employer-provided range is emitted as `baseSalary` in structured data;
+an indicative range remains visible in the advert without being represented as
+confirmed pay in Google's markup. State any travel expectation in the advert
+when it matters; there is no separate travel expectation box.
 
 ## Google Jobs Rules
 
@@ -76,7 +58,7 @@ For Essential Resourcing:
   jobs listing page.
 - The CMS has explicit fields for the original posting date, plain job title,
   hiring employer, employment type, location/remote status, full description,
-  application route and closing date. Complete these before changing Status to
+  application notes and closing date. Complete these before changing Status to
   Live. For an anonymous search, record the hiring organization as
   `confidential`; do not label Essential Resourcing as the employer unless it
   is actually hiring.
@@ -97,7 +79,7 @@ For Essential Resourcing:
 - Salary/rate schema should use real client- or employer-provided pay data.
   Do not invent a number to make the advert look better.
 - Google does not require salary data for JobPosting eligibility; Essential's
-  own candidate-transparency standard is stricter and requires a confirmed
+  own candidate-transparency standard is stricter and requires a defensible
   public salary/rate range before a role is marked live.
 - Fixed project fees can be shown in the advert, but they are not pushed into
   salary schema with a made-up unit.
@@ -145,33 +127,25 @@ Do not publish a live role with:
 - `depending on experience`
 - a range David cannot stand behind
 
-Use:
-
-- `verified` when David has confirmed the range or rate
-- `indicative` only when the caveat is genuinely useful and clear
-- `unverified` only for draft roles
-- `public_range` when the range can be published
-- `indicative_range` when a range is useful but needs caveat wording
-- `confidential` only with a clear reason and David approval
-- `to_be_confirmed` only while the role is draft
+Use Published range when the employer has confirmed the numbers. Use
+Indicative range only when David can stand behind the estimate and the advert
+clearly says that it is indicative. This salary visibility choice controls
+whether confirmed base salary is included in Google's structured data.
 
 No fake numbers. If the salary is not ready, the role stays draft.
 
 ## Hybrid And Location Rules
 
-Every live role should say:
-
-- office base
-- actual office rhythm
-- any travel or client-site expectation
-- whether remote work is possible
+Every live role should say the job location, actual office or remote rhythm and
+whether remote work is possible. Add any material travel or client-site
+expectation to the advert copy.
 
 `Hybrid` on its own is not enough.
 
 ## Success Indicator Rules
 
-Use 3/6/12 month indicators only when they help candidates understand the real
-job.
+Use specific success indicators in the advert only when they help candidates
+understand the real job; the CMS no longer asks for separate 3/6/12 month boxes.
 
 Good:
 
@@ -187,13 +161,10 @@ Not good:
 
 ## Process Rules
 
-Every live role should show:
-
-- the likely interview steps
-- whether the process is confirmed or indicative
-- what happens after applying
-- how David handles candidate details
-- how to ask a quick question before applying
+Add interview steps when the client has confirmed them. Otherwise the website
+shows a clearly labelled typical process. The standard application journey and
+Candidate Privacy Notice explain what happens after applying and how David
+handles candidate details.
 
 Candidates should not feel like they are applying into a black hole.
 
@@ -238,4 +209,4 @@ backend once it is configured and legally reviewed.
 A job can be marked live only when the public advert is clear enough for a
 candidate to make a sensible decision.
 
-Clear salary. Clear working pattern. Clear process. Clear privacy note. No faff.
+Clear pay. Clear working pattern. Clear route to apply. No faff.

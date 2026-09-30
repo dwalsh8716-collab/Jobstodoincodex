@@ -888,6 +888,31 @@ function mapSalarySnapshot(
   };
 }
 
+function jobPayLabel(item: SanityJob) {
+  if (typeof item.salaryMin !== "number" || typeof item.salaryMax !== "number") {
+    return "";
+  }
+
+  const currency = item.salaryCurrency || "GBP";
+  const formatter = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  });
+  const periodLabels: Record<string, string> = {
+    annual: "per year",
+    daily: "per day",
+    hourly: "per hour",
+    fixed: "project fee",
+  };
+  const period = periodLabels[item.salaryPeriod || ""];
+
+  const amount = item.salaryMin === item.salaryMax
+    ? formatter.format(item.salaryMin)
+    : `${formatter.format(item.salaryMin)}–${formatter.format(item.salaryMax)}`;
+  return `${amount}${period ? ` ${period}` : ""}`;
+}
+
 function mapJob(item: SanityJob, fallback?: Job): Job {
   if (item.contentVersion === 2) fallback = undefined;
 
@@ -906,6 +931,7 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
   const salaryRange =
     item.salaryRange ||
     item.salary ||
+    jobPayLabel(item) ||
     fallback?.salaryRange ||
     fallback?.salary ||
     "Salary to be confirmed";
@@ -955,11 +981,24 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     rateMax: item.rateMax ?? fallback?.rateMax,
     ratePeriod: item.ratePeriod || fallback?.ratePeriod || "to_be_confirmed",
     salary: salaryRange,
-    salaryStatus: item.salaryStatus || fallback?.salaryStatus || "unverified",
+    salaryStatus:
+      item.salaryStatus ||
+      fallback?.salaryStatus ||
+      (item.salaryVisibility === "public_range"
+        ? "verified"
+        : item.salaryVisibility === "indicative_range"
+          ? "indicative"
+          : "unverified"),
     salaryTransparencyNote:
       item.salaryTransparencyNote ||
       fallback?.salaryTransparencyNote ||
-      "Salary/rate details need confirming before this role goes live.",
+      (item.salaryStatus === "verified" ||
+      item.salaryVisibility === "public_range"
+        ? "The published pay range has been verified."
+        : item.salaryStatus === "indicative" ||
+            item.salaryVisibility === "indicative_range"
+          ? "This is an indicative pay range; ask David for the latest detail."
+          : ""),
     hiringOrganizationName:
       item.hiringOrganizationName ||
       fallback?.hiringOrganizationName ||
@@ -984,13 +1023,11 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       "Hybrid pattern to confirm.",
     locationExpectation:
       item.locationExpectation ||
-      fallback?.locationExpectation ||
-      "Location expectations to confirm.",
+      fallback?.locationExpectation || "",
     travelExpectation:
       item.travelExpectation ||
       fallback?.travelExpectation ||
-      item.locationExpectation ||
-      "Travel expectations to confirm.",
+      "",
     employmentType:
       item.employmentType || fallback?.employmentType || "Permanent",
     sector: item.sector || fallback?.sector || "",
@@ -1038,19 +1075,19 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     interviewProcessConfirmed:
       item.interviewProcessConfirmed ||
       fallback?.interviewProcessConfirmed ||
-      "to_be_confirmed",
+      (interviewSteps.length ? "confirmed" : "to_be_confirmed"),
     interviewProcess: interviewSteps.length
       ? interviewSteps
       : fallback?.interviewProcess || [],
     processOverview:
       item.processOverview ||
       fallback?.processOverview ||
-      "Typical process for this kind of role.",
+      "",
     processSteps,
     expectedTimeline:
       item.expectedTimeline ||
       fallback?.expectedTimeline ||
-      "Timeline to confirm.",
+      "",
     taskRequired:
       item.taskRequired || fallback?.taskRequired || "to_be_confirmed",
     presentationRequired:
@@ -1060,11 +1097,11 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
     firstStageFormat:
       item.firstStageFormat ||
       fallback?.firstStageFormat ||
-      "First-stage format to confirm.",
+      "",
     finalStageFormat:
       item.finalStageFormat ||
       fallback?.finalStageFormat ||
-      "Final-stage format to confirm.",
+      "",
     feedbackExpectation:
       item.feedbackExpectation ||
       fallback?.feedbackExpectation ||
