@@ -8,6 +8,7 @@ import {
   type SanityIndexNowPayload,
 } from "@/lib/indexnow";
 import { notifyGoogleJobUrl } from "@/lib/google-job-indexing";
+import { activeDistributionJobs } from "@/lib/job-distribution";
 import { getFreshDistributionJobs } from "@/lib/public-content";
 
 export const dynamic = "force-dynamic";
@@ -51,7 +52,8 @@ export async function POST(request: Request) {
       const job = jobs.find((item) => item.externalJobId === payload._id);
       const slug = job?.slug || (typeof payload.slug === "string" ? payload.slug : payload.slug?.current);
       if (!slug) return { status: "missing_slug" as const };
-      return notifyGoogleJobUrl({ slug }, job ? "URL_UPDATED" : "URL_DELETED", {
+      const isLive = job && activeDistributionJobs([job]).length > 0;
+      return notifyGoogleJobUrl({ slug }, isLive ? "URL_UPDATED" : "URL_DELETED", {
         revision: payload._rev,
       });
     })(),
