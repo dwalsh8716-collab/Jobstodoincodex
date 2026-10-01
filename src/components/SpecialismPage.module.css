@@ -1,25 +1,288 @@
-.page h1 { font-size: 4rem; line-height: 1.08; }
-.page h2 { font-size: 2.8rem; line-height: 1.15; max-width: 28ch; }
-.intro { max-width: 70ch; margin-top: 24px; line-height: 1.7; }
-.taxonomy { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; margin-top: 40px; }
-.taxonomy > div { border-top: 2px solid var(--color-ink); padding-top: 24px; }
-.taxonomy h3 { font-size: 1.5rem; line-height: 1.25; }
-.taxonomy ul { padding-left: 20px; margin-top: 20px; }
-.taxonomy li { line-height: 1.65; padding-bottom: 12px; }
-.judgement p { line-height: 1.7; }
-.judgement ul { padding-left: 20px; margin-top: 24px; }
-.judgement li { padding-bottom: 16px; line-height: 1.7; }
-.page :global(.statement-list) p { font-size: 1.05rem; font-weight: 450; line-height: 1.7; }
-.routes { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 40px; padding: 0; list-style: none; margin-top: 40px; }
-.routes li { border-top: 1px solid var(--color-line); }
-.routes a { display: flex; flex-direction: column; gap: 16px; padding: 24px 0; height: 100%; text-decoration: none; color: var(--color-ink); }
-.routes h3 { font-size: 1.5rem; line-height: 1.25; }
-.routes p { line-height: 1.65; max-width: 60ch; }
-.routes :global(.text-link) { margin-top: auto; }
-.proof { border-top: 3px solid var(--color-ink); padding-top: 32px; }
-.proof img { width: 220px; height: auto; margin-block: 24px; }
-.proof p:not(:global(.eyebrow)) { max-width: 65ch; margin-top: 24px; line-height: 1.7; }
-.insights { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; margin-top: 32px; }
-.insights :global(.card) { border: 0; border-top: 1px solid var(--color-line); padding: 24px 0; background: transparent; border-radius: 0; box-shadow: none; }
-@media(max-width:1023px){ .page h1{font-size:3.25rem}.page h2{font-size:2.4rem}.taxonomy{grid-template-columns:minmax(0,1fr)} }
-@media(max-width:767px){ .page h1{font-size:2.5rem}.page h2{font-size:2rem}.routes,.insights{grid-template-columns:minmax(0,1fr)} }
+.page h1 {
+  font-size: 4rem;
+  line-height: 1.08;
+}
+.page h2 {
+  font-size: 2.8rem;
+  line-height: 1.15;
+  max-width: 28ch;
+}
+.hero {
+  padding-block: 80px;
+}
+.hero h1 {
+  max-width: 22ch;
+}
+.heroScope {
+  margin-top: 16px;
+}
+.hubHero {
+  max-width: 960px;
+}
+.hubHero > :global(.lede) {
+  max-width: 65ch;
+  margin-top: 32px;
+}
+.hubGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.marketCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  border: 1px solid var(--color-line);
+  border-top: 2px solid var(--color-accent-readable);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg);
+}
+.number {
+  display: block;
+  color: var(--color-accent-readable);
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+.page .marketCard h2 {
+  margin-top: 24px;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+.marketCard p {
+  margin-top: 20px;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+.marketCard > :global(.text-link) {
+  margin-top: auto;
+  padding-top: 28px;
+}
+.editorial {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 64px;
+  align-items: start;
+}
+.prose {
+  max-width: 65ch;
+  line-height: 1.7;
+  font-size: 1.0625rem;
+}
+.prose > * + * {
+  margin-top: 20px;
+}
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 64px;
+}
+.page .audiences h2 {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+.audiences .prose {
+  margin-top: 24px;
+}
+.audiences :global(.text-link) {
+  margin-top: 24px;
+}
+.bridge {
+  border-top: 1px solid var(--color-line);
+  margin-top: 48px;
+  padding-top: 32px;
+  max-width: 75ch;
+  line-height: 1.7;
+}
+.bridge > :global(.text-link) {
+  margin-top: 20px;
+}
+.candidate {
+  border-top: 1px solid var(--color-line);
+}
+.page .candidate h2 {
+  font-size: 2rem;
+}
+.candidate p:not(:global(.eyebrow)) {
+  margin-top: 20px;
+  line-height: 1.7;
+}
+.candidate :global(.button-row) {
+  margin-top: 24px;
+}
+.intro {
+  max-width: 70ch;
+  margin-top: 24px;
+  line-height: 1.7;
+}
+.taxonomy {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+.taxonomy > div {
+  border-top: 2px solid var(--color-ink);
+  padding-top: 24px;
+}
+.taxonomy h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+.taxonomy .number {
+  margin-bottom: 20px;
+}
+.taxonomyRows {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+.taxonomyRows > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 40px;
+  padding-block: 28px;
+  border-top-width: 1px;
+}
+.taxonomyRows ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 32px;
+  margin-top: 0;
+  align-content: start;
+}
+.taxonomy ul {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.taxonomy li {
+  line-height: 1.65;
+  padding-bottom: 12px;
+}
+.judgement p {
+  line-height: 1.7;
+}
+.judgement ul {
+  padding-left: 20px;
+  margin-top: 24px;
+}
+.judgement li {
+  padding-bottom: 16px;
+  line-height: 1.7;
+}
+.routes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  padding: 0;
+  list-style: none;
+  margin-top: 40px;
+}
+.routes li {
+  border-top: 1px solid var(--color-line);
+}
+.routes a {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+  height: 100%;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+.routes h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+.routes p {
+  line-height: 1.65;
+  max-width: 60ch;
+}
+.routes :global(.text-link) {
+  margin-top: auto;
+}
+.proof {
+  border-top: 3px solid var(--color-ink);
+  padding-top: 32px;
+}
+.proof img {
+  width: 220px;
+  height: auto;
+  margin-block: 24px;
+}
+.proof p:not(:global(.eyebrow)) {
+  max-width: 65ch;
+  margin-top: 24px;
+  line-height: 1.7;
+}
+.insights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 32px;
+}
+.insights :global(.card) {
+  border: 0;
+  border-top: 1px solid var(--color-line);
+  padding: 24px 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+@media (max-width: 1023px) {
+  .page h1 {
+    font-size: 3.25rem;
+  }
+  .page h2 {
+    font-size: 2.4rem;
+  }
+  .taxonomy {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .editorial {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .hero {
+    padding-block: 64px;
+  }
+  .audiences {
+    gap: 32px;
+  }
+}
+@media (max-width: 767px) {
+  .page h1 {
+    font-size: 2.5rem;
+  }
+  .page h2 {
+    font-size: 2rem;
+  }
+  .routes,
+  .insights,
+  .hubGrid,
+  .audiences,
+  .taxonomyRows > div,
+  .taxonomyRows ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero {
+    padding-block: 48px;
+  }
+  .marketCard {
+    padding: 24px;
+  }
+  .page .marketCard h2,
+  .page .audiences h2 {
+    font-size: 1.75rem;
+  }
+  .taxonomyRows > div {
+    gap: 24px;
+  }
+  .audiences {
+    gap: 40px;
+  }
+  .hubHero > :global(.lede) {
+    margin-top: 24px;
+  }
+}
