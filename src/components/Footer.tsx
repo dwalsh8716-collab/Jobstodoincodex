@@ -96,7 +96,7 @@ export function Footer() {
       <div className="container footer-bottom">
         <p>
           © {new Date().getFullYear()} Essential Resourcing. Founder-led
-          recruitment, search and Fractional.
+          recruitment, search and fractional leadership.
         </p>
         <p>Made in Manchester. Working UK-wide.</p>
       </div>

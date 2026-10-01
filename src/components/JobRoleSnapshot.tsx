@@ -47,7 +47,7 @@ export function JobRoleSnapshot({ job }: JobRoleSnapshotProps) {
     {
       label: "Location",
       value: job.location,
-      note: job.officeLocation,
+      note: job.officeLocation === job.location ? "" : job.officeLocation,
     },
     {
       label: "Hybrid / remote",
@@ -61,8 +61,10 @@ export function JobRoleSnapshot({ job }: JobRoleSnapshotProps) {
     },
     {
       label: "Role shape",
-      value: job.roleType,
-      note: [job.seniority, job.workingPattern].filter(Boolean).join(" · "),
+      value: job.employmentType === "permanent-full-time"
+        ? "Permanent, full-time"
+        : job.roleType,
+      note: job.seniority,
     },
     {
       label: "Sector / side",
@@ -98,7 +100,7 @@ export function JobRoleSnapshot({ job }: JobRoleSnapshotProps) {
             <dt>{item.label}</dt>
             <dd>
               <strong>{item.value}</strong>
-              <span>{item.note}</span>
+              {item.note ? <span>{item.note}</span> : null}
             </dd>
           </div>
         ))}
