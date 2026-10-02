@@ -67,20 +67,24 @@ export function buildUniversalJobsXml(jobs: Job[], now = new Date()) {
   return `<?xml version="1.0" encoding="UTF-8"?><jobs source="${xml(siteConfig.name)}">${entries}</jobs>`;
 }
 
-// Talent requires an actual employer name. Anonymous assignments stay out until
-// Talent confirms an acceptable confidential-employer mapping during onboarding.
+// Talent confirmed that Essential Resourcing may be shown for confidential roles.
+// Only send jobs whose published location identifies a real city and region.
 export function buildTalentJobsXml(jobs: Job[], now = new Date()) {
   const entries = activeDistributionJobs(jobs, now)
-    .filter((job) => job.hiringOrganizationName && job.hiringOrganizationName.toLowerCase() !== "confidential")
+    .filter((job) => {
+      const parts = job.location.split(",").map((part) => part.trim());
+      return parts.length === 3 && Boolean(parts[0] && parts[1]) && ["UK", "GB", "United Kingdom"].includes(parts[2]);
+    })
     .map((job) => {
       const [city, region] = job.location.split(",").map((part) => part.trim());
       return [
         "<job>",
         tag("referencenumber", jobReference(job), true),
         tag("title", job.title, true),
-        tag("company", job.hiringOrganizationName, true),
+        tag("company", siteConfig.name, true),
         tag("city", city, true),
-        tag("state", job.locationRegion || region, true),
+        tag("region", region, true),
+        tag("state", region, true),
         tag("country", "United Kingdom", true),
         tag("dateposted", job.postedDate || job.publishedDate, true),
         tag("url", canonicalJobUrl(job), true),

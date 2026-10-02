@@ -190,7 +190,14 @@ describe("candidate transparency foundation", () => {
     expect(feed).toContain("Client Services &amp; Digital Director");
     expect(feed).toContain("<![CDATA[");
     expect(feed).not.toContain("closed-role");
-    expect(buildTalentJobsXml([live], now)).not.toContain("<job>");
+    const talentFeed = buildTalentJobsXml([{ ...live, location: "Manchester, Greater Manchester, UK" }], now);
+    expect(talentFeed).toContain("<job>");
+    expect(talentFeed).toContain("<company><![CDATA[Essential Resourcing]]></company>");
+    expect(talentFeed).toContain("<city><![CDATA[Manchester]]></city>");
+    expect(talentFeed).toContain("<region><![CDATA[Greater Manchester]]></region>");
+    expect(talentFeed).toContain("<state><![CDATA[Greater Manchester]]></state>");
+    expect(talentFeed).not.toContain("<company><![CDATA[confidential]]></company>");
+    expect(buildTalentJobsXml([{ ...live, location: "Greater Manchester, UK" }], now)).not.toContain("<job>");
   });
 
   it("does not require optional editorial extras for a complete job advert", () => {
