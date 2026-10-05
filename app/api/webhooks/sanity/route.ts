@@ -68,9 +68,23 @@ export async function POST(request: Request) {
       });
     }
   }
+  const googleIndexing = notifications[1].status === "fulfilled"
+    ? notifications[1].value
+    : { status: "failed" as const };
+  const jobNotificationFailed = payload._type === "job" && (
+    googleIndexing.status === "failed" ||
+    googleIndexing.status === "not_configured" ||
+    googleIndexing.status === "missing_slug"
+  );
+  if (payload._type === "job" && googleIndexing.status === "notified") {
+    console.info("Google job URL notification submitted", {
+      url: googleIndexing.url,
+      type: googleIndexing.type,
+    });
+  }
   return NextResponse.json({
-    ok: true,
+    ok: !jobNotificationFailed,
     indexNow: notifications[0].status === "fulfilled" ? notifications[0].value : { status: "failed" },
-    googleIndexing: notifications[1].status === "fulfilled" ? notifications[1].value : { status: "failed" },
-  });
+    googleIndexing,
+  }, { status: jobNotificationFailed ? 503 : 200 });
 }
