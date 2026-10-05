@@ -161,6 +161,35 @@ describe("structured data builders", () => {
     expect(schema).not.toHaveProperty("jobLocation");
   });
 
+  it("uses a confirmed region from the public job location without inventing a street address", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      location: "Manchester, Greater Manchester, UK",
+      locationRegion: "",
+      remotePossible: "limited",
+    });
+
+    expect(schema.jobLocation?.address).toEqual({
+      "@type": "PostalAddress",
+      addressLocality: "Manchester",
+      addressRegion: "Greater Manchester",
+      addressCountry: "GB",
+    });
+    expect(schema.jobLocation?.address).not.toHaveProperty("streetAddress");
+    expect(schema.jobLocation?.address).not.toHaveProperty("postalCode");
+  });
+
+  it("does not treat a country as a region", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      location: "London, UK",
+      locationRegion: "",
+      remotePossible: "limited",
+    });
+
+    expect(schema.jobLocation?.address).not.toHaveProperty("addressRegion");
+  });
+
   it("builds a full HTML job description from visible advert sections", () => {
     const description = jobPostingDescriptionHtml({
       ...jobs[0],

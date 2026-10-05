@@ -364,6 +364,13 @@ function googleEmploymentType(job: Job) {
 }
 
 export function jobPostingSchema(job: Job) {
+  const locationParts = job.location.split(",").map((part) => part.trim());
+  const addressRegion = job.locationRegion?.trim() || (
+    locationParts.length === 3 &&
+    /^(UK|GB|United Kingdom)$/i.test(locationParts[2])
+      ? locationParts[1]
+      : undefined
+  );
   type SalaryUnitText = "YEAR" | "DAY" | "HOUR" | "WEEK" | "MONTH";
   const unitTextBySalaryPeriod: Partial<
     Record<Job["salaryPeriod"] | Job["ratePeriod"], SalaryUnitText>
@@ -448,9 +455,9 @@ export function jobPostingSchema(job: Job) {
             "@type": "Place",
             address: {
               "@type": "PostalAddress",
-              addressLocality: job.location.split(",")[0].trim(),
-              ...(job.locationRegion
-                ? { addressRegion: job.locationRegion }
+              addressLocality: locationParts[0],
+              ...(addressRegion
+                ? { addressRegion }
                 : {}),
               addressCountry: "GB",
             },
