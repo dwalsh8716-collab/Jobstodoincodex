@@ -52,6 +52,20 @@ test("mobile menu opens and closes", async ({ page }) => {
   await expect(page).toHaveURL(/\/jobs$/);
 });
 
+test("mobile quick actions do not cover the first screen or downward reading", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/insights");
+
+  const quickActions = page.locator(".mobile-sticky-cta");
+  await expect(quickActions).toHaveAttribute("data-hidden", "true");
+
+  await page.evaluate(() => window.scrollTo(0, 700));
+  await expect(quickActions).toHaveAttribute("data-hidden", "true");
+
+  await page.mouse.wheel(0, -30);
+  await expect(quickActions).toHaveAttribute("data-hidden", "false");
+});
+
 test("contact form validates and returns a safe success state", async ({
   page,
 }) => {

@@ -10,20 +10,32 @@ import { siteConfig } from "@/lib/site";
 
 export function StickyMobileCTA() {
   const pathname = usePathname();
-  const [visible, setVisible] = useState(true);
+  const [visibleOnPath, setVisibleOnPath] = useState<string | null>(null);
+  const visible = visibleOnPath === pathname;
 
   useEffect(() => {
     let previousY = window.scrollY;
+    let directionStartY = previousY;
+    let direction = 0;
     let ticking = false;
 
     const updateVisibility = () => {
       const currentY = window.scrollY;
-      const delta = currentY - previousY;
+      const nextDirection = Math.sign(currentY - previousY);
 
-      if (currentY < 80 || delta < -12) {
-        setVisible(true);
-      } else if (delta > 12 && currentY > 120) {
-        setVisible(false);
+      if (currentY < 80) {
+        setVisibleOnPath(null);
+      } else if (nextDirection !== 0) {
+        if (nextDirection !== direction) {
+          directionStartY = previousY;
+          direction = nextDirection;
+        }
+
+        if (direction > 0 && currentY - directionStartY > 12) {
+          setVisibleOnPath(null);
+        } else if (direction < 0 && directionStartY - currentY > 12) {
+          setVisibleOnPath(pathname);
+        }
       }
 
       previousY = currentY;
@@ -39,7 +51,7 @@ export function StickyMobileCTA() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   if (
     pathname.startsWith("/admin") ||
