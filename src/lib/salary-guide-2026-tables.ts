@@ -1,5 +1,6 @@
 // Approved source: Essential Resourcing NLW_CHECKED guide, September 2026.
-// 87 approved rows; Fractional Managing Partner omitted at the user's request.
+// Strategy, media and insight estimates added 7 October 2026; see
+// docs/SALARY-GUIDE-STRATEGY-PLANNING-RESEARCH.md for evidence and limitations.
 // eCommerce planning ranges were expanded at the user's request. Advisory billing
 // was confirmed monthly; all retained figures are unchanged.
 export const salaryTables = [
@@ -98,7 +99,7 @@ export const salaryTables = [
   },
   {
     id: "pr-communications",
-    title: "Client-side PR, communications & analytics salaries",
+    title: "Client-side PR & communications salaries",
     headers: ["Role", "Lower", "Typical", "Upper"],
     rows: [
       ["PR Executive", "£28,000", "£32,000", "£36,000"],
@@ -108,7 +109,6 @@ export const salaryTables = [
       ["Communications Manager", "£40,000", "£47,500", "£60,000"],
       ["Head of Communications", "£65,000", "£70,000", "£75,000"],
       ["Communications Director", "£85,000", "£105,000", "£130,000"],
-      ["Marketing / Digital Analyst", "£35,000", "£45,000", "£60,000"],
     ],
   },
   {
@@ -141,6 +141,111 @@ export const salaryTables = [
       ["SEO Executive", "£28,000", "£32,000", "£40,000"],
       ["SEO Manager", "£35,000", "£42,500", "£50,000"],
       ["Head of SEO", "£60,000", "£75,000", "£90,000"],
+    ],
+  },
+  {
+    id: "strategy-planning",
+    title: "Brand & creative strategy / planning salaries",
+    headers: ["Strategy / planning role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Junior Planner / Junior Strategist", "£28,000", "£32,000", "£36,000"],
+      ["Brand Planner / Brand Strategist", "£35,000", "£45,000", "£55,000"],
+      ["Senior Planner / Senior Strategist", "£50,000", "£60,000", "£75,000"],
+      [
+        "Planning Director / Strategy Director",
+        "£65,000",
+        "£85,000",
+        "£110,000",
+      ],
+      [
+        "Head of Planning / Head of Strategy",
+        "£85,000",
+        "£105,000",
+        "£130,000",
+      ],
+    ],
+  },
+  {
+    id: "media-strategy-planning",
+    title: "Media-agency strategy & communications planning salaries",
+    headers: ["Specialist role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Junior Strategist (media agency)", "£28,000", "£32,000", "£36,000"],
+      [
+        "Strategist / Strategy Manager (media agency)",
+        "£40,000",
+        "£47,500",
+        "£55,000",
+      ],
+      ["Senior Strategist (media agency)", "£50,000", "£57,500", "£70,000"],
+      ["Strategy Director (media agency)", "£60,000", "£75,000", "£95,000"],
+      ["Head of Strategy (media agency)", "£85,000", "£100,000", "£120,000"],
+      ["Communications Planning Manager", "£32,500", "£37,500", "£45,000"],
+      ["Senior Communications Planner", "£40,000", "£47,500", "£55,000"],
+      ["Communications Planning Director", "£50,000", "£60,000", "£75,000"],
+      ["Head of Communications Planning", "£75,000", "£90,000", "£110,000"],
+    ],
+  },
+  {
+    id: "media-agency",
+    title: "Media-agency client leadership, planning & buying salaries",
+    headers: ["Media-agency role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Media Account Executive", "£26,000", "£28,000", "£30,000"],
+      [
+        "Senior Media Executive / Media Planner Buyer",
+        "£30,000",
+        "£33,000",
+        "£38,000",
+      ],
+      [
+        "Media Account Manager / Media Planning Manager",
+        "£32,500",
+        "£37,500",
+        "£42,500",
+      ],
+      ["Senior Media Account Manager", "£37,500", "£42,500", "£50,000"],
+      ["Media Account Director", "£45,000", "£50,000", "£60,000"],
+      ["Media Associate Director", "£45,000", "£52,500", "£65,000"],
+      ["Media Business Director", "£60,000", "£70,000", "£85,000"],
+      ["Media Client Partner", "£80,000", "£90,000", "£110,000"],
+      ["Media Managing Partner", "£90,000", "£105,000", "£130,000"],
+    ],
+  },
+  {
+    id: "data-analytics",
+    title: "Marketing, digital & media analytics salaries",
+    headers: ["Analytics role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Junior Marketing / Media Analyst", "£28,000", "£32,000", "£36,000"],
+      ["Marketing / Digital Analyst", "£35,000", "£45,000", "£60,000"],
+      ["Senior Marketing / Media Analyst", "£45,000", "£55,000", "£65,000"],
+      ["Marketing / Media Analytics Manager", "£55,000", "£65,000", "£80,000"],
+      ["Head of Marketing / Media Analytics", "£75,000", "£90,000", "£110,000"],
+      [
+        "Marketing / Media Analytics Director",
+        "£90,000",
+        "£105,000",
+        "£130,000",
+      ],
+    ],
+  },
+  {
+    id: "research-insight",
+    title: "Consumer, audience & research insight salaries",
+    headers: ["Research / insight role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Research / Insight Executive", "£27,000", "£30,000", "£34,000"],
+      ["Senior Research / Insight Executive", "£32,000", "£36,000", "£40,000"],
+      ["Research / Insight Manager", "£40,000", "£47,500", "£55,000"],
+      [
+        "Associate Director (research / insight agency)",
+        "£50,000",
+        "£60,000",
+        "£70,000",
+      ],
+      ["Research / Insight Director (agency)", "£65,000", "£77,500", "£95,000"],
+      ["Head of Consumer / Audience Insight", "£70,000", "£85,000", "£105,000"],
     ],
   },
   {

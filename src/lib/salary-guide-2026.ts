@@ -13,7 +13,7 @@ export const salaryGuideIntro = [
   "Use this guide to find your starting point. Then price the actual job.",
 ];
 export const salaryGuideMarket = [
-  "I’ve built this guide around Manchester and the North West first. It covers client-side marketing, brand, digital, performance, eCommerce, CRM, content, social, PR, communications, agency roles and Fractional leadership.",
+  "I’ve built this guide around Manchester and the North West first. It covers client-side marketing, brand, digital, performance, eCommerce, CRM, content, social, PR, communications, agency roles, strategy and planning, media-agency client leadership, data, insight and Fractional leadership.",
   "The figures are Essential Resourcing planning ranges: a combination of advertised salaries, published research and recruiter judgement. Where the local evidence is thin, I haven’t quietly dropped a national figure into a Manchester table and called it a fact.",
   "The useful question is whether your budget matches the responsibility you’re asking someone to take on. That matters at every level, but particularly when a modest job title is carrying a rather substantial brief.",
 ];
@@ -109,7 +109,7 @@ export const salaryCommentary: Record<
   },
   "pr-communications": {
     before: [
-      "These are client-side PR, communications and analytics planning ranges. Agency PR roles are covered separately in the agency section below.",
+      "These are client-side PR and communications planning ranges. Agency PR roles are covered separately in the agency section below. Marketing and digital analysts now have their own section alongside media analytics.",
     ],
     after: [
       "Technical platform knowledge can materially change a brief. So can the difference between producing content and setting its direction, or delivering communications activity and advising senior leaders on reputation.",
@@ -130,6 +130,77 @@ export const salaryCommentary: Record<
       "The Managing Partner and Managing Director planning points assume substantial agencies, group responsibilities or genuine commercial leadership. A smaller independent agency may sit below those ranges.",
       "Then there’s the package. Bonus, profit share and equity can change the conversation considerably, but they shouldn’t be quietly bundled into a base-salary comparison.",
       "Get underneath the title before deciding what the job should pay.",
+    ],
+  },
+  "strategy-planning": {
+    before: [
+      "Good planning gets underneath the brief. Who are we trying to reach? What do they believe? What needs to change? And what should the brand actually do about it?",
+      "This table covers brand and creative planning in brand consultancies, creative and integrated agencies. Think research, audience insight, positioning, propositions and creative briefs. It does not cover corporate strategy, management consulting or business planning. Dedicated media-agency strategy and communications planning are benchmarked separately below.",
+      "These are indicative Manchester and North West hiring estimates, added on 7 October 2026. Local salary evidence is limited, especially for heads of department. The figures combine relevant local adverts with broader regional and UK specialist guides; they are not measured local averages. Treat them as a starting budget to sense-check against the actual remit.",
+    ],
+    heading: "Price the strategic responsibility, not just the title.",
+    after: [
+      "A Brand Planner and a Brand Strategist may be doing much the same job. Senior Planner and Senior Strategist can overlap too. The paired titles above are useful comparisons, not a claim that every agency structures its team the same way.",
+      "Creative Strategist needs a second question. Do you mean brand positioning and creative briefs, or testing hooks, formats and offers for paid-social ads? Both are useful jobs. They are not automatically the same hire. Channel-specific performance creative needs its own comparison, not a brand-planning salary with a different label.",
+      "At planner level, look at research, audience insight, positioning, creative briefing and the ability to turn evidence into a clear recommendation. At senior level, ask whether they independently lead the thinking, challenge senior clients and connect brand, creative and media decisions.",
+      "Planning Director or Strategy Director can mean leading one major account, several client relationships or the whole discipline. The Head of Planning / Head of Strategy range assumes responsibility for a function, its people and the quality of its work. In a smaller agency, the Director and Head roles may be the same job. Don’t add a title premium twice.",
+      "Planning and strategy titles can overlap in a creative agency. That does not make a creative-agency Planning Director interchangeable with a media-agency Communications Planning Director. Match the work, not just the word on the business card.",
+      "And client-side? Dedicated brand strategy and planning roles do exist, but a title can also hide a broader brand-management, insight or commercial-strategy remit. There isn’t enough comparable local salary evidence in this review to publish a separate client-side ladder or assume a pay premium. Use the agency figures only as context, then benchmark the business, scope and decision-making responsibility separately.",
+      "The evidence is thinner at the top. National or international leadership, a major new-business remit, bonus and equity can take the package beyond these base-salary planning points. Chief Strategy Officer and group-wide roles need an individual benchmark.",
+    ],
+  },
+  "media-strategy-planning": {
+    before: [
+      "Strategy and planning work closely together. That doesn’t make them the same job. A media agency may have a dedicated strategy team, specialist communications planners, client leaders and activation teams, with quite different responsibilities.",
+      "Strategy owns the diagnosis and direction: the audience, the growth opportunity, the problem communications need to solve and the choices behind the approach. Communications planning turns that direction into a connected plan: channel roles, sequencing, investment choices and how the work fits together. Both require judgement. Neither is simply another name for buying media.",
+      "The two role families below are separate comparisons, not one promotion ladder. These are modelled Manchester and North West base-salary planning points reviewed on 7 October 2026, informed by wider UK and London guides and limited local evidence. Junior strategy and heads of function have particularly limited direct local evidence; the figures are not measured Manchester averages.",
+    ],
+    heading: "Look at the team, the brief and the decisions they own.",
+    after: [
+      "Someone may have come through media planning and moved into a dedicated strategy team. Someone else may have built their career in research, brand or creative strategy. Their previous title does not decide the benchmark for the job they do now.",
+      "At director level, separate ownership of an account’s strategy from leadership of the agency’s whole discipline. Head of Strategy and Head of Communications Planning assume responsibility for standards, people and capability across a function. An account-level Director is not automatically a Head of department.",
+      "Some agencies combine the roles. Others split them. Planning Director can also mean integrated client planning rather than a specialist communications-planning appointment. Check the reporting line, client scope and actual output before selecting a range. Global, group-wide and Chief Strategy Officer appointments need a separate benchmark.",
+    ],
+  },
+  "media-agency": {
+    note: "The £26,000 Media Account Executive Lower planning point needs the same age-and-hours check as other entry-level salaries.",
+    before: [
+      "Media agencies have their own account and client-leadership structure. These roles bring together the client brief, media planning, specialist buying and activation teams, budgets, delivery and the commercial relationship. They are not media-owner sales jobs, and they are not all dedicated strategy roles.",
+      "The table is for integrated media-agency account leadership and planning/buying coordination. A hands-on AV buyer, PPC specialist, Paid Social lead or programmatic trader needs a channel-specific comparison. A job called Media Manager might mean any of these, so establish the remit first.",
+      "These are estimated Manchester and North West hiring budgets reviewed on 7 October 2026, not a local salary survey. UK and London specialist guides provide much of the evidence, with limited regional adverts for context. Senior Account Manager and Associate Director are scope-based estimates between better-documented levels. Partner-level local evidence is especially thin.",
+    ],
+    heading: "An Associate Director is not the same grade in every agency.",
+    after: [
+      "Executive and planner/buyer roles support research, plans, bookings, reporting and delivery. Managers take day-to-day ownership of accounts or planning workstreams. Senior Managers usually carry more complex work or team responsibility; not every agency uses that grade.",
+      "Account Directors typically own senior client relationships, the quality of integrated plans and team delivery. Associate Director can overlap with Account Director, sit above it, or describe a specialist activation lead. The ranges deliberately overlap. Don’t price the word ‘Associate’ as an automatic promotion.",
+      "Business Directors usually carry a broader client portfolio, team and commercial remit. Client Partners own significant senior relationships and account growth. Managing Partners may lead a major client group, office or business unit, with substantial revenue, profitability and people responsibility. These are possible structures, not a universal sequence every candidate must climb.",
+      "The Managing Partner figures assume a salaried leadership appointment. They are not an owner’s drawings, dividends or the value of equity. Bonus and profit share sit outside these base salaries; national or international mandates can sit above the upper planning point. A Managing Director with whole-agency responsibility needs the agency leadership comparison, not an automatic title uplift.",
+      "Network or independent? Neither gets an automatic salary premium. Compare the actual accounts, team, commercial responsibility and full package. A client-side Media Manager who owns budgets and manages an agency roster also needs a different comparison from someone delivering plans inside the agency.",
+    ],
+  },
+  "data-analytics": {
+    before: [
+      "Useful analysis changes a decision. This section covers marketing, digital and media analysts working with campaign, audience, customer and website data, rather than every job with ‘data’ in the title.",
+      "Use the junior row for an early-career reporting and measurement brief, and the Marketing / Digital Analyst row for an established analyst with greater independent responsibility. The additional levels are modelled Manchester and North West hiring estimates reviewed on 7 October 2026, using relevant regional adverts and broader specialist guides. Evidence is more limited for agency-specific director appointments; these are not measured local averages.",
+    ],
+    heading: "Reporting, measurement and leadership are different briefs.",
+    after: [
+      "Junior analysts support reporting and data checks. Experienced analysts explain what the numbers mean and recommend action. Senior analysts handle more complex questions and influence stakeholders; that does not automatically make them people managers.",
+      "A long software list is not a salary benchmark. Using SQL or BigQuery does not automatically make a role a senior technical appointment. Ask what they need to solve, how independently they work and which decisions their analysis changes. More dashboards is not always more insight.",
+      "Managers own delivery, prioritisation and often a team. Heads and Directors carry wider measurement, capability and commercial responsibility. Those titles can overlap between agencies and client-side businesses. The director range assumes a materially broader function, not just a renamed Head of role.",
+      "SQL, experimentation, attribution, econometrics and marketing-mix modelling can change the brief substantially. Specialist modelling needs its own benchmark, as do data engineering, data science, enterprise BI and Chief Data Officer roles. They are not quietly included in these marketing-analytics figures.",
+    ],
+  },
+  "research-insight": {
+    before: [
+      "Consumer and audience insight asks what people think, feel and do, and why. That may involve qualitative research, surveys, segmentation, brand tracking or combining research with behavioural evidence. It is related to analytics, but it is not the same talent pool.",
+      "These are modelled Manchester and North West planning points reviewed on 7 October 2026. Wider UK research-sector guidance and a limited number of relevant regional adverts inform them. Direct local evidence is particularly limited at Associate Director, Director and Head level. They are starting budgets, not statistical averages.",
+    ],
+    heading: "Research-agency grades and in-house roles don’t line up neatly.",
+    after: [
+      "Executives support research design, fieldwork, analysis and reporting. Senior Executives run more of the project independently. Managers own projects or research programmes, suppliers and stakeholder recommendations; a client-side Insight Manager may commission agencies rather than manage researchers directly.",
+      "Associate Director and Research Director here describe research or insight agency roles with increasing client, methodological, team and commercial ownership. Head of Consumer / Audience Insight describes leadership of a function. It is an alternative comparison, not necessarily the next rung above an agency Director.",
+      "The method, sector and decision-making remit matter. Qualitative, quantitative and mixed-method briefs are not interchangeable. Specialist healthcare research, enterprise data leadership and research-agency owner or Managing Partner packages need individual benchmarking; this review does not establish a reliable local range for those appointments.",
     ],
   },
   fractional: {
@@ -191,7 +262,9 @@ export const salaryEditorial = {
     content: [
       "This isn’t one salary website copied into a table.",
       "The research behind Essential Resourcing’s guide looked across 176 role and discipline entries, 255 selected salary observations and 63 screened vacancies. After cleaning duplicates and unusable records, 51 distinct offers were usable, with 42 of those offers dated between 17 June and 15 September 2026.",
-      "Those are research totals across the guide, not a claim that every role has the same amount of evidence behind it.",
+      "Those totals describe the original September research, not a claim that every role has the same amount of evidence behind it. Strategy, planning, media-agency leadership, analytics and insight were expanded following a separate public-source review on 7 October 2026. That review is not included in those original counts.",
+      "The October additions are evidence-informed estimates, not a new Manchester salary survey. Where comparable local offers are scarce, broader specialist guides help frame a budget, with role scope and geography stated explicitly. No fixed London-to-Manchester percentage discount has been applied. Intermediate grades and senior leadership points carry greater uncertainty and should be sense-checked against a live brief.",
+      "The follow-up review checked the underlying job briefs, not just their titles. Social-media account roles were not treated as integrated media-agency leadership; performance-creative roles were not treated as brand planning; data-security and engineering jobs were excluded from marketing analytics. National remote roles were not counted as Manchester office-based offers. Unverifiable sample counts and automated salary estimates were not adopted.",
       "Manchester and North West evidence came first. Broader published salary information and specialist recruitment research provided context where useful. National figures weren’t silently converted into Manchester salaries.",
       "Advertised salaries tell us what employers offered in their adverts. They don’t necessarily tell us what a successful candidate eventually accepted.",
       "Some roles produce a useful body of local evidence. Others, particularly senior agency, brand and Fractional leadership roles, don’t produce a neat local dataset. The planning ranges reflect that difference.",
@@ -199,7 +272,7 @@ export const salaryEditorial = {
       "The junior ranges also take account of the 2026 National Living Wage context. An annual salary still needs checking against age, contracted hours and the applicable hourly rate.",
       "And finally, a bit of recruiter nous and noggin. Where the public numbers are thin or messy, I’ve applied more than a decade’s experience recruiting in the market and the figures I’d genuinely use when advising a client on a live brief. That’s judgement, and I’d rather be open about it than dress it up as a statistical finding.",
       "Salary information changes. For an active hire, sense-check the budget when you’re ready to go to market.",
-      "Last reviewed: September 2026.",
+      "Core salary research: September 2026. Strategy, media, analytics and insight additions reviewed: 7 October 2026. Other salary ranges have not been rebenchmarked as part of this addition.",
     ],
   },
 };
@@ -289,7 +362,7 @@ export const salaryGuideInsight: Insight = {
   excerpt:
     "Marketing, digital, PR and agency salary planning ranges for Manchester and the North West, with Fractional leadership rates and straight advice from David Walsh.",
   publishedDate: "2026-09-24",
-  updatedDate: "2026-09-24",
+  updatedDate: "2026-10-07",
   readingTime: "15 min read",
   author: "David Walsh",
   body: [

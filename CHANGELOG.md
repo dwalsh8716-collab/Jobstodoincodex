@@ -5,6 +5,55 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-10-07 - Expanded Salary Guide And Salary Sense-Check
+
+### Summary
+
+David approved publication after reviewing the additions and their evidence limitations.
+
+### Public Website Changes
+
+- Added brand/creative strategy, separate media strategy and communications planning,
+  media-agency leadership through Managing Partner, marketing analytics and research insight.
+- Preserved all 87 original salary rows; 121 rows across 15 tables now appear.
+- Kept the existing design, added navigation entries and an hours warning for the
+  junior media salary. New figures are planning estimates, not measured local medians.
+- Added cited research context and a 7 October review date, separate from September counts.
+
+### CMS Changes
+
+- None. This specialist guide is maintained in code.
+
+### Form Changes
+
+- Added the approved salary sense-check form using the existing contact endpoint,
+  consent, honeypot and success/error handling. No test enquiry sent to production.
+
+### SEO Changes
+
+- Updated exported guide content and article modification date; canonical URL and social artwork retained.
+
+### Security / Privacy Changes
+
+- No new credentials, data stores or confidential placement details.
+
+### Recruiter Labs Changes
+
+- None.
+
+### Manual Actions For David
+
+- Continue to sense-check senior estimates against actual briefs. Publication approval
+  does not convert thin regional evidence into a statistical salary survey.
+
+### Rollback Note
+
+- Revert this release commit or restore the prior successful Railway deployment
+  (9fbaa730-5c8a-4012-b60b-a3d54c7e9c22, source d2e39d66).
+  No database, CMS or environment-variable migration is involved.
+- Existing unrelated candidate-process-timeline unit-test failure is documented in
+  the research notes; it is outside this release and was not hidden or changed.
+
 ## 2026-09-28 - Four Service Routes And The Essential Approach
 
 ### Summary
