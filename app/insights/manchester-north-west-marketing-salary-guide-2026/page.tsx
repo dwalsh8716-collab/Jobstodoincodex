@@ -152,7 +152,7 @@ export default function SalaryGuidePage() {
         <div className="section surface">
           <div className={`container ${styles.guide}`}>
             <section className={styles.editorial}>
-              <h2>A quick read on the Manchester marketing market</h2>
+              <h2>A quick read on the Manchester &amp; North West marketing market</h2>
               <Paragraphs texts={salaryGuideMarket} />
             </section>
             <section id="reading-the-tables" className={styles.editorial}>
@@ -502,7 +502,7 @@ export default function SalaryGuidePage() {
         <div id="salary-faqs" className={styles.faqAnchor}>
           <FAQAccordion
             faqs={salaryGuideFaqs}
-            heading="Manchester marketing salary FAQs"
+            heading="Manchester & North West marketing salary FAQs"
           />
         </div>
         <section className={`section dark ${styles.ctaSection}`}>

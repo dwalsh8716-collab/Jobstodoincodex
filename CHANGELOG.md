@@ -5,6 +5,14 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-10-07 - Salary Guide Editorial Consistency
+
+- Aligned the market overview and FAQ headings with Manchester & North West coverage.
+- Distinguished general agency, PR and media Account Director benchmarks in FAQs.
+- Added regional coverage, media, strategy/planning and analytics/insight answers.
+- Clarified fractional rates versus full client costs and specialist discipline overlaps.
+- Salary figures, tables, design, URLs and original research counts are unchanged.
+
 ## 2026-10-07 - Expanded Salary Guide And Salary Sense-Check
 
 ### Summary

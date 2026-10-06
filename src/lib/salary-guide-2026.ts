@@ -109,7 +109,7 @@ export const salaryCommentary: Record<
   },
   "pr-communications": {
     before: [
-      "These are client-side PR and communications planning ranges. Agency PR roles are covered separately in the agency section below. Marketing and digital analysts now have their own section alongside media analytics.",
+      "These salary planning ranges cover client-side PR and communications. Agency PR roles are covered separately in the agency section below. Marketing and digital analysts have their own section alongside media analytics.",
     ],
     after: [
       "Technical platform knowledge can materially change a brief. So can the difference between producing content and setting its direction, or delivering communications activity and advising senior leaders on reputation.",
@@ -193,7 +193,7 @@ export const salaryCommentary: Record<
   },
   "research-insight": {
     before: [
-      "Consumer and audience insight asks what people think, feel and do, and why. That may involve qualitative research, surveys, segmentation, brand tracking or combining research with behavioural evidence. It is related to analytics, but it is not the same talent pool.",
+      "Consumer and audience insight asks what people think, feel and do, and why. That may involve qualitative research, surveys, segmentation, brand tracking or combining research with behavioural evidence. It can overlap with analytics, but the briefs and specialist skills are not interchangeable.",
       "These are modelled Manchester and North West planning points reviewed on 7 October 2026. Wider UK research-sector guidance and a limited number of relevant regional adverts inform them. Direct local evidence is particularly limited at Associate Director, Director and Head level. They are starting budgets, not statistical averages.",
     ],
     heading: "Research-agency grades and in-house roles don’t line up neatly.",
@@ -279,6 +279,11 @@ export const salaryEditorial = {
 
 export const salaryGuideFaqs = [
   {
+    question: "Does this guide cover Manchester or the whole North West?",
+    answer:
+      "Both. Manchester is the starting point, but the guide is intended to help with hiring across North West England. These are regional planning ranges, not separate measured averages for every city or town. The role, employer, working pattern and where you need to find candidates still matter. A Manchester postcode alone doesn’t price the job.",
+  },
+  {
     question: "What is the average Marketing Manager salary in Manchester?",
     answer:
       "Essential Resourcing’s 2026 Manchester and North West planning range for a Marketing Manager is £40,000–£65,000, with £50,000 as the Typical planning point. That is a starting point for a salary conversation, not a measured statistical average or median. Team, budget and commercial responsibility affect where a role sits.",
@@ -302,13 +307,31 @@ export const salaryGuideFaqs = [
   {
     question: "What does an Account Director earn at a Manchester agency?",
     answer:
-      "The agency Account Director planning range is £45,000–£65,000 in annual base salary, with £55,000 as the Typical planning point. These figures relate to marketing, creative, digital, performance and PR/communications agencies. Client portfolio, team remit and commercial responsibility affect the salary.",
+      "The general agency Account Director planning range is £45,000–£65,000 in annual base salary, with £55,000 as the Typical planning point. The agency table also separates PR Account Director roles, while integrated media-agency roles have their own table. Client portfolio, team remit and commercial responsibility affect which comparison fits. The word ‘Director’ doesn’t settle it.",
+  },
+  {
+    question:
+      "What should a Media Account Director earn in Manchester and the North West?",
+    answer:
+      "For integrated media-agency client leadership, the guide’s estimated annual base-salary range is £45,000–£60,000, with £50,000 as the Typical planning point. This is a starting budget, not a measured Manchester average. It is not a benchmark for media-owner sales or every specialist activation role. Account Director and Associate Director can overlap between agencies, so check the accounts, team and commercial responsibility before choosing the range.",
   },
   {
     question:
       "What does a Senior Account Director earn at a Manchester agency?",
     answer:
-      "Essential Resourcing’s 2026 Manchester and North West agency planning range is £55,000–£80,000 in annual base salary, with £65,000 as the Typical planning point. The size and complexity of the portfolio, leadership responsibilities and expectations for account growth all need considering.",
+      "The general agency Senior Account Director planning range is £55,000–£80,000 in annual base salary, with £65,000 as the Typical planning point. Senior PR Account Director has a separate row, and media-agency titles need the media comparison. The portfolio, leadership responsibilities and expectations for account growth all need considering.",
+  },
+  {
+    question:
+      "Are strategy, planning and media account leadership the same salary comparison?",
+    answer:
+      "No. Planner and Strategist can overlap in a creative agency, but dedicated media strategy, communications planning and integrated client leadership can be different jobs. Use the section that matches the decisions, output and team the person owns. Don’t benchmark someone purely because ‘planning’ appears in their title. The newer ranges are estimates, with thinner local evidence at senior levels.",
+  },
+  {
+    question:
+      "Should marketing analytics and consumer insight use the same salary range?",
+    answer:
+      "Not automatically. Marketing and media analytics usually centres on measurement, performance and behavioural data. Consumer and audience insight may involve research design, interviews, surveys and brand tracking. Some roles combine both, which is why the brief matters more than the label. The guide separates the two comparisons rather than pretending one salary ladder fits every data and insight job.",
   },
   {
     question: "How much does a Head of Performance earn in Manchester?",
@@ -328,12 +351,12 @@ export const salaryGuideFaqs = [
   {
     question: "What does a Fractional CMO cost?",
     answer:
-      "Essential Resourcing’s candidate day-rate planning range is £750–£1,200, with £950 as the Typical point. Monthly retainers are £5,000–£8,000, with £6,500 Typical. Advisory-only support is £3,000–£5,000 per month, with £4,000 Typical; the scope of advice and time commitment should be agreed separately. These models are not interchangeable.",
+      "Essential Resourcing’s candidate day-rate planning range is £750–£1,200, with £950 as the Typical point. Monthly retainers are £5,000–£8,000, with £6,500 Typical. Advisory-only support is £3,000–£5,000 per month, with £4,000 Typical. Agree the scope and time commitment separately. These are different engagement models, not an all-in client quote; any fees and tax treatment need confirming.",
   },
   {
     question: "How much does a Fractional Marketing Director cost?",
     answer:
-      "The candidate day-rate planning range is £750–£900, with £825 as the Typical point. The monthly-retainer range is £3,000–£5,000, with £4,000 Typical. These are separate engagement models: the retainer should not be treated as an assumed multiple of the day rate.",
+      "The candidate day-rate planning range is £750–£900, with £825 as the Typical point. The monthly-retainer range is £3,000–£5,000, with £4,000 Typical. These are separate engagement models: the retainer should not be treated as an assumed multiple of the day rate. Agree the scope, time commitment, fees and tax treatment before treating either figure as the full client cost.",
   },
   {
     question: "Why are entry-level marketing salaries increasing?",
@@ -372,7 +395,7 @@ export const salaryGuideInsight: Insight = {
       content: salaryGuideIntro,
     },
     {
-      heading: "A quick read on the Manchester marketing market",
+      heading: "A quick read on the Manchester & North West marketing market",
       content: salaryGuideMarket,
     },
     {

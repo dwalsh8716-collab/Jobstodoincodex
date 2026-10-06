@@ -68,6 +68,41 @@ describe("public 2026 salary guide", () => {
       "£140,000 as the Typical planning point",
     );
   });
+  it("keeps agency FAQ figures aligned with their distinct table rows", () => {
+    for (const [tableId, role, question] of [
+      [
+        "agency",
+        "Account Director",
+        "What does an Account Director earn at a Manchester agency?",
+      ],
+      [
+        "agency",
+        "Senior Account Director",
+        "What does a Senior Account Director earn at a Manchester agency?",
+      ],
+      [
+        "media-agency",
+        "Media Account Director",
+        "What should a Media Account Director earn in Manchester and the North West?",
+      ],
+    ]) {
+      const row = salaryTables
+        .find((table) => table.id === tableId)!
+        .rows.find((row) => row[0] === role)!;
+      const answer = salaryGuideFaqs.find(
+        (faq) => faq.question === question,
+      )!.answer;
+      expect(answer).toContain(`${row[1]}–${row[3]}`);
+      expect(answer).toContain(`${row[2]} as the Typical planning point`);
+    }
+    expect(
+      salaryGuideFaqs.find(
+        (faq) =>
+          faq.question ===
+          "Does this guide cover Manchester or the whole North West?",
+      )!.answer,
+    ).toContain("not separate measured averages");
+  });
   it("includes the expanded eCommerce planning ranges", () => {
     const rows = salaryTables.find((table) => table.id === "ecommerce")!.rows;
     expect(rows).toHaveLength(8);
@@ -168,7 +203,9 @@ describe("public 2026 salary guide", () => {
     ]);
   });
   it("keeps the October evidence qualifications in exported guide copy", () => {
-    expect(salaryCommentary["media-agency"].note).toContain("age-and-hours check");
+    expect(salaryCommentary["media-agency"].note).toContain(
+      "age-and-hours check",
+    );
     const copy = salaryGuideInsight.body
       .flatMap((section) => section.content)
       .join(" ");
@@ -197,7 +234,7 @@ describe("public 2026 salary guide", () => {
     );
     expect(salaryGuideInsight.status).toBe("published");
     expect(salaryGuideInsight.noIndex).toBe(false);
-    expect(salaryGuideFaqs).toHaveLength(14);
+    expect(salaryGuideFaqs).toHaveLength(18);
     expect(
       insights.filter((item) => item.slug === salaryGuideInsight.slug),
     ).toHaveLength(1);
