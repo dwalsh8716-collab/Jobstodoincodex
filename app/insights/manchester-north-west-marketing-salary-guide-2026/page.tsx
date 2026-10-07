@@ -403,74 +403,6 @@ export default function SalaryGuidePage() {
                         .
                       </p>
                     )}
-                    {table.id === "strategy-planning" && (
-                      <p className={styles.prose}>
-                        Research context:{" "}
-                        <a href="https://www.adlib-recruitment.co.uk/agency-salary-guide-north-west-north-east-and-the-east-midlands">
-                          ADLIB’s wider regional agency guide
-                        </a>
-                        ,{" "}
-                        <a href="https://www.gabriele.co.uk/wp-content/uploads/2025/12/Gabriele_Salary-Indicators-2026.pdf">
-                          Gabriele’s 2026 UK indicators
-                        </a>{" "}
-                        and{" "}
-                        <a href="https://harmonicoperations.com/job/strategist-leading-digital-marketing-agency-manchester/">
-                          a Manchester agency Strategist brief
-                        </a>
-                        . These cover different geographies and role scopes;
-                        none is a Manchester-only salary survey. The advert’s
-                        original publication date is unconfirmed.
-                      </p>
-                    )}
-                    {["media-strategy-planning", "media-agency"].includes(
-                      table.id,
-                    ) && (
-                      <p className={styles.prose}>
-                        Research context:{" "}
-                        <a href="https://link.pivotallondon.co.uk/files/Pivotal_Contract_Salary_and_Work_Insights_Guide_2026.pdf">
-                          Pivotal’s 2026 media salary benchmarks
-                        </a>{" "}
-                        and{" "}
-                        <a href="https://republicofmedia.co.uk/app/uploads/2024/02/Comms-Planning-Manager-or-Senior-Comms-Planning-Manager-Feb-2024-1.pdf">
-                          Republic of Media’s Manchester planning brief
-                          (February 2024)
-                        </a>
-                        . The latter is historical context, not a current
-                        vacancy or a 2026 pay survey. Regional estimates are
-                        assessed by remit, not a blanket discount from London.
-                      </p>
-                    )}
-                    {table.id === "data-analytics" && (
-                      <p className={styles.prose}>
-                        Research context:{" "}
-                        <a href="https://www.maxwellbond.co.uk/jobs/Marketing-Analyst-6529">
-                          a Manchester Marketing Analyst brief
-                        </a>
-                        ,{" "}
-                        <a href="https://www.harnham.com/job/e1aeb1da-8723-4ba1-d23d-08d5948a7341-web-analyst-manchester-greater-manchester-2/">
-                          a Manchester Junior Web Analyst brief
-                        </a>{" "}
-                        and{" "}
-                        <a href="https://digitalrepublictalent.com/wp-content/uploads/2026/02/2026-Salary-Guide.pdf">
-                          Digital Republic’s 2026 guide
-                        </a>
-                        . The guide’s UK figures are primarily London-based;
-                        they inform the comparison, not a claim of measured
-                        Manchester pay.
-                      </p>
-                    )}
-                    {table.id === "research-insight" && (
-                      <p className={styles.prose}>
-                        Research context includes{" "}
-                        <a href="https://www.co-operativebankjobs.co.uk/vacancies/9592/insight-manager--research--6-month-ftc.html">
-                          Co-operative Bank’s 2026 Insight Manager advert
-                        </a>
-                        , which included Manchester among its locations. Its
-                        advertised figure was annual full-time-equivalent pay
-                        for a six-month contract, not a permanent market
-                        average.
-                      </p>
-                    )}
                     <a
                       className={`text-link ${styles.back}`}
                       href="#salary-navigation"
@@ -482,13 +414,6 @@ export default function SalaryGuidePage() {
               );
             })}
             <Editorial section={salaryEditorial.junior} id="junior-salaries" />
-            <p className={styles.prose}>
-              Check the current rates on{" "}
-              <a href="https://www.gov.uk/national-minimum-wage-rates">
-                GOV.UK: National Minimum Wage and National Living Wage rates
-              </a>
-              .
-            </p>
             <section
               className={`${styles.editorial} ${styles.guidanceSection}`}
             >
