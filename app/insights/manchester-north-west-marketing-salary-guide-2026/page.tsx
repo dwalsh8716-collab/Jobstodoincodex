@@ -135,9 +135,7 @@ export default function SalaryGuidePage() {
             <Paragraphs texts={salaryGuideIntro} />
             <p className="meta">
               By <Link href="/about-david-walsh">David Walsh</Link>, Founder,
-              Essential Resourcing · Core research: September 2026 · Strategy,
-              media &amp; insight expanded: 7 October 2026 · Specialist coverage
-              updated: 7 October 2026
+              Essential Resourcing · Research: September 2026
             </p>
             <div className="button-row hero-actions">
               <Link
