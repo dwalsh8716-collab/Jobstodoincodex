@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CaseStudy, Insight, Job, Service } from "@/lib/types";
 import editorialStyles from "./Editorial.module.css";
+import { salaryGuideSlug } from "@/lib/salary-guide-2026";
 
 export function ServiceCard({ service }: { service: Service }) {
   return (
@@ -23,7 +24,8 @@ export function InsightCard({ insight, editorial = false }: { insight: Insight; 
       <h3>{insight.title}</h3>
       <p>{insight.cardExcerpt || insight.excerpt}</p>
       <p className="meta">
-        {insight.author} · {insight.publishedDate} · {insight.readingTime}
+        {insight.author} · {insight.publishedDate}
+        {insight.slug !== salaryGuideSlug && insight.readingTime ? ` · ${insight.readingTime}` : null}
       </p>
       <Link className="text-link" href={`/insights/${insight.slug}`}>
         Read insight

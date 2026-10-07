@@ -511,7 +511,7 @@ export const salaryGuideInsight: Insight = {
     "Marketing, digital, PR and agency salary planning ranges for Manchester and the North West, with Fractional leadership rates and straight advice from David Walsh.",
   publishedDate: "2026-09-24",
   updatedDate: "2026-10-07",
-  readingTime: "15 min read",
+  readingTime: "",
   author: "David Walsh",
   body: [
     {

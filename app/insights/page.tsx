@@ -78,7 +78,7 @@ export default async function InsightsPage() {
           {featured ? <div className={styles.featured}>
             <p className="eyebrow">Salary Guide · Manchester &amp; North West · 2026</p>
             <h2>{featured.title}</h2><p>{featured.cardExcerpt || featured.excerpt}</p>
-            <p className="meta">{featured.author} · {featured.updatedDate || featured.publishedDate} · {featured.readingTime}</p>
+            <p className="meta">{featured.author} · {featured.updatedDate || featured.publishedDate}</p>
             <Link className="text-link" href={`/insights/${featured.slug}`}>View Salary Guide</Link>
           </div> : null}
         </div>
