@@ -1,4 +1,9 @@
 export type AnalyticsEventName =
+  | `salary_checker_${"view" | "started" | "role_selected" | "completed" | "comparison_clicked" | "sense_check_clicked" | "whatsapp_clicked" | "reset"}`
+  | `salary_guide_email_${"opened" | "started" | "submitted" | "success" | "error"}`
+  | "salary_guide_share_linkedin"
+  | "salary_guide_copy_link"
+  | "salary_guide_section_clicked"
   | "form_submission"
   | "form_error"
   | "cta_click"
@@ -18,6 +23,9 @@ export type AnalyticsEventName =
   | "salary_snapshot_download";
 
 export type AnalyticsEventParams = {
+  salary_section?: string;
+  role_slug?: string;
+  result_band?: string;
   label?: string;
   href?: string;
   location?: string;
@@ -114,6 +122,9 @@ declare global {
 }
 
 const dataAttributeMap: Record<keyof AnalyticsEventParams, string> = {
+  salary_section: "data-analytics-salary-section",
+  role_slug: "data-analytics-role-slug",
+  result_band: "data-analytics-result-band",
   label: "data-analytics-label",
   href: "data-analytics-href",
   location: "data-analytics-location",
@@ -165,8 +176,13 @@ export function trackEvent(
   params: AnalyticsEventParams = {},
 ) {
   if (typeof window === "undefined") return;
-  if (window.localStorage.getItem(analyticsConsentStorageKey) !== "granted")
+  // Blocked browser storage must never prevent forms or local tools working.
+  try {
+    if (window.localStorage.getItem(analyticsConsentStorageKey) !== "granted")
+      return;
+  } catch {
     return;
+  }
 
   const payload = {
     event,

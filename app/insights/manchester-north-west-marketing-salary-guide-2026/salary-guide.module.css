@@ -236,6 +236,18 @@
   gap: 0.5rem;
 }
 
+.emailDisclosure {
+  grid-column: 1 / -1;
+}
+
+.sharePanel:has(.emailDisclosure) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.sharePanel:has(.emailDisclosure) .shareActions {
+  justify-content: flex-start;
+}
+
 .actionLink,
 .actionButton {
   display: inline-flex;

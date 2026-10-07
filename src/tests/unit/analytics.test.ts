@@ -161,6 +161,61 @@ describe("analytics utility", () => {
     vi.unstubAllGlobals();
   });
 
+  it("keeps tools usable when browser storage is blocked", () => {
+    vi.stubGlobal("window", {
+      localStorage: {
+        getItem() {
+          throw new Error("blocked");
+        },
+      },
+    });
+    expect(() => trackEvent("salary_checker_started")).not.toThrow();
+    vi.unstubAllGlobals();
+  });
+
+  it.each([
+    "salary_checker_view",
+    "salary_checker_started",
+    "salary_checker_role_selected",
+    "salary_checker_completed",
+    "salary_checker_comparison_clicked",
+    "salary_checker_sense_check_clicked",
+    "salary_checker_whatsapp_clicked",
+    "salary_checker_reset",
+    "salary_guide_email_opened",
+    "salary_guide_email_started",
+    "salary_guide_email_submitted",
+    "salary_guide_email_success",
+    "salary_guide_email_error",
+    "salary_guide_share_linkedin",
+    "salary_guide_copy_link",
+    "salary_guide_section_clicked",
+  ] as const)(
+    "gates %s and sends one consented event without personal fields",
+    (event) => {
+      const dataLayer: unknown[] = [];
+      const gtag = vi.fn();
+      const localStorage = createLocalStorage();
+      vi.stubGlobal("window", { localStorage, dataLayer, gtag });
+      const params = {
+        salary_section: "client-side-marketing",
+        role_slug: "client-side-marketing:marketing-manager",
+        result_band: "around_typical",
+      };
+      trackEvent(event, params);
+      expect(dataLayer).toHaveLength(0);
+      expect(gtag).not.toHaveBeenCalled();
+      localStorage.setItem(analyticsConsentStorageKey, "granted");
+      trackEvent(event, params);
+      expect(dataLayer).toEqual([{ event, ...params }]);
+      expect(gtag).toHaveBeenCalledTimes(1);
+      expect(JSON.stringify(dataLayer)).not.toMatch(
+        /salary_exact|@|email_address|50000|full_name/,
+      );
+      vi.unstubAllGlobals();
+    },
+  );
+
   it("queues safe events after consent", () => {
     const dataLayer: unknown[] = [];
     const gtag = vi.fn();

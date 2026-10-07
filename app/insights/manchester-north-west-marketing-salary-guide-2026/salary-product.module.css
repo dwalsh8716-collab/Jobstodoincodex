@@ -1,0 +1,284 @@
+.checker {
+  border-block: 1px solid var(--color-line);
+  padding-block: 2.5rem;
+  margin-bottom: 4rem;
+  scroll-margin-top: 7rem;
+}
+.checker h2 {
+  font-size: 2.5rem;
+  line-height: 1.12;
+  max-width: 24ch;
+}
+.intro {
+  max-width: 66ch;
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+.checkerForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1.25rem;
+  margin-block: 2rem 1.25rem;
+}
+.checkerForm input {
+  min-width: 0;
+  width: 100%;
+}
+.checkButton {
+  margin-top: 1.85rem;
+  min-height: 3rem;
+}
+.roleField {
+  position: relative;
+}
+.help {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0.5rem 0 0;
+}
+.moneyInput {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.moneyInput > span {
+  position: absolute;
+  left: 1rem;
+  color: var(--color-text-muted);
+}
+.moneyInput input {
+  padding-left: 2rem;
+}
+.suggestions {
+  position: absolute;
+  top: 5.3rem;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-card);
+}
+.suggestions ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: min(18rem, 40dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.suggestions li {
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-line);
+}
+.suggestions li:hover,
+.suggestions li[aria-selected="true"] {
+  background: var(--color-surface-muted);
+}
+.suggestions strong,
+.suggestions span {
+  display: block;
+  line-height: 1.45;
+}
+.suggestions span {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+.noMatch {
+  padding: 1rem;
+  line-height: 1.65;
+}
+.noMatch a,
+.caveat a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.caveat {
+  max-width: 74ch;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+.caveat p {
+  margin-block: 0.6rem;
+}
+.error {
+  grid-column: 1 / -1;
+  color: var(--color-ink);
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1rem;
+  line-height: 1.6;
+}
+.result {
+  border-top: 1px solid var(--color-line);
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+.result h3 {
+  font-size: 1.75rem;
+  line-height: 1.3;
+  max-width: 46ch;
+  scroll-margin-top: 7rem;
+}
+.result h4 {
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin: 2rem 0 0.75rem;
+  max-width: 42ch;
+}
+.result p {
+  max-width: 72ch;
+  line-height: 1.7;
+  margin-block: 0.75rem;
+}
+.points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.points dt {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.35rem;
+}
+.points dd {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+.range {
+  width: 100%;
+  height: 5rem;
+  display: block;
+  margin-top: 1rem;
+}
+.range line {
+  vector-effect: non-scaling-stroke;
+}
+.rangeTrack {
+  stroke: var(--color-line);
+  stroke-width: 3;
+}
+.rangeBand {
+  stroke: var(--color-primary);
+  stroke-width: 9;
+}
+.rangeTick {
+  stroke: var(--color-ink);
+  stroke-width: 2;
+}
+.youTick {
+  stroke: var(--color-ink);
+  stroke-width: 5;
+}
+.comparisons {
+  margin: 1.25rem 0;
+  padding: 0;
+  list-style: none;
+}
+.comparisons li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  border-top: 1px solid var(--color-line);
+  padding-block: 1.15rem;
+}
+.comparisons a {
+  font-weight: 750;
+  line-height: 1.45;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.comparisons a span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.825rem;
+  font-weight: 400;
+  margin-top: 0.3rem;
+}
+.comparisons .points {
+  margin: 0;
+}
+.comparisons dd {
+  font-size: 1rem;
+}
+.resultCta {
+  border-top: 1px solid var(--color-line);
+  margin-top: 2rem;
+}
+.textButton {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  min-height: 44px;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  margin-top: 1rem;
+  color: var(--color-ink);
+}
+.emailPanel {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--color-line);
+  padding-top: 1.5rem;
+}
+.emailPanel h3 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+.emailPanel p {
+  line-height: 1.65;
+  margin: 0.75rem 0;
+}
+.emailFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 1.25rem;
+}
+.emailFields input {
+  min-width: 0;
+}
+.emailStatus {
+  min-height: 2rem;
+}
+@media (max-width: 900px) {
+  .checkerForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .checkButton {
+    margin-top: 0;
+    justify-self: start;
+  }
+}
+@media (max-width: 600px) {
+  .checker h2 {
+    font-size: 2rem;
+  }
+  .checkerForm,
+  .emailFields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .comparisons li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.8rem;
+  }
+  .points dd {
+    font-size: 1rem;
+  }
+  .checker {
+    padding-block: 2rem;
+  }
+}

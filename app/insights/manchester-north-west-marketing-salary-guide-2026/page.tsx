@@ -23,6 +23,8 @@ import {
 import styles from "./salary-guide.module.css";
 import { SalaryGuideShare } from "./SalaryGuideShare";
 import { SalarySenseCheckForm } from "./SalarySenseCheckForm";
+import { SalaryChecker } from "./SalaryChecker";
+import { analyticsAttributes } from "@/lib/analytics";
 
 const baseMetadata = createMetadata({
   title: guide.seoTitle,
@@ -138,11 +140,8 @@ export default function SalaryGuidePage() {
               Essential Resourcing · Research: September 2026
             </p>
             <div className="button-row hero-actions">
-              <Link
-                className="button button-primary"
-                href="#salary-sense-check"
-              >
-                Sense-check a salary with David
+              <Link className="button button-primary" href="#salary-checker">
+                Check my salary
               </Link>
               <a className="text-link" href="#salary-navigation">
                 Jump to salaries
@@ -171,6 +170,7 @@ export default function SalaryGuidePage() {
               <Paragraphs texts={salaryGuideBasis} />
             </section>
             <SalaryGuideShare position="top" />
+            <SalaryChecker whatsAppUrl={salarySenseCheckWhatsAppUrl} />
             <nav
               id="salary-navigation"
               aria-label="Salary guide sections"
@@ -189,7 +189,15 @@ export default function SalaryGuidePage() {
                   <ul>
                     {salaryTables.map((table, i) => (
                       <li key={table.id}>
-                        <a href={`#${table.id}`}>{navigation[i]}</a>
+                        <a
+                          href={`#${table.id}`}
+                          {...analyticsAttributes(
+                            "salary_guide_section_clicked",
+                            { salary_section: table.id },
+                          )}
+                        >
+                          {navigation[i]}
+                        </a>
                       </li>
                     ))}
                     <li>
