@@ -54,6 +54,10 @@ describe("transactional guide email", () => {
     const [url, request] = fetchMock.mock.calls[0];
     expect(url).toBe("https://api.resend.com/emails");
     const body = JSON.parse(request.body);
+    expect(body.from).toBe(
+      "David Walsh at Essential Resourcing <test@example.com>",
+    );
+    expect(body.reply_to).toBe("david@essentialresourcing.co.uk");
     expect(body.to).toBe(input.email);
     expect(body.text).toContain(publicSalaryGuideUrl);
     expect(body.text).toContain("hasn't subscribed you to marketing");

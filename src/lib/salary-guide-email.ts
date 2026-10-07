@@ -80,7 +80,7 @@ export async function sendGuideEmail(
         "Idempotency-Key": `salary-guide-${digest(`${email.toLowerCase()}:${requestId}`)}`,
       },
       body: JSON.stringify({
-        from,
+        from: `David Walsh at Essential Resourcing <${from}>`,
         to: email,
         reply_to: siteConfig.email,
         ...guideEmailContent(name),
