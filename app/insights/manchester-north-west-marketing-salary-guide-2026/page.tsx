@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { SchemaScript } from "@/components/SchemaScript";
 import { articleSchema, createMetadata, absoluteUrl } from "@/lib/seo";
-import { salaryTables } from "@/lib/salary-guide-2026-tables";
+import { salaryTables, salaryRowGroups } from "@/lib/salary-guide-2026-tables";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site";
 import {
@@ -88,6 +88,8 @@ const navigation = [
   "Marketing Leadership",
   "Client-side marketing",
   "Brand",
+  "Product Marketing",
+  "Growth & Demand Generation",
   "Digital & Performance",
   "eCommerce",
   "CRM",
@@ -134,7 +136,8 @@ export default function SalaryGuidePage() {
             <p className="meta">
               By <Link href="/about-david-walsh">David Walsh</Link>, Founder,
               Essential Resourcing · Core research: September 2026 · Strategy,
-              media &amp; insight expanded: 7 October 2026
+              media &amp; insight expanded: 7 October 2026 · Specialist coverage
+              updated: 7 October 2026
             </p>
             <div className="button-row hero-actions">
               <Link
@@ -152,7 +155,9 @@ export default function SalaryGuidePage() {
         <div className="section surface">
           <div className={`container ${styles.guide}`}>
             <section className={styles.editorial}>
-              <h2>A quick read on the Manchester &amp; North West marketing market</h2>
+              <h2>
+                A quick read on the Manchester &amp; North West marketing market
+              </h2>
               <Paragraphs texts={salaryGuideMarket} />
             </section>
             <section id="reading-the-tables" className={styles.editorial}>
@@ -267,30 +272,50 @@ export default function SalaryGuidePage() {
                             ))}
                           </tr>
                         </thead>
-                        <tbody>
-                          {table.rows.map((row, index) => (
-                            <tr key={`${row[0]}-${index}`}>
-                              {row.map((cell, i) =>
-                                i === 0 ? (
-                                  <th scope="row" key={i}>
-                                    {cell}
-                                  </th>
-                                ) : (
-                                  <td
-                                    key={i}
-                                    className={
-                                      i === typicalColumnIndex
-                                        ? styles.typicalColumn
-                                        : undefined
-                                    }
-                                  >
-                                    {cell}
-                                  </td>
-                                ),
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
+                        {salaryRowGroups(table).map((group, groupIndex) => (
+                          <tbody
+                            key={group.label || table.id}
+                            aria-labelledby={
+                              group.label
+                                ? `${table.id}-group-${groupIndex}`
+                                : undefined
+                            }
+                          >
+                            {group.label && (
+                              <tr className={styles.groupRow}>
+                                <th
+                                  id={`${table.id}-group-${groupIndex}`}
+                                  scope="rowgroup"
+                                  colSpan={table.headers.length}
+                                >
+                                  {group.label}
+                                </th>
+                              </tr>
+                            )}
+                            {group.rows.map((row, index) => (
+                              <tr key={`${row[0]}-${index}`}>
+                                {row.map((cell, i) =>
+                                  i === 0 ? (
+                                    <th scope="row" key={i}>
+                                      {cell}
+                                    </th>
+                                  ) : (
+                                    <td
+                                      key={i}
+                                      className={
+                                        i === typicalColumnIndex
+                                          ? styles.typicalColumn
+                                          : undefined
+                                      }
+                                    >
+                                      {cell}
+                                    </td>
+                                  ),
+                                )}
+                              </tr>
+                            ))}
+                          </tbody>
+                        ))}
                       </table>
                     </div>
                     {commentary.note && (
@@ -322,6 +347,42 @@ export default function SalaryGuidePage() {
                       <div className={styles.prose}>
                         <Paragraphs texts={commentary.after} />
                       </div>
+                    )}
+                    {commentary.sections?.map((section) => (
+                      <div className={styles.prose} key={section.heading}>
+                        <h3>{section.heading}</h3>
+                        <Paragraphs texts={section.content} />
+                      </div>
+                    ))}
+                    {["product-marketing", "growth-demand-generation"].includes(
+                      table.id,
+                    ) && (
+                      <p className={styles.prose}>
+                        For help shaping a marketing brief, explore{" "}
+                        <Link href="/specialisms/marketing-and-leadership">
+                          Marketing &amp; Leadership
+                        </Link>
+                        .
+                      </p>
+                    )}
+                    {table.id === "digital-performance" && (
+                      <p className={styles.prose}>
+                        For a specialist acquisition or performance hire,
+                        explore{" "}
+                        <Link href="/specialisms/digital-performance-ecommerce">
+                          Digital, Performance &amp; eCommerce
+                        </Link>
+                        .
+                      </p>
+                    )}
+                    {table.id === "content-social" && (
+                      <p className={styles.prose}>
+                        For a content or reputation-led brief, explore{" "}
+                        <Link href="/specialisms/pr-communications-content">
+                          PR, Communications &amp; Content
+                        </Link>
+                        .
+                      </p>
                     )}
                     {table.id === "marketing-leadership" && (
                       <p className={styles.prose}>
@@ -504,6 +565,9 @@ export default function SalaryGuidePage() {
             faqs={salaryGuideFaqs}
             heading="Manchester & North West marketing salary FAQs"
           />
+        </div>
+        <div className={`container ${styles.bottomShare}`}>
+          <SalaryGuideShare />
         </div>
         <section className={`section dark ${styles.ctaSection}`}>
           <div className={`container ${styles.hero} ${styles.ctaInner}`}>

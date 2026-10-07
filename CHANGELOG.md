@@ -5,6 +5,16 @@ Human-readable release notes for Essential Resourcing.
 Use this file to explain what changed without making David read code, commits
 or GitHub issue threads.
 
+## 2026-10-07 - Final Salary Guide Specialist Coverage
+
+- Repeated the sharing controls after the FAQs, with unique accessible labels for both instances.
+- Added the 27 approved salary rows across two new and three expanded categories.
+- Preserved all 121 original rows and every existing salary cell.
+- Added restrained semantic table groups, specialist commentary and six FAQs.
+- Retained existing anchors, design, forms and metadata; clarified the final review's provenance.
+- Corrected the guide-only mobile gutter at intermediate widths.
+- No shared components, global CSS, CMS datasets or job-distribution systems changed.
+
 ## 2026-10-07 - Salary Guide Editorial Consistency
 
 - Aligned the market overview and FAQ headings with Manchester & North West coverage.

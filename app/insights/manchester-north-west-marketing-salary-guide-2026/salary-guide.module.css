@@ -172,6 +172,14 @@
   margin: 0;
 }
 
+.bottomShare {
+  padding: 0 var(--space-page) 2rem;
+}
+
+.bottomShare .sharePanel {
+  margin: 0 auto;
+}
+
 .shareHeading {
   color: var(--color-ink);
   font-weight: 800;
@@ -425,6 +433,22 @@
   line-height: 1.65;
 }
 
+.table tbody .groupRow > th {
+  position: static;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  padding-block: 0.75rem;
+  background: var(--color-surface-muted);
+  color: var(--color-ink);
+  border-top: 1px solid var(--color-line);
+  box-shadow: none;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
 .leadershipQuote {
   max-width: 70ch;
   margin: 2rem 0;
@@ -663,10 +687,14 @@
   .senseCheckPanel {
     grid-template-columns: 1fr;
   }
-
 }
 
 @media (max-width: 760px) {
+  .guide {
+    /* Match the fixed mobile section gutter used by the surrounding layout. */
+    --space-page: 24px;
+  }
+
   .senseCheckCopy h2 {
     font-size: 1.75rem;
   }

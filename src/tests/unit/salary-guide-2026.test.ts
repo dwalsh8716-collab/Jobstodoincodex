@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { salaryTables } from "@/lib/salary-guide-2026-tables";
+import { salaryTables, salaryRowGroups } from "@/lib/salary-guide-2026-tables";
 import {
   salaryGuideInsight,
   salaryGuidePath,
@@ -14,9 +14,9 @@ vi.mock("server-only", () => ({}));
 
 describe("public 2026 salary guide", () => {
   it("keeps the expanded salary groups unique and their ranges ordered", () => {
-    expect(salaryTables).toHaveLength(15);
-    expect(salaryTables.flatMap((table) => table.rows)).toHaveLength(121);
-    expect(new Set(salaryTables.map((table) => table.id)).size).toBe(15);
+    expect(salaryTables).toHaveLength(17);
+    expect(salaryTables.flatMap((table) => table.rows)).toHaveLength(148);
+    expect(new Set(salaryTables.map((table) => table.id)).size).toBe(17);
     for (const table of salaryTables) {
       for (const row of table.rows) {
         expect(row).toHaveLength(table.headers.length);
@@ -234,7 +234,7 @@ describe("public 2026 salary guide", () => {
     );
     expect(salaryGuideInsight.status).toBe("published");
     expect(salaryGuideInsight.noIndex).toBe(false);
-    expect(salaryGuideFaqs).toHaveLength(18);
+    expect(salaryGuideFaqs).toHaveLength(24);
     expect(
       insights.filter((item) => item.slug === salaryGuideInsight.slug),
     ).toHaveLength(1);
@@ -247,5 +247,26 @@ describe("public 2026 salary guide", () => {
           entry.url === `https://essentialresourcing.co.uk${salaryGuidePath}`,
       ),
     ).toHaveLength(1);
+  });
+  it("groups the long tables without changing row order or salary cells", () => {
+    for (const table of salaryTables) {
+      expect(salaryRowGroups(table).flatMap((group) => group.rows)).toEqual(
+        table.rows,
+      );
+    }
+    expect(
+      salaryRowGroups(
+        salaryTables.find((table) => table.id === "digital-performance")!,
+      ),
+    ).toHaveLength(7);
+    expect(
+      salaryRowGroups(salaryTables.find((table) => table.id === "agency")!).at(
+        -1,
+      )?.label,
+    ).toBe("Agency New Business & Growth");
+    expect(salaryTables.slice(3, 5).map((table) => table.id)).toEqual([
+      "product-marketing",
+      "growth-demand-generation",
+    ]);
   });
 });

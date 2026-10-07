@@ -45,6 +45,7 @@ export const salaryCommentary: Record<
     note?: string;
     pullQuote?: string;
     questions?: string[];
+    sections?: { heading: string; content: string[] }[];
   }
 > = {
   "marketing-leadership": {
@@ -93,8 +94,90 @@ export const salaryCommentary: Record<
       "At the senior end, the portfolio matters as much as the title. I’d want to understand the team, budget, reporting line and commercial decisions this person will own. A role with substantial responsibility for brand strategy across a complex business needs a different conversation from a narrower delivery brief.",
     ],
   },
+  "product-marketing": {
+    before: [
+      "A Product Marketing Manager isn’t just a Marketing Manager who happens to market a product.",
+      "Proper Product Marketing usually sits between Product, Marketing, Sales and the customer. Positioning, messaging, launches, competitor intelligence and sales enablement: helping the business explain why anybody should actually buy the thing.",
+      "It isn’t Product Management either. Product Marketing primarily shapes how a product goes to market, who it is for and why they should care. Product Management usually owns more of what gets built and how it develops. Businesses draw that boundary differently, so check where the responsibility actually sits.",
+    ],
+    heading: "What moves a Product Marketing salary?",
+    after: [
+      "Technical or SaaS complexity, international launches, pricing and proposition ownership can change the brief considerably. So can the expectation to equip a sales team, understand competitors and influence senior commercial decisions.",
+      "These are marketing planning ranges. They are not benchmarks for Product Management, Product Design or Engineering.",
+    ],
+  },
+  "growth-demand-generation": {
+    before: [
+      "Growth is another title that’s become a bit of a free-for-all. In one business it’s Performance Marketing with a broader funnel. Somewhere else it spans acquisition, conversion, CRM, retention, experimentation and work with the product team.",
+      "Demand Generation often appears in B2B, SaaS and complex sales environments. The brief may bring together campaigns, content, account-based marketing, automation and lead management, with a strong focus on pipeline and the relationship between Marketing and Sales.",
+      "They’re related. They’re not automatically the same job.",
+    ],
+    heading:
+      "Before benchmarking either, find out what they’re actually expected to grow.",
+    after: [
+      "Do they own acquisition, qualified pipeline, retention or a wider marketing growth plan? What can they influence, and what sits with Sales or Product? Those boundaries matter more than an impressive target without the means to deliver it.",
+      "This table covers marketing roles. Agency new business is covered in the Agency section; sales leadership, product-led engineering and generic commercial growth need separate comparisons.",
+    ],
+  },
   "digital-performance": {
-    note: "The £25,000 PPC Executive planning point needs the same age-and-hours check as other entry-level salaries.",
+    note: "The £25,000 PPC Executive and £26,000 Affiliate Executive Lower planning points need the same age-and-hours check as other entry-level salaries.",
+    sections: [
+      {
+        heading: "Paid Social is not Organic Social.",
+        content: [
+          "Paid Social centres on paid advertising: campaign builds, testing, optimisation and budget pacing. At senior level, the brief can include channel strategy, creative testing, measurement, substantial budgets, client leadership and a team.",
+          "Agency and client-side titles differ. Look at the channels, decisions and commercial responsibility rather than treating every Paid Social Director as the same grade. Organic and content-led social sit in Content & Social below.",
+        ],
+      },
+      {
+        heading: "Programmatic has its own specialist brief.",
+        content: [
+          "Programmatic roles focus on buying and managing advertising through specialist platforms. Junior work may centre on trading, campaign delivery and optimisation; senior responsibility can extend to audience strategy, data, measurement, platform choices, clients and people.",
+          "That is not automatically integrated media planning or media account leadership. Nor does a broad Paid Media title tell you how much programmatic expertise the job needs.",
+        ],
+      },
+      {
+        heading: "What does ‘Biddable’ actually mean?",
+        content: [
+          "Depends who you ask. In one agency it means Paid Search and Paid Social. Somewhere else it includes Programmatic, or covers most of the paid activation team.",
+          "I wouldn’t benchmark a Biddable Manager or Director from that word alone. Establish the channels, hands-on work, budgets, clients, team and commercial responsibility. Then use the closest specialist comparison.",
+          "The job title isn’t the brief. Particularly with this one.",
+        ],
+      },
+      {
+        heading: "CRO: improving conversion, not building the software.",
+        content: [
+          "These CRO roles cover conversion analysis, hypotheses, A/B testing and improving customer journeys. They are marketing-side comparisons, not salary benchmarks for developers or experimentation engineers.",
+        ],
+      },
+      {
+        heading: "Affiliate is a specific commercial channel.",
+        content: [
+          "Publisher and network relationships, negotiation, measurement and budget ownership shape an affiliate brief. International programmes can add complexity too. Don’t use these figures as a catch-all for partnerships, business development or sales.",
+        ],
+      },
+    ],
+  },
+  "content-social": {
+    before: [
+      "These are planning ranges for content and organic social across relevant agency and client-side roles. They are not a claim that the same title commands the same salary in both environments. Paid Social sits in Digital & Performance.",
+    ],
+    sections: [
+      {
+        heading: "Head of Social needs a look underneath the bonnet.",
+        content: [
+          "In one business it means the most senior hands-on social person in a small team. Elsewhere they lead organic social, content, community, influencer activity and reputation across several markets, with a sizeable team underneath them.",
+          "Agency and client-side structures can look very different. Check the scope before treating the Head of Social planning point as the answer for every version of the job.",
+        ],
+      },
+      {
+        heading: "Influencer: look at the commercial responsibility.",
+        content: [
+          "Influencer can sit between Social, PR, creator partnerships, Content and Performance. Managing creator relationships, contracts, negotiations and campaign measurement is a different brief from product seeding alone.",
+          "Some roles carry revenue or performance targets; others focus on awareness and reputation. Establish what the person owns rather than assuming every influencer role is performance marketing.",
+        ],
+      },
+    ],
   },
   ecommerce: {
     after: [
@@ -124,6 +207,17 @@ export const salaryCommentary: Record<
     ],
     note: "For entry-level roles, check hours alongside the annual figure. The £25,000 and £26,000 Lower planning points are below the stated 40-hour National Living Wage equivalent for workers aged 21 or over.",
     heading: "What changes a senior agency salary?",
+    sections: [
+      {
+        heading:
+          "Agency new business: base salary only tells you half the story.",
+        content: [
+          "Agency New Business and Growth roles are about winning business for the agency. They are not the Growth Marketing roles benchmarked earlier in the guide.",
+          "The table shows base salary only. Bonus, commission, profit share, equity and new-business incentives are separate. A lower base with a genuinely achievable incentive scheme may be a better package than a higher base with little upside. Check the terms, not just the headline opportunity.",
+          "What is the target and average account value? Are they generating leads, leading pitches or personally closing business? What support and inherited pipeline are there? Those answers, and how incentives are earned, make the package meaningful.",
+        ],
+      },
+    ],
     after: [
       "An Account Director looking after a contained client portfolio may have a different job from one leading a substantial team, growing accounts and carrying responsibility for margin.",
       "The differences become greater at Client Services Director, Managing Partner and Managing Director level. New-business expectations, agency size, ownership structure and responsibility for running the business all matter.",
@@ -263,6 +357,7 @@ export const salaryEditorial = {
       "This isn’t one salary website copied into a table.",
       "The research behind Essential Resourcing’s guide looked across 176 role and discipline entries, 255 selected salary observations and 63 screened vacancies. After cleaning duplicates and unusable records, 51 distinct offers were usable, with 42 of those offers dated between 17 June and 15 September 2026.",
       "Those totals describe the original September research, not a claim that every role has the same amount of evidence behind it. Strategy, planning, media-agency leadership, analytics and insight were expanded following a separate public-source review on 7 October 2026. That review is not included in those original counts.",
+      "A final specialist coverage-gap review on 7 October added approved planning points for Product Marketing, Growth and Demand Generation, paid activation, CRO, Affiliate, senior Social, Influencer and agency new business. These additions are separate from both the original September counts and the earlier October expansion. They are recruiter-approved planning estimates, not a newly measured regional dataset.",
       "The October additions are evidence-informed estimates, not a new Manchester salary survey. Where comparable local offers are scarce, broader specialist guides help frame a budget, with role scope and geography stated explicitly. No fixed London-to-Manchester percentage discount has been applied. Intermediate grades and senior leadership points carry greater uncertainty and should be sense-checked against a live brief.",
       "The follow-up review checked the underlying job briefs, not just their titles. Social-media account roles were not treated as integrated media-agency leadership; performance-creative roles were not treated as brand planning; data-security and engineering jobs were excluded from marketing analytics. National remote roles were not counted as Manchester office-based offers. Unverifiable sample counts and automated salary estimates were not adopted.",
       "Manchester and North West evidence came first. Broader published salary information and specialist recruitment research provided context where useful. National figures weren’t silently converted into Manchester salaries.",
@@ -272,12 +367,42 @@ export const salaryEditorial = {
       "The junior ranges also take account of the 2026 National Living Wage context. An annual salary still needs checking against age, contracted hours and the applicable hourly rate.",
       "And finally, a bit of recruiter nous and noggin. Where the public numbers are thin or messy, I’ve applied more than a decade’s experience recruiting in the market and the figures I’d genuinely use when advising a client on a live brief. That’s judgement, and I’d rather be open about it than dress it up as a statistical finding.",
       "Salary information changes. For an active hire, sense-check the budget when you’re ready to go to market.",
-      "Core salary research: September 2026. Strategy, media, analytics and insight additions reviewed: 7 October 2026. Other salary ranges have not been rebenchmarked as part of this addition.",
+      "Core salary research: September 2026. Strategy, media, analytics and insight additions reviewed: 7 October 2026. Final specialist coverage additions: 7 October 2026. Existing salary ranges have not been rebenchmarked as part of these additions.",
     ],
   },
 };
 
 export const salaryGuideFaqs = [
+  {
+    question: "What does a Paid Social Manager earn in Manchester?",
+    answer:
+      "The guide’s annual base-salary planning range is £35,000–£50,000, with £42,500 as the Typical point. This covers paid advertising, not organic social. Check campaign ownership, budgets, measurement, clients and team responsibility before choosing a point within the range.",
+  },
+  {
+    question: "What does a Programmatic Manager earn in Manchester?",
+    answer:
+      "The planning range is £35,000–£50,000 in annual base salary, with £42,500 Typical. Platform execution, trading, data and measurement may sit alongside client or people responsibility. These are planning estimates, not a measured local average or an integrated media-planning benchmark.",
+  },
+  {
+    question: "What should a Product Marketing Manager earn in the North West?",
+    answer:
+      "The planning range is £45,000–£70,000 in annual base salary, with £55,000 Typical. Technical complexity, positioning, launches, international markets and sales enablement can change the scope. Product Management and Product Design are different comparisons.",
+  },
+  {
+    question: "Is Growth Marketing the same as Demand Generation?",
+    answer:
+      "Not automatically. Growth can span acquisition, conversion, retention and experimentation. Demand Generation often focuses on pipeline and sales alignment in B2B or complex sales environments. The roles can overlap. Establish what they own before picking a benchmark; neither is automatically an agency new-business job.",
+  },
+  {
+    question: "What should a Head of Social earn?",
+    answer:
+      "The guide’s annual base-salary planning range is £55,000–£90,000, with £70,000 Typical. A hands-on lead in a small team is a different brief from someone running social, community, content and influencer activity across several markets. Agency and client-side structures also affect the comparison.",
+  },
+  {
+    question: "Do agency new-business salary ranges include commission?",
+    answer:
+      "No. They show annual base salary only. Bonus, commission, profit share, equity and other incentives need a separate conversation. Check targets, pipeline, pitch support, closing responsibility and how achievable the incentive scheme actually is before comparing packages.",
+  },
   {
     question: "Does this guide cover Manchester or the whole North West?",
     answer:
@@ -416,6 +541,10 @@ export const salaryGuideInsight: Insight = {
           ? [salaryCommentary[table.id].note!]
           : []),
         ...(salaryCommentary[table.id]?.after || []),
+        ...(salaryCommentary[table.id]?.sections || []).flatMap((section) => [
+          section.heading,
+          ...section.content,
+        ]),
       ],
     })),
     ...Object.values(salaryEditorial),

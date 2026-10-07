@@ -3,6 +3,34 @@
 // docs/SALARY-GUIDE-STRATEGY-PLANNING-RESEARCH.md for evidence and limitations.
 // eCommerce planning ranges were expanded at the user's request. Advisory billing
 // was confirmed monthly; all retained figures are unchanged.
+const groupStarts: Record<string, Record<string, string>> = {
+  "digital-performance": {
+    "Digital Marketing Executive": "General digital",
+    "Performance Marketing Executive": "Performance",
+    "PPC Executive": "Paid Search",
+    "Paid Social Executive": "Paid Social",
+    "Programmatic Executive / Trader": "Programmatic",
+    "CRO Analyst": "CRO",
+    "Affiliate Executive": "Affiliate",
+  },
+  agency: {
+    "Account Executive": "Client services & leadership",
+    "PR Account Executive": "PR agency roles",
+    "PPC Executive": "Digital agency specialists",
+    "Agency New Business Manager": "Agency New Business & Growth",
+  },
+};
+
+export function salaryRowGroups(table: { id: string; rows: string[][] }) {
+  const groups: { label?: string; rows: string[][] }[] = [];
+  for (const row of table.rows) {
+    const label = groupStarts[table.id]?.[row[0]];
+    if (label || groups.length === 0) groups.push({ label, rows: [] });
+    groups[groups.length - 1].rows.push(row);
+  }
+  return groups;
+}
+
 export const salaryTables = [
   {
     id: "marketing-leadership",
@@ -41,6 +69,34 @@ export const salaryTables = [
     ],
   },
   {
+    id: "product-marketing",
+    title: "Product Marketing salaries",
+    headers: ["Role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Product Marketing Manager", "£45,000", "£55,000", "£70,000"],
+      ["Senior Product Marketing Manager", "£60,000", "£72,500", "£85,000"],
+      [
+        "Head of Product Marketing / Product Marketing Lead",
+        "£75,000",
+        "£90,000",
+        "£110,000",
+      ],
+      ["Product Marketing Director", "£90,000", "£105,000", "£125,000"],
+    ],
+  },
+  {
+    id: "growth-demand-generation",
+    title: "Growth & Demand Generation salaries",
+    headers: ["Role", "Lower", "Typical", "Upper"],
+    rows: [
+      ["Growth Marketing Manager", "£45,000", "£55,000", "£70,000"],
+      ["Senior Growth Marketing Manager", "£55,000", "£65,000", "£80,000"],
+      ["Demand Generation Manager", "£45,000", "£57,500", "£70,000"],
+      ["Head of Growth / Demand Generation", "£70,000", "£85,000", "£105,000"],
+      ["Growth Director", "£85,000", "£100,000", "£125,000"],
+    ],
+  },
+  {
     id: "digital-performance",
     title: "Digital & performance salaries",
     headers: ["Role", "Lower", "Typical", "Upper"],
@@ -56,6 +112,23 @@ export const salaryTables = [
       ["Head of Performance", "£70,000", "£80,000", "£100,000"],
       ["PPC Executive", "£25,000", "£29,000", "£35,000"],
       ["PPC Manager", "£35,000", "£42,500", "£50,000"],
+      ["Paid Social Executive", "£28,000", "£32,000", "£36,000"],
+      ["Paid Social Manager", "£35,000", "£42,500", "£50,000"],
+      [
+        "Paid Social Account Director / Director",
+        "£45,000",
+        "£55,000",
+        "£65,000",
+      ],
+      ["Head of Paid Social", "£60,000", "£75,000", "£90,000"],
+      ["Programmatic Executive / Trader", "£28,000", "£32,000", "£36,000"],
+      ["Programmatic Manager", "£35,000", "£42,500", "£50,000"],
+      ["Programmatic Director", "£50,000", "£60,000", "£75,000"],
+      ["Head of Programmatic", "£60,000", "£75,000", "£90,000"],
+      ["CRO Analyst", "£30,000", "£35,000", "£40,000"],
+      ["CRO Manager", "£37,500", "£45,000", "£52,500"],
+      ["Affiliate Executive", "£26,000", "£30,000", "£35,000"],
+      ["Affiliate Manager", "£35,000", "£42,500", "£50,000"],
     ],
   },
   {
@@ -95,6 +168,14 @@ export const salaryTables = [
       ["Head of Content", "£54,000", "£70,000", "£90,000"],
       ["Social Media Executive", "£28,000", "£32,000", "£38,000"],
       ["Social Media Manager", "£35,000", "£40,000", "£50,000"],
+      [
+        "Senior Social Media Manager / Social Lead",
+        "£42,500",
+        "£50,000",
+        "£60,000",
+      ],
+      ["Head of Social", "£55,000", "£70,000", "£90,000"],
+      ["Influencer Marketing Manager", "£35,000", "£42,500", "£50,000"],
     ],
   },
   {
@@ -141,6 +222,19 @@ export const salaryTables = [
       ["SEO Executive", "£28,000", "£32,000", "£40,000"],
       ["SEO Manager", "£35,000", "£42,500", "£50,000"],
       ["Head of SEO", "£60,000", "£75,000", "£90,000"],
+      ["Agency New Business Manager", "£40,000", "£50,000", "£60,000"],
+      [
+        "Agency New Business Director / Growth Director",
+        "£70,000",
+        "£85,000",
+        "£105,000",
+      ],
+      [
+        "Head of New Business / Agency Growth",
+        "£75,000",
+        "£90,000",
+        "£110,000",
+      ],
     ],
   },
   {
