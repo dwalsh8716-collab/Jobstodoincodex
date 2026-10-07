@@ -172,7 +172,7 @@ export default function SalaryGuidePage() {
               </dl>
               <Paragraphs texts={salaryGuideBasis} />
             </section>
-            <SalaryGuideShare />
+            <SalaryGuideShare position="top" />
             <nav
               id="salary-navigation"
               aria-label="Salary guide sections"
@@ -567,7 +567,7 @@ export default function SalaryGuidePage() {
           />
         </div>
         <div className={`container ${styles.bottomShare}`}>
-          <SalaryGuideShare />
+          <SalaryGuideShare position="bottom" />
         </div>
         <section className={`section dark ${styles.ctaSection}`}>
           <div className={`container ${styles.hero} ${styles.ctaInner}`}>

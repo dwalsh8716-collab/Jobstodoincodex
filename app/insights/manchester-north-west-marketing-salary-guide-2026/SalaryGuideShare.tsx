@@ -1,14 +1,13 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 import styles from "./salary-guide.module.css";
 
 const guideUrl =
   "https://essentialresourcing.co.uk/insights/manchester-north-west-marketing-salary-guide-2026";
 const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(guideUrl)}`;
 
-export function SalaryGuideShare() {
-  const headingId = useId();
+export function SalaryGuideShare({ position }: { position: "top" | "bottom" }) {
   const [copyStatus, setCopyStatus] = useState("");
 
   async function copyGuideLink() {
@@ -21,9 +20,9 @@ export function SalaryGuideShare() {
   }
 
   return (
-    <aside className={styles.sharePanel} aria-labelledby={headingId}>
+    <aside className={styles.sharePanel} aria-label={`Share the salary guide (${position})`}>
       <div>
-        <p id={headingId} className={styles.shareHeading}>
+        <p className={styles.shareHeading}>
           Useful? Send it to someone who’s hiring.
         </p>
         <p className={styles.shareNote}>No sign-up. Just the useful bit.</p>

@@ -44,7 +44,8 @@ describe("candidate process timeline", () => {
 
     expect(html).toContain("Typical process, exact client stages to confirm");
     expect(html).toContain("Apply or send a LinkedIn/profile note");
-    expect(html).toContain("To be confirmed");
+    expect(html).not.toContain("<dt>Task</dt>");
+    expect(html).not.toContain("<dt>Presentation</dt>");
   });
 
   it("wires the timeline into job pages and candidate confirmations", () => {
