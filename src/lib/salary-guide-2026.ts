@@ -45,6 +45,7 @@ export const salaryCommentary: Record<
     note?: string;
     pullQuote?: string;
     questions?: string[];
+    lenses?: { label: string; description: string }[];
     sections?: { heading: string; content: string[] }[];
   }
 > = {
@@ -79,13 +80,75 @@ export const salaryCommentary: Record<
     before: [
       "Planning ranges for permanent marketing roles in Manchester and the North West.",
     ],
-    heading: "Marketing Manager: the title only tells you so much",
+    heading:
+      "Marketing Manager might be the most uselessly useful job title in marketing",
     note: "At the junior end, check contracted hours as well as annual salary. A £25,000 salary does not meet the stated 2026 National Living Wage equivalent for someone aged 21 or over working 40 hours a week. See the junior salary guidance below.",
     after: [
-      "A Marketing Manager delivering campaigns within an established team isn’t necessarily doing the same job as someone building the marketing plan, managing agencies, owning the budget and reporting to the board.",
-      "Both might have the same title. Their accountability is quite different.",
-      "Before settling on the salary, work out whether this person is executing somebody else’s strategy or creating it. Are they managing activity, or are they expected to lead the function and answer for its commercial contribution?",
-      "If your Marketing Manager brief carries Head of Marketing responsibility, the salary needs to reflect that. The job title isn’t the brief.",
+      "Two people can both have Marketing Manager on LinkedIn and be completely different marketers.",
+      "One might be a broad, full-mix generalist. Another is heavily brand-led. Someone else is brilliant at campaigns, events and marcomms. Another lives and dies by leads and pipeline.",
+      "Then you've got performance, CRM, eCommerce, Product Marketing, Growth and all the other variations that can sit behind the same bloody title.",
+      "So before benchmarking a Marketing Manager, I'd want to know where they actually sit. Good marketers often overlap several of these areas.",
+    ],
+    lenses: [
+      {
+        label: "Generalist / full-mix",
+        description:
+          "Broad ownership across campaigns, brand, digital, agencies and budget.",
+      },
+      {
+        label: "Brand-led",
+        description:
+          "Positioning, proposition, brand strategy and how the business shows up in the market.",
+      },
+      {
+        label: "Marcomms / campaign-led",
+        description:
+          "Messaging, campaigns, content, events, collateral and communications.",
+      },
+      {
+        label: "Demand / lead-gen",
+        description:
+          "Pipeline, leads and usually a much closer relationship with Sales.",
+      },
+      {
+        label: "Performance / acquisition",
+        description: "Paid channels, acquisition, ROAS, CAC and optimisation.",
+      },
+      {
+        label: "CRM / lifecycle",
+        description:
+          "Retention, customer journeys, email, automation, loyalty and lifetime value.",
+      },
+      {
+        label: "eCommerce",
+        description: "Trading, conversion, merchandising and online revenue.",
+      },
+      {
+        label: "Product Marketing",
+        description:
+          "Positioning, go-to-market, launches, competitor insight and sales enablement.",
+      },
+    ],
+    sections: [
+      {
+        heading: "How far upstream are they?",
+        content: [
+          "And then there's another question. Are they being handed a strategy and asked to deliver it?",
+          "Or are they expected to understand the customer and market, shape the proposition, decide who you're targeting, influence positioning and build the marketing plan in the first place?",
+          "The downstream work might be campaigns, communications, channels and activation. Many Marketing Managers do both; the useful thing is understanding where the weight of the job sits.",
+          "Neither is automatically better. They're just different jobs.",
+        ],
+      },
+      {
+        heading: "What do you actually mean by strategic?",
+        content: [
+          "That's why when somebody tells me, \"We need a strategic Marketing Manager,\" that's usually my next question.",
+          "Do you mean somebody genuinely upstream, looking at the customer, proposition, positioning and marketing plan? Or somebody who's going to own the campaign strategy and delivery?",
+          "Both can be strategic. They're just strategic in different ways.",
+          "If your Marketing Manager brief carries Head of Marketing responsibility, managing agencies, owning the budget and reporting to the board, the salary needs to reflect that.",
+          "That's the bit you need to benchmark and recruit. Not the words on the business card.",
+        ],
+      },
     ],
   },
   brand: {
@@ -541,6 +604,9 @@ export const salaryGuideInsight: Insight = {
           ? [salaryCommentary[table.id].note!]
           : []),
         ...(salaryCommentary[table.id]?.after || []),
+        ...(salaryCommentary[table.id]?.lenses || []).map(
+          ({ label, description }) => `${label}: ${description}`,
+        ),
         ...(salaryCommentary[table.id]?.sections || []).flatMap((section) => [
           section.heading,
           ...section.content,

@@ -346,9 +346,25 @@ export default function SalaryGuidePage() {
                         <Paragraphs texts={commentary.after} />
                       </div>
                     )}
+                    {commentary.lenses && (
+                      <dl className={styles.marketingLenses}>
+                        {commentary.lenses.map(({ label, description }) => (
+                          <div key={label}>
+                            <dt>{label}</dt>
+                            <dd>{description}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
                     {commentary.sections?.map((section) => (
                       <div className={styles.prose} key={section.heading}>
-                        <h3>{section.heading}</h3>
+                        {commentary.lenses ? (
+                          <h4 className={styles.marketingQuestion}>
+                            {section.heading}
+                          </h4>
+                        ) : (
+                          <h3>{section.heading}</h3>
+                        )}
                         <Paragraphs texts={section.content} />
                       </div>
                     ))}

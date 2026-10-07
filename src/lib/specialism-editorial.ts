@@ -40,19 +40,26 @@ export const specialismEditorial = {
         ],
       },
     ],
-    heading: "What does marketing actually need to change?",
-    judgement:
-      "A Head of Marketing in one business can be doing a completely different job from a Head of Marketing somewhere else. Team size, budget, channel ownership and commercial responsibility matter more than the title alone.",
-    questions: [
-      "Are they building the function or inheriting one?",
-      "Do they own brand, demand, digital or all of it?",
-      "What team will they lead?",
-      "What budget and commercial responsibility sits with them?",
-      "Do you need somebody to set the strategy, execute it, or both?",
-      "What should be different 12 months after they join?",
+    heading:
+      "Tell me you need a Marketing Manager and I'll probably ask another ten questions.",
+    judgement: [
+      "Brand-led? Full-mix? Marcomms? Demand gen? Performance? Product Marketing? Growth? Hands-on delivery, or genuinely upstream and strategic?",
+      "Two people can both have Marketing Manager on their CV and belong in completely different candidate pools.",
+      "That's why I don't start with the title. I want to know what this person actually needs to own, what they're being measured on and what should be different because they're there.",
     ],
-    closing:
-      "That's the brief. Not whether somebody has already had exactly the same title.",
+    questions: [
+      "What are they actually responsible for?",
+      "Are they building the marketing plan or delivering one that's already there?",
+      "Are they measured on brand, pipeline, revenue, acquisition, retention or something else?",
+      "How close are they to the customer and proposition?",
+      "How close are they to Sales?",
+      "What team, agencies and budget will they own?",
+      "Do they need to set the strategy, execute it, or both?",
+    ],
+    closing: [
+      "That's the brief. Not whether somebody has already had exactly the same job title somewhere else.",
+      'And if the answer is, "Bit of all of it, really." Fair enough. That\'s usually where the useful conversation starts.',
+    ],
     adjacent: "digital-performance-ecommerce",
     boundary:
       "For a brief centred on performance, acquisition or eCommerce, explore Digital, Performance & eCommerce.",

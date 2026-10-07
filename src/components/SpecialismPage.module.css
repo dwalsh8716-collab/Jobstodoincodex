@@ -163,6 +163,9 @@
 .judgement p {
   line-height: 1.7;
 }
+.marketingJudgement p + p {
+  margin-top: 20px;
+}
 .judgement ul {
   padding-left: 20px;
   margin-top: 24px;

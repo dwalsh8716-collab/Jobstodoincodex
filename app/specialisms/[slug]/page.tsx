@@ -158,14 +158,23 @@ export default async function SpecialismPage({ params }: Props) {
             <p className="eyebrow">The job title isn’t the brief</p>
             <h2 id="brief-judgement">{editorial.heading}</h2>
           </div>
-          <div className={styles.judgement}>
-            <p>{editorial.judgement}</p>
+          <div
+            className={`${styles.judgement} ${specialism.slug === "marketing-and-leadership" ? styles.marketingJudgement : ""}`}
+          >
+            {(typeof editorial.judgement === "string"
+              ? [editorial.judgement]
+              : editorial.judgement
+            ).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
             <ul>
               {editorial.questions.map((question) => (
                 <li key={question}>{question}</li>
               ))}
             </ul>
-            {editorial.closing ? <p>{editorial.closing}</p> : null}
+            {editorial.closing?.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </div>
       </section>
