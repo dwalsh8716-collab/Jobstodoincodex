@@ -6,6 +6,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { createHash, randomUUID } from "node:crypto";
+import { essentialEmailHtml, essentialEmailSender } from "./branded-email";
 import { isCandidateTransparencyFeatureEnabled } from "./candidate-transparency";
 import {
   candidateConfirmationSubject,
@@ -355,10 +356,11 @@ async function sendResendEmail({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from,
+      from: essentialEmailSender(from),
       to,
       subject,
       text,
+      html: essentialEmailHtml(text),
       attachments,
     }),
   });

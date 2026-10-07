@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createHash } from "node:crypto";
+import { essentialEmailHtml, essentialEmailSender } from "./branded-email";
 import {
   salaryGuideLeadSchema,
   salaryGuideMinimumCompletionTimeMs,
@@ -366,10 +367,11 @@ async function sendSalaryGuideEmails(payload: SalaryGuideLeadPayload) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from,
+        from: essentialEmailSender(from),
         to: recipient,
         subject,
         text,
+        html: essentialEmailHtml(text),
       }),
     });
 

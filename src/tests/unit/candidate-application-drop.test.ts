@@ -339,7 +339,7 @@ describe("candidate application drop", () => {
     expect(awsMocks.send).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledTimes(2);
     expect(adminEmail).toMatchObject({
-      from: "website@example.com",
+      from: "Essential Resourcing <website@example.com>",
       to: "david@example.com",
       subject: "Essential Resourcing CV/application from Candidate Name",
     });
@@ -350,9 +350,12 @@ describe("candidate application drop", () => {
       },
     ]);
     expect(candidateEmail).toMatchObject({
-      from: "website@example.com",
+      from: "Essential Resourcing <website@example.com>",
       to: "candidate@example.com",
     });
+    expect(candidateEmail.html).toContain(
+      "/assets/essential-resourcing-email-logo.png",
+    );
     expect(candidateEmail.attachments).toBeUndefined();
   });
 

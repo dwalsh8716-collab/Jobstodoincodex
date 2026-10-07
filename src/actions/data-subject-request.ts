@@ -23,6 +23,7 @@ import {
   verifyDataSubjectRequestEmailToken,
 } from "@/lib/operations/store";
 import { candidatePrivacyPath } from "@/lib/candidate-trust";
+import { essentialEmailHtml, essentialEmailSender } from "@/lib/branded-email";
 import { siteConfig } from "@/lib/site";
 
 export type DataSubjectRequestActionResult = {
@@ -119,10 +120,11 @@ async function sendEmail({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from,
+      from: essentialEmailSender(from),
       to: recipient,
       subject,
       text,
+      html: essentialEmailHtml(text),
     }),
   });
 

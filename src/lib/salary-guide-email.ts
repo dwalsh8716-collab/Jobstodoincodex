@@ -1,5 +1,6 @@
 import "server-only";
 import { createHash } from "node:crypto";
+import { essentialEmailHeaderHtml } from "./branded-email";
 import { salaryGuideEmailSchema } from "@/validations/salary-guide-email";
 import {
   publicSalaryGuideTitle,
@@ -24,10 +25,21 @@ function reserve(key: string, limit: number, windowMs: number, now: number) {
 }
 
 export function guideEmailContent(name: string) {
+  const firstName = name.trim().split(/\s+/)[0];
+  const safeFirstName = firstName.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
   return {
     subject: `Your ${publicSalaryGuideTitle}`,
     text: [
-      `Hi ${name.trim().split(/\s+/)[0]},`,
+      `Hi ${firstName},`,
       "",
       "As promised, here's the guide:",
       "",
@@ -47,6 +59,19 @@ export function guideEmailContent(name: string) {
       "You asked us to email you this guide. This hasn't subscribed you to marketing emails.",
       `${siteConfig.url}/privacy-policy`,
     ].join("\n"),
+    html: `<!doctype html>
+<html lang="en"><body style="margin:0;padding:24px;background:#ffffff;color:#171717;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.55">
+<div style="max-width:560px;margin:0 auto">
+  ${essentialEmailHeaderHtml()}
+  <p>Hi ${safeFirstName},</p>
+  <p>As promised, here's the guide:</p>
+  <p><strong>${publicSalaryGuideTitle}</strong><br><a href="${publicSalaryGuideUrl}" style="color:#131313;text-decoration:underline">View the Salary Guide</a></p>
+  <p>It's the live version, so if I update any of the numbers or add anything later, you'll always be looking at the latest one.</p>
+  <p>And if you're actually hiring and want me to sense-check a salary against the real brief, just give me a shout.</p>
+  <p>If it stacks up, I'll tell you. If it doesn't, I'll tell you that too.</p>
+  <p>Cheers,<br>David<br>Essential Resourcing</p>
+  <p style="border-top:1px solid #dedede;padding-top:18px;margin-top:28px;color:#666;font-size:13px">You asked us to email you this guide. This hasn't subscribed you to marketing emails.<br><a href="${siteConfig.url}/privacy-policy" style="color:#444">Privacy Policy</a></p>
+</div></body></html>`,
   };
 }
 

@@ -60,6 +60,9 @@ describe("transactional guide email", () => {
     expect(body.reply_to).toBe("david@essentialresourcing.co.uk");
     expect(body.to).toBe(input.email);
     expect(body.text).toContain(publicSalaryGuideUrl);
+    expect(body.html).toContain('width="216" height="60"');
+    expect(body.html).toContain("/assets/essential-resourcing-email-logo.png");
+    expect(body.html).toContain(publicSalaryGuideUrl);
     expect(body.text).toContain("hasn't subscribed you to marketing");
     expect(body).not.toHaveProperty("attachments");
     expect(body).not.toHaveProperty("salary");

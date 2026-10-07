@@ -221,12 +221,16 @@ describe("contact server action response shape", () => {
 
     const confirmationBody = JSON.parse(
       String(fetchMock.mock.calls[1]?.[1]?.body),
-    ) as { to: string; subject: string; text: string };
+    ) as { from: string; to: string; subject: string; text: string; html: string };
 
     expect(confirmationBody).toMatchObject({
+      from: "Essential Resourcing <website@example.com>",
       to: "candidate-confirmation@example.com",
       subject: "We've received your note",
     });
+    expect(confirmationBody.html).toContain(
+      "/assets/essential-resourcing-email-logo.png",
+    );
     expect(confirmationBody.text).toContain("Candidate Privacy Notice");
     expect(confirmationBody.text).toContain("delete");
     expect(confirmationBody.text).not.toContain(

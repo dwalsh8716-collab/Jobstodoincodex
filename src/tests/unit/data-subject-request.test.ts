@@ -163,14 +163,18 @@ describe("data subject request action", () => {
     ) as { text: string };
     const requesterBody = JSON.parse(
       String(fetchMock.mock.calls[1]?.[1]?.body),
-    ) as { to: string; subject: string; text: string };
+    ) as { from: string; to: string; subject: string; text: string; html: string };
 
     expect(adminBody.text).toContain("Delete my candidate details");
     expect(adminBody.text).not.toContain("confidential job search");
     expect(requesterBody).toMatchObject({
+      from: "Essential Resourcing <website@example.com>",
       to: "email-dsar@example.com",
       subject: "We've received your data request",
     });
+    expect(requesterBody.html).toContain(
+      "/assets/essential-resourcing-email-logo.png",
+    );
     expect(requesterBody.text).toContain("Candidate Privacy Notice");
     expect(requesterBody.text).toContain("Identity verification");
     expect(requesterBody.text).not.toContain("confidential job search");

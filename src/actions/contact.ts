@@ -13,6 +13,7 @@ import {
   candidateRetentionStatement,
 } from "@/lib/candidate-trust";
 import { dataSubjectRequestPath } from "@/lib/dsar";
+import { essentialEmailHtml, essentialEmailSender } from "@/lib/branded-email";
 import { saveContactEnquiryToOperations } from "@/lib/operations/store";
 import { siteConfig } from "@/lib/site";
 import { sendWhatsAppBusinessConfirmation } from "@/lib/whatsapp-business/client";
@@ -87,10 +88,11 @@ async function sendWithResend(payload: ContactFormPayload) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from,
+        from: essentialEmailSender(from),
         to: recipient,
         subject,
         text,
+        html: essentialEmailHtml(text),
       }),
     });
 
