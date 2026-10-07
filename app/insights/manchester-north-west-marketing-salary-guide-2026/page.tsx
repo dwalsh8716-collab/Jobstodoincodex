@@ -414,6 +414,13 @@ export default function SalaryGuidePage() {
               );
             })}
             <Editorial section={salaryEditorial.junior} id="junior-salaries" />
+            <p className={styles.prose}>
+              Check the current rates on{" "}
+              <a href="https://www.gov.uk/national-minimum-wage-rates">
+                GOV.UK: National Minimum Wage and National Living Wage rates
+              </a>
+              .
+            </p>
             <section
               className={`${styles.editorial} ${styles.guidanceSection}`}
             >
