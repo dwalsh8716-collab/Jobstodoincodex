@@ -36,47 +36,42 @@ export default async function CandidatesPage() {
             Or just quietly curious?
           </h1>
           <div className={styles.candidateHeroCopy}>
-          <p>
-            Good roles. Honest advice. No recruitment nonsense.
-          </p>
-          <p className="lede">
-            You don’t need to be desperately looking for another job to have a
-            conversation with me.
-          </p>
-          <p className="lede">
-            Maybe you’re actively looking. Maybe something doesn’t feel quite
-            right where you are. Or maybe you’re perfectly happy but you’d still
-            listen if the right thing came along.
-          </p>
-          <p className="lede">
-            I recruit across marketing, digital, PR, communications and
-            agencies, from specialist roles through to senior leadership.
-          </p>
-          <p className="lede">
-            I’ll give you an honest view on the opportunity, salary and market.
-            I won’t push you into something that isn’t right, and your details
-            don’t go anywhere without you knowing about it.
-          </p>
-          <p className="lede">
-            No hard sell. No CV flinging. Just a proper conversation.
-          </p>
-          </div>
-          <div className="button-row hero-actions">
-            <Link
-              className="button button-primary"
-              href="#current-opportunities"
-            >
-              See current roles
-            </Link>
-            <Link className="button button-secondary" href="#candidate-contact">
-              Talk to David confidentially
-            </Link>
-            <WhatsAppButton
-              intent="candidates"
-              label="Message David on WhatsApp"
-              location="candidate_hero"
-              variant="text"
-            />
+            <p>Good roles. Honest advice. No recruitment nonsense.</p>
+            <div className="button-row hero-actions">
+              <Link className="button button-primary" href="#current-opportunities">
+                See current roles
+              </Link>
+              <Link className="button button-secondary" href="#candidate-contact">
+                Talk to David confidentially
+              </Link>
+              <WhatsAppButton
+                intent="candidates"
+                label="Message David on WhatsApp"
+                location="candidate_hero"
+                variant="text"
+              />
+            </div>
+            <p className="lede">
+              You don’t need to be desperately looking for another job to have a
+              conversation with me.
+            </p>
+            <p className="lede">
+              Maybe you’re actively looking. Maybe something doesn’t feel quite
+              right where you are. Or maybe you’re perfectly happy but you’d still
+              listen if the right thing came along.
+            </p>
+            <p className="lede">
+              I recruit across marketing, digital, PR, communications and
+              agencies, from specialist roles through to senior leadership.
+            </p>
+            <p className="lede">
+              I’ll give you an honest view on the opportunity, salary and market.
+              I won’t push you into something that isn’t right, and your details
+              don’t go anywhere without you knowing about it.
+            </p>
+            <p className="lede">
+              No hard sell. No CV flinging. Just a proper conversation.
+            </p>
           </div>
           <p className="candidate-credibility-line">
             Agency-side · Client-side · Permanent · Fractional ·
