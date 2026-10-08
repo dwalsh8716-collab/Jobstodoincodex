@@ -46,7 +46,9 @@ export function JobRoleSnapshot({ job }: JobRoleSnapshotProps) {
     },
     {
       label: "Location",
-      value: job.location,
+      value: [job.locationStreetAddress, job.location, job.locationPostalCode]
+        .filter(Boolean)
+        .join(", "),
       note: job.officeLocation === job.location ? "" : job.officeLocation,
     },
     {

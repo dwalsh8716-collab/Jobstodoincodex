@@ -95,6 +95,7 @@ export type Service = {
   searchPhrases: string[];
   seoTitle: string;
   metaDescription: string;
+  updatedDate?: string;
 };
 
 export type Insight = {
@@ -161,6 +162,7 @@ export type CaseStudy = {
   featured: boolean;
   seoTitle: string;
   metaDescription: string;
+  updatedDate?: string;
 };
 
 export type SalarySnapshot = {
@@ -185,6 +187,7 @@ export type SalarySnapshot = {
   takeaways: string[];
   seoTitle: string;
   metaDescription: string;
+  updatedDate?: string;
 };
 
 export type Job = {
@@ -208,8 +211,11 @@ export type Job = {
   salaryStatus: "verified" | "indicative" | "unverified";
   salaryTransparencyNote: string;
   hiringOrganizationName?: string;
+  postingRepresentation?: "recruiter" | "employer";
   location: string;
   locationRegion?: string;
+  locationStreetAddress?: string;
+  locationPostalCode?: string;
   officeLocation: string;
   workingPattern: string;
   hybridPattern: string;

@@ -188,6 +188,8 @@ describe("candidate transparency foundation", () => {
     expect(activeDistributionJobs([live, live, closed], now)).toHaveLength(1);
     expect(feed).toContain("5209d31b-fba4-45c9-948b-492af7eef918");
     expect(feed).toContain("Client Services &amp; Digital Director");
+    expect(feed).toContain("<employer>Essential Resourcing</employer>");
+    expect(feed).not.toContain("<employer>confidential</employer>");
     expect(feed).toContain("<![CDATA[");
     expect(feed).not.toContain("closed-role");
     const talentFeed = buildTalentJobsXml([{ ...live, location: "Manchester, Greater Manchester, UK" }], now);

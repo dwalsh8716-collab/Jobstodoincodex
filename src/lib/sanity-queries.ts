@@ -47,6 +47,7 @@ const videoFields = /* groq */ `
 
 const serviceCardFields = /* groq */ `
   _id,
+  "updatedDate": _updatedAt,
   title,
   "slug": slug.current,
   shortDescription,
@@ -68,6 +69,7 @@ const insightCardFields = /* groq */ `
 
 const caseStudyCardFields = /* groq */ `
   _id,
+  "updatedDate": _updatedAt,
   title,
   "slug": slug.current,
   clientType,
@@ -113,6 +115,7 @@ const contentBlockFields = /* groq */ `
 
 const serviceFields = /* groq */ `
   _id,
+  "updatedDate": _updatedAt,
   title,
   "slug": slug.current,
   shortDescription,
@@ -163,8 +166,11 @@ const jobFields = /* groq */ `
   salaryStatus,
   salaryTransparencyNote,
   hiringOrganizationName,
+  postingRepresentation,
   location,
   locationRegion,
+  locationStreetAddress,
+  locationPostalCode,
   officeLocation,
   workingPattern,
   hybridPattern,
@@ -300,6 +306,7 @@ const contentHubFields = /* groq */ `
 
 const salarySnapshotFields = /* groq */ `
   _id,
+  "updatedDate": _updatedAt,
   title,
   "slug": slug.current,
   contentFormat,

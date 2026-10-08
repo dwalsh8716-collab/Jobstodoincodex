@@ -11,8 +11,10 @@ describe("job copy standards", () => {
 
     expect(fieldNames).toEqual([
       "contentVersion", "title", "slug", "salaryMin", "salaryMax",
-      "salaryPeriod", "salaryVisibility", "hiringOrganizationName",
-      "location", "workingPattern", "hybridPattern", "remotePossible",
+      "salaryPeriod", "salaryVisibility", "postingRepresentation",
+      "hiringOrganizationName", "location", "locationRegion",
+      "locationStreetAddress", "locationPostalCode", "workingPattern",
+      "hybridPattern", "remotePossible",
       "employmentType", "whyRoleExists", "summary", "body", "davidsTake",
       "responsibilities", "mustHaves", "niceToHaves", "benefits",
       "interviewSteps", "applicationNotes", "postedDate", "closingDate",

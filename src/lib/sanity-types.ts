@@ -337,6 +337,7 @@ export type SanityHomePage = SanitySeo & {
 
 export type SanityService = SanitySeo & {
   _id: string;
+  updatedDate?: string;
   title: string;
   slug: string;
   shortDescription?: string;
@@ -397,8 +398,11 @@ export type SanityJob = SanitySeo & {
   salaryStatus?: "verified" | "indicative" | "unverified";
   salaryTransparencyNote?: string;
   hiringOrganizationName?: string;
+  postingRepresentation?: "recruiter" | "employer";
   location?: string;
   locationRegion?: string;
+  locationStreetAddress?: string;
+  locationPostalCode?: string;
   officeLocation?: string;
   workingPattern?: string;
   hybridPattern?: string;
@@ -486,6 +490,7 @@ export type SanityInsight = SanitySeo & {
 export type SanityCaseStudy = SanitySeo & {
   searchStory?: import("./havas-search-story").CaseStudySearchStory;
   _id: string;
+  updatedDate?: string;
   title: string;
   slug: string;
   clientType?: string;
@@ -525,6 +530,7 @@ export type SanityCaseStudy = SanitySeo & {
 
 export type SanitySalarySnapshot = SanitySeo & {
   _id: string;
+  updatedDate?: string;
   title: string;
   slug: string;
   contentFormat?: "snapshot" | "guide_landing_page";

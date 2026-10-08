@@ -179,6 +179,36 @@ describe("structured data builders", () => {
     expect(schema.jobLocation?.address).not.toHaveProperty("postalCode");
   });
 
+  it("keeps recruiter-posted client roles confidential to Google when Essential is the advertiser", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      hiringOrganizationName: "Essential Resourcing",
+      postingRepresentation: "recruiter",
+      location: "Manchester, Greater Manchester, UK",
+    });
+
+    expect(schema.hiringOrganization).toMatchObject({ name: "confidential" });
+  });
+
+  it("uses an authorised named employer and optional real workplace address", () => {
+    const schema = jobPostingSchema({
+      ...jobs[0],
+      hiringOrganizationName: "Approved Hiring Employer",
+      postingRepresentation: "employer",
+      location: "Manchester, Greater Manchester, UK",
+      locationStreetAddress: "10 Example Street",
+      locationPostalCode: "M1 1AA",
+    });
+
+    expect(schema.hiringOrganization).toMatchObject({
+      name: "Approved Hiring Employer",
+    });
+    expect(schema.jobLocation?.address).toMatchObject({
+      streetAddress: "10 Example Street",
+      postalCode: "M1 1AA",
+    });
+  });
+
   it("does not treat a country as a region", () => {
     const schema = jobPostingSchema({
       ...jobs[0],

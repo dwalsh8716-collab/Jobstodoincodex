@@ -445,6 +445,7 @@ export function jobPostingSchema(job: Job) {
     hiringOrganization: {
       "@type": "Organization",
       name:
+        job.postingRepresentation === "recruiter" ||
         job.hiringOrganizationName?.trim().toLowerCase() === "confidential"
           ? "confidential"
           : job.hiringOrganizationName || "confidential",
@@ -456,8 +457,14 @@ export function jobPostingSchema(job: Job) {
             address: {
               "@type": "PostalAddress",
               addressLocality: locationParts[0],
+              ...(job.locationStreetAddress?.trim()
+                ? { streetAddress: job.locationStreetAddress.trim() }
+                : {}),
               ...(addressRegion
                 ? { addressRegion }
+                : {}),
+              ...(job.locationPostalCode?.trim()
+                ? { postalCode: job.locationPostalCode.trim() }
                 : {}),
               addressCountry: "GB",
             },

@@ -2108,17 +2108,17 @@ function liveJobReadinessIssue(document: CmsDocumentValue | undefined) {
 }
 
 const newJobFields = new Set([
-  "contentVersion", "title", "slug", "hiringOrganizationName",
+  "contentVersion", "title", "slug", "postingRepresentation", "hiringOrganizationName",
   "employmentType", "salaryMin", "salaryMax", "salaryPeriod",
-  "salaryVisibility", "location", "workingPattern", "hybridPattern",
+  "salaryVisibility", "location", "locationRegion", "locationStreetAddress", "locationPostalCode", "workingPattern", "hybridPattern",
   "remotePossible", "summary", "body", "whyRoleExists", "davidsTake",
   "responsibilities", "mustHaves", "niceToHaves", "benefits",
   "interviewSteps", "applicationNotes", "postedDate", "closingDate", "status",
   "distributionPanel",
 ]);
 const jobBasicsFields = new Set([
-  "title", "slug", "hiringOrganizationName", "employmentType",
-  "salaryMin", "salaryMax", "salaryPeriod", "salaryVisibility", "location",
+  "title", "slug", "postingRepresentation", "hiringOrganizationName", "employmentType",
+  "salaryMin", "salaryMax", "salaryPeriod", "salaryVisibility", "location", "locationRegion", "locationStreetAddress", "locationPostalCode",
   "workingPattern", "hybridPattern", "remotePossible",
 ]);
 const jobAdvertFields = new Set([
@@ -2287,14 +2287,30 @@ const job = defineType({
         "Plain-English note for candidates. Example: salary range confirmed with the client, or indicative pending final sign-off.",
     }),
     defineField({
-      name: "hiringOrganizationName",
-      title: "Hiring employer",
+      name: "postingRepresentation",
+      title: "Who is advertising this role?",
       type: "string",
       description:
-        "Enter the actual organization offering the role. If it must remain anonymous, enter exactly: confidential. Never enter Essential Resourcing unless it is the employer.",
+        "Choose recruiter for an anonymous client vacancy, or named employer only when you have permission to identify the organisation.",
+      options: {
+        list: [
+          { title: "Essential Resourcing (recruiter; client confidential)", value: "recruiter" },
+          { title: "Named hiring employer (authorised)", value: "employer" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "recruiter",
+    }),
+    defineField({
+      name: "hiringOrganizationName",
+      title: "Public employer / advertiser name",
+      type: "string",
+      description:
+        "For recruiter-posted vacancies, enter Essential Resourcing. Google JobPosting will still identify the anonymous hiring organisation as confidential. For named-employer mode, enter the real employer only when authorised. This also supplies the company name to eligible external job feeds.",
       validation: requiredText(
-        "Add the employer name or enter 'confidential'.",
+        "Add Essential Resourcing as advertiser, or the authorised hiring employer.",
       ),
+      initialValue: "Essential Resourcing",
     }),
     defineField({ name: "location", title: "Location", type: "string" }),
     defineField({
@@ -2302,6 +2318,20 @@ const job = defineType({
       title: "Location region (optional)",
       type: "string",
       description: "For example Greater Manchester or North West England.",
+    }),
+    defineField({
+      name: "locationStreetAddress",
+      title: "Workplace street address (optional)",
+      type: "string",
+      description:
+        "Only enter the actual place where the successful candidate will work. This appears publicly and in Google job data. Never use Essential Resourcing's office as a fallback.",
+    }),
+    defineField({
+      name: "locationPostalCode",
+      title: "Workplace postcode (optional)",
+      type: "string",
+      description:
+        "The postcode of the actual workplace. Optional; displayed publicly and included in Google job data when supplied.",
     }),
     defineField({
       name: "officeLocation",

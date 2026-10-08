@@ -622,6 +622,7 @@ function mapService(item: SanityService, fallback?: Service): Service {
     return {
       title: item.title || fallback.title,
       slug: item.slug || fallback.slug,
+      updatedDate: item.updatedDate || fallback.updatedDate,
       status: item.status === "draft" ? "draft" : "published",
       noIndex: item.noIndex ?? fallback.noIndex ?? false,
       shortDescription: item.shortDescription || fallback.shortDescription,
@@ -669,6 +670,7 @@ function mapService(item: SanityService, fallback?: Service): Service {
   return {
     title: fallback?.title || item.title || "Untitled service",
     slug: item.slug || fallback?.slug || "",
+    updatedDate: item.updatedDate || fallback?.updatedDate,
     status: item.status === "draft" ? "draft" : "published",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
     shortDescription: fallback?.shortDescription || item.shortDescription || "",
@@ -790,6 +792,7 @@ function mapCaseStudy(item: SanityCaseStudy, fallback?: CaseStudy): CaseStudy {
     searchStory: item.searchStory ?? fallback?.searchStory,
     title: item.title ?? fallback?.title ?? "Untitled case study",
     slug: item.slug ?? fallback?.slug ?? "",
+    updatedDate: item.updatedDate || fallback?.updatedDate,
     status: item.status ?? fallback?.status ?? "draft",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
     clientType: item.clientType ?? fallback?.clientType ?? "Client",
@@ -853,6 +856,7 @@ function mapSalarySnapshot(
   return {
     title: fallback?.title || item.title || "Untitled salary snapshot",
     slug: item.slug || fallback?.slug || "",
+    updatedDate: item.updatedDate || fallback?.updatedDate,
     status: item.status || fallback?.status || "draft",
     noIndex: item.noIndex ?? fallback?.noIndex ?? false,
     contentFormat: fallback?.contentFormat || item.contentFormat || "snapshot",
@@ -1005,8 +1009,19 @@ function mapJob(item: SanityJob, fallback?: Job): Job {
       item.hiringOrganizationName ||
       fallback?.hiringOrganizationName ||
       "confidential",
+    postingRepresentation:
+      item.postingRepresentation ||
+      fallback?.postingRepresentation ||
+      (item.hiringOrganizationName?.trim().toLowerCase() === "confidential" ||
+      !item.hiringOrganizationName
+        ? "recruiter"
+        : "employer"),
     location: item.location || fallback?.location || "Location to confirm",
     locationRegion: item.locationRegion || fallback?.locationRegion || "",
+    locationStreetAddress:
+      item.locationStreetAddress || fallback?.locationStreetAddress || "",
+    locationPostalCode:
+      item.locationPostalCode || fallback?.locationPostalCode || "",
     officeLocation:
       item.officeLocation ||
       fallback?.officeLocation ||

@@ -95,7 +95,7 @@ function buildEntry({
 
   return {
     url: `${baseUrl}${path}`,
-    lastModified,
+    ...(lastModified ? { lastModified } : {}),
     changeFrequency,
     priority,
   };
@@ -119,7 +119,7 @@ export function buildPublicSitemap({
 
   const addEntry = ({
     path,
-    lastModified = now,
+    lastModified,
     changeFrequency = "monthly",
     priority = 0.65,
   }: {
@@ -166,6 +166,7 @@ export function buildPublicSitemap({
   services.filter(isPublishedPublicItem).forEach((service) => {
     addEntry({
       path: `/services/${service.slug}`,
+      lastModified: parseSitemapDate(service.updatedDate),
       priority: 0.82,
     });
   });
@@ -175,10 +176,7 @@ export function buildPublicSitemap({
     .forEach((insight) => {
       addEntry({
         path: `/insights/${insight.slug}`,
-        lastModified:
-          parseSitemapDate(insight.updatedDate) ||
-          parseSitemapDate(insight.publishedDate) ||
-          now,
+        lastModified: parseSitemapDate(insight.updatedDate),
         changeFrequency: "weekly",
         priority: 0.72,
       });
@@ -189,6 +187,7 @@ export function buildPublicSitemap({
     .forEach((caseStudy) => {
       addEntry({
         path: `/case-studies/${caseStudy.slug}`,
+        lastModified: parseSitemapDate(caseStudy.updatedDate),
         priority: 0.7,
       });
     });
@@ -198,6 +197,7 @@ export function buildPublicSitemap({
     .forEach((snapshot) => {
       addEntry({
         path: `/salary-snapshots/${snapshot.slug}`,
+        lastModified: parseSitemapDate(snapshot.updatedDate),
         priority: 0.68,
       });
     });

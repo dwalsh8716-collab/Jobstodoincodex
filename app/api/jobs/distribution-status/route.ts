@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { isJobLive } from "@/lib/content";
-import { canonicalJobUrl, jobReference } from "@/lib/job-distribution";
+import {
+  canonicalJobUrl,
+  distributionEmployerName,
+  jobReference,
+} from "@/lib/job-distribution";
 import { getFreshDistributionJobs } from "@/lib/public-content";
 
 export const dynamic = "force-dynamic";
@@ -25,7 +29,8 @@ export async function GET(request: Request) {
       salary: job.salaryRange,
       postedDate: job.postedDate || job.publishedDate,
       closingDate: job.closingDate,
-      talentEligible: Boolean(job.hiringOrganizationName && job.hiringOrganizationName.toLowerCase() !== "confidential"),
+      advertiser: distributionEmployerName(job),
+      talentEligible: Boolean(distributionEmployerName(job)),
     }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ eligible: false, unavailable: true }, { status: 503, headers: { "Cache-Control": "no-store" } });

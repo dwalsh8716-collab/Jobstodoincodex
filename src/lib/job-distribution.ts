@@ -29,6 +29,17 @@ export const activeDistributionJobs = (jobs: Job[], now = new Date()) => {
 
 export const jobReference = (job: Job) => job.externalJobId || job.slug;
 
+export function distributionEmployerName(job: Job) {
+  if (
+    job.postingRepresentation === "recruiter" ||
+    !job.hiringOrganizationName ||
+    job.hiringOrganizationName.trim().toLowerCase() === "confidential"
+  ) {
+    return siteConfig.name;
+  }
+  return job.hiringOrganizationName || siteConfig.name;
+}
+
 function salaryFields(job: Job) {
   if (job.salaryStatus !== "verified" || job.salaryVisibility !== "public_range") return "";
   return [
@@ -48,7 +59,7 @@ export function buildUniversalJobsXml(jobs: Job[], now = new Date()) {
     tag("location", job.location),
     tag("region", job.locationRegion),
     tag("country", "GB"),
-    tag("employer", job.hiringOrganizationName || "confidential"),
+    tag("employer", distributionEmployerName(job)),
     tag("recruiter", siteConfig.name),
     salaryFields(job),
     tag("employmentType", job.employmentType),

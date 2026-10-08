@@ -189,6 +189,33 @@ describe("dynamic sitemap engine", () => {
     expect(builtUrls).not.toContain(
       "https://www.essentialresourcing.co.uk/salary-guides",
     );
+    const homepage = sitemap.find((entry) => entry.url.endsWith("/"));
+    const service = sitemap.find((entry) =>
+      entry.url.endsWith(`/services/${publicService.slug}`),
+    );
+    expect(homepage).not.toHaveProperty("lastModified");
+    expect(service).not.toHaveProperty("lastModified");
+  });
+
+  it("uses real content update dates where available", () => {
+    const updatedService = {
+      ...publicService,
+      updatedDate: "2026-10-07T13:15:00.000Z",
+    };
+    const sitemap = buildPublicSitemap({
+      baseUrl: "https://essentialresourcing.co.uk",
+      launchPages: ["/"],
+      services: [updatedService],
+      insights: [],
+      caseStudies: [],
+      salarySnapshots: [],
+      jobs: [],
+      now,
+      referenceDate: now,
+    });
+
+    expect(sitemap.find((entry) => entry.url.endsWith(`/services/${updatedService.slug}`)))
+      .toMatchObject({ lastModified: new Date("2026-10-07T13:15:00.000Z") });
   });
 
   it("keeps closed and expired jobs out while allowing the approved salary guide gate", () => {
