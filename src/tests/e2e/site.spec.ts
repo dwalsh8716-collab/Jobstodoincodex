@@ -52,7 +52,9 @@ test("mobile menu opens and closes", async ({ page }) => {
   await expect(page).toHaveURL(/\/jobs$/);
 });
 
-test("mobile quick actions do not cover the first screen or downward reading", async ({ page }) => {
+test("mobile quick actions do not cover the first screen or downward reading", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/insights");
 
@@ -72,6 +74,11 @@ test("contact form validates and returns a safe success state", async ({
   await page.goto("/contact");
 
   const contactForm = page.locator("#contact-form form");
+  await expect(
+    contactForm.locator('select[name="briefType"] option', {
+      hasText: "Candidate conversation",
+    }),
+  ).toHaveCount(0);
 
   await contactForm.getByRole("button", { name: "Send enquiry" }).click();
   await expect(page.locator("input:invalid, textarea:invalid")).not.toHaveCount(
@@ -85,6 +92,9 @@ test("contact form validates and returns a safe success state", async ({
   await contactForm.getByLabel("Email").fill("phase-test@example.com");
   await contactForm.getByLabel("Company").fill("Essential Resourcing");
   await contactForm
+    .getByLabel("What do you need?")
+    .selectOption("Permanent Recruitment");
+  await contactForm
     .locator('textarea[name="message"]')
     .fill("I need help testing the enquiry flow before launch.");
   await contactForm.locator('input[name="consent"]').check();
@@ -94,6 +104,29 @@ test("contact form validates and returns a safe success state", async ({
   await expect(contactForm.getByRole("status")).not.toContainText(
     "phase-test@example.com",
   );
+});
+
+test("salary sense-check separates personal pay from a hiring budget", async ({
+  page,
+}) => {
+  await page.goto(
+    "/insights/manchester-north-west-marketing-salary-guide-2026",
+  );
+
+  const form = page.locator('form:has(input[name="salaryPurpose"])');
+  await expect(form.getByText("Candidate Privacy Notice")).toHaveCount(0);
+  await expect(form.getByLabel("Salary or budget")).toBeVisible();
+  await form.getByLabel("My own salary or package").check();
+  await expect(form.getByLabel("Your current salary or rate")).toBeVisible();
+  await expect(form.getByText("Candidate Privacy Notice")).toBeVisible();
+  await form.getByLabel("A salary for someone I’m hiring").check();
+  await expect(form.getByLabel("Proposed salary or budget")).toBeVisible();
+  await expect(form.getByText("Candidate Privacy Notice")).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
 });
 
 test("key public pages load", async ({ page }) => {

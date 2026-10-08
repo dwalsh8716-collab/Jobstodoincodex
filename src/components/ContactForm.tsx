@@ -104,14 +104,14 @@ export function ContactForm({
     : [
         "Permanent Recruitment",
         "Retained Search",
-        "Fractional",
+        "Fractional Leadership",
         "Market Intelligence & Advisory",
-        "Candidate conversation",
+        "Hiring salary sense-check",
         "Something else",
       ];
   const defaultBriefType =
     type === "client"
-      ? "Permanent Recruitment"
+      ? ""
       : type === "job"
         ? "Job application"
         : "Candidate conversation";
@@ -232,10 +232,16 @@ export function ContactForm({
           id={`${type}-brief`}
           name="briefType"
           defaultValue={defaultBriefType}
+          required
         >
+          {type === "client" ? (
+            <option value="" disabled>
+              Choose the closest fit
+            </option>
+          ) : null}
           {briefOptions.map((option) => (
             <option key={option} value={option}>
-              {option === "Fractional" ? "Fractional Leadership" : option}
+              {option}
             </option>
           ))}
         </select>

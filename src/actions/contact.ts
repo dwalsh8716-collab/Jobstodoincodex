@@ -62,6 +62,23 @@ function notificationMessage(payload: ContactFormPayload) {
   return "No message supplied.";
 }
 
+function isPersonalSalaryQuestion(payload: ContactFormPayload) {
+  return (
+    payload.type === "candidate" &&
+    payload.briefType === "Personal salary sense-check"
+  );
+}
+
+function enquirySubject(payload: ContactFormPayload) {
+  if (
+    isPersonalSalaryQuestion(payload) ||
+    payload.briefType === "Hiring salary sense-check"
+  ) {
+    return `Essential Resourcing | ${payload.briefType} from ${payload.name}`;
+  }
+  return `Essential Resourcing ${payload.type} enquiry from ${payload.name}`;
+}
+
 async function sendWithResend(payload: ContactFormPayload) {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
@@ -103,9 +120,14 @@ async function sendWithResend(payload: ContactFormPayload) {
 
   await sendEmail({
     recipient: to,
-    subject: `Essential Resourcing ${payload.type} enquiry from ${payload.name}`,
+    subject: enquirySubject(payload),
     text: [
-      `Type: ${payload.type}`,
+      `Enquiry: ${payload.briefType}`,
+      `Route: ${isPersonalSalaryQuestion(payload) ? "Personal salary question" : payload.type}`,
+      payload.sourcePage?.startsWith("/") &&
+      !payload.sourcePage.startsWith("//")
+        ? `Source page: ${siteConfig.url}${payload.sourcePage}`
+        : "",
       payload.jobTitle ? `Job: ${payload.jobTitle}` : "",
       `Name: ${payload.name}`,
       `Email: ${payload.email}`,
@@ -113,7 +135,6 @@ async function sendWithResend(payload: ContactFormPayload) {
       payload.company ? `Company: ${payload.company}` : "",
       payload.linkedin ? `LinkedIn: ${payload.linkedin}` : "",
       payload.jobSlug ? `Job slug: ${payload.jobSlug}` : "",
-      `Brief type: ${payload.briefType}`,
       `Preferred contact method: ${payload.preferredContactMethod}`,
       payload.type !== "client"
         ? `WhatsApp reply consent: ${payload.whatsappContactConsent === "yes" ? "yes" : "no"}`
@@ -129,37 +150,55 @@ async function sendWithResend(payload: ContactFormPayload) {
       "",
       notificationMessage(payload),
       "",
-      payload.type !== "client"
-        ? "Candidate note: do not attach or forward CVs unless secure private storage and permission are in place."
-        : "",
+      isPersonalSalaryQuestion(payload)
+        ? "Personal salary question: do not add to the talent pool without separate consent."
+        : payload.type !== "client"
+          ? "Candidate note: do not attach or forward CVs unless secure private storage and permission are in place."
+          : "",
     ]
       .filter(Boolean)
       .join("\n"),
   });
 
   if (payload.type !== "client") {
+    const personalSalaryQuestion = isPersonalSalaryQuestion(payload);
     await sendEmail({
       recipient: payload.email,
-      subject: candidateConfirmationSubject(payload.type),
-      text: [
-        `Hi ${payload.name},`,
-        "",
-        payload.type === "job"
-          ? `Thanks for applying through Essential Resourcing${payload.jobTitle ? ` for ${payload.jobTitle}` : ""}.`
-          : "Thanks for sending your note to Essential Resourcing.",
-        "",
-        "What happens next:",
-        ...candidateNextSteps.map((step, index) => `${index + 1}. ${step}`),
-        "",
-        candidateRetentionStatement,
-        "",
-        `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
-        `To ask for deletion or a copy of your details: ${siteConfig.url}${dataSubjectRequestPath}`,
-        "",
-        "No black hole. No nonsense. If it looks relevant, David will come back to you.",
-        "",
-        "Essential Resourcing",
-      ].join("\n"),
+      subject: personalSalaryQuestion
+        ? "We've received your salary question"
+        : candidateConfirmationSubject(payload.type),
+      text: personalSalaryQuestion
+        ? [
+            `Hi ${payload.name},`,
+            "",
+            "Thanks for asking me to sense-check your salary or package. I’ll read what you’ve sent and come back to you directly.",
+            "",
+            "This question does not add you to a talent pool or marketing list.",
+            `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
+            `To ask for deletion or a copy of your details: ${siteConfig.url}${dataSubjectRequestPath}`,
+            "",
+            "David Walsh",
+            "Essential Resourcing",
+          ].join("\n")
+        : [
+            `Hi ${payload.name},`,
+            "",
+            payload.type === "job"
+              ? `Thanks for applying through Essential Resourcing${payload.jobTitle ? ` for ${payload.jobTitle}` : ""}.`
+              : "Thanks for sending your note to Essential Resourcing.",
+            "",
+            "What happens next:",
+            ...candidateNextSteps.map((step, index) => `${index + 1}. ${step}`),
+            "",
+            candidateRetentionStatement,
+            "",
+            `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
+            `To ask for deletion or a copy of your details: ${siteConfig.url}${dataSubjectRequestPath}`,
+            "",
+            "No black hole. No nonsense. If it looks relevant, David will come back to you.",
+            "",
+            "Essential Resourcing",
+          ].join("\n"),
     });
   }
 

@@ -532,7 +532,7 @@ export async function submitCandidateApplicationDrop({
 
     await sendResendEmail({
       to,
-      subject: `Essential Resourcing CV/application from ${payload.name}`,
+      subject: `Essential Resourcing ${payload.type === "job" ? "job application" : storedCv ? "candidate CV" : "candidate note"} from ${payload.name}`,
       text: adminEmailText({ payload, reference, cv: storedCv }),
       attachments:
         storedCv && buffer

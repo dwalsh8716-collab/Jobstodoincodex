@@ -99,6 +99,39 @@ describe("contact form validation", () => {
     expect(validCandidate.success).toBe(true);
   });
 
+  it("keeps personal and hiring salary questions on their respective routes", () => {
+    expect(
+      contactFormSchema.safeParse({
+        ...basePayload,
+        type: "candidate",
+        briefType: "Personal salary sense-check",
+        privacyNoticeAcknowledgement: "yes",
+      }).success,
+    ).toBe(true);
+    expect(
+      contactFormSchema.safeParse({
+        ...basePayload,
+        type: "client",
+        briefType: "Personal salary sense-check",
+      }).success,
+    ).toBe(false);
+    expect(
+      contactFormSchema.safeParse({
+        ...basePayload,
+        type: "candidate",
+        briefType: "Hiring salary sense-check",
+        privacyNoticeAcknowledgement: "yes",
+      }).success,
+    ).toBe(false);
+    expect(
+      contactFormSchema.safeParse({
+        ...basePayload,
+        type: "candidate",
+        briefType: "Personal salary sense-check",
+      }).success,
+    ).toBe(false);
+  });
+
   it("lets candidates apply with a profile URL instead of a cover letter", () => {
     const validProfileOnlyApplication = contactFormSchema.safeParse({
       ...basePayload,
@@ -221,7 +254,13 @@ describe("contact server action response shape", () => {
 
     const confirmationBody = JSON.parse(
       String(fetchMock.mock.calls[1]?.[1]?.body),
-    ) as { from: string; to: string; subject: string; text: string; html: string };
+    ) as {
+      from: string;
+      to: string;
+      subject: string;
+      text: string;
+      html: string;
+    };
 
     expect(confirmationBody).toMatchObject({
       from: "Essential Resourcing <website@example.com>",
@@ -235,6 +274,91 @@ describe("contact server action response shape", () => {
     expect(confirmationBody.text).toContain("delete");
     expect(confirmationBody.text).not.toContain(
       "confidential conversation about my next move",
+    );
+  });
+
+  it("labels a personal salary question clearly and sends a relevant acknowledgement", async () => {
+    process.env.RESEND_API_KEY = "test_resend_key";
+    process.env.CONTACT_TO_EMAIL = "david@example.com";
+    process.env.CONTACT_FROM_EMAIL = "website@example.com";
+    delete process.env.OPERATIONS_DB_ENABLED;
+    delete process.env.DATABASE_URL;
+
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const now = Date.now();
+    const result = await submitContactEnquiry(
+      {
+        ...basePayload,
+        type: "candidate",
+        email: "personal-salary@example.com",
+        briefType: "Personal salary sense-check",
+        message: "I would like to discuss my current package privately.",
+        privacyNoticeAcknowledgement: "yes",
+        sourcePage:
+          "/insights/manchester-north-west-marketing-salary-guide-2026",
+        startedAt: now - minimumCompletionTimeMs - 500,
+      },
+      { ip: "personal-salary-enquiry", now },
+    );
+
+    expect(result.ok).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const adminEmail = JSON.parse(
+      String(fetchMock.mock.calls[0]?.[1]?.body),
+    ) as { subject: string; text: string };
+    const confirmation = JSON.parse(
+      String(fetchMock.mock.calls[1]?.[1]?.body),
+    ) as { subject: string; text: string };
+    expect(adminEmail.subject).toBe(
+      "Essential Resourcing | Personal salary sense-check from David Walsh",
+    );
+    expect(adminEmail.text).toContain("Route: Personal salary question");
+    expect(adminEmail.text).toContain(
+      "do not add to the talent pool without separate consent",
+    );
+    expect(adminEmail.text).toContain(
+      "Source page: https://essentialresourcing.co.uk/insights/manchester-north-west-marketing-salary-guide-2026",
+    );
+    expect(confirmation.subject).toBe("We've received your salary question");
+    expect(confirmation.text).toContain("does not add you to a talent pool");
+    expect(confirmation.text).not.toContain("current package privately");
+    expect(confirmation.text).not.toContain("possible fit");
+  });
+
+  it("labels a hiring salary question without sending a candidate acknowledgement", async () => {
+    process.env.RESEND_API_KEY = "test_resend_key";
+    process.env.CONTACT_TO_EMAIL = "david@example.com";
+    delete process.env.OPERATIONS_DB_ENABLED;
+    delete process.env.DATABASE_URL;
+
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const now = Date.now();
+    const result = await submitContactEnquiry(
+      {
+        ...basePayload,
+        email: "hiring-salary@example.com",
+        briefType: "Hiring salary sense-check",
+        sourcePage: "/contact",
+        startedAt: now - minimumCompletionTimeMs - 500,
+      },
+      { ip: "hiring-salary-enquiry", now },
+    );
+
+    expect(result.ok).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const adminEmail = JSON.parse(
+      String(fetchMock.mock.calls[0]?.[1]?.body),
+    ) as { subject: string; text: string };
+    expect(adminEmail.subject).toBe(
+      "Essential Resourcing | Hiring salary sense-check from David Walsh",
+    );
+    expect(adminEmail.text).toContain("Route: client");
+    expect(adminEmail.text).toContain(
+      "Source page: https://essentialresourcing.co.uk/contact",
     );
   });
 });

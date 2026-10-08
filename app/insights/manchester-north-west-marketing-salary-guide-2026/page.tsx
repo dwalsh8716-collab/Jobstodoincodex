@@ -485,9 +485,9 @@ export default function SalaryGuidePage() {
                   Want me to sense-check a salary?
                 </h2>
                 <p id="salary-sense-check-intro">
-                  Send me the role or title, the salary or budget, and anything
-                  useful about the brief. I’ll tell you whether it broadly
-                  stacks up.
+                  Checking your own pay, or setting a hiring budget? Send me the
+                  role, the number and a little context. I’ll tell you whether
+                  it broadly stacks up.
                 </p>
                 <div className={styles.senseCheckActions}>
                   {salarySenseCheckWhatsAppUrl && (

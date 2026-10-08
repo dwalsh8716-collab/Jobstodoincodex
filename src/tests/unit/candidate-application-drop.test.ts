@@ -273,6 +273,9 @@ describe("candidate application drop", () => {
     expect(awsMocks.send).not.toHaveBeenCalled();
     expect(global.fetch).toHaveBeenCalledTimes(2);
     expect(adminEmail.attachments).toBeUndefined();
+    expect(adminEmail.subject).toBe(
+      "Essential Resourcing candidate note from Candidate Name",
+    );
     expect(adminEmail.text).toContain(
       "LinkedIn/profile: https://www.linkedin.com/in/example",
     );
@@ -341,7 +344,7 @@ describe("candidate application drop", () => {
     expect(adminEmail).toMatchObject({
       from: "Essential Resourcing <website@example.com>",
       to: "david@example.com",
-      subject: "Essential Resourcing CV/application from Candidate Name",
+      subject: "Essential Resourcing candidate CV from Candidate Name",
     });
     expect(adminEmail.attachments).toEqual([
       {

@@ -654,6 +654,21 @@
   min-width: 0;
 }
 
+.senseCheckPurpose {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.senseCheckPurpose legend {
+  margin-bottom: 0.5rem;
+  color: var(--color-ink);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
 .senseCheckFull {
   grid-column: 1 / -1;
 }

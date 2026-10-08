@@ -87,6 +87,19 @@ export const contactFormSchema = z
   .superRefine((payload, ctx) => {
     const messageLength = payload.message?.length || 0;
 
+    if (
+      (payload.briefType === "Personal salary sense-check" &&
+        payload.type !== "candidate") ||
+      (payload.briefType === "Hiring salary sense-check" &&
+        payload.type !== "client")
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["briefType"],
+        message: "Please choose the right salary enquiry type.",
+      });
+    }
+
     if (payload.type === "client" && messageLength < 10) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -100,8 +113,7 @@ export const contactFormSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["linkedin"],
-          message:
-            "Please add either a LinkedIn/profile URL or a short note.",
+          message: "Please add either a LinkedIn/profile URL or a short note.",
         });
       }
 
