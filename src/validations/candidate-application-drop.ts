@@ -1,4 +1,8 @@
 import { z } from "zod";
+import {
+  maxCandidateNoteLength,
+  minStandaloneCandidateNoteLength,
+} from "@/lib/candidate-application-constraints";
 import { preferredContactMethods } from "./contact";
 
 export const maxCvFileBytes = 10 * 1024 * 1024;
@@ -42,7 +46,10 @@ export const candidateApplicationDropSchema = z
         .max(240)
         .optional(),
     ),
-    note: z.preprocess(emptyToUndefined, safeText(2000).optional()),
+    note: z.preprocess(
+      emptyToUndefined,
+      safeText(maxCandidateNoteLength).optional(),
+    ),
     preferredContactMethod: z
       .enum(preferredContactMethods)
       .default("no_preference"),
@@ -77,32 +84,24 @@ export const candidateApplicationDropSchema = z
   .superRefine((payload, ctx) => {
     const noteLength = payload.note?.length || 0;
 
-    if (!payload.linkedin && noteLength < 10 && payload.hasCvFile !== "yes") {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["linkedin"],
-        message:
-          "Please add a CV, LinkedIn/profile URL or short note.",
-      });
-    }
-
-    if (payload.note && noteLength > 0 && noteLength < 10) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["note"],
-        message: "Please add a little more detail, or leave the note blank.",
-      });
-    }
-
     if (
-      payload.preferredContactMethod === "whatsapp" &&
-      !payload.phone
+      !payload.linkedin &&
+      noteLength < minStandaloneCandidateNoteLength &&
+      payload.hasCvFile !== "yes"
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["phone"],
+        path: ["note"],
         message:
-          "Please add a phone number if you prefer WhatsApp contact.",
+          "Add a CV or profile link, or write at least 10 characters in the short note.",
+      });
+    }
+
+    if (payload.preferredContactMethod === "whatsapp" && !payload.phone) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["phone"],
+        message: "Please add a phone number if you prefer WhatsApp contact.",
       });
     }
 
@@ -152,7 +151,9 @@ export function validateCvFile(
   const hasKnownSafeMime =
     value.type === "" ||
     value.type === "application/octet-stream" ||
-    allowedCvMimeTypes.includes(value.type as (typeof allowedCvMimeTypes)[number]);
+    allowedCvMimeTypes.includes(
+      value.type as (typeof allowedCvMimeTypes)[number],
+    );
 
   if (!hasValidExtension || !hasKnownSafeMime) {
     return {

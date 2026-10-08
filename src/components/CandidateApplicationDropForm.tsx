@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { maxCandidateNoteLength } from "@/lib/candidate-application-constraints";
 import {
   candidateConsentCopy,
   candidatePrivacyPath,
   candidateRetentionStatement,
 } from "@/lib/candidate-trust";
+import { siteConfig } from "@/lib/site";
 
 type CandidateApplicationDropFormProps = {
   type: "candidate" | "job";
@@ -31,10 +33,15 @@ export function CandidateApplicationDropForm({
   >("idle");
   const [message, setMessage] = useState("");
   const [reference, setReference] = useState("");
+  const [noteLength, setNoteLength] = useState(0);
   const [startedAt, setStartedAt] = useState(() => Date.now().toString());
   const [hasTrackedStart, setHasTrackedStart] = useState(false);
   const formId = useId();
   const statusId = `${formId}-${type}-cv-form-status`;
+  const sendFailureMessage =
+    type === "job"
+      ? "The application could not be sent."
+      : "Your details could not be sent.";
   const sourcePage =
     type === "job" && jobSlug ? `/jobs/${jobSlug}` : "/candidates";
 
@@ -67,7 +74,10 @@ export function CandidateApplicationDropForm({
       }
       if (document.referrer) {
         try {
-          formData.set("referrerHost", new URL(document.referrer).hostname.slice(0, 100));
+          formData.set(
+            "referrerHost",
+            new URL(document.referrer).hostname.slice(0, 100),
+          );
         } catch {
           // The referrer is optional; never interrupt an application for it.
         }
@@ -88,13 +98,13 @@ export function CandidateApplicationDropForm({
       };
 
       if (!response.ok || !data.ok) {
-        throw new Error(data.message || "The CV could not be sent.");
+        throw new Error(data.message || sendFailureMessage);
       }
 
       setStatus("success");
       setMessage(
         data.message ||
-          "Thanks. Your CV has gone privately to David for review.",
+          "Thanks. Your details have gone privately to David for review.",
       );
       setReference(data.reference || "");
       trackEvent("cv_upload_submission", {
@@ -102,13 +112,12 @@ export function CandidateApplicationDropForm({
         job_slug: jobSlug,
       });
       form.reset();
+      setNoteLength(0);
       setStartedAt(Date.now().toString());
       setHasTrackedStart(false);
     } catch (error) {
       setStatus("error");
-      setMessage(
-        error instanceof Error ? error.message : "The CV could not be sent.",
-      );
+      setMessage(error instanceof Error ? error.message : sendFailureMessage);
       trackEvent("form_error", {
         form_type: type,
         job_slug: jobSlug,
@@ -234,13 +243,19 @@ export function CandidateApplicationDropForm({
           id={`${type}-cv-note`}
           name="note"
           rows={5}
-          maxLength={2000}
+          maxLength={maxCandidateNoteLength}
+          aria-describedby={`${type}-cv-note-count`}
+          onChange={(event) => setNoteLength(event.currentTarget.value.length)}
           placeholder={
             type === "job"
               ? "A few useful lines about why the role caught your eye is plenty."
               : "Tell David what you're doing now and what you might want next."
           }
         />
+        <p id={`${type}-cv-note-count`} className="form-note">
+          {noteLength.toLocaleString("en-GB")} /{" "}
+          {maxCandidateNoteLength.toLocaleString("en-GB")} characters
+        </p>
       </div>
 
       <div className="form-row">
@@ -344,6 +359,17 @@ export function CandidateApplicationDropForm({
         {message}
         {reference ? ` Reference: ${reference}.` : ""}
       </p>
+      {status === "error" ? (
+        <p className="form-note">
+          Still having trouble? Email David your note and CV directly at{" "}
+          <a
+            href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(jobTitle ? `Application: ${jobTitle}` : "Candidate enquiry")}`}
+          >
+            {siteConfig.email}
+          </a>
+          .
+        </p>
+      ) : null}
 
       {status === "success" ? (
         <div className="form-confirmation" role="status">

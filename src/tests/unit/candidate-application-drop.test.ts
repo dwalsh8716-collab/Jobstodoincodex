@@ -180,6 +180,49 @@ describe("candidate application drop", () => {
     expect(usefulNote.success).toBe(true);
   });
 
+  it("accepts a longer application note up to the visible limit", () => {
+    const withinLimit = candidateApplicationDropSchema.safeParse({
+      ...validPayload(),
+      note: "A".repeat(4000),
+    });
+    const overLimit = candidateApplicationDropSchema.safeParse({
+      ...validPayload(),
+      note: "A".repeat(4001),
+    });
+
+    expect(withinLimit.success).toBe(true);
+    expect(overLimit.success).toBe(false);
+  });
+
+  it("allows a brief accompanying note with a CV or profile, but explains a note-only minimum", () => {
+    const withCv = candidateApplicationDropSchema.safeParse({
+      ...validPayload(),
+      linkedin: "",
+      note: "Hi David",
+      hasCvFile: "yes",
+    });
+    const withProfile = candidateApplicationDropSchema.safeParse({
+      ...validPayload(),
+      note: "Hi David",
+      hasCvFile: undefined,
+    });
+    const noteOnly = candidateApplicationDropSchema.safeParse({
+      ...validPayload(),
+      linkedin: "",
+      note: "Hi David",
+      hasCvFile: undefined,
+    });
+
+    expect(withCv.success).toBe(true);
+    expect(withProfile.success).toBe(true);
+    expect(noteOnly.success).toBe(false);
+    if (!noteOnly.success) {
+      expect(noteOnly.error.errors[0]?.message).toContain(
+        "at least 10 characters",
+      );
+    }
+  });
+
   it("requires WhatsApp consent when WhatsApp is the preferred candidate route", () => {
     const missingConsent = candidateApplicationDropSchema.safeParse({
       ...validPayload(),
