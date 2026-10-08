@@ -1979,6 +1979,11 @@ p {
   gap: 16px;
 }
 
+.job-application-anchor {
+  min-width: 0;
+  scroll-margin-top: 96px;
+}
+
 .candidate-dropzone {
   display: grid;
   min-width: 0;

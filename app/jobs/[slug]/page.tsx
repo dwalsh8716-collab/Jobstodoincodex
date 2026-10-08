@@ -16,6 +16,7 @@ import { getPublicJob, getPublicJobs } from "@/lib/public-content";
 import { createMetadata, jobPostingSchema } from "@/lib/seo";
 import { canonicalJobUrl } from "@/lib/job-distribution";
 import { candidateJobWhatsAppMessage } from "@/lib/whatsapp";
+import { analyticsAttributes } from "@/lib/analytics";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -84,6 +85,19 @@ export default async function JobPage({ params }: Props) {
               : "Confidential employer · "}
             {job.salaryRange} · {job.location} · {job.workingPattern}
           </p>
+          {live ? (
+            <a
+              className="button button-primary"
+              href="#job-application"
+              {...analyticsAttributes("cta_click", {
+                label: "Apply for this role",
+                location: "job_hero",
+                job_slug: job.slug,
+              })}
+            >
+              Apply for this role
+            </a>
+          ) : null}
         </div>
       </section>
       {live ? (
@@ -318,11 +332,13 @@ export default async function JobPage({ params }: Props) {
                     </Link>
                   </div>
                 </div>
-                <CandidateApplicationDrop
-                  type="job"
-                  jobTitle={job.title}
-                  jobSlug={job.slug}
-                />
+                <div id="job-application" className="job-application-anchor">
+                  <CandidateApplicationDrop
+                    type="job"
+                    jobTitle={job.title}
+                    jobSlug={job.slug}
+                  />
+                </div>
               </>
             ) : (
               <div className="card">
