@@ -85,6 +85,12 @@ export function Footer() {
           <Link href={siteConfig.companyLinkedIn} target="_blank" rel="noopener noreferrer">
             Essential Resourcing on LinkedIn
           </Link>
+          <Link href={siteConfig.companyFacebook} target="_blank" rel="noopener noreferrer">
+            Essential Resourcing on Facebook
+          </Link>
+          <Link href={siteConfig.companyInstagram} target="_blank" rel="noopener noreferrer">
+            Essential Resourcing on Instagram
+          </Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/candidate-privacy">Candidate Privacy Notice</Link>
           <Link href="/candidate-privacy/request">Data Request</Link>

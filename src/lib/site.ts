@@ -25,6 +25,10 @@ export const defaultLinkedInProfileUrl =
   "https://www.linkedin.com/in/davidwalshmarketingsearch/";
 export const defaultLinkedInCompanyUrl =
   "https://www.linkedin.com/company/essentialresourcing/";
+export const defaultFacebookCompanyUrl =
+  "https://www.facebook.com/essentialresourcing/";
+export const defaultInstagramCompanyUrl =
+  "https://www.instagram.com/esse.ntialresourcing/";
 export const defaultLinkedInRecommendationsUrl =
   "https://www.linkedin.com/in/davidwalshmarketingsearch/details/recommendations/";
 
@@ -60,6 +64,8 @@ export const siteConfig = {
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   linkedIn: linkedInProfileUrl,
   companyLinkedIn: defaultLinkedInCompanyUrl,
+  companyFacebook: defaultFacebookCompanyUrl,
+  companyInstagram: defaultInstagramCompanyUrl,
   linkedInLabel: "Connect with David on LinkedIn",
   linkedInRecommendations: linkedInRecommendationsUrl,
   linkedInRecommendationsLabel: "Read LinkedIn recommendations",
