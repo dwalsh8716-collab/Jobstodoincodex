@@ -123,6 +123,7 @@ export const serviceNavigation = [
 ] as const;
 
 export const launchPages = [
+  "/sitemap",
   "/",
   "/about-essential",
   "/about-david-walsh",

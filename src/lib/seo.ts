@@ -62,7 +62,7 @@ export function organisationSchema() {
     name: siteConfig.name,
     url: siteConfig.url,
     logo: absoluteUrl(siteConfig.logoDark),
-    sameAs: [siteConfig.companyLinkedIn],
+    sameAs: [siteConfig.companyLinkedIn, siteConfig.companyFacebook, siteConfig.companyInstagram],
     areaServed: ["Manchester", "North West England", "United Kingdom"],
     founder: {
       "@type": "Person",

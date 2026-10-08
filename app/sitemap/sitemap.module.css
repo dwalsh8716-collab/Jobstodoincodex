@@ -1,0 +1,32 @@
+.directory {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 56px;
+}
+.directory section {
+  border-top: 1px solid var(--color-line);
+  padding-top: 20px;
+}
+.directory h2 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+.directory ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.directory a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 767px) {
+  .directory {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}

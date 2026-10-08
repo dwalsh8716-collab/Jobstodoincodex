@@ -5,6 +5,8 @@ import { linkedInRecommendations } from "@/lib/content";
 import { organisationSchema, personSchema } from "@/lib/seo";
 import {
   defaultLinkedInCompanyUrl,
+  defaultFacebookCompanyUrl,
+  defaultInstagramCompanyUrl,
   defaultLinkedInProfileUrl,
   defaultLinkedInRecommendationsUrl,
   siteConfig,
@@ -33,7 +35,7 @@ describe("David Walsh LinkedIn profile integration", () => {
       sameAs: [defaultLinkedInProfileUrl],
     });
     expect(organisationSchema()).toMatchObject({
-      sameAs: [defaultLinkedInCompanyUrl],
+      sameAs: [defaultLinkedInCompanyUrl, defaultFacebookCompanyUrl, defaultInstagramCompanyUrl],
     });
   });
 
@@ -48,7 +50,7 @@ describe("David Walsh LinkedIn profile integration", () => {
       'location="contact_page"',
     );
     expect(readProjectFile("src/components/Footer.tsx")).toContain(
-      'location="footer"',
+      'location: "footer"',
     );
     expect(readProjectFile("app/insights/[slug]/page.tsx")).toContain(
       'location="author_bio"',
