@@ -52,6 +52,38 @@ test("mobile menu opens and closes", async ({ page }) => {
   await expect(page).toHaveURL(/\/jobs$/);
 });
 
+test("tablet navigation switches to the compact menu", async ({ page }) => {
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.goto("/");
+
+  const toggle = page.getByRole("button", { name: "Open navigation" });
+  await expect(toggle).toBeVisible();
+  await toggle.click();
+  await expect(
+    page.getByRole("navigation", { name: "Primary navigation" }),
+  ).toBeVisible();
+});
+
+test("salary guide jump is visible on the first phone screen", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/insights/manchester-north-west-marketing-salary-guide-2026");
+
+  const jump = page.getByRole("link", { name: "Jump to salaries" });
+  const bounds = await jump.boundingBox();
+  expect(bounds).not.toBeNull();
+  expect(bounds!.y + bounds!.height).toBeLessThan(844);
+
+  const rejectCookies = page.getByRole("button", {
+    name: "Reject non-essential",
+  });
+  if (await rejectCookies.isVisible()) await rejectCookies.click();
+
+  await jump.click();
+  await expect(page).toHaveURL(/#salary-navigation$/);
+});
+
 test("mobile quick actions do not cover the first screen or downward reading", async ({
   page,
 }) => {

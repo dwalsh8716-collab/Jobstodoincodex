@@ -23,7 +23,11 @@ export function JobListingCard({ job }: { job: Job }) {
         {job.specialism ? (
           <p className={styles.descriptor}>{job.specialism}</p>
         ) : null}
-        <h3 id={`job-${job.slug}`}>{job.title}</h3>
+        <h3 id={`job-${job.slug}`}>
+          <Link className={styles.titleLink} href={`/jobs/${job.slug}`}>
+            {job.title}
+          </Link>
+        </h3>
         <p className={styles.summary}>{job.summary}</p>
       </div>
       <dl className={styles.details}>

@@ -441,6 +441,10 @@ p {
   align-items: end;
 }
 
+.clients-hero-grid {
+  align-items: start;
+}
+
 .clients-hero-copy,
 .process-hero-copy {
   display: grid;
@@ -4456,6 +4460,62 @@ fieldset.form-row legend {
   border-color: color-mix(in srgb, var(--color-charcoal) 26%, transparent);
 }
 
+@media (max-width: 1180px) {
+  .primary-nav {
+    position: fixed;
+    top: 76px;
+    right: 12px;
+    left: 12px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+    padding: 12px;
+    max-height: calc(100dvh - 96px);
+    overflow-y: auto;
+  }
+
+  .primary-nav.is-open {
+    display: flex;
+  }
+
+  .primary-nav a {
+    padding: 12px;
+  }
+
+  .nav-whatsapp {
+    display: inline-flex;
+    margin-top: 8px;
+  }
+
+  .nav-booking {
+    display: inline-flex;
+    margin-top: 8px;
+  }
+
+  .primary-nav a::after {
+    display: none !important;
+  }
+
+  .nav-dropdown {
+    position: static;
+    display: grid;
+    min-width: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 4px 0 8px 12px;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}
+
 @media (max-width: 980px) {
   h1 {
     font-size: 4.35rem;
@@ -4529,60 +4589,6 @@ fieldset.form-row legend {
 
   .grid-2 {
     grid-template-columns: 1fr;
-  }
-
-  .primary-nav {
-    position: fixed;
-    top: 76px;
-    right: 12px;
-    left: 12px;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-soft);
-    padding: 12px;
-    max-height: calc(100dvh - 96px);
-    overflow-y: auto;
-  }
-
-  .primary-nav.is-open {
-    display: flex;
-  }
-
-  .primary-nav a {
-    padding: 12px;
-  }
-
-  .nav-whatsapp {
-    display: inline-flex;
-    margin-top: 8px;
-  }
-
-  .nav-booking {
-    display: inline-flex;
-    margin-top: 8px;
-  }
-
-  .primary-nav a::after {
-    display: none !important;
-  }
-
-  .nav-dropdown {
-    position: static;
-    display: grid;
-    min-width: 0;
-    border: 0;
-    box-shadow: none;
-    background: transparent;
-    padding: 4px 0 8px 12px;
-  }
-
-  .nav-toggle {
-    display: block;
   }
 
   .footer-grid,
@@ -4944,7 +4950,7 @@ fieldset.form-row legend {
   }
 
   .home-hero-video {
-    min-height: calc(100svh - 76px);
+    min-height: calc(100svh - 180px);
   }
 
   .home-hero-video::before {

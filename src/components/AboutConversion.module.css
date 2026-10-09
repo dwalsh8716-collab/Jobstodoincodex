@@ -18,6 +18,7 @@
 .routeLinks { display: flex; flex-wrap: wrap; gap: 24px 40px; margin-top: 24px; }
 .routeLinks a { text-decoration: underline; text-underline-offset: 5px; }
 .contact :global(.trust-callout) { border: 0; border-top: 1px solid var(--color-dark-line); padding: 24px 0 0; background: transparent; }
+.contact :global(.split) { align-items: start; }
 .contact h2 { font-size: 1.75rem; }
 .contactRoutes { margin-top: 40px; }
 .contactRoutes > div { border-top: 1px solid var(--color-dark-line); margin-top: 24px; padding-top: 20px; }

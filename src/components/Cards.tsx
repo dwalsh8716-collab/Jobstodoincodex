@@ -21,7 +21,14 @@ export function InsightCard({ insight, editorial = false }: { insight: Insight; 
   return (
     <article className={editorial ? editorialStyles.card : "card lift-card"}>
       <span className="tag">{insight.cardCategory || insight.category}</span>
-      <h3>{insight.title}</h3>
+      <h3>
+        <Link
+          className={editorialStyles.titleLink}
+          href={`/insights/${insight.slug}`}
+        >
+          {insight.title}
+        </Link>
+      </h3>
       <p>{insight.cardExcerpt || insight.excerpt}</p>
       <p className="meta">
         {insight.author} · {insight.publishedDate}
@@ -71,7 +78,11 @@ export function JobCard({ job }: { job: Job }) {
       <span className="tag">
         {job.status === "live" ? "Live role" : `${job.status} role`}
       </span>
-      <h3>{job.title}</h3>
+      <h3>
+        <Link className={editorialStyles.titleLink} href={`/jobs/${job.slug}`}>
+          {job.title}
+        </Link>
+      </h3>
       <p>{job.summary}</p>
       <p className="meta">
         {job.location} · {job.workingPattern} · {job.salaryRange}

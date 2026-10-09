@@ -134,11 +134,6 @@ export default function SalaryGuidePage() {
             <p className="lede">
               What should you actually be paying good marketing people in 2026?
             </p>
-            <Paragraphs texts={salaryGuideIntro} />
-            <p className="meta">
-              By <Link href="/about-david-walsh">David Walsh</Link>, Founder,
-              Essential Resourcing · Research: September 2026
-            </p>
             <div className="button-row hero-actions">
               <Link className="button button-primary" href="#salary-checker">
                 Check my salary
@@ -147,6 +142,11 @@ export default function SalaryGuidePage() {
                 Jump to salaries
               </a>
             </div>
+            <Paragraphs texts={salaryGuideIntro} />
+            <p className="meta">
+              By <Link href="/about-david-walsh">David Walsh</Link>, Founder,
+              Essential Resourcing · Research: September 2026
+            </p>
           </div>
         </header>
         <div className="section surface">
