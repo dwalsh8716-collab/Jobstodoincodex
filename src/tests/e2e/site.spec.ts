@@ -64,6 +64,20 @@ test("tablet navigation switches to the compact menu", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("desktop navigation starts only once the header fits", async ({ page }) => {
+  await page.setViewportSize({ width: 1199, height: 800 });
+  await page.goto("/");
+  await expect(
+    page.getByRole("button", { name: "Open navigation" }),
+  ).toBeVisible();
+
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await expect(page.getByRole("button", { name: "Open navigation" })).toBeHidden();
+  await expect(
+    page.getByRole("navigation", { name: "Primary navigation" }),
+  ).toBeVisible();
+});
+
 test("salary guide jump is visible on the first phone screen", async ({
   page,
 }) => {

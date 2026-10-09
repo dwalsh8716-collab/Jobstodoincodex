@@ -4460,7 +4460,7 @@ fieldset.form-row legend {
   border-color: color-mix(in srgb, var(--color-charcoal) 26%, transparent);
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1199px) {
   .primary-nav {
     position: fixed;
     top: 76px;
