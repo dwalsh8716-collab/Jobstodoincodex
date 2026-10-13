@@ -43,7 +43,7 @@
     "@sanity/vision": "6.16.0",
     "@sanity/webhook": "4.0.4",
     "@sentry/nextjs": "^10.75.1",
-    "next": "16.3.5",
+    "next": "16.3.8",
     "next-sanity": "^13.1.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
@@ -60,7 +60,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "eslint": "9.39.5",
-    "eslint-config-next": "16.3.5",
+    "eslint-config-next": "16.3.8",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "prettier": "3.9.6",
     "tailwindcss": "4.3.3",
@@ -82,7 +82,7 @@
       "esbuild": "^0.28.1"
     },
     "adm-zip": "0.6.1",
-    "undici": "7.29.0",
+    "undici": "7.29.1",
     "@module-federation/vite": "1.21.6",
     "typeid-js": {
       "uuid": "^11.1.1"
