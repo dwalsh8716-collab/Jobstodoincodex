@@ -217,7 +217,7 @@ describe("candidate application drop", () => {
     expect(withProfile.success).toBe(true);
     expect(noteOnly.success).toBe(false);
     if (!noteOnly.success) {
-      expect(noteOnly.error.errors[0]?.message).toContain(
+      expect(noteOnly.error.issues[0]?.message).toContain(
         "at least 10 characters",
       );
     }

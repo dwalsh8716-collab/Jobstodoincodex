@@ -276,7 +276,7 @@ export async function submitInterimAvailabilityUpdate(
   const parsed = interimAvailabilityUpdateSchema.safeParse(input);
   if (!parsed.success) {
     return safeFailure(
-      parsed.error.errors[0]?.message || "Please check the form.",
+      parsed.error.issues[0]?.message || "Please check the form.",
     );
   }
 

@@ -60,7 +60,7 @@ export const contactFormSchema = z
     consent: z.preprocess(
       (value) => (value === true ? "yes" : value),
       z.literal("yes", {
-        errorMap: () => ({ message: "Consent is required." }),
+        error: "Consent is required.",
       }),
     ),
     privacyNoticeAcknowledgement: z.preprocess(

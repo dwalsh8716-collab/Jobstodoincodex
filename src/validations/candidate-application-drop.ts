@@ -54,13 +54,10 @@ export const candidateApplicationDropSchema = z
       .enum(preferredContactMethods)
       .default("no_preference"),
     consent: z.literal("yes", {
-      errorMap: () => ({ message: "Consent is required." }),
+      error: "Consent is required.",
     }),
     privacyNoticeAcknowledgement: z.literal("yes", {
-      errorMap: () => ({
-        message:
-          "Please confirm that you have read the Candidate Privacy Notice.",
-      }),
+      error: "Please confirm that you have read the Candidate Privacy Notice.",
     }),
     whatsappContactConsent: z.literal("yes").optional(),
     talentPoolConsent: z.literal("yes").optional(),

@@ -233,7 +233,7 @@ export function buildInterviewNotePrototypeDraft(
       ok: false,
       skipped: true,
       reason: "invalid_input",
-      errors: parsed.error.errors.map((error) => error.message),
+      errors: parsed.error.issues.map((error) => error.message),
     };
   }
 

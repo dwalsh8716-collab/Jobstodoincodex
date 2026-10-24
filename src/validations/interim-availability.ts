@@ -29,7 +29,7 @@ export const interimAvailabilityUpdateSchema = z
       .trim()
       .regex(/^[A-Za-z0-9_-]{32,200}$/, "This link could not be used."),
     status: z.enum(interimAvailabilityStatuses, {
-      errorMap: () => ({ message: "Please choose your availability." }),
+      error: "Please choose your availability.",
     }),
     availableFrom: optionalDate,
     dayRate: optionalText(80),

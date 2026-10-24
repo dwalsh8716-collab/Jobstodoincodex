@@ -446,7 +446,7 @@ export async function submitSalaryGuideLead(
     return salaryGuideResult(
       "invalid_payload",
       400,
-      parsed.error.errors[0]?.message || "Please check the form.",
+      parsed.error.issues[0]?.message || "Please check the form.",
     );
   }
 

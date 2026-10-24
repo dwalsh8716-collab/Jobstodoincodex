@@ -215,7 +215,7 @@ export async function submitContactEnquiry(
     return {
       ok: false,
       statusCode: 400,
-      message: parsed.error.errors[0]?.message || "Please check the form.",
+      message: parsed.error.issues[0]?.message || "Please check the form.",
     };
   }
 

@@ -37,12 +37,12 @@ export const salaryGuideLeadSchema = z.object({
       .optional(),
   ),
   hiringInterest: z.enum(salaryGuideHiringInterests, {
-    errorMap: () => ({ message: "Please choose what the guide is for." }),
+    error: "Please choose what the guide is for.",
   }),
   consentToContact: z.preprocess(
     (value) => (value === true ? "yes" : value),
     z.literal("yes", {
-      errorMap: () => ({ message: "Consent to contact is required." }),
+      error: "Consent to contact is required.",
     }),
   ),
   marketingConsent: z.preprocess(

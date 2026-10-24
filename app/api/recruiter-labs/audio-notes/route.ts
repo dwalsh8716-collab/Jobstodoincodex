@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       {
         ok: false,
         message:
-          parsed.error.errors[0]?.message || "Check the audio note details.",
+          parsed.error.issues[0]?.message || "Check the audio note details.",
       },
       { status: 400 },
     );
