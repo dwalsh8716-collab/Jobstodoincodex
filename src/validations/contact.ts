@@ -30,6 +30,20 @@ const optionalUrl = z.preprocess(
     .optional(),
 );
 
+function isLinkedInProfileUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return (
+      url.protocol === "https:" &&
+      (url.hostname === "linkedin.com" ||
+        url.hostname.endsWith(".linkedin.com")) &&
+      /^\/in\/[^/]+\/?$/.test(url.pathname)
+    );
+  } catch {
+    return false;
+  }
+}
+
 export const contactFormSchema = z
   .object({
     type: z.enum(contactTypes).default("client"),
@@ -97,6 +111,17 @@ export const contactFormSchema = z
         code: z.ZodIssueCode.custom,
         path: ["briefType"],
         message: "Please choose the right salary enquiry type.",
+      });
+    }
+
+    if (
+      payload.briefType === "Personal salary sense-check" &&
+      (!payload.linkedin || !isLinkedInProfileUrl(payload.linkedin))
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["linkedin"],
+        message: "Please add your LinkedIn profile URL (linkedin.com/in/...).",
       });
     }
 

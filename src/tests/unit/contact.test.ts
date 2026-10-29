@@ -106,6 +106,7 @@ describe("contact form validation", () => {
         type: "candidate",
         briefType: "Personal salary sense-check",
         privacyNoticeAcknowledgement: "yes",
+        linkedin: "https://www.linkedin.com/in/example/",
       }).success,
     ).toBe(true);
     expect(
@@ -130,6 +131,39 @@ describe("contact form validation", () => {
         briefType: "Personal salary sense-check",
       }).success,
     ).toBe(false);
+  });
+
+  it("requires a genuine LinkedIn profile for personal salary questions only", () => {
+    const personalQuestion = {
+      ...basePayload,
+      type: "candidate",
+      briefType: "Personal salary sense-check",
+      privacyNoticeAcknowledgement: "yes",
+    };
+
+    for (const linkedin of [
+      undefined,
+      "https://example.com/in/example",
+      "https://linkedin.com.evil.example/in/example",
+      "https://www.linkedin.com/company/example",
+    ]) {
+      expect(
+        contactFormSchema.safeParse({ ...personalQuestion, linkedin }).success,
+      ).toBe(false);
+    }
+
+    expect(
+      contactFormSchema.safeParse({
+        ...personalQuestion,
+        linkedin: "https://www.linkedin.com/in/example/",
+      }).success,
+    ).toBe(true);
+    expect(
+      contactFormSchema.safeParse({
+        ...basePayload,
+        briefType: "Hiring salary sense-check",
+      }).success,
+    ).toBe(true);
   });
 
   it("lets candidates apply with a profile URL instead of a cover letter", () => {
@@ -294,6 +328,7 @@ describe("contact server action response shape", () => {
         type: "candidate",
         email: "personal-salary@example.com",
         briefType: "Personal salary sense-check",
+        linkedin: "https://www.linkedin.com/in/example/",
         message: "I would like to discuss my current package privately.",
         privacyNoticeAcknowledgement: "yes",
         sourcePage:
@@ -315,6 +350,9 @@ describe("contact server action response shape", () => {
       "Essential Resourcing | Personal salary sense-check from David Walsh",
     );
     expect(adminEmail.text).toContain("Route: Personal salary question");
+    expect(adminEmail.text).toContain(
+      "LinkedIn: https://www.linkedin.com/in/example/",
+    );
     expect(adminEmail.text).toContain(
       "do not add to the talent pool without separate consent",
     );
