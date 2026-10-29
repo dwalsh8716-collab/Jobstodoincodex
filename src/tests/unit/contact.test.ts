@@ -106,7 +106,6 @@ describe("contact form validation", () => {
         type: "candidate",
         briefType: "Personal salary sense-check",
         privacyNoticeAcknowledgement: "yes",
-        linkedin: "https://www.linkedin.com/in/example/",
       }).success,
     ).toBe(true);
     expect(
@@ -133,7 +132,7 @@ describe("contact form validation", () => {
     ).toBe(false);
   });
 
-  it("requires a genuine LinkedIn profile for personal salary questions only", () => {
+  it("allows personal salary questions without LinkedIn but checks supplied profiles", () => {
     const personalQuestion = {
       ...basePayload,
       type: "candidate",
@@ -141,8 +140,12 @@ describe("contact form validation", () => {
       privacyNoticeAcknowledgement: "yes",
     };
 
+    expect(contactFormSchema.safeParse(personalQuestion).success).toBe(true);
+    expect(
+      contactFormSchema.safeParse({ ...personalQuestion, linkedin: "" }).success,
+    ).toBe(true);
+
     for (const linkedin of [
-      undefined,
       "https://example.com/in/example",
       "https://linkedin.com.evil.example/in/example",
       "https://www.linkedin.com/company/example",

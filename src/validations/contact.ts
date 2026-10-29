@@ -116,12 +116,13 @@ export const contactFormSchema = z
 
     if (
       payload.briefType === "Personal salary sense-check" &&
-      (!payload.linkedin || !isLinkedInProfileUrl(payload.linkedin))
+      payload.linkedin &&
+      !isLinkedInProfileUrl(payload.linkedin)
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["linkedin"],
-        message: "Please add your LinkedIn profile URL (linkedin.com/in/...).",
+        message: "Please use a LinkedIn profile URL (linkedin.com/in/...).",
       });
     }
 

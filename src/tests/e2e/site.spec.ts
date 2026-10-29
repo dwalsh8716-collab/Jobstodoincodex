@@ -165,7 +165,7 @@ test("salary sense-check separates personal pay from a hiring budget", async ({
   await form.getByLabel("My own salary or package").check();
   await expect(form.getByLabel("Your current salary or rate")).toBeVisible();
   await expect(form.getByLabel("Your LinkedIn profile URL")).toBeVisible();
-  await expect(form.getByLabel("Your LinkedIn profile URL")).toHaveAttribute(
+  await expect(form.getByLabel("Your LinkedIn profile URL")).not.toHaveAttribute(
     "required",
     "",
   );

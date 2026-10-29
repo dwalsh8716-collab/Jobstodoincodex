@@ -173,7 +173,10 @@ export function SalarySenseCheckForm() {
         </div>
         {purpose === "personal" ? (
           <div className={`form-row ${styles.senseCheckFull}`}>
-            <label htmlFor={`${id}-linkedin`}>Your LinkedIn profile URL</label>
+            <label htmlFor={`${id}-linkedin`}>
+              Your LinkedIn profile URL{" "}
+              <span className="optional-label">Optional</span>
+            </label>
             <input
               id={`${id}-linkedin`}
               name="linkedin"
@@ -181,7 +184,6 @@ export function SalarySenseCheckForm() {
               autoComplete="url"
               maxLength={240}
               placeholder="https://www.linkedin.com/in/your-name/"
-              required
             />
           </div>
         ) : null}
