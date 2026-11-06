@@ -165,14 +165,23 @@ test("salary sense-check separates personal pay from a hiring budget", async ({
   await form.getByLabel("My own salary or package").check();
   await expect(form.getByLabel("Your current salary or rate")).toBeVisible();
   await expect(form.getByLabel("Your LinkedIn profile URL")).toBeVisible();
-  await expect(form.getByLabel("Your LinkedIn profile URL")).not.toHaveAttribute(
-    "required",
-    "",
-  );
+  const cvInput = form.locator('input[name="cvFile"]');
+  if (await cvInput.count()) {
+    await expect(cvInput).toBeVisible();
+    await expect(
+      form.getByLabel("Your LinkedIn profile URL"),
+    ).not.toHaveAttribute("required", "");
+  } else {
+    await expect(form.getByLabel("Your LinkedIn profile URL")).toHaveAttribute(
+      "required",
+      "",
+    );
+  }
   await expect(form.getByText("Candidate Privacy Notice")).toBeVisible();
   await form.getByLabel("A salary for someone I’m hiring").check();
   await expect(form.getByLabel("Proposed salary or budget")).toBeVisible();
   await expect(form.getByLabel("Your LinkedIn profile URL")).toHaveCount(0);
+  await expect(cvInput).toHaveCount(0);
   await expect(form.getByText("Candidate Privacy Notice")).toHaveCount(0);
   expect(
     await page.evaluate(

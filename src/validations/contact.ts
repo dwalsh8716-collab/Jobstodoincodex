@@ -30,7 +30,7 @@ const optionalUrl = z.preprocess(
     .optional(),
 );
 
-function isLinkedInProfileUrl(value: string) {
+export function isLinkedInProfileUrl(value: string) {
   try {
     const url = new URL(value);
     return (
@@ -116,13 +116,14 @@ export const contactFormSchema = z
 
     if (
       payload.briefType === "Personal salary sense-check" &&
-      payload.linkedin &&
-      !isLinkedInProfileUrl(payload.linkedin)
+      (!payload.linkedin || !isLinkedInProfileUrl(payload.linkedin))
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["linkedin"],
-        message: "Please use a LinkedIn profile URL (linkedin.com/in/...).",
+        message: payload.linkedin
+          ? "Please use a LinkedIn profile URL (linkedin.com/in/...)."
+          : "Please add your LinkedIn profile or attach a CV.",
       });
     }
 

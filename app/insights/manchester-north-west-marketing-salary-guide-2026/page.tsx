@@ -25,6 +25,7 @@ import { SalaryGuideShare } from "./SalaryGuideShare";
 import { SalarySenseCheckForm } from "./SalarySenseCheckForm";
 import { SalaryChecker } from "./SalaryChecker";
 import { analyticsAttributes } from "@/lib/analytics";
+import { getCandidateApplicationDropStatus } from "@/lib/candidate-application-drop";
 
 const baseMetadata = createMetadata({
   title: guide.seoTitle,
@@ -107,6 +108,7 @@ const navigation = [
 ];
 
 export default function SalaryGuidePage() {
+  const { canAcceptCvUploads } = getCandidateApplicationDropStatus();
   const schema = {
     ...articleSchema(guide),
     image: absoluteUrl("/assets/salary-guide-2026-social.png"),
@@ -505,7 +507,7 @@ export default function SalaryGuidePage() {
                   </Link>
                 </div>
               </div>
-              <SalarySenseCheckForm />
+              <SalarySenseCheckForm canAcceptCvUploads={canAcceptCvUploads} />
             </section>
             <Editorial
               section={salaryEditorial.methodology}

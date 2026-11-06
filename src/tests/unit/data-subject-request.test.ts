@@ -160,12 +160,13 @@ describe("data subject request action", () => {
 
     const adminBody = JSON.parse(
       String(fetchMock.mock.calls[0]?.[1]?.body),
-    ) as { text: string };
+    ) as { text: string; reply_to?: string };
     const requesterBody = JSON.parse(
       String(fetchMock.mock.calls[1]?.[1]?.body),
     ) as { from: string; to: string; subject: string; text: string; html: string };
 
     expect(adminBody.text).toContain("Delete my candidate details");
+    expect(adminBody.reply_to).toBeUndefined();
     expect(adminBody.text).not.toContain("confidential job search");
     expect(requesterBody).toMatchObject({
       from: "Essential Resourcing <website@example.com>",

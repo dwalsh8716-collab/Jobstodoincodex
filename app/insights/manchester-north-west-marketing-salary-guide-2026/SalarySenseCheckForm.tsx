@@ -9,7 +9,11 @@ import styles from "./salary-guide.module.css";
 const sourcePage =
   "/insights/manchester-north-west-marketing-salary-guide-2026";
 
-export function SalarySenseCheckForm() {
+export function SalarySenseCheckForm({
+  canAcceptCvUploads,
+}: {
+  canAcceptCvUploads: boolean;
+}) {
   const id = useId();
   const [startedAt, setStartedAt] = useState(() => Date.now().toString());
   const [status, setStatus] = useState<
@@ -26,10 +30,19 @@ export function SalarySenseCheckForm() {
     const salary = String(data.get("salary") || "").trim();
     const note = String(data.get("note") || "").trim();
     const isPersonal = data.get("salaryPurpose") === "personal";
+    const linkedin = String(data.get("linkedin") || "").trim();
+    const cvEntry = data.get("cvFile");
+    const hasCv = cvEntry instanceof File && cvEntry.size > 0;
+
+    if (isPersonal && !linkedin && !hasCv) {
+      setStatus("error");
+      setMessage("Please add your LinkedIn profile or attach a CV.");
+      form.querySelector<HTMLInputElement>('input[name="linkedin"]')?.focus();
+      return;
+    }
 
     data.delete("role");
     data.delete("salary");
-    data.delete("note");
     data.delete("salaryPurpose");
     data.set("type", isPersonal ? "candidate" : "client");
     data.set(
@@ -37,26 +50,40 @@ export function SalarySenseCheckForm() {
       isPersonal ? "Personal salary sense-check" : "Hiring salary sense-check",
     );
     data.set("sourcePage", sourcePage);
-    data.set(
-      "message",
-      [
-        "Salary sense-check enquiry",
-        `Role/title: ${role}`,
-        `${isPersonal ? "Current salary/rate" : "Hiring salary/budget"}: ${salary}`,
-        note ? `Additional context: ${note}` : "",
-      ]
-        .filter(Boolean)
-        .join("\n"),
-    );
+
+    if (isPersonal && hasCv) {
+      data.set("salaryRole", role);
+      data.set("currentSalary", salary);
+      data.set("preferredContactMethod", "no_preference");
+    } else {
+      data.delete("cvFile");
+      data.delete("note");
+      data.set(
+        "message",
+        [
+          "Salary sense-check enquiry",
+          `Role/title: ${role}`,
+          `${isPersonal ? "Current salary/rate" : "Hiring salary/budget"}: ${salary}`,
+          note ? `Additional context: ${note}` : "",
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      );
+    }
 
     setStatus("loading");
     setMessage("");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: data,
-      });
+      const response = await fetch(
+        isPersonal && hasCv
+          ? "/api/candidate-application-drop"
+          : "/api/contact",
+        {
+          method: "POST",
+          body: data,
+        },
+      );
       const result = (await response.json()) as {
         ok?: boolean;
         message?: string;
@@ -172,20 +199,48 @@ export function SalarySenseCheckForm() {
           />
         </div>
         {purpose === "personal" ? (
-          <div className={`form-row ${styles.senseCheckFull}`}>
-            <label htmlFor={`${id}-linkedin`}>
-              Your LinkedIn profile URL{" "}
-              <span className="optional-label">Optional</span>
-            </label>
-            <input
-              id={`${id}-linkedin`}
-              name="linkedin"
-              type="url"
-              autoComplete="url"
-              maxLength={240}
-              placeholder="https://www.linkedin.com/in/your-name/"
-            />
-          </div>
+          <>
+            <p
+              id={`${id}-profile-help`}
+              className={`form-note ${styles.senseCheckFull}`}
+            >
+              {canAcceptCvUploads
+                ? "Add your LinkedIn profile or a CV so I can see the work behind your title. One is needed."
+                : "Add your LinkedIn profile so I can see the work behind your title."}
+            </p>
+            <div className={`form-row ${styles.senseCheckFull}`}>
+              <label htmlFor={`${id}-linkedin`}>
+                Your LinkedIn profile URL
+              </label>
+              <input
+                id={`${id}-linkedin`}
+                name="linkedin"
+                type="url"
+                autoComplete="url"
+                maxLength={240}
+                placeholder="https://www.linkedin.com/in/your-name/"
+                aria-describedby={`${id}-profile-help`}
+                required={!canAcceptCvUploads}
+              />
+            </div>
+            {canAcceptCvUploads ? (
+              <div className={`form-row ${styles.senseCheckFull}`}>
+                <label htmlFor={`${id}-cv-file`}>Or attach your CV</label>
+                <input
+                  id={`${id}-cv-file`}
+                  name="cvFile"
+                  type="file"
+                  accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  aria-describedby={`${id}-cv-help`}
+                  disabled={status === "loading"}
+                />
+                <p id={`${id}-cv-help`} className="form-note">
+                  PDF, DOC or DOCX only. Maximum file size 10MB. Sent privately
+                  to David.
+                </p>
+              </div>
+            ) : null}
+          </>
         ) : null}
         <div className={`form-row ${styles.senseCheckFull}`}>
           <label htmlFor={`${id}-note`}>

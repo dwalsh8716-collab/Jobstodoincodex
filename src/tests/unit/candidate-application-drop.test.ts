@@ -223,6 +223,40 @@ describe("candidate application drop", () => {
     }
   });
 
+  it("requires a CV or LinkedIn profile for a personal salary question", () => {
+    const salaryQuestion = {
+      ...validPayload(),
+      briefType: "Personal salary sense-check",
+      salaryRole: "Marketing Manager",
+      currentSalary: "£45,000",
+      note: "I manage the whole marketing function.",
+      hasCvFile: undefined,
+    };
+
+    expect(
+      candidateApplicationDropSchema.safeParse({
+        ...salaryQuestion,
+        linkedin: "",
+      }).success,
+    ).toBe(false);
+    expect(
+      candidateApplicationDropSchema.safeParse(salaryQuestion).success,
+    ).toBe(true);
+    expect(
+      candidateApplicationDropSchema.safeParse({
+        ...salaryQuestion,
+        linkedin: "",
+        hasCvFile: "yes",
+      }).success,
+    ).toBe(true);
+    expect(
+      candidateApplicationDropSchema.safeParse({
+        ...salaryQuestion,
+        linkedin: "https://example.com/in/example",
+      }).success,
+    ).toBe(false);
+  });
+
   it("requires WhatsApp consent when WhatsApp is the preferred candidate route", () => {
     const missingConsent = candidateApplicationDropSchema.safeParse({
       ...validPayload(),
@@ -319,6 +353,7 @@ describe("candidate application drop", () => {
     expect(adminEmail.subject).toBe(
       "Essential Resourcing candidate note from Candidate Name",
     );
+    expect(adminEmail.reply_to).toBe("candidate@example.com");
     expect(adminEmail.text).toContain(
       "LinkedIn/profile: https://www.linkedin.com/in/example",
     );
@@ -387,6 +422,7 @@ describe("candidate application drop", () => {
     expect(adminEmail).toMatchObject({
       from: "Essential Resourcing <website@example.com>",
       to: "david@example.com",
+      reply_to: "candidate@example.com",
       subject: "Essential Resourcing candidate CV from Candidate Name",
     });
     expect(adminEmail.attachments).toEqual([
@@ -403,6 +439,90 @@ describe("candidate application drop", () => {
       "/assets/essential-resourcing-email-logo.png",
     );
     expect(candidateEmail.attachments).toBeUndefined();
+    expect(candidateEmail.reply_to).toBeUndefined();
+  });
+
+  it("delivers a CV-backed salary question without treating it as an application", async () => {
+    enableCvUploadEnv();
+    const formData = new FormData();
+    const payload = {
+      ...validPayload(),
+      briefType: "Personal salary sense-check",
+      salaryRole: "Marketing Manager",
+      currentSalary: "£45,000",
+      linkedin: "",
+      note: "I manage the whole marketing function.",
+      talentPoolConsent: undefined,
+      sourcePage: "/insights/manchester-north-west-marketing-salary-guide-2026",
+    };
+    for (const [key, value] of Object.entries(payload)) {
+      if (value !== undefined) formData.set(key, String(value));
+    }
+    formData.set(
+      "cvFile",
+      new File(["%PDF-1.4 test cv"], "cv.pdf", { type: "application/pdf" }),
+    );
+
+    const response = await POST(
+      new NextRequest("https://example.com/api/candidate-application-drop", {
+        method: "POST",
+        headers: { "x-forwarded-for": "203.0.113.31" },
+        body: formData,
+      }),
+    );
+    const adminEmail = JSON.parse(
+      String(vi.mocked(global.fetch).mock.calls[0]?.[1]?.body),
+    );
+    const confirmation = JSON.parse(
+      String(vi.mocked(global.fetch).mock.calls[1]?.[1]?.body),
+    );
+
+    expect(response.status).toBe(200);
+    expect(awsMocks.send).toHaveBeenCalledTimes(1);
+    expect(adminEmail.subject).toBe(
+      "Essential Resourcing | Personal salary sense-check from Candidate Name",
+    );
+    expect(adminEmail.reply_to).toBe("candidate@example.com");
+    expect(adminEmail.text).toContain("Route: Personal salary question");
+    expect(adminEmail.text).toContain("Role/title: Marketing Manager");
+    expect(adminEmail.text).toContain("Current salary/rate: £45,000");
+    expect(adminEmail.text).toContain("Talent pool consent: no");
+    expect(adminEmail.text).toContain("do not add to the talent pool");
+    expect(adminEmail.attachments).toHaveLength(1);
+    expect(confirmation.subject).toBe("We've received your salary question");
+    expect(confirmation.text).toContain("does not add you to a talent pool");
+    expect(confirmation.text).not.toContain("Thanks for applying");
+  });
+
+  it("rejects a salary question that falsely claims a CV was attached", async () => {
+    enableCandidateNoteEnv();
+    const formData = new FormData();
+    const payload = {
+      ...validPayload(),
+      briefType: "Personal salary sense-check",
+      salaryRole: "Marketing Manager",
+      currentSalary: "£45,000",
+      linkedin: "",
+      hasCvFile: "yes",
+      note: "I manage the whole marketing function.",
+    };
+    for (const [key, value] of Object.entries(payload)) {
+      formData.set(key, String(value));
+    }
+
+    const response = await POST(
+      new NextRequest("https://example.com/api/candidate-application-drop", {
+        method: "POST",
+        headers: { "x-forwarded-for": "203.0.113.32" },
+        body: formData,
+      }),
+    );
+
+    expect(response.status).toBe(400);
+    expect((await response.json()).message).toContain(
+      "LinkedIn profile or attach a CV",
+    );
+    expect(global.fetch).not.toHaveBeenCalled();
   });
 
   it("documents the live private storage and privacy boundary", () => {

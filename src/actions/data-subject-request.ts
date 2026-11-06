@@ -102,10 +102,12 @@ async function sendEmail({
   recipient,
   subject,
   text,
+  replyTo,
 }: {
   recipient: string;
   subject: string;
   text: string;
+  replyTo?: string;
 }) {
   const { apiKey, from } = getDataSubjectRequestEmailConfig();
 
@@ -125,6 +127,7 @@ async function sendEmail({
       subject,
       text,
       html: essentialEmailHtml(text),
+      ...(replyTo ? { reply_to: replyTo } : {}),
     }),
   });
 
@@ -152,6 +155,7 @@ async function sendDataSubjectRequestAdminEmail({
 
   return sendEmail({
     recipient: adminTo,
+    replyTo: emailVerified ? details.email : undefined,
     subject: emailVerified
       ? "Verified data/privacy request ready for review"
       : "New data/privacy request received",

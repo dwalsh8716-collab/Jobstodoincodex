@@ -106,6 +106,7 @@ describe("contact form validation", () => {
         type: "candidate",
         briefType: "Personal salary sense-check",
         privacyNoticeAcknowledgement: "yes",
+        linkedin: "https://www.linkedin.com/in/example/",
       }).success,
     ).toBe(true);
     expect(
@@ -132,7 +133,7 @@ describe("contact form validation", () => {
     ).toBe(false);
   });
 
-  it("allows personal salary questions without LinkedIn but checks supplied profiles", () => {
+  it("requires LinkedIn for personal salary questions sent without a CV", () => {
     const personalQuestion = {
       ...basePayload,
       type: "candidate",
@@ -140,10 +141,11 @@ describe("contact form validation", () => {
       privacyNoticeAcknowledgement: "yes",
     };
 
-    expect(contactFormSchema.safeParse(personalQuestion).success).toBe(true);
+    expect(contactFormSchema.safeParse(personalQuestion).success).toBe(false);
     expect(
-      contactFormSchema.safeParse({ ...personalQuestion, linkedin: "" }).success,
-    ).toBe(true);
+      contactFormSchema.safeParse({ ...personalQuestion, linkedin: "" })
+        .success,
+    ).toBe(false);
 
     for (const linkedin of [
       "https://example.com/in/example",
@@ -345,13 +347,15 @@ describe("contact server action response shape", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
     const adminEmail = JSON.parse(
       String(fetchMock.mock.calls[0]?.[1]?.body),
-    ) as { subject: string; text: string };
+    ) as { subject: string; text: string; reply_to?: string };
     const confirmation = JSON.parse(
       String(fetchMock.mock.calls[1]?.[1]?.body),
-    ) as { subject: string; text: string };
+    ) as { subject: string; text: string; reply_to?: string };
     expect(adminEmail.subject).toBe(
       "Essential Resourcing | Personal salary sense-check from David Walsh",
     );
+    expect(adminEmail.reply_to).toBe("personal-salary@example.com");
+    expect(confirmation.reply_to).toBeUndefined();
     expect(adminEmail.text).toContain("Route: Personal salary question");
     expect(adminEmail.text).toContain(
       "LinkedIn: https://www.linkedin.com/in/example/",
@@ -393,10 +397,11 @@ describe("contact server action response shape", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const adminEmail = JSON.parse(
       String(fetchMock.mock.calls[0]?.[1]?.body),
-    ) as { subject: string; text: string };
+    ) as { subject: string; text: string; reply_to?: string };
     expect(adminEmail.subject).toBe(
       "Essential Resourcing | Hiring salary sense-check from David Walsh",
     );
+    expect(adminEmail.reply_to).toBe("hiring-salary@example.com");
     expect(adminEmail.text).toContain("Route: client");
     expect(adminEmail.text).toContain(
       "Source page: https://essentialresourcing.co.uk/contact",

@@ -334,11 +334,13 @@ async function sendResendEmail({
   subject,
   text,
   attachments,
+  replyTo,
 }: {
   to: string;
   subject: string;
   text: string;
   attachments?: Array<{ filename: string; content: string }>;
+  replyTo?: string;
 }) {
   const { apiKey, from, delivery } = emailConfig();
   if (!apiKey) {
@@ -362,6 +364,7 @@ async function sendResendEmail({
       text,
       html: essentialEmailHtml(text),
       attachments,
+      ...(replyTo ? { reply_to: replyTo } : {}),
     }),
   });
 
@@ -379,11 +382,15 @@ function adminEmailText({
   reference: string;
   cv: StoredCvFile | null;
 }) {
+  const personalSalaryQuestion =
+    payload.briefType === "Personal salary sense-check";
   return [
-    "A candidate/application has been submitted through Essential Resourcing.",
+    personalSalaryQuestion
+      ? "A personal salary sense-check has been submitted through Essential Resourcing."
+      : "A candidate/application has been submitted through Essential Resourcing.",
     "",
     `Reference: ${reference}`,
-    `Route: ${payload.type}`,
+    `Route: ${personalSalaryQuestion ? "Personal salary question" : payload.type}`,
     payload.jobTitle ? `Job: ${payload.jobTitle}` : "",
     payload.jobSlug ? `Job slug: ${payload.jobSlug}` : "",
     payload.sourcePage ? `Source page: ${payload.sourcePage}` : "",
@@ -401,7 +408,15 @@ function adminEmailText({
     `Talent pool consent: ${payload.talentPoolConsent === "yes" ? "yes" : "no"}`,
     `Candidate Privacy Notice acknowledged: yes`,
     "",
-    payload.note ? payload.note : "No separate note supplied.",
+    personalSalaryQuestion ? `Role/title: ${payload.salaryRole}` : "",
+    personalSalaryQuestion
+      ? `Current salary/rate: ${payload.currentSalary}`
+      : "",
+    payload.note
+      ? `${personalSalaryQuestion ? "Additional context: " : ""}${payload.note}`
+      : personalSalaryQuestion
+        ? ""
+        : "No separate note supplied.",
     "",
     cv
       ? [
@@ -419,12 +434,31 @@ function adminEmailText({
           .filter(Boolean)
           .join("\n")
       : "No CV file uploaded.",
+    personalSalaryQuestion
+      ? "Personal salary question: do not add to the talent pool without separate consent."
+      : "",
   ]
     .filter(Boolean)
     .join("\n");
 }
 
 function candidateConfirmationText(payload: CandidateApplicationDropPayload) {
+  if (payload.briefType === "Personal salary sense-check") {
+    return [
+      `Hi ${payload.name},`,
+      "",
+      "Thanks for asking me to sense-check your salary or package. I’ll read what you’ve sent and come back to you directly.",
+      "",
+      "If you uploaded a CV, it has gone privately to David for this enquiry. It is not published or sent to clients.",
+      "This question does not add you to a talent pool or marketing list.",
+      `Candidate Privacy Notice: ${siteConfig.url}${candidatePrivacyPath}`,
+      `To ask for deletion or a copy of your details: ${siteConfig.url}${dataSubjectRequestPath}`,
+      "",
+      "David Walsh",
+      "Essential Resourcing",
+    ].join("\n");
+  }
+
   return [
     `Hi ${payload.name},`,
     "",
@@ -529,10 +563,15 @@ export async function submitCandidateApplicationDrop({
     }
 
     const { to } = emailConfig();
+    const personalSalaryQuestion =
+      payload.briefType === "Personal salary sense-check";
 
     await sendResendEmail({
       to,
-      subject: `Essential Resourcing ${payload.type === "job" ? "job application" : storedCv ? "candidate CV" : "candidate note"} from ${payload.name}`,
+      replyTo: payload.email,
+      subject: personalSalaryQuestion
+        ? `Essential Resourcing | Personal salary sense-check from ${payload.name}`
+        : `Essential Resourcing ${payload.type === "job" ? "job application" : storedCv ? "candidate CV" : "candidate note"} from ${payload.name}`,
       text: adminEmailText({ payload, reference, cv: storedCv }),
       attachments:
         storedCv && buffer
@@ -547,16 +586,20 @@ export async function submitCandidateApplicationDrop({
 
     await sendResendEmail({
       to: payload.email,
-      subject: candidateConfirmationSubject(payload.type),
+      subject: personalSalaryQuestion
+        ? "We've received your salary question"
+        : candidateConfirmationSubject(payload.type),
       text: candidateConfirmationText(payload),
     });
 
     return {
       ok: true,
       statusCode: 200,
-      message: cvFile
-        ? "Thanks. Your CV has been sent privately to David. If it looks relevant, he will come back to you directly."
-        : "Thanks. Your note has gone privately to David. If there is a sensible conversation to have, he will come back to you directly.",
+      message: personalSalaryQuestion
+        ? "Thanks. Your salary question and CV have gone privately to David. He’ll reply directly."
+        : cvFile
+          ? "Thanks. Your CV has been sent privately to David. If it looks relevant, he will come back to you directly."
+          : "Thanks. Your note has gone privately to David. If there is a sensible conversation to have, he will come back to you directly.",
       status: "live",
       reference,
     };

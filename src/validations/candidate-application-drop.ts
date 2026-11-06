@@ -3,7 +3,7 @@ import {
   maxCandidateNoteLength,
   minStandaloneCandidateNoteLength,
 } from "@/lib/candidate-application-constraints";
-import { preferredContactMethods } from "./contact";
+import { isLinkedInProfileUrl, preferredContactMethods } from "./contact";
 
 export const maxCvFileBytes = 10 * 1024 * 1024;
 
@@ -46,6 +46,12 @@ export const candidateApplicationDropSchema = z
         .max(240)
         .optional(),
     ),
+    briefType: z.preprocess(
+      emptyToUndefined,
+      z.literal("Personal salary sense-check").optional(),
+    ),
+    salaryRole: z.preprocess(emptyToUndefined, safeText(120).optional()),
+    currentSalary: z.preprocess(emptyToUndefined, safeText(100).optional()),
     note: z.preprocess(
       emptyToUndefined,
       safeText(maxCandidateNoteLength).optional(),
@@ -81,7 +87,39 @@ export const candidateApplicationDropSchema = z
   .superRefine((payload, ctx) => {
     const noteLength = payload.note?.length || 0;
 
+    if (payload.briefType === "Personal salary sense-check") {
+      if (payload.type !== "candidate") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["type"],
+          message: "Please choose the right salary enquiry type.",
+        });
+      }
+      if (!payload.salaryRole || !payload.currentSalary) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["salaryRole"],
+          message: "Please add your role and current salary or rate.",
+        });
+      }
+      if (!payload.linkedin && payload.hasCvFile !== "yes") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["linkedin"],
+          message: "Please add your LinkedIn profile or attach a CV.",
+        });
+      }
+      if (payload.linkedin && !isLinkedInProfileUrl(payload.linkedin)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["linkedin"],
+          message: "Please use a LinkedIn profile URL (linkedin.com/in/...).",
+        });
+      }
+    }
+
     if (
+      payload.briefType !== "Personal salary sense-check" &&
       !payload.linkedin &&
       noteLength < minStandaloneCandidateNoteLength &&
       payload.hasCvFile !== "yes"
@@ -178,6 +216,9 @@ export function formDataToCandidateApplicationDropInput(formData: FormData) {
     email: formData.get("email"),
     phone: formData.get("phone"),
     linkedin: formData.get("linkedin"),
+    briefType: formData.get("briefType"),
+    salaryRole: formData.get("salaryRole"),
+    currentSalary: formData.get("currentSalary"),
     note: formData.get("note"),
     preferredContactMethod: formData.get("preferredContactMethod"),
     consent: formData.get("consent"),

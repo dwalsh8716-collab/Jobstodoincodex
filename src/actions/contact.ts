@@ -93,10 +93,12 @@ async function sendWithResend(payload: ContactFormPayload) {
     recipient,
     subject,
     text,
+    replyTo,
   }: {
     recipient: string;
     subject: string;
     text: string;
+    replyTo?: string;
   }) {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -110,6 +112,7 @@ async function sendWithResend(payload: ContactFormPayload) {
         subject,
         text,
         html: essentialEmailHtml(text),
+        ...(replyTo ? { reply_to: replyTo } : {}),
       }),
     });
 
@@ -120,6 +123,7 @@ async function sendWithResend(payload: ContactFormPayload) {
 
   await sendEmail({
     recipient: to,
+    replyTo: payload.email,
     subject: enquirySubject(payload),
     text: [
       `Enquiry: ${payload.briefType}`,

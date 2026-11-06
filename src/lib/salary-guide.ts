@@ -355,10 +355,12 @@ async function sendSalaryGuideEmails(payload: SalaryGuideLeadPayload) {
     recipient,
     subject,
     text,
+    replyTo,
   }: {
     recipient: string;
     subject: string;
     text: string;
+    replyTo?: string;
   }) {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -372,6 +374,7 @@ async function sendSalaryGuideEmails(payload: SalaryGuideLeadPayload) {
         subject,
         text,
         html: essentialEmailHtml(text),
+        ...(replyTo ? { reply_to: replyTo } : {}),
       }),
     });
 
@@ -382,6 +385,7 @@ async function sendSalaryGuideEmails(payload: SalaryGuideLeadPayload) {
 
   await sendEmail({
     recipient: to,
+    replyTo: payload.email,
     subject: `Salary guide request from ${payload.name}`,
     text: [
       `Name: ${payload.name}`,
